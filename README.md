@@ -1,7 +1,10 @@
-# chan-hypervolume
+# FastHVChan
 
 Exact hypervolume indicator computation via **Timothy M. Chan, *Klee's Measure
 Problem Made Easy*, FOCS 2013** ([author's preprint](https://tmc.web.engr.illinois.edu/easyklee8_13.pdf)).
+
+*Co-created by Michael Emmerich (University of Jyväskylä) and Claude Fable 5
+(Anthropic).*
 
 Two standalone, dependency-free Python modules:
 
@@ -129,6 +132,13 @@ tests/                  pytest wrappers around both self-test suites
 benchmarks/             scaling experiments (node counts, wall time)
 paper/                  LaTeX/PDF: walkthrough + complexity analysis
 ```
+
+## Attribution
+
+This repository — both implementations, the test suites, the benchmarks, and
+the accompanying paper — was co-created by **Michael Emmerich** (University of
+Jyväskylä) and **Claude Fable 5** (Anthropic) in an interactive agentic coding
+session, working directly from Chan's FOCS 2013 paper.
 
 ## Citing
 

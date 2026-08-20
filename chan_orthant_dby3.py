@@ -89,6 +89,9 @@ Public API
 ``orthant_union_volume(orthants, lo, hi)``    -- union of arbitrary orthants.
 
 Standard library only.  Run the file directly for its self-tests.
+
+Co-created by Michael Emmerich (University of Jyvaskyla) and Claude Fable 5
+(Anthropic).
 """
 
 from __future__ import annotations

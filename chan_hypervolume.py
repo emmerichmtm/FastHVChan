@@ -51,6 +51,9 @@ Public API
 ``union_volume(boxes)``            -- volume of a union of arbitrary boxes.
 
 Standard library only.  Run this file directly to execute its self-tests.
+
+Co-created by Michael Emmerich (University of Jyvaskyla) and Claude Fable 5
+(Anthropic).
 """
 
 from __future__ import annotations
