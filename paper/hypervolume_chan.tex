@@ -53,9 +53,9 @@ boxes.  Chan's FOCS~2013 paper \emph{``Klee's Measure Problem Made Easy''}
 gives (i)~a remarkably simple $\Oh(n^{d/2})$-time algorithm for arbitrary
 boxes and (ii)~an $\Oh(n^{d/3}\operatorname{polylog} n)$-time algorithm for
 orthants---the case that contains the hypervolume indicator problem.  We
-describe complete, self-contained Python implementations of both algorithms,
-the second specialized to the grounded orthants that arise in hypervolume
-computation.  We walk through both algorithms in an implementation-oriented
+describe complete, self-contained Python implementations of both algorithms;
+the second supports orthants of arbitrary orientation, with the grounded
+orthants of hypervolume computation as its primary application.  We walk through both algorithms in an implementation-oriented
 way, including the symbolic machinery of ``basic functions'' that the
 $d/3$-algorithm requires, give a transparent complexity analysis of the code
 as written (including where it loses logarithmic factors against the paper's
@@ -119,10 +119,10 @@ This paper documents two self-contained Python implementations
   front end.  To our knowledge this is among the first faithful public
   implementations of the FOCS 2013 algorithm.
 \item \texttt{chan\_orthant\_dby3.py} --- Chan's Section-4.2 orthant
-  algorithm, specialized to grounded orthants (the hypervolume case),
-  including the full symbolic ``basic function'' machinery of the paper's
-  Lemmas~4.4 and~4.5.  We are not aware of any previous implementation of
-  this algorithm.
+  algorithm for orthants of arbitrary orientation (the hypervolume case,
+  grounded orthants, is the default front end), including the full symbolic
+  ``basic function'' machinery of the paper's Lemmas~4.4 and~4.5.  We are
+  not aware of any previous implementation of this algorithm.
 \end{itemize}
 Section~\ref{sec:simple} walks through the simple algorithm,
 Section~\ref{sec:dby3} through the orthant algorithm,
@@ -271,6 +271,7 @@ The price is that 2-sided orthants cannot be eliminated by re-coordination.
 Chan's \emph{functional approach} absorbs them into the integrand instead.
 
 \subsection{Basic functions and staircase absorption}
+\label{sec:absorb}
 
 \begin{definition}[{Chan \cite[Def.~4.2]{Chan2013}}, adapted]
 A \emph{basic function} is a finite sum of terms
@@ -284,24 +285,39 @@ function.  Its \emph{complexity} is the total number of pieces of all
 functions involved.
 \end{definition}
 
-The recursion maintains a cell $\Gamma$, a list $\bar B$ of surviving orthant
-points, and a basic function $F$, and computes
+An orthant is given by its vertex $v$ and a sign per axis: the constraint on
+axis $k$ is $x_k\ge v_k$ or $x_k\le v_k$.  A constraint is \emph{active} in
+the cell $\Gamma$ if its hyperplane actually cuts $\Gamma$.  The recursion
+maintains a cell $\Gamma$, a list $\bar B$ of surviving orthants, and a
+basic function $F$, and computes
 $\int_{\Gamma\setminus\bigcup\bar B} F(x)\,dx$; initially $F\equiv 1$.  The
 simplification events are:
 \begin{itemize}\itemsep2pt
-\item \textbf{Cover.} A box active in no dimension ($y\le \ell$) covers
-  $\Gamma$: the node contributes $0$.
-\item \textbf{Slabs.} A box active only in dimension $i$ is the halfspace
-  $\{x_i\ge y_i\}$; its complement is $\{x_i<y_i\}$, so the cell is shrunk:
-  $\Gamma.\mathrm{hi}_i\leftarrow\min(\Gamma.\mathrm{hi}_i,\,y_i)$.  (For
-  same-orientation orthants no coordinate collapsing is needed.)
-\item \textbf{2-sided orthants.} The boxes active exactly in dimensions
-  $\{i,j\}$ are quadrants $\{x_i\ge a_t,\ x_j\ge b_t\}$ in the $(i,j)$-plane.
-  The complement of their union is $\{x_j< f(x_i)\}$ where
-  $f(t)=\min\{b_t : a_t\le t\}$ is a \emph{single monotone-decreasing step
-  function}---the staircase of the 2-D maxima of the points
-  (Figure~\ref{fig:staircase}).  Absorption multiplies the condition
-  $[x_j\le f(x_i)]$ into every term of $F$; two conditions of the same pair,
+\item \textbf{Cover.} An orthant with no active constraint covers $\Gamma$:
+  the node contributes $0$.
+\item \textbf{Slabs.} An orthant with one active constraint is a halfspace;
+  its complement chops the cell from one side:
+  $\Gamma.\mathrm{hi}_i\leftarrow\min(\Gamma.\mathrm{hi}_i,v_i)$ for a
+  $\ge$-constraint, $\Gamma.\mathrm{lo}_i\leftarrow\max(\Gamma.\mathrm{lo}_i,v_i)$
+  for a $\le$-constraint; opposing slabs that cross empty the cell.  (For
+  orthants no coordinate collapsing is needed---restricted to a cell, a slab
+  is always one-sided.)
+\item \textbf{2-sided orthants.} The orthants active exactly in dimensions
+  $\{i,j\}$ are quadrants in the $(i,j)$-plane, in four orientation classes.
+  The complement of the union of each class is a single monotone step
+  condition (Figure~\ref{fig:staircase} shows the $(\ge,\ge)$ class):
+  \begin{center}
+  \begin{tabular}{@{}llll@{}}
+  class & covered iff & complement & shape of $f$\\
+  $(\ge,\ge)$ & $x_j\ge\min\{b_t: a_t\le x_i\}$ & $x_j\le f(x_i)$ & decreasing\\
+  $(\le,\le)$ & $x_j\le\max\{b_t: a_t\ge x_i\}$ & $x_j\ge f(x_i)$ & decreasing\\
+  $(\ge,\le)$ & $x_j\le\max\{b_t: a_t\le x_i\}$ & $x_j\ge f(x_i)$ & increasing\\
+  $(\le,\ge)$ & $x_j\ge\min\{b_t: a_t\ge x_i\}$ & $x_j\le f(x_i)$ & increasing\\
+  \end{tabular}
+  \end{center}
+  These four staircases are exactly the four monotone boundary functions
+  $f^-,g^-,f^+,g^+$ of Chan's Section~4.1.  Absorption multiplies the
+  class's condition into every term of $F$; two conditions of the same pair,
   sense, and monotonicity class merge by a pointwise $\min$/$\max$, so the
   predicate size stays $\Oh(d^2)$.
 \end{itemize}
@@ -328,7 +344,8 @@ simplification events are:
 \caption{Absorbing 2-sided orthants of a pair $(i,j)$.  The union of the
 quadrants (shaded) is bounded by a staircase; the complement is described by
 the single condition $x_j<f(x_i)$ with $f$ monotone decreasing---one
-condition per axis pair, regardless of how many boxes were absorbed.}
+condition per orientation class per axis pair, regardless of how many boxes
+were absorbed; shown is the $(\ge,\ge)$ class, the other three mirror it.}
 \label{fig:staircase}
 \end{figure}
 
@@ -440,17 +457,21 @@ $T(N)=\Oh(N^{d/3}\log^{\Oh(1)}N)$ for $d\ge4$ \cite{Chan2013}.  (For $d=3$
 the exponent $d/3=1$ is not interesting: the union of orthants then has
 linear complexity anyway.)
 
-\subsection{Scope of the specialization}
+\subsection{Scope}
 
-The implementation restricts Chan's Section~4.2 in one way: all orthants must
-share the same orientation (be grounded), which is exactly the hypervolume
-setting.  This is what makes the absorbed predicate per axis pair a
-\emph{single} decreasing staircase; for mixed orientations the complement of
-$\bigcup B_{ij}$ requires up to four monotone step functions
-\cite[Sec.~4.1]{Chan2013}, which the term algebra supports but the absorption
-front end does not currently produce.  The paper's further results---the
-word-RAM speedups of its Section~3 and the $\Oh(n^{(d+1)/3})$ hypercube
-algorithm of its Section~4.3---are out of scope.
+The implementation covers Chan's Section~4.2 in full generality: orthants of
+arbitrary orientation, via the four staircase classes of
+Section~\ref{sec:absorb} (the general entry point is
+\texttt{orthant\_union\_volume}; \texttt{hypervolume\_dby3} is the grounded
+front end).  The four classes are exactly the four monotone boundary
+functions of the union of $B_{ij}$ in Chan's Section~4.1
+\cite[Sec.~4.1]{Chan2013}, and the term algebra treats them uniformly, so
+the generalization touches only the absorption front end, the slab handling
+(halfspaces now chop the cell from either side, and opposing slabs may empty
+it), the active-constraint tests, and the two-sided corners of the
+inclusion--exclusion base case.  The paper's further results---the word-RAM
+speedups of its Section~3 and the $\Oh(n^{(d+1)/3})$ hypercube algorithm of
+its Section~4.3---remain out of scope.
 
 \section{Complexity of the implementations as written}
 \label{sec:complexity}
@@ -557,7 +578,11 @@ code that is easy to get subtly wrong:
   exercise every degenerate branch of the tie handling.  The
   $d/2$-implementation is additionally validated on arbitrary
   (non-orthant) box unions and on spherical fronts against an independent
-  coordinate-compression enumerator.
+  coordinate-compression enumerator.  The orthant module is further checked
+  on random \emph{mixed-orientation} orthant unions in $d\in\{3,4,5\}$
+  (property tests of all four staircase classes, inclusion--exclusion on
+  small instances, and the $d/2$-implementation on clipped boxes for up to
+  $n=80$), including forced compression.
 \end{enumerate}
 All checks pass with relative errors at machine-precision level (worst
 observed: $4\cdot10^{-14}$).
@@ -642,7 +667,10 @@ hv3 = hypervolume_dby3(points, ref)   # identical value, d >= 3 only
 \noindent Both functions accept \texttt{maximize=True} and
 \texttt{prefilter=False}; the general Klee's-measure entry point
 \texttt{union\_volume(boxes)} in \texttt{chan\_hypervolume.py} accepts
-arbitrary boxes as \texttt{(lo, hi)} corner pairs.  The solver classes
+arbitrary boxes as \texttt{(lo, hi)} corner pairs, and
+\texttt{orthant\_union\_volume(orthants, lo, hi)} in
+\texttt{chan\_orthant\_dby3.py} accepts arbitrary-orientation orthants as
+\texttt{(vertex, signs)} pairs measured inside a domain box.  The solver classes
 (\texttt{ChanMeasure}, \texttt{ChanOrthantMeasure}) expose node counts and,
 for the latter, the compression interval and a switch to disable compression.
 
@@ -658,9 +686,8 @@ integration, and grid-averaging compression---is intricate to implement
 correctly, chiefly because of positive-measure ties between step functions.
 We believe the implementation presented here is the first of that algorithm;
 its recursion-tree scaling matches the $d/3$ theory, and it provides an
-executable specification against which faster engineered variants (or
-implementations of the general-orientation and hypercube cases) can be
-checked.
+executable specification against which faster engineered variants (or an
+implementation of the hypercube case) can be checked.
 
 \paragraph{Code availability.}
 Both modules, the test suites, and the benchmark scripts are available in the

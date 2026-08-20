@@ -8,7 +8,7 @@ Two standalone, dependency-free Python modules:
 | Module | Algorithm | Worst case (paper) | As implemented | Use it for |
 |---|---|---|---|---|
 | [`chan_hypervolume.py`](chan_hypervolume.py) | Section 2: simple divide & conquer for arbitrary boxes | O(n^(d/2)), d ≥ 3 | O(n^(d/2) log n) | **practical computation** (also solves general Klee's measure problem) |
-| [`chan_orthant_dby3.py`](chan_orthant_dby3.py) | Section 4.2: orthant algorithm, specialized to grounded orthants (= hypervolume) | O(n^(d/3) polylog n), d ≥ 4 | same exponent, large constants | **reference implementation** of the asymptotically fastest known hypervolume algorithm |
+| [`chan_orthant_dby3.py`](chan_orthant_dby3.py) | Section 4.2: orthant algorithm, arbitrary orientations (hypervolume = grounded case) | O(n^(d/3) polylog n), d ≥ 4 | same exponent, large constants | **reference implementation** of the asymptotically fastest known hypervolume algorithm |
 
 The hypervolume indicator of a point set `Y` w.r.t. a reference point `r` is
 the volume of the union of the boxes `[y, r]`, `y ∈ Y` — a special case of
@@ -39,6 +39,16 @@ from chan_hypervolume import union_volume
 union_volume([((0, 0), (1, 1)), ((5, 5), (7, 8))])   # -> 7.0
 ```
 
+Unions of orthants of **arbitrary orientation** (full Section 4.2, d ≥ 3) —
+each orthant is a `(vertex, signs)` pair, `signs[k] = +1` for `x_k ≥ v_k`,
+`-1` for `x_k ≤ v_k`, measured inside a domain box:
+
+```python
+from chan_orthant_dby3 import orthant_union_volume
+orthants = [((0.5, 0.5, 0.5), (+1, -1, +1)), ((0.3, 0.7, 0.2), (-1, -1, +1))]
+orthant_union_volume(orthants, lo=(0, 0, 0), hi=(1, 1, 1))
+```
+
 Requirements: Python ≥ 3.9, standard library only.
 
 ## How the algorithms work
@@ -52,10 +62,13 @@ surviving box then has a (d−2)-face crossing the cell; cutting at the
 through dimensions) makes the total face weight drop by `2^(2/d)` per level,
 which solves to O(n^(d/2)) leaves.
 
-**Section 4.2 (d/3).** For grounded orthants the simplification is
-strengthened: boxes spanning the cell in all but *two* dimensions are also
-eliminated, by absorbing their pairwise union — a staircase — into the
-integrand as a condition `x_j ≤ f(x_i)` with `f` a monotone step function.
+**Section 4.2 (d/3).** For orthants the simplification is strengthened:
+boxes spanning the cell in all but *two* dimensions are also eliminated, by
+absorbing their pairwise union — a staircase — into the integrand as a
+condition `x_j ≤ f(x_i)` / `x_j ≥ f(x_i)` with `f` a monotone step function
+(one condition per orientation class per axis pair; there are four classes,
+which are exactly the four monotone boundaries `f⁻, g⁻, f⁺, g⁺` of the
+paper's Section 4.1).
 The integrand becomes a "basic function" (sums of products of step-function
 densities and monotone step conditions), which Chan shows is closed under
 one-variable integration (Lemma 4.4) and can be periodically *compressed*
@@ -83,7 +96,8 @@ Validation is layered: randomized property tests for the step-function
 algebra; the symbolic integrator checked against exact grid enumeration;
 compression checked for integral preservation and on-grid breakpoints; both
 algorithms checked against O(2^n) inclusion–exclusion, against each other,
-with compression forced on/off, and on tie-heavy integer instances.
+with compression forced on/off, on tie-heavy integer instances, and — for
+the orthant module — on random mixed-orientation orthant unions in d = 3–5.
 Worst observed disagreement: ~4·10⁻¹⁴ relative.
 
 ## Performance snapshot
@@ -110,7 +124,7 @@ executable specification, not as the fast path.
 
 ```
 chan_hypervolume.py     Section-2 algorithm + hypervolume/union_volume API
-chan_orthant_dby3.py    Section-4.2 algorithm (grounded orthants) + API
+chan_orthant_dby3.py    Section-4.2 algorithm (arbitrary orthants) + API
 tests/                  pytest wrappers around both self-test suites
 benchmarks/             scaling experiments (node counts, wall time)
 paper/                  LaTeX/PDF: walkthrough + complexity analysis

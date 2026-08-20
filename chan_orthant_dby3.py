@@ -6,10 +6,12 @@ This module implements the algorithm of Section 4.2 of
     Timothy M. Chan, *Klee's Measure Problem Made Easy*, FOCS 2013,
     https://tmc.web.engr.illinois.edu/easyklee8_13.pdf
 
-specialized to *grounded orthants*: boxes of the form ``{x : x >= p}`` clipped
-to a domain box.  This is exactly the shape of the boxes in the hypervolume
-indicator problem (each solution point spans a box against the reference
-point), the special case the paper names explicitly.
+for *orthants of arbitrary orientation*: boxes with a single finite vertex,
+``{x : x_k >= v_k or x_k <= v_k per axis}``, clipped to a domain box.  The
+hypervolume indicator problem is the special case in which every orthant is
+*grounded* (all constraints point the same way): each solution point spans a
+box against the reference point.  The paper names this special case
+explicitly.
 
 The companion module ``chan_hypervolume.py`` implements the paper's simple
 Section-2 algorithm, which runs in O(n^(d/2)) time for arbitrary boxes and is
@@ -34,10 +36,14 @@ longer the constant 1 but a "basic function" (Definition 4.2)
 
 where each density ``h_i`` is a univariate step function and the predicate
 ``E`` is a conjunction of conditions ``x_j <= f(x_i)`` / ``x_j >= f(x_i)``
-with *monotone* step functions ``f``.  For a pair of axes (i, j), the union of
-the 2-sided orthants ``{x_i >= a, x_j >= b}`` is a staircase whose complement
-is ``{x_j < f(x_i)}`` for a single monotone-decreasing step function ``f`` --
-so absorbing them just multiplies one condition into every term.
+with *monotone* step functions ``f``.  For a pair of axes (i, j), 2-sided
+orthants come in four orientation classes; the union of each class is a
+staircase whose complement is a single monotone step condition (decreasing
+for the ``(>=,>=)`` and ``(<=,<=)`` classes, increasing for the mixed ones,
+with the sense of the inequality matching the x_j direction) -- so absorbing
+a class multiplies one condition into every term, and conditions of the same
+class merge by pointwise min/max.  These four classes are exactly the four
+monotone functions ``f^-, g^-, f^+, g^+`` of the paper's Section 4.1.
 
 Two symbolic operations make the recursion work:
 
@@ -79,7 +85,8 @@ values (``_ray_boundary``) instead of point evaluation.
 
 Public API
 ----------
-``hypervolume_dby3(points, reference)`` -- hypervolume indicator, exact.
+``hypervolume_dby3(points, reference)``       -- hypervolume indicator, exact.
+``orthant_union_volume(orthants, lo, hi)``    -- union of arbitrary orthants.
 
 Standard library only.  Run the file directly for its self-tests.
 """
@@ -93,7 +100,13 @@ import sys
 from bisect import bisect_left, bisect_right
 from typing import Dict, Iterable, List, Optional, Sequence, Tuple
 
-__all__ = ["hypervolume_dby3", "ChanOrthantMeasure", "Step", "Term"]
+__all__ = [
+    "hypervolume_dby3",
+    "orthant_union_volume",
+    "ChanOrthantMeasure",
+    "Step",
+    "Term",
+]
 
 INF = math.inf
 Point = Tuple[float, ...]
@@ -752,8 +765,13 @@ def compress_terms(
 
 
 class ChanOrthantMeasure:
-    """Measure of the complement of a union of grounded orthants ``{x >= p}``
-    inside a box domain, by Chan's Section-4.2 algorithm.
+    """Measure of the complement of a union of orthants of arbitrary
+    orientation inside a box domain, by Chan's Section-4.2 algorithm.
+
+    An orthant is given as ``(vertex, signs)`` with ``signs[k] = +1`` for the
+    constraint ``x_k >= vertex[k]`` and ``-1`` for ``x_k <= vertex[k]``; a
+    bare point is accepted as shorthand for the grounded orthant
+    ``{x >= p}`` (the hypervolume case).
 
     ``compress_every`` is the paper's "simplify only every ~log2(r^d) levels"
     knob (it throttles only the F~ compression; slab and staircase absorption
@@ -782,26 +800,39 @@ class ChanOrthantMeasure:
 
     # -- entry point -------------------------------------------------------- #
 
-    def complement_measure(
-        self, points: Sequence[Point], lo: Point, hi: Point
-    ) -> float:
+    def complement_measure(self, boxes: Sequence, lo: Point, hi: Point) -> float:
+        normalized: List[Tuple[Point, Tuple[int, ...]]] = []
+        for item in boxes:
+            if len(item) == 2 and isinstance(item[0], (tuple, list)):
+                vertex, signs = item
+            else:  # bare point: grounded orthant {x >= p}
+                vertex, signs = item, (1,) * self.dim
+            if len(vertex) != self.dim or len(signs) != self.dim:
+                raise ValueError("orthant dimension mismatch")
+            normalized.append(
+                (tuple(float(v) for v in vertex), tuple(int(s) for s in signs))
+            )
         self.node_count = 0
         self.term_high_water = 0
         self.compress_count = 0
-        n = max(2, len(points))
+        n = max(2, len(normalized))
         if self.compress_every is None:
             # every ~log2(r^d) levels with r = n^0.1, i.e. 0.1 * d * log2 n
             self._interval = max(1, round(0.1 * self.dim * math.log2(n)))
         else:
             self._interval = self.compress_every
         sys.setrecursionlimit(max(sys.getrecursionlimit(), 50_000))
-        return self._measure(list(points), [Term(1.0)], list(lo), list(hi), 0, 0)
+        return self._measure(normalized, [Term(1.0)], list(lo), list(hi), 0, 0)
+
+    def _active(self, vertex: Point, signs, k: int, lo, hi) -> bool:
+        """Does the orthant's k-constraint actually cut the cell?"""
+        return vertex[k] > lo[k] if signs[k] > 0 else vertex[k] < hi[k]
 
     # -- one recursion node ------------------------------------------------- #
 
     def _measure(
         self,
-        points: List[Point],
+        boxes: List[Tuple[Point, Tuple[int, ...]]],
         terms: List[Term],
         lo: List[float],
         hi: List[float],
@@ -814,24 +845,28 @@ class ChanOrthantMeasure:
         # Step 1 (simplify, cheap part): absorb boxes that span the cell on
         # all axes (cover it), all but one axis (slabs -> shrink the cell), or
         # all but two axes (2-sided orthants -> staircase conditions).
-        absorbed = self._absorb(points, terms, lo, hi)
+        absorbed = self._absorb(boxes, terms, lo, hi)
         if absorbed is None:
-            return 0.0  # some box covers the whole cell
-        points, terms, lo, hi = absorbed
+            return 0.0  # the cell is entirely covered
+        boxes, terms, lo, hi = absorbed
         terms = _prune_terms(terms, lambda a: (lo[a], hi[a]))
         if not terms:
             return 0.0
 
         # Base cases: no surviving boxes -> integrate F; few boxes ->
         # inclusion-exclusion over them (each intersection is a box).
-        if len(points) <= self.base_boxes:
+        if len(boxes) <= self.base_boxes:
             total = 0.0
-            for size in range(len(points) + 1):
-                for subset in itertools.combinations(points, size):
-                    corner = [
-                        max([lo[k]] + [p[k] for p in subset]) for k in range(self.dim)
-                    ]
-                    value = integrate_terms(terms, corner, hi)
+            for size in range(len(boxes) + 1):
+                for subset in itertools.combinations(boxes, size):
+                    sub_lo, sub_hi = list(lo), list(hi)
+                    for vertex, signs in subset:
+                        for k in range(self.dim):
+                            if signs[k] > 0:
+                                sub_lo[k] = max(sub_lo[k], vertex[k])
+                            else:
+                                sub_hi[k] = min(sub_hi[k], vertex[k])
+                    value = integrate_terms(terms, sub_lo, sub_hi)
                     total += value if size % 2 == 0 else -value
             return total
 
@@ -848,13 +883,20 @@ class ChanOrthantMeasure:
             self.use_compression
             and since_compress >= self._interval
             and _terms_complexity(terms)
-            > self.compress_factor * self.dim**2 * (len(points) + 2)
+            > self.compress_factor * self.dim**2 * (len(boxes) + 2)
         ):
             self.compress_count += 1
             grids = []
             for k in range(self.dim):
                 grids.append(
-                    sorted({lo[k], hi[k]} | {p[k] for p in points if p[k] > lo[k]})
+                    sorted(
+                        {lo[k], hi[k]}
+                        | {
+                            v[k]
+                            for v, s in boxes
+                            if self._active(v, s, k, lo, hi)
+                        }
+                    )
                 )
             terms = compress_terms(terms, grids, lo, hi)
             since_compress = 0
@@ -866,7 +908,7 @@ class ChanOrthantMeasure:
         # renumbering that puts the cut axis at position 1.
         for probe in range(self.dim):
             axis = (depth + probe) % self.dim
-            cuts = self._cut_candidates(points, lo, hi, axis, depth + probe)
+            cuts = self._cut_candidates(boxes, lo, hi, axis, depth + probe)
             if cuts:
                 depth += probe
                 break
@@ -882,90 +924,144 @@ class ChanOrthantMeasure:
         # their own (smaller) cells, so they must not share Term objects.
         right_terms = [t.clone() for t in terms]
         return self._measure(
-            points, terms, lo, left_hi, depth + 1, since_compress + 1
+            boxes, terms, lo, left_hi, depth + 1, since_compress + 1
         ) + self._measure(
-            points, right_terms, right_lo, hi, depth + 1, since_compress + 1
+            boxes, right_terms, right_lo, hi, depth + 1, since_compress + 1
         )
 
     # -- simplification: absorb low-complexity boxes ------------------------ #
 
-    def _absorb(self, points, terms, lo, hi):
+    def _absorb(self, boxes, terms, lo, hi):
         lo, hi = list(lo), list(hi)
+        dim = self.dim
         while True:
-            points = [p for p in points if all(p[k] < hi[k] for k in range(self.dim))]
+            # Drop orthants whose intersection with the cell has no interior:
+            # a >=-constraint at or above the ceiling (resp. a <=-constraint
+            # at or below the floor) empties the box within the cell.
+            live = []
+            for vertex, signs in boxes:
+                empty = any(
+                    (vertex[k] >= hi[k]) if signs[k] > 0 else (vertex[k] <= lo[k])
+                    for k in range(dim)
+                )
+                if not empty:
+                    live.append((vertex, signs))
+            boxes = live
             actives = [
-                [k for k in range(self.dim) if p[k] > lo[k]] for p in points
+                [k for k in range(dim) if self._active(v, s, k, lo, hi)]
+                for v, s in boxes
             ]
             if any(not act for act in actives):
                 return None  # a box covers the cell entirely
-            caps: Dict[int, float] = {}
-            for p, act in zip(points, actives):
-                if len(act) == 1:  # slab {x_i >= p_i}: complement is x_i < p_i
+            # Slabs (exactly one active constraint) are halfspaces; their
+            # complement chops the cell from one side.
+            shrunk = False
+            keep = []
+            for (vertex, signs), act in zip(boxes, actives):
+                if len(act) == 1:
                     i = act[0]
-                    caps[i] = min(caps.get(i, INF), p[i])
-            if not caps:
+                    if signs[i] > 0:  # {x_i >= v}: complement is x_i < v
+                        hi[i] = min(hi[i], vertex[i])
+                    else:  # {x_i <= v}: complement is x_i > v
+                        lo[i] = max(lo[i], vertex[i])
+                    shrunk = True
+                else:
+                    keep.append(((vertex, signs), act))
+            if any(hi[k] <= lo[k] for k in range(dim)):
+                return None  # opposing slabs covered the cell
+            boxes = [b for b, _ in keep]
+            if not shrunk:
+                actives = [act for _, act in keep]
                 break
-            for i, value in caps.items():
-                hi[i] = min(hi[i], value)
-            points = [p for p, act in zip(points, actives) if len(act) != 1]
             # shrinking the cell can create new covers/slabs: loop again
 
-        pairs: Dict[Tuple[int, int], List[Tuple[float, float]]] = {}
-        rest: List[Point] = []
-        for p, act in zip(points, actives):
+        # 2-sided orthants: absorb each orientation class of each axis pair
+        # as one monotone staircase condition on every term.
+        pairs: Dict[Tuple[int, int, int, int], List[Tuple[float, float]]] = {}
+        rest: List[Tuple[Point, Tuple[int, ...]]] = []
+        for (vertex, signs), act in zip(boxes, actives):
             if len(act) == 2:
                 i, j = act
-                pairs.setdefault((i, j), []).append((p[i], p[j]))
+                key = (i, j, signs[i], signs[j])
+                pairs.setdefault(key, []).append((vertex[i], vertex[j]))
             else:
-                rest.append(p)
+                rest.append((vertex, signs))
         if pairs:
             terms = [t.clone() for t in terms]
-            for (i, j), pts in pairs.items():
-                f = _staircase(pts)
+            for (i, j, si, sj), pts in pairs.items():
+                f, sense = _staircase(pts, si, sj)
                 for term in terms:
-                    term.add_cond(i, j, f, LE)
+                    term.add_cond(i, j, f, sense)
             terms = _merge_terms(terms)
         return rest, terms, lo, hi
 
     # -- cutting ------------------------------------------------------------ #
 
-    def _cut_candidates(self, points, lo, hi, axis, depth):
+    def _cut_candidates(self, boxes, lo, hi, axis, depth):
         d = self.dim
         pos = [((k - depth) % d) + 1 for k in range(d)]  # renumbered positions
         cuts: List[Tuple[float, float]] = []
-        for p in points:
-            if p[axis] <= lo[axis]:
+        for vertex, signs in boxes:
+            if not self._active(vertex, signs, axis, lo, hi):
                 continue
-            active = [k for k in range(d) if k != axis and p[k] > lo[k]]
+            active = [
+                k
+                for k in range(d)
+                if k != axis and self._active(vertex, signs, k, lo, hi)
+            ]
             if len(active) < 2:
                 continue
             weight = sum(
                 2.0 ** ((pos[axis] + pos[j] + pos[k]) / d)
                 for j, k in itertools.combinations(active, 2)
             )
-            cuts.append((p[axis], weight))
+            cuts.append((vertex[axis], weight))
         return cuts
 
 
-def _staircase(points: Sequence[Tuple[float, float]]) -> Step:
-    """Complement boundary of a union of quadrants {x_i >= a, x_j >= b}: the
-    monotone-decreasing step function f with f(t) = min{b : a <= t}, so the
-    complement is {x_j < f(x_i)} (up to measure zero).
+def _staircase(
+    points: Sequence[Tuple[float, float]], si: int, sj: int
+) -> Tuple[Step, str]:
+    """Complement boundary of a union of 2-sided orthants of one orientation
+    class in the (i, j)-plane.
+
+    Each point (a, b) is the vertex of the quadrant {x_i >=< a, x_j >=< b}
+    with directions given by the signs ``si``/``sj`` (+1 for >=, -1 for <=).
+    The complement of the union of one class is described by a single
+    monotone step condition (up to measure zero):
+
+        si  sj   covered iff                     complement        shape
+        +   +    x_j >= min{b : a <= x_i}        x_j <= f(x_i)     decreasing
+        -   -    x_j <= max{b : a >= x_i}        x_j >= f(x_i)     decreasing
+        +   -    x_j <= max{b : a <= x_i}        x_j >= f(x_i)     increasing
+        -   +    x_j >= min{b : a >= x_i}        x_j <= f(x_i)     increasing
+
+    Returns the step function and the condition sense (LE or GE).
     """
-    pts = sorted(points)
-    xs: List[float] = []
-    vs: List[float] = [INF]
-    best = INF
-    for a, b in pts:
-        new_best = min(best, b)
-        if new_best < best:
-            if xs and xs[-1] == a:
-                vs[-1] = new_best
-            else:
-                xs.append(a)
-                vs.append(new_best)
-            best = new_best
-    return Step(xs, vs)
+    use_min = sj > 0
+    agg = min if use_min else max
+    neutral = INF if use_min else -INF
+    sense = LE if use_min else GE
+
+    best_at: Dict[float, float] = {}
+    for a, b in points:
+        best_at[a] = agg(best_at[a], b) if a in best_at else b
+    xs = sorted(best_at)
+
+    if si > 0:  # boxes with a <= t qualify: prefix aggregation
+        vs = [neutral]
+        run = neutral
+        for a in xs:
+            run = agg(run, best_at[a])
+            vs.append(run)
+    else:  # boxes with a >= t qualify: suffix aggregation
+        rev = [neutral]
+        run = neutral
+        for a in reversed(xs):
+            run = agg(run, best_at[a])
+            rev.append(run)
+        vs = list(reversed(rev))
+    return Step(xs, vs), sense
 
 
 def _weighted_median(cuts: List[Tuple[float, float]]) -> float:
@@ -982,6 +1078,36 @@ def _weighted_median(cuts: List[Tuple[float, float]]) -> float:
 # --------------------------------------------------------------------------- #
 # Public API
 # --------------------------------------------------------------------------- #
+
+
+def orthant_union_volume(
+    orthants: Iterable[Tuple[Sequence[float], Sequence[int]]],
+    lo: Sequence[float],
+    hi: Sequence[float],
+    **solver_options,
+) -> float:
+    """Volume of the union of arbitrary-orientation orthants within the box
+    ``[lo, hi]``, by Chan's Section-4.2 algorithm (dimension >= 3).
+
+    Each orthant is a pair ``(vertex, signs)``: ``signs[k] = +1`` selects the
+    halfspace ``x_k >= vertex[k]`` and ``-1`` selects ``x_k <= vertex[k]``.
+    The hypervolume indicator is the special case with all signs ``+1`` and
+    ``hi`` the reference point (see ``hypervolume_dby3``).
+    """
+    lo = tuple(float(x) for x in lo)
+    hi = tuple(float(x) for x in hi)
+    dim = len(lo)
+    volume = 1.0
+    for a, b in zip(lo, hi):
+        if b <= a:
+            return 0.0
+        volume *= b - a
+    boxes = [
+        (tuple(float(v) for v in vertex), tuple(int(s) for s in signs))
+        for vertex, signs in orthants
+    ]
+    solver = ChanOrthantMeasure(dim, **solver_options)
+    return volume - solver.complement_measure(boxes, lo, hi)
 
 
 def hypervolume_dby3(
@@ -1220,6 +1346,74 @@ def _reference_hypervolume(points, reference) -> float:
     return total
 
 
+def _reference_orthant_union(orthants, lo, hi) -> float:
+    """O(2^n) inclusion-exclusion for arbitrary orthants; tests only."""
+    d = len(lo)
+    total = 0.0
+    for size in range(1, len(orthants) + 1):
+        for subset in itertools.combinations(orthants, size):
+            vol = 1.0
+            for k in range(d):
+                a, b = lo[k], hi[k]
+                for vertex, signs in subset:
+                    if signs[k] > 0:
+                        a = max(a, vertex[k])
+                    else:
+                        b = min(b, vertex[k])
+                vol *= max(0.0, b - a)
+            total += vol if size % 2 else -vol
+    return total
+
+
+def _test_staircase_classes(rng: random.Random) -> None:
+    for _ in range(400):
+        si, sj = rng.choice((1, -1)), rng.choice((1, -1))
+        pts = [
+            (rng.choice((0.2, 0.4, 0.6, 0.8)), rng.choice((0.2, 0.4, 0.6, 0.8)))
+            for _ in range(rng.randrange(1, 6))
+        ]
+        f, sense = _staircase(pts, si, sj)
+        for _ in range(20):
+            t, y = rng.random(), rng.random()  # continuous: ties a.s. avoided
+            covered = any(
+                (t >= a if si > 0 else t <= a) and (y >= b if sj > 0 else y <= b)
+                for a, b in pts
+            )
+            holds = y <= f(t) if sense == LE else y >= f(t)
+            assert holds == (not covered), (si, sj, pts, t, y, f.xs, f.vs)
+    print("  [ok ] staircase absorption, all four orientation classes")
+
+
+def _test_mixed_orthants(rng: random.Random) -> None:
+    lo3, hi3 = None, None  # silence linters
+    for d in (3, 4, 5):
+        lo = tuple(0.0 for _ in range(d))
+        hi = tuple(1.0 for _ in range(d))
+        cases = [(6, False), (10, False), (8, True)] if d < 5 else [(6, False), (6, True)]
+        for n, integer_grid in cases:
+            orthants = []
+            for _ in range(n):
+                if integer_grid:  # tie-heavy coordinates
+                    vertex = tuple(rng.randrange(1, 4) / 4.0 for _ in range(d))
+                else:
+                    vertex = tuple(rng.random() for _ in range(d))
+                signs = tuple(rng.choice((1, -1)) for _ in range(d))
+                orthants.append((vertex, signs))
+            got = orthant_union_volume(orthants, lo, hi)
+            want = _reference_orthant_union(orthants, lo, hi)
+            assert abs(got - want) < 1e-8 * max(1.0, want), (d, n, got, want)
+    # forced compression with mixed orientations
+    orthants = [
+        (tuple(rng.random() for _ in range(4)), tuple(rng.choice((1, -1)) for _ in range(4)))
+        for _ in range(8)
+    ]
+    lo, hi = (0.0,) * 4, (1.0,) * 4
+    got = orthant_union_volume(orthants, lo, hi, compress_every=3, compress_factor=0.0)
+    want = _reference_orthant_union(orthants, lo, hi)
+    assert abs(got - want) < 1e-8 * max(1.0, want), (got, want)
+    print("  [ok ] arbitrary-orientation orthants vs inclusion-exclusion (d=3..5)")
+
+
 def _test_full_algorithm(rng: random.Random) -> None:
     sizes = {3: (1, 4, 8, 12), 4: (4, 8, 10), 5: (6,)}
     for d, ns in sizes.items():
@@ -1288,9 +1482,11 @@ def _self_test() -> None:
     _test_less_than(rng)
     _test_integration(rng)
     _test_compression(rng)
+    _test_staircase_classes(rng)
     _test_full_algorithm(rng)
     _test_against_section2(rng)
     _test_forced_compression(rng)
+    _test_mixed_orthants(rng)
     print("All self-tests passed.")
 
 

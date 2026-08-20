@@ -42,6 +42,11 @@ def test_dby3_end_to_end():
     cod._test_against_section2(rng)
 
 
+def test_mixed_orientation_orthants():
+    cod._test_staircase_classes(random.Random(7))
+    cod._test_mixed_orthants(random.Random(8))
+
+
 def _reference_union(boxes):
     """O(2^n) inclusion-exclusion, independent of both modules' internals."""
     total = 0.0
