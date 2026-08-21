@@ -29,7 +29,7 @@ from chan_orthant_dby3 import hypervolume_dby3      # reference, d >= 3
 points = [(0.2, 0.7, 0.3), (0.5, 0.2, 0.6), (0.8, 0.4, 0.1)]
 ref    = (1.0, 1.0, 1.0)     # minimization by default
 
-hv  = hypervolume(points, ref)         # -> 0.579...
+hv  = hypervolume(points, ref)         # -> 0.31
 hv3 = hypervolume_dby3(points, ref)    # identical value
 ```
 
