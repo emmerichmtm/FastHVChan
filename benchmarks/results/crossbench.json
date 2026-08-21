@@ -1,0 +1,1531 @@
+{
+ "dims": [
+  3,
+  4,
+  5,
+  7,
+  9,
+  10
+ ],
+ "records": [
+  {
+   "dataset": "spherical",
+   "dim": 3,
+   "hv": 1.0640825879175329,
+   "n": 100,
+   "reps": 2,
+   "seconds": 0.027072,
+   "status": "ok",
+   "variant": "py-sec2"
+  },
+  {
+   "dataset": "spherical",
+   "dim": 3,
+   "hv": 1.0640825879175329,
+   "n": 100,
+   "reps": 3,
+   "seconds": 0.021977933,
+   "status": "ok",
+   "variant": "py-sec2-nopre"
+  },
+  {
+   "dataset": "spherical",
+   "dim": 3,
+   "hv": 1.0640825879175329,
+   "n": 100,
+   "reps": 1,
+   "seconds": 0.0525133,
+   "status": "ok",
+   "variant": "py-dby3"
+  },
+  {
+   "dataset": "spherical",
+   "dim": 3,
+   "hv": 1.0640825879175329,
+   "n": 100,
+   "reps": 1,
+   "seconds": 0.0548125,
+   "status": "ok",
+   "variant": "py-dby3-nocomp"
+  },
+  {
+   "dataset": "spherical",
+   "dim": 3,
+   "hv": 1.0640825879175329,
+   "n": 100,
+   "nodes": 447,
+   "reps": 73,
+   "seconds": 0.000684932,
+   "status": "ok",
+   "variant": "c-sec2"
+  },
+  {
+   "dataset": "spherical",
+   "dim": 3,
+   "hv": 1.0640825879175329,
+   "n": 100,
+   "nodes": 131,
+   "reps": 73,
+   "seconds": 0.000767123,
+   "status": "ok",
+   "variant": "c-sec2-bc8"
+  },
+  {
+   "dataset": "spherical",
+   "dim": 3,
+   "hv": 1.0831643669937465,
+   "n": 200,
+   "reps": 1,
+   "seconds": 0.0676612,
+   "status": "ok",
+   "variant": "py-sec2"
+  },
+  {
+   "dataset": "spherical",
+   "dim": 3,
+   "hv": 1.0831643669937465,
+   "n": 200,
+   "reps": 1,
+   "seconds": 0.0526523,
+   "status": "ok",
+   "variant": "py-sec2-nopre"
+  },
+  {
+   "dataset": "spherical",
+   "dim": 3,
+   "hv": 1.0831643669937465,
+   "n": 200,
+   "reps": 1,
+   "seconds": 0.1278274,
+   "status": "ok",
+   "variant": "py-dby3"
+  },
+  {
+   "dataset": "spherical",
+   "dim": 3,
+   "hv": 1.0831643669937465,
+   "n": 200,
+   "reps": 1,
+   "seconds": 0.1749659,
+   "status": "ok",
+   "variant": "py-dby3-nocomp"
+  },
+  {
+   "dataset": "spherical",
+   "dim": 3,
+   "hv": 1.0831643669937465,
+   "n": 200,
+   "nodes": 943,
+   "reps": 35,
+   "seconds": 0.001428571,
+   "status": "ok",
+   "variant": "c-sec2"
+  },
+  {
+   "dataset": "spherical",
+   "dim": 3,
+   "hv": 1.0831643669937465,
+   "n": 200,
+   "nodes": 305,
+   "reps": 37,
+   "seconds": 0.001459459,
+   "status": "ok",
+   "variant": "c-sec2-bc8"
+  },
+  {
+   "dataset": "spherical",
+   "dim": 4,
+   "hv": 1.238986257450259,
+   "n": 60,
+   "reps": 1,
+   "seconds": 0.0610883,
+   "status": "ok",
+   "variant": "py-sec2"
+  },
+  {
+   "dataset": "spherical",
+   "dim": 4,
+   "hv": 1.238986257450259,
+   "n": 60,
+   "reps": 1,
+   "seconds": 0.0559096,
+   "status": "ok",
+   "variant": "py-sec2-nopre"
+  },
+  {
+   "dataset": "spherical",
+   "dim": 4,
+   "hv": 1.238986257450259,
+   "n": 60,
+   "reps": 1,
+   "seconds": 0.308398,
+   "status": "ok",
+   "variant": "py-dby3"
+  },
+  {
+   "dataset": "spherical",
+   "dim": 4,
+   "hv": 1.238986257450259,
+   "n": 60,
+   "reps": 1,
+   "seconds": 0.2764179,
+   "status": "ok",
+   "variant": "py-dby3-nocomp"
+  },
+  {
+   "dataset": "spherical",
+   "dim": 4,
+   "hv": 1.238986257450259,
+   "n": 60,
+   "nodes": 1149,
+   "reps": 42,
+   "seconds": 0.001357143,
+   "status": "ok",
+   "variant": "c-sec2"
+  },
+  {
+   "dataset": "spherical",
+   "dim": 4,
+   "hv": 1.238986257450259,
+   "n": 60,
+   "nodes": 243,
+   "reps": 61,
+   "seconds": 0.001098361,
+   "status": "ok",
+   "variant": "c-sec2-bc8"
+  },
+  {
+   "dataset": "spherical",
+   "dim": 4,
+   "hv": 1.3442818720516374,
+   "n": 120,
+   "reps": 1,
+   "seconds": 0.1764304,
+   "status": "ok",
+   "variant": "py-sec2"
+  },
+  {
+   "dataset": "spherical",
+   "dim": 4,
+   "hv": 1.3442818720516374,
+   "n": 120,
+   "reps": 1,
+   "seconds": 0.1385043,
+   "status": "ok",
+   "variant": "py-sec2-nopre"
+  },
+  {
+   "dataset": "spherical",
+   "dim": 4,
+   "hv": 1.3442818720516374,
+   "n": 120,
+   "reps": 1,
+   "seconds": 0.7782297,
+   "status": "ok",
+   "variant": "py-dby3"
+  },
+  {
+   "dataset": "spherical",
+   "dim": 4,
+   "hv": 1.3442818720516374,
+   "n": 120,
+   "reps": 1,
+   "seconds": 0.6995579,
+   "status": "ok",
+   "variant": "py-dby3-nocomp"
+  },
+  {
+   "dataset": "spherical",
+   "dim": 4,
+   "hv": 1.3442818720516374,
+   "n": 120,
+   "nodes": 3139,
+   "reps": 12,
+   "seconds": 0.004333333,
+   "status": "ok",
+   "variant": "c-sec2"
+  },
+  {
+   "dataset": "spherical",
+   "dim": 4,
+   "hv": 1.3442818720516374,
+   "n": 120,
+   "nodes": 745,
+   "reps": 13,
+   "seconds": 0.004076923,
+   "status": "ok",
+   "variant": "c-sec2-bc8"
+  },
+  {
+   "dataset": "spherical",
+   "dim": 5,
+   "hv": 1.3699894308985265,
+   "n": 40,
+   "reps": 1,
+   "seconds": 0.0946843,
+   "status": "ok",
+   "variant": "py-sec2"
+  },
+  {
+   "dataset": "spherical",
+   "dim": 5,
+   "hv": 1.3699894308985265,
+   "n": 40,
+   "reps": 1,
+   "seconds": 0.0885824,
+   "status": "ok",
+   "variant": "py-sec2-nopre"
+  },
+  {
+   "dataset": "spherical",
+   "dim": 5,
+   "hv": 1.3699894308985265,
+   "n": 40,
+   "reps": 1,
+   "seconds": 0.5032543,
+   "status": "ok",
+   "variant": "py-dby3"
+  },
+  {
+   "dataset": "spherical",
+   "dim": 5,
+   "hv": 1.3699894308985265,
+   "n": 40,
+   "reps": 1,
+   "seconds": 0.4197109,
+   "status": "ok",
+   "variant": "py-dby3-nocomp"
+  },
+  {
+   "dataset": "spherical",
+   "dim": 5,
+   "hv": 1.3699894308985265,
+   "n": 40,
+   "nodes": 2463,
+   "reps": 26,
+   "seconds": 0.002115385,
+   "status": "ok",
+   "variant": "c-sec2"
+  },
+  {
+   "dataset": "spherical",
+   "dim": 5,
+   "hv": 1.3699894308985265,
+   "n": 40,
+   "nodes": 341,
+   "reps": 44,
+   "seconds": 0.001136364,
+   "status": "ok",
+   "variant": "c-sec2-bc8"
+  },
+  {
+   "dataset": "spherical",
+   "dim": 5,
+   "hv": 1.4784994096301598,
+   "n": 80,
+   "reps": 1,
+   "seconds": 0.2258635,
+   "status": "ok",
+   "variant": "py-sec2"
+  },
+  {
+   "dataset": "spherical",
+   "dim": 5,
+   "hv": 1.47849940963016,
+   "n": 80,
+   "reps": 1,
+   "seconds": 0.2331461,
+   "status": "ok",
+   "variant": "py-sec2-nopre"
+  },
+  {
+   "dataset": "spherical",
+   "dim": 5,
+   "hv": 1.4784994096301598,
+   "n": 80,
+   "reps": 1,
+   "seconds": 1.7799555,
+   "status": "ok",
+   "variant": "py-dby3"
+  },
+  {
+   "dataset": "spherical",
+   "dim": 5,
+   "hv": 1.4784994096301598,
+   "n": 80,
+   "reps": 1,
+   "seconds": 1.7780917,
+   "status": "ok",
+   "variant": "py-dby3-nocomp"
+  },
+  {
+   "dataset": "spherical",
+   "dim": 5,
+   "hv": 1.4784994096301598,
+   "n": 80,
+   "nodes": 9017,
+   "reps": 8,
+   "seconds": 0.007125,
+   "status": "ok",
+   "variant": "c-sec2"
+  },
+  {
+   "dataset": "spherical",
+   "dim": 5,
+   "hv": 1.4784994096301598,
+   "n": 80,
+   "nodes": 1311,
+   "reps": 11,
+   "seconds": 0.004545455,
+   "status": "ok",
+   "variant": "c-sec2-bc8"
+  },
+  {
+   "dataset": "spherical",
+   "dim": 7,
+   "hv": 1.6738102258217873,
+   "n": 25,
+   "reps": 1,
+   "seconds": 0.2171377,
+   "status": "ok",
+   "variant": "py-sec2"
+  },
+  {
+   "dataset": "spherical",
+   "dim": 7,
+   "hv": 1.6738102258217873,
+   "n": 25,
+   "reps": 1,
+   "seconds": 0.1998644,
+   "status": "ok",
+   "variant": "py-sec2-nopre"
+  },
+  {
+   "dataset": "spherical",
+   "dim": 7,
+   "hv": 1.6738102258217875,
+   "n": 25,
+   "reps": 1,
+   "seconds": 1.3842692,
+   "status": "ok",
+   "variant": "py-dby3"
+  },
+  {
+   "dataset": "spherical",
+   "dim": 7,
+   "hv": 1.6738102258217875,
+   "n": 25,
+   "reps": 1,
+   "seconds": 1.3676805,
+   "status": "ok",
+   "variant": "py-dby3-nocomp"
+  },
+  {
+   "dataset": "spherical",
+   "dim": 7,
+   "hv": 1.6738102258217873,
+   "n": 25,
+   "nodes": 7751,
+   "reps": 6,
+   "seconds": 0.008666667,
+   "status": "ok",
+   "variant": "c-sec2"
+  },
+  {
+   "dataset": "spherical",
+   "dim": 7,
+   "hv": 1.673810225821787,
+   "n": 25,
+   "nodes": 423,
+   "reps": 32,
+   "seconds": 0.00175,
+   "status": "ok",
+   "variant": "c-sec2-bc8"
+  },
+  {
+   "dataset": "spherical",
+   "dim": 7,
+   "hv": 2.0226446657485093,
+   "n": 50,
+   "reps": 1,
+   "seconds": 1.6825537,
+   "status": "ok",
+   "variant": "py-sec2"
+  },
+  {
+   "dataset": "spherical",
+   "dim": 7,
+   "hv": 2.0226446657485093,
+   "n": 50,
+   "reps": 1,
+   "seconds": 1.7156576,
+   "status": "ok",
+   "variant": "py-sec2-nopre"
+  },
+  {
+   "dataset": "spherical",
+   "dim": 7,
+   "hv": 2.0226446657485093,
+   "n": 50,
+   "reps": 1,
+   "seconds": 11.0747764,
+   "status": "ok",
+   "variant": "py-dby3"
+  },
+  {
+   "dataset": "spherical",
+   "dim": 7,
+   "hv": 2.0226446657485093,
+   "n": 50,
+   "reps": 1,
+   "seconds": 11.5591528,
+   "status": "ok",
+   "variant": "py-dby3-nocomp"
+  },
+  {
+   "dataset": "spherical",
+   "dim": 7,
+   "hv": 2.0226446657485093,
+   "n": 50,
+   "nodes": 57093,
+   "reps": 1,
+   "seconds": 0.051,
+   "status": "ok",
+   "variant": "c-sec2"
+  },
+  {
+   "dataset": "spherical",
+   "dim": 7,
+   "hv": 2.0226446657485093,
+   "n": 50,
+   "nodes": 4459,
+   "reps": 3,
+   "seconds": 0.017333333,
+   "status": "ok",
+   "variant": "c-sec2-bc8"
+  },
+  {
+   "dataset": "spherical",
+   "dim": 9,
+   "hv": 1.9323892963533362,
+   "n": 20,
+   "reps": 1,
+   "seconds": 0.9811182,
+   "status": "ok",
+   "variant": "py-sec2"
+  },
+  {
+   "dataset": "spherical",
+   "dim": 9,
+   "hv": 1.9323892963533362,
+   "n": 20,
+   "reps": 1,
+   "seconds": 0.900979,
+   "status": "ok",
+   "variant": "py-sec2-nopre"
+  },
+  {
+   "dataset": "spherical",
+   "dim": 9,
+   "hv": 1.9323892963533358,
+   "n": 20,
+   "reps": 1,
+   "seconds": 5.0098583,
+   "status": "ok",
+   "variant": "py-dby3"
+  },
+  {
+   "dataset": "spherical",
+   "dim": 9,
+   "hv": 1.9323892963533358,
+   "n": 20,
+   "reps": 1,
+   "seconds": 5.3666513,
+   "status": "ok",
+   "variant": "py-dby3-nocomp"
+  },
+  {
+   "dataset": "spherical",
+   "dim": 9,
+   "hv": 1.9323892963533362,
+   "n": 20,
+   "nodes": 28213,
+   "reps": 2,
+   "seconds": 0.0315,
+   "status": "ok",
+   "variant": "c-sec2"
+  },
+  {
+   "dataset": "spherical",
+   "dim": 9,
+   "hv": 1.9323892963533358,
+   "n": 20,
+   "nodes": 779,
+   "reps": 10,
+   "seconds": 0.0055,
+   "status": "ok",
+   "variant": "c-sec2-bc8"
+  },
+  {
+   "dataset": "spherical",
+   "dim": 9,
+   "hv": 2.2508160751745026,
+   "n": 40,
+   "reps": 1,
+   "seconds": 12.3393694,
+   "status": "ok",
+   "variant": "py-sec2"
+  },
+  {
+   "dataset": "spherical",
+   "dim": 9,
+   "hv": 2.2508160751745026,
+   "n": 40,
+   "reps": 1,
+   "seconds": 13.5634561,
+   "status": "ok",
+   "variant": "py-sec2-nopre"
+  },
+  {
+   "dataset": "spherical",
+   "dim": 9,
+   "hv": 2.2508160751745026,
+   "n": 40,
+   "reps": 1,
+   "seconds": 82.3503679,
+   "status": "ok",
+   "variant": "py-dby3"
+  },
+  {
+   "dataset": "spherical",
+   "dim": 9,
+   "hv": 2.2508160751745026,
+   "n": 40,
+   "reps": 1,
+   "seconds": 78.4047924,
+   "status": "ok",
+   "variant": "py-dby3-nocomp"
+  },
+  {
+   "dataset": "spherical",
+   "dim": 9,
+   "hv": 2.2508160751745026,
+   "n": 40,
+   "nodes": 346423,
+   "reps": 1,
+   "seconds": 0.394,
+   "status": "ok",
+   "variant": "c-sec2"
+  },
+  {
+   "dataset": "spherical",
+   "dim": 9,
+   "hv": 2.2508160751745026,
+   "n": 40,
+   "nodes": 14623,
+   "reps": 1,
+   "seconds": 0.073,
+   "status": "ok",
+   "variant": "c-sec2-bc8"
+  },
+  {
+   "dataset": "spherical",
+   "dim": 10,
+   "hv": 2.1221375945360066,
+   "n": 20,
+   "reps": 1,
+   "seconds": 2.4268371,
+   "status": "ok",
+   "variant": "py-sec2"
+  },
+  {
+   "dataset": "spherical",
+   "dim": 10,
+   "hv": 2.1221375945360066,
+   "n": 20,
+   "reps": 1,
+   "seconds": 2.3374657,
+   "status": "ok",
+   "variant": "py-sec2-nopre"
+  },
+  {
+   "dataset": "spherical",
+   "dim": 10,
+   "hv": 2.1221375945360066,
+   "n": 20,
+   "reps": 1,
+   "seconds": 11.6273088,
+   "status": "ok",
+   "variant": "py-dby3"
+  },
+  {
+   "dataset": "spherical",
+   "dim": 10,
+   "hv": 2.1221375945360066,
+   "n": 20,
+   "reps": 1,
+   "seconds": 11.106812,
+   "status": "ok",
+   "variant": "py-dby3-nocomp"
+  },
+  {
+   "dataset": "spherical",
+   "dim": 10,
+   "hv": 2.1221375945360066,
+   "n": 20,
+   "nodes": 65613,
+   "reps": 1,
+   "seconds": 0.075,
+   "status": "ok",
+   "variant": "c-sec2"
+  },
+  {
+   "dataset": "spherical",
+   "dim": 10,
+   "hv": 2.122137594536006,
+   "n": 20,
+   "nodes": 1581,
+   "reps": 6,
+   "seconds": 0.0085,
+   "status": "ok",
+   "variant": "c-sec2-bc8"
+  },
+  {
+   "dataset": "spherical",
+   "dim": 10,
+   "hv": 2.51498386113047,
+   "n": 40,
+   "reps": 1,
+   "seconds": 34.2609938,
+   "status": "ok",
+   "variant": "py-sec2"
+  },
+  {
+   "dataset": "spherical",
+   "dim": 10,
+   "hv": 2.51498386113047,
+   "n": 40,
+   "reps": 1,
+   "seconds": 34.133154,
+   "status": "ok",
+   "variant": "py-sec2-nopre"
+  },
+  {
+   "dataset": "spherical",
+   "dim": 10,
+   "n": 40,
+   "status": "timeout",
+   "variant": "py-dby3"
+  },
+  {
+   "dataset": "spherical",
+   "dim": 10,
+   "n": 40,
+   "status": "timeout",
+   "variant": "py-dby3-nocomp"
+  },
+  {
+   "dataset": "spherical",
+   "dim": 10,
+   "hv": 2.51498386113047,
+   "n": 40,
+   "nodes": 884141,
+   "reps": 1,
+   "seconds": 1.217,
+   "status": "ok",
+   "variant": "c-sec2"
+  },
+  {
+   "dataset": "spherical",
+   "dim": 10,
+   "hv": 2.51498386113047,
+   "n": 40,
+   "nodes": 30971,
+   "reps": 1,
+   "seconds": 0.199,
+   "status": "ok",
+   "variant": "c-sec2-bc8"
+  },
+  {
+   "dataset": "cliff",
+   "dim": 3,
+   "hv": 0.7464512369646668,
+   "n": 100,
+   "reps": 4,
+   "seconds": 0.01433375,
+   "status": "ok",
+   "variant": "py-sec2"
+  },
+  {
+   "dataset": "cliff",
+   "dim": 3,
+   "hv": 0.7464512369646668,
+   "n": 100,
+   "reps": 5,
+   "seconds": 0.01132062,
+   "status": "ok",
+   "variant": "py-sec2-nopre"
+  },
+  {
+   "dataset": "cliff",
+   "dim": 3,
+   "hv": 0.7464512369646665,
+   "n": 100,
+   "reps": 2,
+   "seconds": 0.02884575,
+   "status": "ok",
+   "variant": "py-dby3"
+  },
+  {
+   "dataset": "cliff",
+   "dim": 3,
+   "hv": 0.7464512369646665,
+   "n": 100,
+   "reps": 2,
+   "seconds": 0.03255935,
+   "status": "ok",
+   "variant": "py-dby3-nocomp"
+  },
+  {
+   "dataset": "cliff",
+   "dim": 3,
+   "hv": 0.7464512369646668,
+   "n": 100,
+   "nodes": 417,
+   "reps": 183,
+   "seconds": 0.000284153,
+   "status": "ok",
+   "variant": "c-sec2"
+  },
+  {
+   "dataset": "cliff",
+   "dim": 3,
+   "hv": 0.7464512369646668,
+   "n": 100,
+   "nodes": 105,
+   "reps": 200,
+   "seconds": 0.000245,
+   "status": "ok",
+   "variant": "c-sec2-bc8"
+  },
+  {
+   "dataset": "cliff",
+   "dim": 3,
+   "hv": 0.7518806773963644,
+   "n": 200,
+   "reps": 2,
+   "seconds": 0.03697845,
+   "status": "ok",
+   "variant": "py-sec2"
+  },
+  {
+   "dataset": "cliff",
+   "dim": 3,
+   "hv": 0.7518806773963644,
+   "n": 200,
+   "reps": 2,
+   "seconds": 0.0278521,
+   "status": "ok",
+   "variant": "py-sec2-nopre"
+  },
+  {
+   "dataset": "cliff",
+   "dim": 3,
+   "hv": 0.7518806773963643,
+   "n": 200,
+   "reps": 1,
+   "seconds": 0.063788,
+   "status": "ok",
+   "variant": "py-dby3"
+  },
+  {
+   "dataset": "cliff",
+   "dim": 3,
+   "hv": 0.7518806773963643,
+   "n": 200,
+   "reps": 1,
+   "seconds": 0.0608657,
+   "status": "ok",
+   "variant": "py-dby3-nocomp"
+  },
+  {
+   "dataset": "cliff",
+   "dim": 3,
+   "hv": 0.7518806773963644,
+   "n": 200,
+   "nodes": 889,
+   "reps": 51,
+   "seconds": 0.001098039,
+   "status": "ok",
+   "variant": "c-sec2"
+  },
+  {
+   "dataset": "cliff",
+   "dim": 3,
+   "hv": 0.7518806773963643,
+   "n": 200,
+   "nodes": 277,
+   "reps": 58,
+   "seconds": 0.000931034,
+   "status": "ok",
+   "variant": "c-sec2-bc8"
+  },
+  {
+   "dataset": "cliff",
+   "dim": 4,
+   "hv": 0.7552109173468242,
+   "n": 60,
+   "reps": 4,
+   "seconds": 0.01608625,
+   "status": "ok",
+   "variant": "py-sec2"
+  },
+  {
+   "dataset": "cliff",
+   "dim": 4,
+   "hv": 0.7552109173468242,
+   "n": 60,
+   "reps": 4,
+   "seconds": 0.0156463,
+   "status": "ok",
+   "variant": "py-sec2-nopre"
+  },
+  {
+   "dataset": "cliff",
+   "dim": 4,
+   "hv": 0.7552109173468244,
+   "n": 60,
+   "reps": 1,
+   "seconds": 0.0873509,
+   "status": "ok",
+   "variant": "py-dby3"
+  },
+  {
+   "dataset": "cliff",
+   "dim": 4,
+   "hv": 0.7552109173468244,
+   "n": 60,
+   "reps": 1,
+   "seconds": 0.085191,
+   "status": "ok",
+   "variant": "py-dby3-nocomp"
+  },
+  {
+   "dataset": "cliff",
+   "dim": 4,
+   "hv": 0.7552109173468242,
+   "n": 60,
+   "nodes": 645,
+   "reps": 110,
+   "seconds": 0.000463636,
+   "status": "ok",
+   "variant": "c-sec2"
+  },
+  {
+   "dataset": "cliff",
+   "dim": 4,
+   "hv": 0.7552109173468244,
+   "n": 60,
+   "nodes": 127,
+   "reps": 159,
+   "seconds": 0.000352201,
+   "status": "ok",
+   "variant": "c-sec2-bc8"
+  },
+  {
+   "dataset": "cliff",
+   "dim": 4,
+   "hv": 0.8018669882951817,
+   "n": 120,
+   "reps": 2,
+   "seconds": 0.0487586,
+   "status": "ok",
+   "variant": "py-sec2"
+  },
+  {
+   "dataset": "cliff",
+   "dim": 4,
+   "hv": 0.8018669882951817,
+   "n": 120,
+   "reps": 1,
+   "seconds": 0.0544795,
+   "status": "ok",
+   "variant": "py-sec2-nopre"
+  },
+  {
+   "dataset": "cliff",
+   "dim": 4,
+   "hv": 0.8018669882951817,
+   "n": 120,
+   "reps": 1,
+   "seconds": 0.2069959,
+   "status": "ok",
+   "variant": "py-dby3"
+  },
+  {
+   "dataset": "cliff",
+   "dim": 4,
+   "hv": 0.8018669882951817,
+   "n": 120,
+   "reps": 1,
+   "seconds": 0.2293178,
+   "status": "ok",
+   "variant": "py-dby3-nocomp"
+  },
+  {
+   "dataset": "cliff",
+   "dim": 4,
+   "hv": 0.8018669882951817,
+   "n": 120,
+   "nodes": 1779,
+   "reps": 37,
+   "seconds": 0.001378378,
+   "status": "ok",
+   "variant": "c-sec2"
+  },
+  {
+   "dataset": "cliff",
+   "dim": 4,
+   "hv": 0.8018669882951817,
+   "n": 120,
+   "nodes": 377,
+   "reps": 42,
+   "seconds": 0.001309524,
+   "status": "ok",
+   "variant": "c-sec2-bc8"
+  },
+  {
+   "dataset": "cliff",
+   "dim": 5,
+   "hv": 0.6126626406398663,
+   "n": 40,
+   "reps": 2,
+   "seconds": 0.02886445,
+   "status": "ok",
+   "variant": "py-sec2"
+  },
+  {
+   "dataset": "cliff",
+   "dim": 5,
+   "hv": 0.6126626406398663,
+   "n": 40,
+   "reps": 2,
+   "seconds": 0.03097775,
+   "status": "ok",
+   "variant": "py-sec2-nopre"
+  },
+  {
+   "dataset": "cliff",
+   "dim": 5,
+   "hv": 0.6126626406398663,
+   "n": 40,
+   "reps": 1,
+   "seconds": 0.2342463,
+   "status": "ok",
+   "variant": "py-dby3"
+  },
+  {
+   "dataset": "cliff",
+   "dim": 5,
+   "hv": 0.6126626406398663,
+   "n": 40,
+   "reps": 1,
+   "seconds": 0.2453428,
+   "status": "ok",
+   "variant": "py-dby3-nocomp"
+  },
+  {
+   "dataset": "cliff",
+   "dim": 5,
+   "hv": 0.6126626406398663,
+   "n": 40,
+   "nodes": 1283,
+   "reps": 52,
+   "seconds": 0.001096154,
+   "status": "ok",
+   "variant": "c-sec2"
+  },
+  {
+   "dataset": "cliff",
+   "dim": 5,
+   "hv": 0.6126626406398665,
+   "n": 40,
+   "nodes": 175,
+   "reps": 95,
+   "seconds": 0.000568421,
+   "status": "ok",
+   "variant": "c-sec2-bc8"
+  },
+  {
+   "dataset": "cliff",
+   "dim": 5,
+   "hv": 0.7546007382234725,
+   "n": 80,
+   "reps": 1,
+   "seconds": 0.1000538,
+   "status": "ok",
+   "variant": "py-sec2"
+  },
+  {
+   "dataset": "cliff",
+   "dim": 5,
+   "hv": 0.7546007382234725,
+   "n": 80,
+   "reps": 1,
+   "seconds": 0.0848644,
+   "status": "ok",
+   "variant": "py-sec2-nopre"
+  },
+  {
+   "dataset": "cliff",
+   "dim": 5,
+   "hv": 0.7546007382234725,
+   "n": 80,
+   "reps": 1,
+   "seconds": 0.544647,
+   "status": "ok",
+   "variant": "py-dby3"
+  },
+  {
+   "dataset": "cliff",
+   "dim": 5,
+   "hv": 0.7546007382234725,
+   "n": 80,
+   "reps": 1,
+   "seconds": 0.5331964,
+   "status": "ok",
+   "variant": "py-dby3-nocomp"
+  },
+  {
+   "dataset": "cliff",
+   "dim": 5,
+   "hv": 0.7546007382234723,
+   "n": 80,
+   "nodes": 3567,
+   "reps": 20,
+   "seconds": 0.0028,
+   "status": "ok",
+   "variant": "c-sec2"
+  },
+  {
+   "dataset": "cliff",
+   "dim": 5,
+   "hv": 0.7546007382234723,
+   "n": 80,
+   "nodes": 497,
+   "reps": 26,
+   "seconds": 0.001961538,
+   "status": "ok",
+   "variant": "c-sec2-bc8"
+  },
+  {
+   "dataset": "cliff",
+   "dim": 7,
+   "hv": 0.4153722440915333,
+   "n": 25,
+   "reps": 1,
+   "seconds": 0.1240491,
+   "status": "ok",
+   "variant": "py-sec2"
+  },
+  {
+   "dataset": "cliff",
+   "dim": 7,
+   "hv": 0.4153722440915333,
+   "n": 25,
+   "reps": 1,
+   "seconds": 0.1185976,
+   "status": "ok",
+   "variant": "py-sec2-nopre"
+  },
+  {
+   "dataset": "cliff",
+   "dim": 7,
+   "hv": 0.4153722440915333,
+   "n": 25,
+   "reps": 1,
+   "seconds": 0.8640239,
+   "status": "ok",
+   "variant": "py-dby3"
+  },
+  {
+   "dataset": "cliff",
+   "dim": 7,
+   "hv": 0.4153722440915333,
+   "n": 25,
+   "reps": 1,
+   "seconds": 0.8574441,
+   "status": "ok",
+   "variant": "py-dby3-nocomp"
+  },
+  {
+   "dataset": "cliff",
+   "dim": 7,
+   "hv": 0.4153722440915333,
+   "n": 25,
+   "nodes": 4647,
+   "reps": 12,
+   "seconds": 0.004833333,
+   "status": "ok",
+   "variant": "c-sec2"
+  },
+  {
+   "dataset": "cliff",
+   "dim": 7,
+   "hv": 0.4153722440915333,
+   "n": 25,
+   "nodes": 277,
+   "reps": 37,
+   "seconds": 0.001378378,
+   "status": "ok",
+   "variant": "c-sec2-bc8"
+  },
+  {
+   "dataset": "cliff",
+   "dim": 7,
+   "hv": 0.6093258288619419,
+   "n": 50,
+   "reps": 1,
+   "seconds": 0.5270473,
+   "status": "ok",
+   "variant": "py-sec2"
+  },
+  {
+   "dataset": "cliff",
+   "dim": 7,
+   "hv": 0.6093258288619419,
+   "n": 50,
+   "reps": 1,
+   "seconds": 0.5414906,
+   "status": "ok",
+   "variant": "py-sec2-nopre"
+  },
+  {
+   "dataset": "cliff",
+   "dim": 7,
+   "hv": 0.6093258288619419,
+   "n": 50,
+   "reps": 1,
+   "seconds": 4.5075444,
+   "status": "ok",
+   "variant": "py-dby3"
+  },
+  {
+   "dataset": "cliff",
+   "dim": 7,
+   "hv": 0.6093258288619419,
+   "n": 50,
+   "reps": 1,
+   "seconds": 4.3427851,
+   "status": "ok",
+   "variant": "py-dby3-nocomp"
+  },
+  {
+   "dataset": "cliff",
+   "dim": 7,
+   "hv": 0.6093258288619419,
+   "n": 50,
+   "nodes": 19957,
+   "reps": 3,
+   "seconds": 0.019333333,
+   "status": "ok",
+   "variant": "c-sec2"
+  },
+  {
+   "dataset": "cliff",
+   "dim": 7,
+   "hv": 0.6093258288619419,
+   "n": 50,
+   "nodes": 1519,
+   "reps": 9,
+   "seconds": 0.005555556,
+   "status": "ok",
+   "variant": "c-sec2-bc8"
+  },
+  {
+   "dataset": "cliff",
+   "dim": 9,
+   "hv": 0.1929557521041083,
+   "n": 20,
+   "reps": 1,
+   "seconds": 0.5742419,
+   "status": "ok",
+   "variant": "py-sec2"
+  },
+  {
+   "dataset": "cliff",
+   "dim": 9,
+   "hv": 0.1929557521041083,
+   "n": 20,
+   "reps": 1,
+   "seconds": 0.4352243,
+   "status": "ok",
+   "variant": "py-sec2-nopre"
+  },
+  {
+   "dataset": "cliff",
+   "dim": 9,
+   "hv": 0.19295575210410787,
+   "n": 20,
+   "reps": 1,
+   "seconds": 3.2451507,
+   "status": "ok",
+   "variant": "py-dby3"
+  },
+  {
+   "dataset": "cliff",
+   "dim": 9,
+   "hv": 0.19295575210410787,
+   "n": 20,
+   "reps": 1,
+   "seconds": 3.270994,
+   "status": "ok",
+   "variant": "py-dby3-nocomp"
+  },
+  {
+   "dataset": "cliff",
+   "dim": 9,
+   "hv": 0.1929557521041083,
+   "n": 20,
+   "nodes": 15215,
+   "reps": 4,
+   "seconds": 0.0155,
+   "status": "ok",
+   "variant": "c-sec2"
+  },
+  {
+   "dataset": "cliff",
+   "dim": 9,
+   "hv": 0.19295575210410876,
+   "n": 20,
+   "nodes": 501,
+   "reps": 22,
+   "seconds": 0.002318182,
+   "status": "ok",
+   "variant": "c-sec2-bc8"
+  },
+  {
+   "dataset": "cliff",
+   "dim": 9,
+   "hv": 0.45400682477235765,
+   "n": 40,
+   "reps": 1,
+   "seconds": 2.9896313,
+   "status": "ok",
+   "variant": "py-sec2"
+  },
+  {
+   "dataset": "cliff",
+   "dim": 9,
+   "hv": 0.45400682477235765,
+   "n": 40,
+   "reps": 1,
+   "seconds": 3.3403533,
+   "status": "ok",
+   "variant": "py-sec2-nopre"
+  },
+  {
+   "dataset": "cliff",
+   "dim": 9,
+   "hv": 0.4540068247723572,
+   "n": 40,
+   "reps": 1,
+   "seconds": 31.7256328,
+   "status": "ok",
+   "variant": "py-dby3"
+  },
+  {
+   "dataset": "cliff",
+   "dim": 9,
+   "hv": 0.4540068247723572,
+   "n": 40,
+   "reps": 1,
+   "seconds": 28.7409897,
+   "status": "ok",
+   "variant": "py-dby3-nocomp"
+  },
+  {
+   "dataset": "cliff",
+   "dim": 9,
+   "hv": 0.45400682477235765,
+   "n": 40,
+   "nodes": 95481,
+   "reps": 1,
+   "seconds": 0.103,
+   "status": "ok",
+   "variant": "c-sec2"
+  },
+  {
+   "dataset": "cliff",
+   "dim": 9,
+   "hv": 0.45400682477235765,
+   "n": 40,
+   "nodes": 3279,
+   "reps": 4,
+   "seconds": 0.01675,
+   "status": "ok",
+   "variant": "c-sec2-bc8"
+  },
+  {
+   "dataset": "cliff",
+   "dim": 10,
+   "hv": 0.18377089152192028,
+   "n": 20,
+   "reps": 1,
+   "seconds": 0.9660697,
+   "status": "ok",
+   "variant": "py-sec2"
+  },
+  {
+   "dataset": "cliff",
+   "dim": 10,
+   "hv": 0.18377089152192028,
+   "n": 20,
+   "reps": 1,
+   "seconds": 1.0054511,
+   "status": "ok",
+   "variant": "py-sec2-nopre"
+  },
+  {
+   "dataset": "cliff",
+   "dim": 10,
+   "hv": 0.18377089152192028,
+   "n": 20,
+   "reps": 1,
+   "seconds": 6.175533,
+   "status": "ok",
+   "variant": "py-dby3"
+  },
+  {
+   "dataset": "cliff",
+   "dim": 10,
+   "hv": 0.18377089152192028,
+   "n": 20,
+   "reps": 1,
+   "seconds": 6.6520578,
+   "status": "ok",
+   "variant": "py-dby3-nocomp"
+  },
+  {
+   "dataset": "cliff",
+   "dim": 10,
+   "hv": 0.18377089152192028,
+   "n": 20,
+   "nodes": 29397,
+   "reps": 2,
+   "seconds": 0.0285,
+   "status": "ok",
+   "variant": "c-sec2"
+  },
+  {
+   "dataset": "cliff",
+   "dim": 10,
+   "hv": 0.1837708915219194,
+   "n": 20,
+   "nodes": 567,
+   "reps": 14,
+   "seconds": 0.003642857,
+   "status": "ok",
+   "variant": "c-sec2-bc8"
+  },
+  {
+   "dataset": "cliff",
+   "dim": 10,
+   "hv": 0.24246569192540512,
+   "n": 40,
+   "reps": 1,
+   "seconds": 9.8573531,
+   "status": "ok",
+   "variant": "py-sec2"
+  },
+  {
+   "dataset": "cliff",
+   "dim": 10,
+   "hv": 0.24246569192540512,
+   "n": 40,
+   "reps": 1,
+   "seconds": 10.5573669,
+   "status": "ok",
+   "variant": "py-sec2-nopre"
+  },
+  {
+   "dataset": "cliff",
+   "dim": 10,
+   "hv": 0.242465691925406,
+   "n": 40,
+   "reps": 1,
+   "seconds": 90.6074994,
+   "status": "ok",
+   "variant": "py-dby3"
+  },
+  {
+   "dataset": "cliff",
+   "dim": 10,
+   "hv": 0.242465691925406,
+   "n": 40,
+   "reps": 1,
+   "seconds": 87.8285443,
+   "status": "ok",
+   "variant": "py-dby3-nocomp"
+  },
+  {
+   "dataset": "cliff",
+   "dim": 10,
+   "hv": 0.24246569192540512,
+   "n": 40,
+   "nodes": 270677,
+   "reps": 1,
+   "seconds": 0.321,
+   "status": "ok",
+   "variant": "c-sec2"
+  },
+  {
+   "dataset": "cliff",
+   "dim": 10,
+   "hv": 0.242465691925406,
+   "n": 40,
+   "nodes": 7931,
+   "reps": 2,
+   "seconds": 0.0395,
+   "status": "ok",
+   "variant": "c-sec2-bc8"
+  }
+ ],
+ "reference": 1.2,
+ "seed": 20260821,
+ "sizes": {
+  "10": [
+   20,
+   40
+  ],
+  "3": [
+   100,
+   200
+  ],
+  "4": [
+   60,
+   120
+  ],
+  "5": [
+   40,
+   80
+  ],
+  "7": [
+   25,
+   50
+  ],
+  "9": [
+   20,
+   40
+  ]
+ },
+ "timeout": 120.0,
+ "variants": [
+  "py-sec2",
+  "py-sec2-nopre",
+  "py-dby3",
+  "py-dby3-nocomp",
+  "c-sec2",
+  "c-sec2-bc8"
+ ]
+}

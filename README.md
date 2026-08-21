@@ -129,8 +129,8 @@ executable specification, not as the fast path.
 chan_hypervolume.py     Section-2 algorithm + hypervolume/union_volume API
 chan_orthant_dby3.py    Section-4.2 algorithm (arbitrary orthants) + API
 tests/                  pytest wrappers around both self-test suites
-benchmarks/             scaling experiments (node counts, wall time)
-paper/                  LaTeX/PDF: walkthrough + complexity analysis
+benchmarks/             scaling experiments; cross-implementation benchmark
+paper/                  LaTeX/PDF: walkthrough, complexity analysis, benchmarks
 c/                      C99 port of the Section-2 algorithm
 ```
 
