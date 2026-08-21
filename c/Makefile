@@ -14,10 +14,11 @@ EXE := .exe
 endif
 
 TEST := test_fasthvchan$(EXE)
+DRIVER := bench_driver$(EXE)
 
 .PHONY: all test check bench clean
 
-all: libfasthvchan.a $(TEST)
+all: libfasthvchan.a $(TEST) $(DRIVER)
 
 libfasthvchan.a: fasthvchan.o
 	$(AR) rcs $@ $^
@@ -40,5 +41,9 @@ check: $(TEST)
 bench: $(TEST)
 	./$(TEST) --bench
 
+# Used by benchmarks/crossbench.py; times one dataset file.
+$(DRIVER): bench_driver.c fasthvchan.c fasthvchan.h
+	$(CC) $(CFLAGS) bench_driver.c fasthvchan.c -o $@ $(LDLIBS)
+
 clean:
-	$(RM) fasthvchan.o libfasthvchan.a $(TEST) cases.txt
+	$(RM) fasthvchan.o libfasthvchan.a $(TEST) $(DRIVER) cases.txt
