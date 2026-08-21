@@ -42,6 +42,28 @@ def make_call(variant, points, ref):
     if variant == "py-dby3-nocomp":
         from chan_orthant_dby3 import hypervolume_dby3
         return lambda: hypervolume_dby3(points, ref, use_compression=False)
+    if variant == "py-ds":
+        from hv_baselines import hypervolume_ds
+        return lambda: hypervolume_ds(points, ref)
+    if variant == "py-wfg":
+        from hv_baselines import hypervolume_wfg
+        return lambda: hypervolume_wfg(points, ref)
+    if variant == "py-ys":
+        # Vendored Yildiz-Suri-style anchored solver; a minimisation instance
+        # maps to the anchored form through q = ref - y.  The transform is part
+        # of the timed call, like the other variants' prefilters.
+        sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+        from vendor.yildiz_suri_anchor import anchored_hypervolume
+
+        def call():
+            anchored = [
+                tuple(r - x for x, r in zip(p, ref))
+                for p in points
+                if all(x < r for x, r in zip(p, ref))
+            ]
+            return anchored_hypervolume(anchored, method="auto")
+
+        return call
     raise SystemExit("unknown variant %r" % variant)
 
 

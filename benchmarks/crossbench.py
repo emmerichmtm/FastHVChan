@@ -33,8 +33,13 @@ VARIANTS = [
     ("py-sec2-nopre", "py", []),
     ("py-dby3", "py", []),
     ("py-dby3-nocomp", "py", []),
+    ("py-ds", "py", []),
+    ("py-wfg", "py", []),
+    ("py-ys", "py", []),
     ("c-sec2", "c", []),
     ("c-sec2-bc8", "c", ["--base-case", "8"]),
+    ("c-ds", "c", ["--algo", "ds"]),
+    ("c-wfg", "c", ["--algo", "wfg"]),
 ]
 
 DIMS = [3, 4, 5, 7, 9, 10]
@@ -157,9 +162,11 @@ def main():
 
     driver = os.path.join(ROOT, "c",
                           "bench_driver.exe" if os.name == "nt" else "bench_driver")
+    variants = VARIANTS
     if not os.path.exists(driver):
-        raise SystemExit("build the C driver first:  make -C c bench_driver\n"
-                         "(looked for %s)" % driver)
+        variants = [v for v in VARIANTS if v[1] != "c"]
+        print("WARNING: C driver not found (%s); skipping C variants.\n"
+              "Build it with:  make -C c bench_driver" % driver)
 
     data_dir = args.data_dir or tempfile.mkdtemp(prefix="crossbench-")
     if not os.path.isdir(data_dir):
@@ -180,7 +187,7 @@ def main():
                                     "%s-d%d-n%d.txt" % (dataset_name, dim, n))
                 write_dataset(path, points, dim)
 
-                for variant, kind, extra in VARIANTS:
+                for variant, kind, extra in variants:
                     key = (dataset_name, dim, variant)
                     if key in exhausted:
                         outcome = {"status": "skipped"}
@@ -210,7 +217,7 @@ def main():
         "timeout": args.timeout,
         "dims": DIMS,
         "sizes": {str(k): v for k, v in sizes.items()},
-        "variants": [v[0] for v in VARIANTS],
+        "variants": [v[0] for v in variants],
         "records": records,
     }
     with open(args.out, "w") as handle:

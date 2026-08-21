@@ -41,6 +41,28 @@ double hv = fhv_hypervolume(points, 3, 3, ref, /*maximize=*/0, /*prefilter=*/1);
 Points are flat `double` arrays of `n * dim`, row-major. Objectives are
 minimised unless `maximize` is set. Full contracts are in `fasthvchan.h`.
 
+## Baseline algorithms
+
+`hv_baselines.c` / `hv_baselines.h` add C99 ports of the two classical
+comparison baselines from `../hv_baselines.py`, with the same conventions:
+
+| Function | Algorithm |
+|---|---|
+| `fhv_hypervolume_ds` | dimension sweep (3-D O(n log n) base case; higher dimensions after Guerreiro, Fonseca & Emmerich, CCCG 2012) |
+| `fhv_hypervolume_wfg` | WFG (While, Bradstreet & Barone, IEEE TEC 16(1), 2012) |
+
+They ship with their own self-contained suite, `test_hv_baselines` (built and
+run by `make test`), which cross-checks both against brute-force
+inclusion–exclusion (d=1..6, plus tie-heavy integer grids) and against the
+Chan port on spherical fronts up to n=120. `bench_driver --algo ds|wfg`
+selects them in the cross-implementation benchmark.
+
+**Status:** the baseline ports were authored 1:1 from the exhaustively tested
+Python implementation on a machine without a C toolchain — parsed with a C99
+parser but not yet compiled or executed. Run `make test` on a machine with a
+compiler before relying on them; the suite is designed to catch any porting
+fault.
+
 ## Validation
 
 The port is checked two independent ways, both green:

@@ -12,10 +12,15 @@ sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
 
 import chan_hypervolume as chv
 import chan_orthant_dby3 as cod
+import hv_baselines as hvb
 
 
 def test_section2_suite():
     chv._self_test()
+
+
+def test_baselines_suite():
+    hvb._self_test()
 
 
 def test_step_algebra():

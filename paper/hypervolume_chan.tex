@@ -109,6 +109,18 @@ essentially optimal: deciding coverage is W[1]-hard in $d$, and beating
 $n^{d/2}$ combinatorially would improve long-standing bounds for
 $d$-clique~\cite{Chan2013}.
 
+A different, practice-oriented lineage of exact algorithms is not based on
+Klee-style space partitioning: dimension-sweep methods, whose specialised
+four-dimensional representative achieves $O(n^2)$ time
+\cite{GuerreiroFonsecaEmmerich2012}, and the WFG algorithm, a recursive
+exclusive-hypervolume scheme with exponential worst case but excellent
+practical behaviour \cite{WhileBradstreetBarone2012}.  The repository
+accompanying this paper implements both (in Python and C99) purely as
+comparison baselines, alongside a vendored Y{\i}ld{\i}z--Suri-style solver
+\cite{YildizSuri2012}; they appear in the benchmark report
+(\texttt{paper/benchmarks.pdf}) but are otherwise not discussed further ---
+this paper remains focused on Chan's algorithms.
+
 \paragraph{Contribution.}
 This paper documents two self-contained Python implementations
 (standard library only):
@@ -762,6 +774,19 @@ L.~While, P.~Hingston, L.~Barone, and S.~Huband.
 \newblock A faster algorithm for calculating hypervolume.
 \newblock \emph{IEEE Transactions on Evolutionary Computation},
   10(1):29--38, 2006.
+
+\bibitem{WhileBradstreetBarone2012}
+L.~While, L.~Bradstreet, and L.~Barone.
+\newblock A fast way of calculating exact hypervolumes.
+\newblock \emph{IEEE Transactions on Evolutionary Computation},
+  16(1):86--95, 2012.
+
+\bibitem{GuerreiroFonsecaEmmerich2012}
+A.~P. Guerreiro, C.~M. Fonseca, and M.~T.~M. Emmerich.
+\newblock A fast dimension-sweep algorithm for the hypervolume indicator in
+  four dimensions.
+\newblock In \emph{Proc.\ 24th Canadian Conference on Computational Geometry
+  (CCCG)}, pages 77--82, 2012.
 
 \bibitem{GuerreiroFonsecaPaquete2021}
 A.~P. Guerreiro, C.~M. Fonseca, and L.~Paquete.

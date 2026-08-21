@@ -1,6 +1,9 @@
-/* bench_driver.c -- time the C port on one dataset file.
+/* bench_driver.c -- time one C implementation on one dataset file.
  *
- *   bench_driver <file> [--base-case K]
+ *   bench_driver <file> [--base-case K] [--algo sec2|ds|wfg]
+ *
+ * --algo selects the implementation: sec2 (default) is the Chan Section-2
+ * port, ds the dimension sweep, wfg the WFG algorithm (see hv_baselines.h).
  *
  * The file is the format written by benchmarks/crossbench.py:
  *
@@ -15,6 +18,7 @@
  * the reported time is per call.
  */
 #include "fasthvchan.h"
+#include "hv_baselines.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -26,7 +30,7 @@
 
 int main(int argc, char **argv)
 {
-    const char *path = NULL;
+    const char *path = NULL, *algo = "sec2";
     int dim = 0, i, base_case = -1;
     long n = 0;
     double *pts = NULL, *ref = NULL, hv = 0.0, elapsed;
@@ -37,11 +41,19 @@ int main(int argc, char **argv)
     for (i = 1; i < argc; i++) {
         if (strcmp(argv[i], "--base-case") == 0 && i + 1 < argc)
             base_case = atoi(argv[++i]);
+        else if (strcmp(argv[i], "--algo") == 0 && i + 1 < argc)
+            algo = argv[++i];
         else if (!path)
             path = argv[i];
     }
     if (!path) {
-        fprintf(stderr, "usage: bench_driver <file> [--base-case K]\n");
+        fprintf(stderr,
+                "usage: bench_driver <file> [--base-case K] [--algo sec2|ds|wfg]\n");
+        return 2;
+    }
+    if (strcmp(algo, "sec2") != 0 && strcmp(algo, "ds") != 0 &&
+        strcmp(algo, "wfg") != 0) {
+        fprintf(stderr, "unknown --algo %s\n", algo);
         return 2;
     }
     if (base_case >= 0)
@@ -88,13 +100,19 @@ int main(int argc, char **argv)
 
     t0 = clock();
     do {
-        hv = fhv_hypervolume(pts, (size_t)n, dim, ref, 0, 1);
+        if (strcmp(algo, "ds") == 0)
+            hv = fhv_hypervolume_ds(pts, (size_t)n, dim, ref, 0, 1);
+        else if (strcmp(algo, "wfg") == 0)
+            hv = fhv_hypervolume_wfg(pts, (size_t)n, dim, ref, 0, 1);
+        else
+            hv = fhv_hypervolume(pts, (size_t)n, dim, ref, 0, 1);
         reps++;
         elapsed = (double)(clock() - t0) / CLOCKS_PER_SEC;
     } while (elapsed < MIN_SECONDS && reps < MAX_REPS);
 
-    printf("hv=%.17g nodes=%ld seconds=%.9f reps=%ld base_case=%d\n", hv,
-           fhv_node_count, elapsed / (double)reps, reps, fhv_base_case);
+    printf("hv=%.17g nodes=%ld seconds=%.9f reps=%ld base_case=%d algo=%s\n",
+           hv, fhv_node_count, elapsed / (double)reps, reps, fhv_base_case,
+           algo);
     free(ref);
     free(pts);
     return 0;
