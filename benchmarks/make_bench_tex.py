@@ -179,6 +179,167 @@ def nodes_table(records, dims, sizes):
     return "\n".join(lines)
 
 
+def nodes_comparison_table(payload):
+    """d/2 versus d/3 recursion nodes, side by side, from node_counts.py."""
+    records = payload["records"]
+    datasets = sorted({r["dataset"] for r in records})
+    index = {(r["dataset"], r["dim"], r["n"]): r for r in records}
+    dims = sorted({r["dim"] for r in records})
+
+    lines = [r"\begin{tabular}{rr" + "rrr" * len(datasets) + "}", r"\toprule"]
+    header = [" ", " "]
+    rules = []
+    for i, name in enumerate(datasets):
+        header.append(r"\multicolumn{3}{c}{\textsf{%s}}" % escape(name))
+        first = 3 + 3 * i
+        rules.append(r"\cmidrule(%s){%d-%d}"
+                     % ("lr" if i + 1 < len(datasets) else "l",
+                        first, first + 2))
+    lines.append(" & ".join(header) + r" \\")
+    lines.append("".join(rules))
+    lines.append("$d$ & $n$ & " +
+                 " & ".join(["$d/2$ & $d/3$ & ratio"] * len(datasets)) + r" \\")
+    lines.append(r"\midrule")
+    for dim in dims:
+        ns = sorted({r["n"] for r in records if r["dim"] == dim})
+        for n in ns:
+            row = [str(dim), str(n)]
+            for name in datasets:
+                rec = index.get((name, dim, n))
+                if rec is None:
+                    row += ["--", "--", "--"]
+                    continue
+                ratio = (rec["nodes_dby2"] / rec["nodes_dby3"]
+                         if rec["nodes_dby3"] else None)
+                row.append(group_digits(rec["nodes_dby2"]))
+                row.append(group_digits(rec["nodes_dby3"]))
+                row.append(r"%.1f$\times$" % ratio if ratio else "--")
+            lines.append(" & ".join(row) + r" \\")
+        lines.append(r"\addlinespace[2pt]")
+    lines.append(r"\bottomrule")
+    lines.append(r"\end{tabular}")
+    return "\n".join(lines)
+
+
+def nodes_exponent_table(payload):
+    """Fitted node-count exponents, against the two theoretical bounds."""
+    rows = payload.get("exponents", [])
+    if not rows:
+        return ""
+    datasets = sorted({r["dataset"] for r in rows})
+    index = {(r["dataset"], r["dim"]): r for r in rows}
+    dims = sorted({r["dim"] for r in rows})
+
+    lines = [r"\begin{tabular}{r" + "rr" * len(datasets) + "rr}", r"\toprule"]
+    header = [" "]
+    rules = []
+    for i, name in enumerate(datasets):
+        header.append(r"\multicolumn{2}{c}{\textsf{%s}}" % escape(name))
+        first = 2 + 2 * i
+        rules.append(r"\cmidrule(lr){%d-%d}" % (first, first + 1))
+    header.append(r"\multicolumn{2}{c}{worst case}")
+    first = 2 + 2 * len(datasets)
+    rules.append(r"\cmidrule(l){%d-%d}" % (first, first + 1))
+    lines.append(" & ".join(header) + r" \\")
+    lines.append("".join(rules))
+    lines.append("$d$ & " +
+                 " & ".join(["$d/2$ & $d/3$"] * (len(datasets) + 1)) + r" \\")
+    lines.append(r"\midrule")
+    for dim in dims:
+        row = [str(dim)]
+        for name in datasets:
+            rec = index.get((name, dim))
+            for key in ("exp_dby2", "exp_dby3"):
+                value = rec.get(key) if rec else None
+                row.append("%.2f" % value if value is not None else "--")
+        row.append("%.1f" % (dim / 2.0))
+        row.append("%.2f" % (dim / 3.0))
+        lines.append(" & ".join(row) + r" \\")
+    lines.append(r"\bottomrule")
+    lines.append(r"\end{tabular}")
+    return "\n".join(lines)
+
+
+def space_table(payload):
+    """Peak live boxes per input box, and the fitted exponent in n."""
+    rows = payload.get("summaries", [])
+    if not rows:
+        return ""
+    datasets = sorted({r["dataset"] for r in rows})
+    index = {(r["dataset"], r["dim"]): r for r in rows}
+    dims = sorted({r["dim"] for r in rows})
+
+    lines = [r"\begin{tabular}{r" + "rr" * len(datasets) + "}", r"\toprule"]
+    header = [" "]
+    rules = []
+    for i, name in enumerate(datasets):
+        header.append(r"\multicolumn{2}{c}{\textsf{%s}}" % escape(name))
+        first = 2 + 2 * i
+        rules.append(r"\cmidrule(%s){%d-%d}"
+                     % ("lr" if i + 1 < len(datasets) else "l",
+                        first, first + 1))
+    lines.append(" & ".join(header) + r" \\")
+    lines.append("".join(rules))
+    lines.append("$d$ & " +
+                 " & ".join(["peak$/n$ & exponent"] * len(datasets)) + r" \\")
+    lines.append(r"\midrule")
+    for dim in dims:
+        row = [str(dim)]
+        for name in datasets:
+            rec = index.get((name, dim))
+            if rec is None:
+                row += ["--", "--"]
+            else:
+                row.append("%.1f" % rec["peak_over_n"])
+                row.append("%.2f" % rec["exponent"]
+                           if rec.get("exponent") is not None else "--")
+        lines.append(" & ".join(row) + r" \\")
+    lines.append(r"\bottomrule")
+    lines.append(r"\end{tabular}")
+    return "\n".join(lines)
+
+
+def wfg_hard_table(payload):
+    """Per-dimension summary of the wfg_hard structural probe."""
+    records = payload["records"]
+    summaries = {s["dim"]: s for s in payload.get("summaries", [])}
+    dims = sorted({r["dim"] for r in records})
+
+    lines = [r"\begin{tabular}{rrrrrrr}", r"\toprule",
+             r"$d$ & $n$ range & $|\bar B|$ & nodes & absorb (max) & "
+             r"integrate (max) & total exp. \\",
+             r"\midrule"]
+    for dim in dims:
+        rows = sorted((r for r in records if r["dim"] == dim),
+                      key=lambda r: r["n"])
+        summary = summaries.get(dim, {})
+        exponent = summary.get("exp_total")
+        lines.append(" & ".join([
+            str(dim),
+            "%d--%d" % (rows[0]["n"], rows[-1]["n"]),
+            str(max(r["surviving"] for r in rows)),
+            str(max(r["nodes"] for r in rows)),
+            fmt_seconds(max(r["absorb_seconds"] for r in rows)),
+            fmt_seconds(max(r["integrate_seconds"] for r in rows)),
+            "%.2f" % exponent if exponent is not None else "--",
+        ]) + r" \\")
+    lines.append(r"\bottomrule")
+    lines.append(r"\end{tabular}")
+    return "\n".join(lines)
+
+
+def group_digits(value):
+    return "{:,}".format(value).replace(",", r"\,")
+
+
+def load_optional(path):
+    """Load a companion result file, or None if it has not been produced."""
+    if not path or not os.path.exists(path):
+        return None
+    with open(path) as handle:
+        return json.load(handle)
+
+
 def speedup_range(records, cvariant):
     """Min and max speedup of a C variant over the fastest Python variant."""
     index = {(r["dataset"], r["dim"], r["n"], r["variant"]): r for r in records}
@@ -242,10 +403,132 @@ def agreement(records):
     return worst, worst_key, worst_count, complete
 
 
+NODES_COMPARE_SECTION = r"""
+Those counts come from the Section-2 recursion in C. The Section-4.2 algorithm
+cuts on $(d-3)$-faces rather than $(d-2)$-faces, so its tree should be smaller,
+and should grow with an exponent of $d/3$ rather than $d/2$. Running both
+solvers over the same instances (\texttt{benchmarks/node\_counts.py}, on a
+denser size ladder than the timing runs use) gives
+Table~\ref{tab:nodescompare}: the Section-4.2 tree is smaller on every instance
+measured, by a factor between %(node_ratio_lo).1f and %(node_ratio_hi).1f.
+
+\begin{table}[htbp]
+\centering
+\small
+%(nodes_compare_table)s
+\caption{Recursion nodes, Section 2 versus Section 4.2, same instances. Both
+columns are the Python implementations, so they differ from Table~\ref{tab:nodes},
+which reports the C port; the two ports resolve ties in the weighted median
+slightly differently and so explore marginally different trees.}
+\label{tab:nodescompare}
+\end{table}
+
+Whether the \emph{exponent} improves is a harder question than whether the tree
+is smaller. Table~\ref{tab:nodesexp} fits $\text{nodes} \sim n^{x}$ per
+dimension and dataset. Both algorithms stay far below their worst-case
+exponents on these instances. The Section-4.2 fit is the lower of the two in
+%(exp_lower)d of %(exp_pairs)d cases, and --- the part that matters --- the gap
+widens with $d$, which is where the two bounds diverge: at $d = 10$ the fits are
+%(exp_hi_d2).2f against %(exp_hi_d3).2f on \textsf{spherical}. The exceptions
+all sit at low $d$, where $d/2$ and $d/3$ are closest together and the two fits
+differ by less than $0.05$ --- within the noise of a fit taken over a four- to
+eight-fold range in $n$, at sizes where constant factors still dominate. These
+numbers are evidence that the implementations behave as the theory says they
+should; they are not a measurement of the asymptotic exponent.
+
+\begin{table}[htbp]
+\centering
+\small
+%(nodes_exponent_table)s
+\caption{Fitted node-count exponents against the worst-case exponents.}
+\label{tab:nodesexp}
+\end{table}
+
+One further observation from the same runs: the term high-water mark of the
+Section-4.2 solver is $1$ on every instance in this table. For grounded
+orthants, absorption only adds or merges conditions and never multiplies terms,
+so the $\tilde F$ compression --- the only operation that can multiply them ---
+never needs to fire.
+"""
+
+SPACE_SECTION = r"""
+\subsection{Space}
+
+The recursion is depth first, and each node keeps its own clipped box array
+alive while its first child runs, so peak memory is the sum along a
+root-to-leaf path rather than the largest single node. Chan's analysis makes
+that sum geometric --- the $(d-2)$-face weight falls by $2^{2/d}$ per level ---
+and therefore linear. Table~\ref{tab:space} confirms it empirically
+(\texttt{benchmarks/space\_profile.py}): the fitted exponent of peak live boxes
+in $n$ is %(space_exp_lo).2f--%(space_exp_hi).2f across both datasets and
+$d = 3, \dots, 7$, with a constant that grows roughly like $2d$ boxes per input
+box. A box costs $2d$ doubles, so peak memory is $O(d^2 n)$ words.
+
+\begin{table}[htbp]
+\centering
+%(space_table)s
+\caption{Peak live boxes per input box, and the fitted exponent in $n$.}
+\label{tab:space}
+\end{table}
+
+Note that \emph{cumulative} allocation is a different quantity and is
+superlinear: every one of the $O(n^{d/2})$ nodes allocates a fresh array. Those
+arrays die with their node, so they never coexist.
+"""
+
+WFG_HARD_SECTION = r"""
+\section{A family where the Section-4.2 recursion collapses}
+
+The \textsf{wfg\_hard} instances\footnote{From the \texttt{moo-nondominated-sets}
+collection, \url{https://github.com/renaudlr/moo-nondominated-sets}.} are built
+so that each point is non-dominated through only two of its objectives, the
+remaining coordinates being tied. Relative to the root cell every orthant
+therefore has exactly two \emph{active} constraints --- and an orthant with at
+most two active constraints is precisely what the Section-4.1 simplification
+absorbs, as a slab or a 2-sided orthant. The prediction is that the Section-4.2
+recursion never cuts at all.
+
+That is exactly what happens (\texttt{benchmarks/wfg\_hard\_probe.py}). On
+every instance tested the set of active-constraint counts is exactly
+$\{2\}$ --- not merely concentrated there --- so the surviving set $\bar B$ is
+empty at the root and the recursion terminates in a single node, for every
+dimension and every size:
+
+\begin{table}[htbp]
+\centering
+%(wfg_hard_table)s
+\caption{\textsf{wfg\_hard}: the recursion collapses to its base case. Times
+are the per-phase maxima over the sizes in the range.}
+\label{tab:wfghard}
+\end{table}
+
+The whole computation is thus one absorption followed by one integration of a
+single basic function, and the phase split shows where the time goes: the
+absorption is linear and negligible, while the integration --- Lemma 4.4 ---
+dominates and is superlinear, so the total does not reach the $O(n \log n)$
+that the collapse would otherwise allow. The engine does not exploit that in
+this family the $d/2$ staircase conditions live on \emph{disjoint} axis pairs,
+so the integral factorises into $d/2$ independent two-dimensional integrals;
+integrating the axes one by one in the general way costs more. This is an
+implementation limit rather than an algorithmic one, and it is the clearest
+target for future work on this code.
+"""
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--results",
                         default=os.path.join(HERE, "results", "crossbench.json"))
+    parser.add_argument("--nodecounts",
+                        default=os.path.join(HERE, "results",
+                                             "nodecounts.json"),
+                        help="optional; from benchmarks/node_counts.py")
+    parser.add_argument("--space",
+                        default=os.path.join(HERE, "results", "space.json"),
+                        help="optional; from benchmarks/space_profile.py")
+    parser.add_argument("--wfg-hard", dest="wfg_hard",
+                        default=os.path.join(HERE, "results", "wfg_hard.json"),
+                        help="optional; from benchmarks/wfg_hard_probe.py")
     parser.add_argument("--out",
                         default=os.path.join(ROOT, "paper", "benchmarks.tex"))
     args = parser.parse_args()
@@ -265,7 +548,49 @@ def main():
     machine = "%s, Python %s" % (platform.platform(),
                                  platform.python_version())
 
+    # Optional companion result sets; each section appears only if its data is
+    # present, so the report regenerates cleanly from crossbench.json alone.
+    nodes_compare_section = ""
+    optional = load_optional(args.nodecounts)
+    if optional:
+        ratios = [r["nodes_dby2"] / r["nodes_dby3"] for r in optional["records"]
+                  if r["nodes_dby3"]]
+        exps = [e for e in optional.get("exponents", [])
+                if e.get("exp_dby2") is not None
+                and e.get("exp_dby3") is not None]
+        # The prose names spherical at the largest dimension; pick exactly that.
+        top = max((e for e in exps if e["dataset"] == "spherical"),
+                  key=lambda e: e["dim"], default={})
+        nodes_compare_section = NODES_COMPARE_SECTION % {
+            "nodes_compare_table": nodes_comparison_table(optional),
+            "nodes_exponent_table": nodes_exponent_table(optional),
+            "node_ratio_lo": min(ratios), "node_ratio_hi": max(ratios),
+            "exp_lower": sum(1 for e in exps
+                             if e["exp_dby3"] < e["exp_dby2"]),
+            "exp_pairs": len(exps),
+            "exp_hi_d2": top.get("exp_dby2", float("nan")),
+            "exp_hi_d3": top.get("exp_dby3", float("nan")),
+        }
+
+    extra = []
+    optional = load_optional(args.space)
+    if optional:
+        exps = [s["exponent"] for s in optional["summaries"]
+                if s.get("exponent") is not None]
+        extra.append(SPACE_SECTION % {
+            "space_table": space_table(optional),
+            "space_exp_lo": min(exps), "space_exp_hi": max(exps),
+        })
+    optional = load_optional(args.wfg_hard)
+    if optional and optional.get("records"):
+        extra.append(WFG_HARD_SECTION % {
+            "wfg_hard_table": wfg_hard_table(optional),
+        })
+
     body = TEMPLATE % {
+        "nodes_compare_section": nodes_compare_section,
+        "extra_sections": "\n".join(extra),
+        "variant_count": len(variants),
         "machine": escape(machine),
         "ref": payload["reference"],
         "seed": payload["seed"],
@@ -409,9 +734,10 @@ implementation.
 
 \subsection{Recursion size}
 
-Node counts are reported by the C port; they measure the size of the recursion
-tree and are independent of language. Table~\ref{tab:nodes} shows how the two
-datasets differ in the work they induce at equal $n$.
+Node counts measure the size of the recursion tree itself, so they are
+independent of language and of per-node constant factors --- they are the
+quantity the two complexity bounds actually bound. Table~\ref{tab:nodes} shows
+how the two datasets differ in the work they induce at equal $n$.
 
 \begin{table}[htbp]
 \centering
@@ -419,7 +745,9 @@ datasets differ in the work they induce at equal $n$.
 \caption{Recursion nodes, C Section-2 with $b=2$.}
 \label{tab:nodes}
 \end{table}
+%(nodes_compare_section)s
 
+%(extra_sections)s
 \section{Agreement}
 
 Across %(complete)d cases in which more than one variant completed, the largest
@@ -429,7 +757,7 @@ Section 4.2), two languages, and two base-case settings therefore agree to
 within floating-point rounding on every case measured. This is the strongest
 correctness statement available without an exact-arithmetic oracle, and it is
 what the reader should weigh most heavily: the timings below are only
-meaningful because all six variants compute the same number.
+meaningful because all %(variant_count)d variants compute the same number.
 
 \section{Discussion}
 

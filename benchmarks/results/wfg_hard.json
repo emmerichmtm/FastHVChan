@@ -1,0 +1,679 @@
+{
+ "records": [
+  {
+   "absorb_seconds": 0.00030559999868273735,
+   "active_counts": [
+    2
+   ],
+   "check": "ok",
+   "complexity": 103,
+   "dim": 4,
+   "hv": 1.1201050867003965,
+   "integrate_seconds": 0.0014414000033866614,
+   "n": 100,
+   "nodes": 1,
+   "surviving": 0,
+   "terms_high_water": 1,
+   "total_seconds": 0.0017841999942902476
+  },
+  {
+   "absorb_seconds": 0.0005472000048030168,
+   "active_counts": [
+    2
+   ],
+   "check": "ok",
+   "complexity": 203,
+   "dim": 4,
+   "hv": 1.165530119075546,
+   "integrate_seconds": 0.004157799994572997,
+   "n": 200,
+   "nodes": 1,
+   "surviving": 0,
+   "terms_high_water": 1,
+   "total_seconds": 0.007121200003894046
+  },
+  {
+   "absorb_seconds": 0.000812100013718009,
+   "active_counts": [
+    2
+   ],
+   "check": "--",
+   "complexity": 303,
+   "dim": 4,
+   "hv": 1.1813564532511318,
+   "integrate_seconds": 0.00829560001147911,
+   "n": 300,
+   "nodes": 1,
+   "surviving": 0,
+   "terms_high_water": 1,
+   "total_seconds": 0.009356599999591708
+  },
+  {
+   "absorb_seconds": 0.0010283000010531396,
+   "active_counts": [
+    2
+   ],
+   "check": "--",
+   "complexity": 403,
+   "dim": 4,
+   "hv": 1.1894038977141754,
+   "integrate_seconds": 0.013471100013703108,
+   "n": 400,
+   "nodes": 1,
+   "surviving": 0,
+   "terms_high_water": 1,
+   "total_seconds": 0.015207599994027987
+  },
+  {
+   "absorb_seconds": 0.0013085999817121774,
+   "active_counts": [
+    2
+   ],
+   "check": "--",
+   "complexity": 503,
+   "dim": 4,
+   "hv": 1.1942761236367725,
+   "integrate_seconds": 0.02009189999080263,
+   "n": 500,
+   "nodes": 1,
+   "surviving": 0,
+   "terms_high_water": 1,
+   "total_seconds": 0.022390500002074987
+  },
+  {
+   "absorb_seconds": 0.0014746999950148165,
+   "active_counts": [
+    2
+   ],
+   "check": "--",
+   "complexity": 603,
+   "dim": 4,
+   "hv": 1.197542693757161,
+   "integrate_seconds": 0.027532199979759753,
+   "n": 600,
+   "nodes": 1,
+   "surviving": 0,
+   "terms_high_water": 1,
+   "total_seconds": 0.0303004999877885
+  },
+  {
+   "absorb_seconds": 0.0018599999893922359,
+   "active_counts": [
+    2
+   ],
+   "check": "--",
+   "complexity": 703,
+   "dim": 4,
+   "hv": 1.1998850392890523,
+   "integrate_seconds": 0.037045199977001175,
+   "n": 700,
+   "nodes": 1,
+   "surviving": 0,
+   "terms_high_water": 1,
+   "total_seconds": 0.04002099999343045
+  },
+  {
+   "absorb_seconds": 0.00214389999746345,
+   "active_counts": [
+    2
+   ],
+   "check": "--",
+   "complexity": 803,
+   "dim": 4,
+   "hv": 1.2016467875851735,
+   "integrate_seconds": 0.047612199996365234,
+   "n": 800,
+   "nodes": 1,
+   "surviving": 0,
+   "terms_high_water": 1,
+   "total_seconds": 0.05134829998132773
+  },
+  {
+   "absorb_seconds": 0.002355500007979572,
+   "active_counts": [
+    2
+   ],
+   "check": "--",
+   "complexity": 903,
+   "dim": 4,
+   "hv": 1.2030200028897202,
+   "integrate_seconds": 0.05929799997829832,
+   "n": 900,
+   "nodes": 1,
+   "surviving": 0,
+   "terms_high_water": 1,
+   "total_seconds": 0.06322650000220165
+  },
+  {
+   "absorb_seconds": 0.002604100009193644,
+   "active_counts": [
+    2
+   ],
+   "check": "--",
+   "complexity": 1003,
+   "dim": 4,
+   "hv": 1.2041204490366342,
+   "integrate_seconds": 0.07248129998333752,
+   "n": 1000,
+   "nodes": 1,
+   "surviving": 0,
+   "terms_high_water": 1,
+   "total_seconds": 0.07599869999103248
+  },
+  {
+   "absorb_seconds": 0.00030949999927543104,
+   "active_counts": [
+    2
+   ],
+   "check": "ok",
+   "complexity": 94,
+   "dim": 6,
+   "hv": 1.3721421258760103,
+   "integrate_seconds": 0.0012223999947309494,
+   "n": 90,
+   "nodes": 1,
+   "surviving": 0,
+   "terms_high_water": 1,
+   "total_seconds": 0.0016291000065393746
+  },
+  {
+   "absorb_seconds": 0.0005849000008311123,
+   "active_counts": [
+    2
+   ],
+   "check": "ok",
+   "complexity": 184,
+   "dim": 6,
+   "hv": 1.499901935136325,
+   "integrate_seconds": 0.0031633000180590898,
+   "n": 180,
+   "nodes": 1,
+   "surviving": 0,
+   "terms_high_water": 1,
+   "total_seconds": 0.004723999998532236
+  },
+  {
+   "absorb_seconds": 0.0008023999980650842,
+   "active_counts": [
+    2
+   ],
+   "check": "--",
+   "complexity": 274,
+   "dim": 6,
+   "hv": 1.5465182378977462,
+   "integrate_seconds": 0.005125399999087676,
+   "n": 270,
+   "nodes": 1,
+   "surviving": 0,
+   "terms_high_water": 1,
+   "total_seconds": 0.006621999986236915
+  },
+  {
+   "absorb_seconds": 0.0010418999881949276,
+   "active_counts": [
+    2
+   ],
+   "check": "--",
+   "complexity": 364,
+   "dim": 6,
+   "hv": 1.5706517296687919,
+   "integrate_seconds": 0.008047900017118081,
+   "n": 360,
+   "nodes": 1,
+   "surviving": 0,
+   "terms_high_water": 1,
+   "total_seconds": 0.010353799996664748
+  },
+  {
+   "absorb_seconds": 0.001235899981111288,
+   "active_counts": [
+    2
+   ],
+   "check": "--",
+   "complexity": 454,
+   "dim": 6,
+   "hv": 1.5854056680121804,
+   "integrate_seconds": 0.012343799986410886,
+   "n": 450,
+   "nodes": 1,
+   "surviving": 0,
+   "terms_high_water": 1,
+   "total_seconds": 0.014166699984343722
+  },
+  {
+   "absorb_seconds": 0.0014496000076178461,
+   "active_counts": [
+    2
+   ],
+   "check": "--",
+   "complexity": 544,
+   "dim": 6,
+   "hv": 1.5953580659178426,
+   "integrate_seconds": 0.0163079000194557,
+   "n": 540,
+   "nodes": 1,
+   "surviving": 0,
+   "terms_high_water": 1,
+   "total_seconds": 0.018676200008485466
+  },
+  {
+   "absorb_seconds": 0.0016946000105235726,
+   "active_counts": [
+    2
+   ],
+   "check": "--",
+   "complexity": 634,
+   "dim": 6,
+   "hv": 1.6025247047095152,
+   "integrate_seconds": 0.021644300024490803,
+   "n": 630,
+   "nodes": 1,
+   "surviving": 0,
+   "terms_high_water": 1,
+   "total_seconds": 0.02489999998942949
+  },
+  {
+   "absorb_seconds": 0.0019178999937139452,
+   "active_counts": [
+    2
+   ],
+   "check": "--",
+   "complexity": 724,
+   "dim": 6,
+   "hv": 1.6079315757977974,
+   "integrate_seconds": 0.027088800008641556,
+   "n": 720,
+   "nodes": 1,
+   "surviving": 0,
+   "terms_high_water": 1,
+   "total_seconds": 0.03131099999882281
+  },
+  {
+   "absorb_seconds": 0.0023087000008672476,
+   "active_counts": [
+    2
+   ],
+   "check": "--",
+   "complexity": 814,
+   "dim": 6,
+   "hv": 1.6121559483214376,
+   "integrate_seconds": 0.04005340000730939,
+   "n": 810,
+   "nodes": 1,
+   "surviving": 0,
+   "terms_high_water": 1,
+   "total_seconds": 0.049463899980764836
+  },
+  {
+   "absorb_seconds": 0.00377520002075471,
+   "active_counts": [
+    2
+   ],
+   "check": "--",
+   "complexity": 904,
+   "dim": 6,
+   "hv": 1.6155474975491613,
+   "integrate_seconds": 0.052268700004788116,
+   "n": 900,
+   "nodes": 1,
+   "surviving": 0,
+   "terms_high_water": 1,
+   "total_seconds": 0.05962559999898076
+  },
+  {
+   "absorb_seconds": 0.0001824999926611781,
+   "active_counts": [
+    2
+   ],
+   "check": "ok",
+   "complexity": 33,
+   "dim": 8,
+   "hv": 0.8670649806618462,
+   "integrate_seconds": 0.0011055000068154186,
+   "n": 28,
+   "nodes": 1,
+   "surviving": 0,
+   "terms_high_water": 1,
+   "total_seconds": 0.0012774999777320772
+  },
+  {
+   "absorb_seconds": 0.00026879998040385544,
+   "active_counts": [
+    2
+   ],
+   "check": "ok",
+   "complexity": 65,
+   "dim": 8,
+   "hv": 1.3268707340149481,
+   "integrate_seconds": 0.0014005999837536365,
+   "n": 60,
+   "nodes": 1,
+   "surviving": 0,
+   "terms_high_water": 1,
+   "total_seconds": 0.0017550000047776848
+  },
+  {
+   "absorb_seconds": 0.0004956999910064042,
+   "active_counts": [
+    2
+   ],
+   "check": "--",
+   "complexity": 93,
+   "dim": 8,
+   "hv": 1.5174291609115125,
+   "integrate_seconds": 0.0014872000028844923,
+   "n": 88,
+   "nodes": 1,
+   "surviving": 0,
+   "terms_high_water": 1,
+   "total_seconds": 0.0019515999883878976
+  },
+  {
+   "absorb_seconds": 0.000447300000814721,
+   "active_counts": [
+    2
+   ],
+   "check": "--",
+   "complexity": 125,
+   "dim": 8,
+   "hv": 1.6442511731266953,
+   "integrate_seconds": 0.0018521000165492296,
+   "n": 120,
+   "nodes": 1,
+   "surviving": 0,
+   "terms_high_water": 1,
+   "total_seconds": 0.002530900004785508
+  },
+  {
+   "absorb_seconds": 0.0005819000070914626,
+   "active_counts": [
+    2
+   ],
+   "check": "--",
+   "complexity": 153,
+   "dim": 8,
+   "hv": 1.7162459199657258,
+   "integrate_seconds": 0.002316999976756051,
+   "n": 148,
+   "nodes": 1,
+   "surviving": 0,
+   "terms_high_water": 1,
+   "total_seconds": 0.002875200007110834
+  },
+  {
+   "absorb_seconds": 0.0005873000191058964,
+   "active_counts": [
+    2
+   ],
+   "check": "--",
+   "complexity": 185,
+   "dim": 8,
+   "hv": 1.7741304588590046,
+   "integrate_seconds": 0.0026925000129267573,
+   "n": 180,
+   "nodes": 1,
+   "surviving": 0,
+   "terms_high_water": 1,
+   "total_seconds": 0.0036585000052582473
+  },
+  {
+   "absorb_seconds": 0.0006499000010080636,
+   "active_counts": [
+    2
+   ],
+   "check": "--",
+   "complexity": 213,
+   "dim": 8,
+   "hv": 1.811571812932051,
+   "integrate_seconds": 0.0030835999932605773,
+   "n": 208,
+   "nodes": 1,
+   "surviving": 0,
+   "terms_high_water": 1,
+   "total_seconds": 0.004464899975573644
+  },
+  {
+   "absorb_seconds": 0.000754000007873401,
+   "active_counts": [
+    2
+   ],
+   "check": "--",
+   "complexity": 245,
+   "dim": 8,
+   "hv": 1.8445585270018974,
+   "integrate_seconds": 0.0039394999912474304,
+   "n": 240,
+   "nodes": 1,
+   "surviving": 0,
+   "terms_high_water": 1,
+   "total_seconds": 0.005033500026911497
+  },
+  {
+   "absorb_seconds": 0.000822900008643046,
+   "active_counts": [
+    2
+   ],
+   "check": "--",
+   "complexity": 273,
+   "dim": 8,
+   "hv": 1.8674450103959097,
+   "integrate_seconds": 0.004732600005809218,
+   "n": 268,
+   "nodes": 1,
+   "surviving": 0,
+   "terms_high_water": 1,
+   "total_seconds": 0.006046400027116761
+  },
+  {
+   "absorb_seconds": 0.0009457000123802572,
+   "active_counts": [
+    2
+   ],
+   "check": "--",
+   "complexity": 305,
+   "dim": 8,
+   "hv": 1.8887217190474028,
+   "integrate_seconds": 0.005240700003923848,
+   "n": 300,
+   "nodes": 1,
+   "surviving": 0,
+   "terms_high_water": 1,
+   "total_seconds": 0.006949800008442253
+  },
+  {
+   "absorb_seconds": 0.0002893999917432666,
+   "active_counts": [
+    2
+   ],
+   "check": "ok",
+   "complexity": 21,
+   "dim": 10,
+   "hv": 0.3321868177000005,
+   "integrate_seconds": 0.0018037999980151653,
+   "n": 15,
+   "nodes": 1,
+   "surviving": 0,
+   "terms_high_water": 1,
+   "total_seconds": 0.0009757999796420336
+  },
+  {
+   "absorb_seconds": 0.00015639999764971435,
+   "active_counts": [
+    2
+   ],
+   "check": "ok",
+   "complexity": 36,
+   "dim": 10,
+   "hv": 0.7551675246039972,
+   "integrate_seconds": 0.0009151000122074038,
+   "n": 30,
+   "nodes": 1,
+   "surviving": 0,
+   "terms_high_water": 1,
+   "total_seconds": 0.0011033999908249825
+  },
+  {
+   "absorb_seconds": 0.00022310001077130437,
+   "active_counts": [
+    2
+   ],
+   "check": "--",
+   "complexity": 51,
+   "dim": 10,
+   "hv": 1.0711120279861084,
+   "integrate_seconds": 0.0016344999894499779,
+   "n": 45,
+   "nodes": 1,
+   "surviving": 0,
+   "terms_high_water": 1,
+   "total_seconds": 0.0013838000013493001
+  },
+  {
+   "absorb_seconds": 0.0002474999928381294,
+   "active_counts": [
+    2
+   ],
+   "check": "--",
+   "complexity": 66,
+   "dim": 10,
+   "hv": 1.300289194725261,
+   "integrate_seconds": 0.0011965000012423843,
+   "n": 60,
+   "nodes": 1,
+   "surviving": 0,
+   "terms_high_water": 1,
+   "total_seconds": 0.0016008999955374748
+  },
+  {
+   "absorb_seconds": 0.000298400002066046,
+   "active_counts": [
+    2
+   ],
+   "check": "--",
+   "complexity": 81,
+   "dim": 10,
+   "hv": 1.470963557850971,
+   "integrate_seconds": 0.0013515000173356384,
+   "n": 75,
+   "nodes": 1,
+   "surviving": 0,
+   "terms_high_water": 1,
+   "total_seconds": 0.0017939000099431723
+  },
+  {
+   "absorb_seconds": 0.00034729999606497586,
+   "active_counts": [
+    2
+   ],
+   "check": "--",
+   "complexity": 96,
+   "dim": 10,
+   "hv": 1.602059188474317,
+   "integrate_seconds": 0.0014792000001762062,
+   "n": 90,
+   "nodes": 1,
+   "surviving": 0,
+   "terms_high_water": 1,
+   "total_seconds": 0.0031478000164497644
+  },
+  {
+   "absorb_seconds": 0.0003921999887097627,
+   "active_counts": [
+    2
+   ],
+   "check": "--",
+   "complexity": 111,
+   "dim": 10,
+   "hv": 1.7055622871345935,
+   "integrate_seconds": 0.0016771999944467098,
+   "n": 105,
+   "nodes": 1,
+   "surviving": 0,
+   "terms_high_water": 1,
+   "total_seconds": 0.002264599985210225
+  },
+  {
+   "absorb_seconds": 0.0005185999907553196,
+   "active_counts": [
+    2
+   ],
+   "check": "--",
+   "complexity": 126,
+   "dim": 10,
+   "hv": 1.7892032436594054,
+   "integrate_seconds": 0.0019092000147793442,
+   "n": 120,
+   "nodes": 1,
+   "surviving": 0,
+   "terms_high_water": 1,
+   "total_seconds": 0.0026459000073373318
+  },
+  {
+   "absorb_seconds": 0.0005141999863553792,
+   "active_counts": [
+    2
+   ],
+   "check": "--",
+   "complexity": 141,
+   "dim": 10,
+   "hv": 1.858125887808467,
+   "integrate_seconds": 0.0023427999985869974,
+   "n": 135,
+   "nodes": 1,
+   "surviving": 0,
+   "terms_high_water": 1,
+   "total_seconds": 0.0028224999841768295
+  },
+  {
+   "absorb_seconds": 0.0005519000114873052,
+   "active_counts": [
+    2
+   ],
+   "check": "--",
+   "complexity": 156,
+   "dim": 10,
+   "hv": 1.915862916429179,
+   "integrate_seconds": 0.0021912000083830208,
+   "n": 150,
+   "nodes": 1,
+   "surviving": 0,
+   "terms_high_water": 1,
+   "total_seconds": 0.003108799981418997
+  }
+ ],
+ "reference": 1.1,
+ "summaries": [
+  {
+   "dim": 4,
+   "exp_absorb": 0.9413442299158613,
+   "exp_integrate": 1.7135496922535798,
+   "exp_total": 1.583117830691688,
+   "max_nodes": 1,
+   "max_surviving": 0
+  },
+  {
+   "dim": 6,
+   "exp_absorb": 0.9611286282818037,
+   "exp_integrate": 1.6009919452838266,
+   "exp_total": 1.5071320151362713,
+   "max_nodes": 1,
+   "max_surviving": 0
+  },
+  {
+   "dim": 8,
+   "exp_absorb": 0.6675309904458656,
+   "exp_integrate": 0.6749016577767779,
+   "exp_total": 0.7252824414908398,
+   "max_nodes": 1,
+   "max_surviving": 0
+  },
+  {
+   "dim": 10,
+   "exp_absorb": 0.42479675383777893,
+   "exp_integrate": 0.18529881499100892,
+   "exp_total": 0.551193620999512,
+   "max_nodes": 1,
+   "max_surviving": 0
+  }
+ ]
+}

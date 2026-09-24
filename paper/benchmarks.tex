@@ -189,9 +189,10 @@ $d$ & $n$ & $b{=}2$ & $b{=}8$ & $b{=}2$ & $b{=}8$ \\
 
 \subsection{Recursion size}
 
-Node counts are reported by the C port; they measure the size of the recursion
-tree and are independent of language. Table~\ref{tab:nodes} shows how the two
-datasets differ in the work they induce at equal $n$.
+Node counts measure the size of the recursion tree itself, so they are
+independent of language and of per-node constant factors --- they are the
+quantity the two complexity bounds actually bound. Table~\ref{tab:nodes} shows
+how the two datasets differ in the work they induce at equal $n$.
 
 \begin{table}[htbp]
 \centering
@@ -223,6 +224,184 @@ $d$ & $n$ & \textsf{cliff} & \textsf{spherical} \\
 \label{tab:nodes}
 \end{table}
 
+Those counts come from the Section-2 recursion in C. The Section-4.2 algorithm
+cuts on $(d-3)$-faces rather than $(d-2)$-faces, so its tree should be smaller,
+and should grow with an exponent of $d/3$ rather than $d/2$. Running both
+solvers over the same instances (\texttt{benchmarks/node\_counts.py}, on a
+denser size ladder than the timing runs use) gives
+Table~\ref{tab:nodescompare}: the Section-4.2 tree is smaller on every instance
+measured, by a factor between 2.0 and 9.1.
+
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabular}{rrrrrrrr}
+\toprule
+  &   & \multicolumn{3}{c}{\textsf{cliff}} & \multicolumn{3}{c}{\textsf{spherical}} \\
+\cmidrule(lr){3-5}\cmidrule(l){6-8}
+$d$ & $n$ & $d/2$ & $d/3$ & ratio & $d/2$ & $d/3$ & ratio \\
+\midrule
+3 & 50 & 175 & 31 & 5.6$\times$ & 229 & 31 & 7.4$\times$ \\
+3 & 100 & 417 & 67 & 6.2$\times$ & 455 & 69 & 6.6$\times$ \\
+3 & 200 & 891 & 139 & 6.4$\times$ & 933 & 139 & 6.7$\times$ \\
+3 & 400 & 2\,345 & 283 & 8.3$\times$ & 1\,947 & 283 & 6.9$\times$ \\
+3 & 800 & 5\,193 & 571 & 9.1$\times$ & 3\,891 & 571 & 6.8$\times$ \\
+\addlinespace[2pt]
+4 & 30 & 245 & 115 & 2.1$\times$ & 427 & 113 & 3.8$\times$ \\
+4 & 60 & 651 & 247 & 2.6$\times$ & 1\,141 & 285 & 4.0$\times$ \\
+4 & 120 & 1\,771 & 685 & 2.6$\times$ & 3\,143 & 769 & 4.1$\times$ \\
+4 & 240 & 5\,279 & 1\,695 & 3.1$\times$ & 7\,109 & 1\,989 & 3.6$\times$ \\
+\addlinespace[2pt]
+5 & 20 & 431 & 165 & 2.6$\times$ & 573 & 161 & 3.6$\times$ \\
+5 & 40 & 1\,283 & 531 & 2.4$\times$ & 2\,477 & 581 & 4.3$\times$ \\
+5 & 80 & 3\,541 & 1\,495 & 2.4$\times$ & 9\,017 & 2\,111 & 4.3$\times$ \\
+5 & 160 & 12\,549 & 5\,111 & 2.5$\times$ & 26\,945 & 7\,113 & 3.8$\times$ \\
+\addlinespace[2pt]
+7 & 12 & 559 & 281 & 2.0$\times$ & 1\,015 & 283 & 3.6$\times$ \\
+7 & 25 & 4\,647 & 1\,515 & 3.1$\times$ & 7\,751 & 1\,751 & 4.4$\times$ \\
+7 & 50 & 19\,959 & 7\,163 & 2.8$\times$ & 57\,093 & 10\,557 & 5.4$\times$ \\
+7 & 100 & 75\,673 & 29\,857 & 2.5$\times$ & 316\,667 & 60\,361 & 5.2$\times$ \\
+\addlinespace[2pt]
+9 & 10 & 933 & 435 & 2.1$\times$ & 1\,775 & 645 & 2.8$\times$ \\
+9 & 20 & 15\,215 & 4\,515 & 3.4$\times$ & 28\,195 & 5\,521 & 5.1$\times$ \\
+9 & 40 & 95\,453 & 31\,613 & 3.0$\times$ & 346\,421 & 50\,799 & 6.8$\times$ \\
+\addlinespace[2pt]
+10 & 10 & 1\,727 & 827 & 2.1$\times$ & 2\,765 & 893 & 3.1$\times$ \\
+10 & 20 & 29\,397 & 7\,761 & 3.8$\times$ & 65\,613 & 11\,049 & 5.9$\times$ \\
+10 & 40 & 270\,681 & 83\,157 & 3.3$\times$ & 884\,199 & 132\,923 & 6.7$\times$ \\
+\addlinespace[2pt]
+\bottomrule
+\end{tabular}
+\caption{Recursion nodes, Section 2 versus Section 4.2, same instances. Both
+columns are the Python implementations, so they differ from Table~\ref{tab:nodes},
+which reports the C port; the two ports resolve ties in the weighted median
+slightly differently and so explore marginally different trees.}
+\label{tab:nodescompare}
+\end{table}
+
+Whether the \emph{exponent} improves is a harder question than whether the tree
+is smaller. Table~\ref{tab:nodesexp} fits $\text{nodes} \sim n^{x}$ per
+dimension and dataset. Both algorithms stay far below their worst-case
+exponents on these instances. The Section-4.2 fit is the lower of the two in
+9 of 12 cases, and --- the part that matters --- the gap
+widens with $d$, which is where the two bounds diverge: at $d = 10$ the fits are
+4.16 against 3.61 on \textsf{spherical}. The exceptions
+all sit at low $d$, where $d/2$ and $d/3$ are closest together and the two fits
+differ by less than $0.05$ --- within the noise of a fit taken over a four- to
+eight-fold range in $n$, at sizes where constant factors still dominate. These
+numbers are evidence that the implementations behave as the theory says they
+should; they are not a measurement of the asymptotic exponent.
+
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabular}{rrrrrrr}
+\toprule
+  & \multicolumn{2}{c}{\textsf{cliff}} & \multicolumn{2}{c}{\textsf{spherical}} & \multicolumn{2}{c}{worst case} \\
+\cmidrule(lr){2-3}\cmidrule(lr){4-5}\cmidrule(l){6-7}
+$d$ & $d/2$ & $d/3$ & $d/2$ & $d/3$ & $d/2$ & $d/3$ \\
+\midrule
+3 & 1.23 & 1.05 & 1.03 & 1.04 & 1.5 & 1.00 \\
+4 & 1.47 & 1.31 & 1.36 & 1.38 & 2.0 & 1.33 \\
+5 & 1.61 & 1.64 & 1.85 & 1.83 & 2.5 & 1.67 \\
+7 & 2.30 & 2.21 & 2.73 & 2.54 & 3.5 & 2.33 \\
+9 & 3.34 & 3.09 & 3.80 & 3.15 & 4.5 & 3.00 \\
+10 & 3.65 & 3.33 & 4.16 & 3.61 & 5.0 & 3.33 \\
+\bottomrule
+\end{tabular}
+\caption{Fitted node-count exponents against the worst-case exponents.}
+\label{tab:nodesexp}
+\end{table}
+
+One further observation from the same runs: the term high-water mark of the
+Section-4.2 solver is $1$ on every instance in this table. For grounded
+orthants, absorption only adds or merges conditions and never multiplies terms,
+so the $\tilde F$ compression --- the only operation that can multiply them ---
+never needs to fire.
+
+
+
+\subsection{Space}
+
+The recursion is depth first, and each node keeps its own clipped box array
+alive while its first child runs, so peak memory is the sum along a
+root-to-leaf path rather than the largest single node. Chan's analysis makes
+that sum geometric --- the $(d-2)$-face weight falls by $2^{2/d}$ per level ---
+and therefore linear. Table~\ref{tab:space} confirms it empirically
+(\texttt{benchmarks/space\_profile.py}): the fitted exponent of peak live boxes
+in $n$ is 0.88--1.04 across both datasets and
+$d = 3, \dots, 7$, with a constant that grows roughly like $2d$ boxes per input
+box. A box costs $2d$ doubles, so peak memory is $O(d^2 n)$ words.
+
+\begin{table}[htbp]
+\centering
+\begin{tabular}{rrrrr}
+\toprule
+  & \multicolumn{2}{c}{\textsf{cliff}} & \multicolumn{2}{c}{\textsf{spherical}} \\
+\cmidrule(lr){2-3}\cmidrule(l){4-5}
+$d$ & peak$/n$ & exponent & peak$/n$ & exponent \\
+\midrule
+3 & 4.2 & 1.00 & 4.4 & 0.98 \\
+4 & 5.7 & 0.99 & 6.3 & 0.93 \\
+5 & 7.0 & 1.01 & 9.1 & 0.97 \\
+6 & 8.5 & 0.89 & 12.1 & 1.04 \\
+7 & 10.3 & 0.88 & 15.2 & 1.00 \\
+\bottomrule
+\end{tabular}
+\caption{Peak live boxes per input box, and the fitted exponent in $n$.}
+\label{tab:space}
+\end{table}
+
+Note that \emph{cumulative} allocation is a different quantity and is
+superlinear: every one of the $O(n^{d/2})$ nodes allocates a fresh array. Those
+arrays die with their node, so they never coexist.
+
+
+\section{A family where the Section-4.2 recursion collapses}
+
+The \textsf{wfg\_hard} instances\footnote{From the \texttt{moo-nondominated-sets}
+collection, \url{https://github.com/renaudlr/moo-nondominated-sets}.} are built
+so that each point is non-dominated through only two of its objectives, the
+remaining coordinates being tied. Relative to the root cell every orthant
+therefore has exactly two \emph{active} constraints --- and an orthant with at
+most two active constraints is precisely what the Section-4.1 simplification
+absorbs, as a slab or a 2-sided orthant. The prediction is that the Section-4.2
+recursion never cuts at all.
+
+That is exactly what happens (\texttt{benchmarks/wfg\_hard\_probe.py}). On
+every instance tested the set of active-constraint counts is exactly
+$\{2\}$ --- not merely concentrated there --- so the surviving set $\bar B$ is
+empty at the root and the recursion terminates in a single node, for every
+dimension and every size:
+
+\begin{table}[htbp]
+\centering
+\begin{tabular}{rrrrrrr}
+\toprule
+$d$ & $n$ range & $|\bar B|$ & nodes & absorb (max) & integrate (max) & total exp. \\
+\midrule
+4 & 100--1000 & 0 & 1 & 0.0026 & 0.0725 & 1.58 \\
+6 & 90--900 & 0 & 1 & 0.0038 & 0.0523 & 1.51 \\
+8 & 28--300 & 0 & 1 & 0.00095 & 0.0052 & 0.73 \\
+10 & 15--150 & 0 & 1 & 0.00055 & 0.0023 & 0.55 \\
+\bottomrule
+\end{tabular}
+\caption{\textsf{wfg\_hard}: the recursion collapses to its base case. Times
+are the per-phase maxima over the sizes in the range.}
+\label{tab:wfghard}
+\end{table}
+
+The whole computation is thus one absorption followed by one integration of a
+single basic function, and the phase split shows where the time goes: the
+absorption is linear and negligible, while the integration --- Lemma 4.4 ---
+dominates and is superlinear, so the total does not reach the $O(n \log n)$
+that the collapse would otherwise allow. The engine does not exploit that in
+this family the $d/2$ staircase conditions live on \emph{disjoint} axis pairs,
+so the integral factorises into $d/2$ independent two-dimensional integrals;
+integrating the axes one by one in the general way costs more. This is an
+implementation limit rather than an algorithmic one, and it is the clearest
+target for future work on this code.
+
 \section{Agreement}
 
 Across 24 cases in which more than one variant completed, the largest
@@ -232,7 +411,7 @@ Section 4.2), two languages, and two base-case settings therefore agree to
 within floating-point rounding on every case measured. This is the strongest
 correctness statement available without an exact-arithmetic oracle, and it is
 what the reader should weigh most heavily: the timings below are only
-meaningful because all six variants compute the same number.
+meaningful because all 9 variants compute the same number.
 
 \section{Discussion}
 

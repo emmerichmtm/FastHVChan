@@ -1,0 +1,538 @@
+{
+ "dims": [
+  3,
+  4,
+  5,
+  7,
+  9,
+  10
+ ],
+ "exponents": [
+  {
+   "dataset": "spherical",
+   "dim": 3,
+   "exp_dby2": 1.027075738738606,
+   "exp_dby3": 1.044243503600565
+  },
+  {
+   "dataset": "spherical",
+   "dim": 4,
+   "exp_dby2": 1.363385946027199,
+   "exp_dby3": 1.3844967474165393
+  },
+  {
+   "dataset": "spherical",
+   "dim": 5,
+   "exp_dby2": 1.8530069565591103,
+   "exp_dby3": 1.825729322020827
+  },
+  {
+   "dataset": "spherical",
+   "dim": 7,
+   "exp_dby2": 2.726094573680545,
+   "exp_dby3": 2.535192531218249
+  },
+  {
+   "dataset": "spherical",
+   "dim": 9,
+   "exp_dby2": 3.804281776937742,
+   "exp_dby3": 3.149678563224035
+  },
+  {
+   "dataset": "spherical",
+   "dim": 10,
+   "exp_dby2": 4.160473905983491,
+   "exp_dby3": 3.6088574343350177
+  },
+  {
+   "dataset": "cliff",
+   "dim": 3,
+   "exp_dby2": 1.2273751430469009,
+   "exp_dby3": 1.0484870302326048
+  },
+  {
+   "dataset": "cliff",
+   "dim": 4,
+   "exp_dby2": 1.4732067798590456,
+   "exp_dby3": 1.3116331467501205
+  },
+  {
+   "dataset": "cliff",
+   "dim": 5,
+   "exp_dby2": 1.605585784612952,
+   "exp_dby3": 1.6352564703544503
+  },
+  {
+   "dataset": "cliff",
+   "dim": 7,
+   "exp_dby2": 2.297170914668876,
+   "exp_dby3": 2.2051972054043
+  },
+  {
+   "dataset": "cliff",
+   "dim": 9,
+   "exp_dby2": 3.338384824808859,
+   "exp_dby3": 3.0916793694741616
+  },
+  {
+   "dataset": "cliff",
+   "dim": 10,
+   "exp_dby2": 3.6460908652248483,
+   "exp_dby3": 3.325903286180011
+  }
+ ],
+ "records": [
+  {
+   "compressions": 0,
+   "dataset": "spherical",
+   "dim": 3,
+   "n": 50,
+   "nodes_dby2": 229,
+   "nodes_dby3": 31,
+   "terms_high_water": 1
+  },
+  {
+   "compressions": 0,
+   "dataset": "spherical",
+   "dim": 3,
+   "n": 100,
+   "nodes_dby2": 455,
+   "nodes_dby3": 69,
+   "terms_high_water": 1
+  },
+  {
+   "compressions": 0,
+   "dataset": "spherical",
+   "dim": 3,
+   "n": 200,
+   "nodes_dby2": 933,
+   "nodes_dby3": 139,
+   "terms_high_water": 1
+  },
+  {
+   "compressions": 0,
+   "dataset": "spherical",
+   "dim": 3,
+   "n": 400,
+   "nodes_dby2": 1947,
+   "nodes_dby3": 283,
+   "terms_high_water": 1
+  },
+  {
+   "compressions": 0,
+   "dataset": "spherical",
+   "dim": 3,
+   "n": 800,
+   "nodes_dby2": 3891,
+   "nodes_dby3": 571,
+   "terms_high_water": 1
+  },
+  {
+   "compressions": 0,
+   "dataset": "spherical",
+   "dim": 4,
+   "n": 30,
+   "nodes_dby2": 427,
+   "nodes_dby3": 113,
+   "terms_high_water": 1
+  },
+  {
+   "compressions": 0,
+   "dataset": "spherical",
+   "dim": 4,
+   "n": 60,
+   "nodes_dby2": 1141,
+   "nodes_dby3": 285,
+   "terms_high_water": 1
+  },
+  {
+   "compressions": 0,
+   "dataset": "spherical",
+   "dim": 4,
+   "n": 120,
+   "nodes_dby2": 3143,
+   "nodes_dby3": 769,
+   "terms_high_water": 1
+  },
+  {
+   "compressions": 0,
+   "dataset": "spherical",
+   "dim": 4,
+   "n": 240,
+   "nodes_dby2": 7109,
+   "nodes_dby3": 1989,
+   "terms_high_water": 1
+  },
+  {
+   "compressions": 0,
+   "dataset": "spherical",
+   "dim": 5,
+   "n": 20,
+   "nodes_dby2": 573,
+   "nodes_dby3": 161,
+   "terms_high_water": 1
+  },
+  {
+   "compressions": 0,
+   "dataset": "spherical",
+   "dim": 5,
+   "n": 40,
+   "nodes_dby2": 2477,
+   "nodes_dby3": 581,
+   "terms_high_water": 1
+  },
+  {
+   "compressions": 0,
+   "dataset": "spherical",
+   "dim": 5,
+   "n": 80,
+   "nodes_dby2": 9017,
+   "nodes_dby3": 2111,
+   "terms_high_water": 1
+  },
+  {
+   "compressions": 0,
+   "dataset": "spherical",
+   "dim": 5,
+   "n": 160,
+   "nodes_dby2": 26945,
+   "nodes_dby3": 7113,
+   "terms_high_water": 1
+  },
+  {
+   "compressions": 0,
+   "dataset": "spherical",
+   "dim": 7,
+   "n": 12,
+   "nodes_dby2": 1015,
+   "nodes_dby3": 283,
+   "terms_high_water": 1
+  },
+  {
+   "compressions": 0,
+   "dataset": "spherical",
+   "dim": 7,
+   "n": 25,
+   "nodes_dby2": 7751,
+   "nodes_dby3": 1751,
+   "terms_high_water": 1
+  },
+  {
+   "compressions": 0,
+   "dataset": "spherical",
+   "dim": 7,
+   "n": 50,
+   "nodes_dby2": 57093,
+   "nodes_dby3": 10557,
+   "terms_high_water": 1
+  },
+  {
+   "compressions": 0,
+   "dataset": "spherical",
+   "dim": 7,
+   "n": 100,
+   "nodes_dby2": 316667,
+   "nodes_dby3": 60361,
+   "terms_high_water": 1
+  },
+  {
+   "compressions": 0,
+   "dataset": "spherical",
+   "dim": 9,
+   "n": 10,
+   "nodes_dby2": 1775,
+   "nodes_dby3": 645,
+   "terms_high_water": 1
+  },
+  {
+   "compressions": 0,
+   "dataset": "spherical",
+   "dim": 9,
+   "n": 20,
+   "nodes_dby2": 28195,
+   "nodes_dby3": 5521,
+   "terms_high_water": 1
+  },
+  {
+   "compressions": 0,
+   "dataset": "spherical",
+   "dim": 9,
+   "n": 40,
+   "nodes_dby2": 346421,
+   "nodes_dby3": 50799,
+   "terms_high_water": 1
+  },
+  {
+   "compressions": 0,
+   "dataset": "spherical",
+   "dim": 10,
+   "n": 10,
+   "nodes_dby2": 2765,
+   "nodes_dby3": 893,
+   "terms_high_water": 1
+  },
+  {
+   "compressions": 0,
+   "dataset": "spherical",
+   "dim": 10,
+   "n": 20,
+   "nodes_dby2": 65613,
+   "nodes_dby3": 11049,
+   "terms_high_water": 1
+  },
+  {
+   "compressions": 0,
+   "dataset": "spherical",
+   "dim": 10,
+   "n": 40,
+   "nodes_dby2": 884199,
+   "nodes_dby3": 132923,
+   "terms_high_water": 1
+  },
+  {
+   "compressions": 0,
+   "dataset": "cliff",
+   "dim": 3,
+   "n": 50,
+   "nodes_dby2": 175,
+   "nodes_dby3": 31,
+   "terms_high_water": 1
+  },
+  {
+   "compressions": 0,
+   "dataset": "cliff",
+   "dim": 3,
+   "n": 100,
+   "nodes_dby2": 417,
+   "nodes_dby3": 67,
+   "terms_high_water": 1
+  },
+  {
+   "compressions": 0,
+   "dataset": "cliff",
+   "dim": 3,
+   "n": 200,
+   "nodes_dby2": 891,
+   "nodes_dby3": 139,
+   "terms_high_water": 1
+  },
+  {
+   "compressions": 0,
+   "dataset": "cliff",
+   "dim": 3,
+   "n": 400,
+   "nodes_dby2": 2345,
+   "nodes_dby3": 283,
+   "terms_high_water": 1
+  },
+  {
+   "compressions": 0,
+   "dataset": "cliff",
+   "dim": 3,
+   "n": 800,
+   "nodes_dby2": 5193,
+   "nodes_dby3": 571,
+   "terms_high_water": 1
+  },
+  {
+   "compressions": 0,
+   "dataset": "cliff",
+   "dim": 4,
+   "n": 30,
+   "nodes_dby2": 245,
+   "nodes_dby3": 115,
+   "terms_high_water": 1
+  },
+  {
+   "compressions": 0,
+   "dataset": "cliff",
+   "dim": 4,
+   "n": 60,
+   "nodes_dby2": 651,
+   "nodes_dby3": 247,
+   "terms_high_water": 1
+  },
+  {
+   "compressions": 0,
+   "dataset": "cliff",
+   "dim": 4,
+   "n": 120,
+   "nodes_dby2": 1771,
+   "nodes_dby3": 685,
+   "terms_high_water": 1
+  },
+  {
+   "compressions": 0,
+   "dataset": "cliff",
+   "dim": 4,
+   "n": 240,
+   "nodes_dby2": 5279,
+   "nodes_dby3": 1695,
+   "terms_high_water": 1
+  },
+  {
+   "compressions": 0,
+   "dataset": "cliff",
+   "dim": 5,
+   "n": 20,
+   "nodes_dby2": 431,
+   "nodes_dby3": 165,
+   "terms_high_water": 1
+  },
+  {
+   "compressions": 0,
+   "dataset": "cliff",
+   "dim": 5,
+   "n": 40,
+   "nodes_dby2": 1283,
+   "nodes_dby3": 531,
+   "terms_high_water": 1
+  },
+  {
+   "compressions": 0,
+   "dataset": "cliff",
+   "dim": 5,
+   "n": 80,
+   "nodes_dby2": 3541,
+   "nodes_dby3": 1495,
+   "terms_high_water": 1
+  },
+  {
+   "compressions": 0,
+   "dataset": "cliff",
+   "dim": 5,
+   "n": 160,
+   "nodes_dby2": 12549,
+   "nodes_dby3": 5111,
+   "terms_high_water": 1
+  },
+  {
+   "compressions": 0,
+   "dataset": "cliff",
+   "dim": 7,
+   "n": 12,
+   "nodes_dby2": 559,
+   "nodes_dby3": 281,
+   "terms_high_water": 1
+  },
+  {
+   "compressions": 0,
+   "dataset": "cliff",
+   "dim": 7,
+   "n": 25,
+   "nodes_dby2": 4647,
+   "nodes_dby3": 1515,
+   "terms_high_water": 1
+  },
+  {
+   "compressions": 0,
+   "dataset": "cliff",
+   "dim": 7,
+   "n": 50,
+   "nodes_dby2": 19959,
+   "nodes_dby3": 7163,
+   "terms_high_water": 1
+  },
+  {
+   "compressions": 0,
+   "dataset": "cliff",
+   "dim": 7,
+   "n": 100,
+   "nodes_dby2": 75673,
+   "nodes_dby3": 29857,
+   "terms_high_water": 1
+  },
+  {
+   "compressions": 0,
+   "dataset": "cliff",
+   "dim": 9,
+   "n": 10,
+   "nodes_dby2": 933,
+   "nodes_dby3": 435,
+   "terms_high_water": 1
+  },
+  {
+   "compressions": 0,
+   "dataset": "cliff",
+   "dim": 9,
+   "n": 20,
+   "nodes_dby2": 15215,
+   "nodes_dby3": 4515,
+   "terms_high_water": 1
+  },
+  {
+   "compressions": 0,
+   "dataset": "cliff",
+   "dim": 9,
+   "n": 40,
+   "nodes_dby2": 95453,
+   "nodes_dby3": 31613,
+   "terms_high_water": 1
+  },
+  {
+   "compressions": 0,
+   "dataset": "cliff",
+   "dim": 10,
+   "n": 10,
+   "nodes_dby2": 1727,
+   "nodes_dby3": 827,
+   "terms_high_water": 1
+  },
+  {
+   "compressions": 0,
+   "dataset": "cliff",
+   "dim": 10,
+   "n": 20,
+   "nodes_dby2": 29397,
+   "nodes_dby3": 7761,
+   "terms_high_water": 1
+  },
+  {
+   "compressions": 0,
+   "dataset": "cliff",
+   "dim": 10,
+   "n": 40,
+   "nodes_dby2": 270681,
+   "nodes_dby3": 83157,
+   "terms_high_water": 1
+  }
+ ],
+ "seed": 20260821,
+ "sizes": {
+  "10": [
+   10,
+   20,
+   40
+  ],
+  "3": [
+   50,
+   100,
+   200,
+   400,
+   800
+  ],
+  "4": [
+   30,
+   60,
+   120,
+   240
+  ],
+  "5": [
+   20,
+   40,
+   80,
+   160
+  ],
+  "7": [
+   12,
+   25,
+   50,
+   100
+  ],
+  "9": [
+   10,
+   20,
+   40
+  ]
+ }
+}

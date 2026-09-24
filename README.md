@@ -160,6 +160,26 @@ paper/                  LaTeX/PDF: walkthrough, complexity analysis, benchmarks
 c/                      C99 ports: Section-2 algorithm + both baselines
 ```
 
+### Benchmark scripts
+
+| Script | Measures |
+|---|---|
+| `crossbench.py` | wall-clock time, every variant, byte-identical datasets → `results/crossbench.json` |
+| `node_counts.py` | recursion-tree size, d/2 vs d/3, with fitted growth exponents |
+| `space_profile.py` | peak live boxes of the d/2 solver (checks the linear-space claim) |
+| `wfg_hard_probe.py` | structural probe on the `wfg_hard` family: does the d/3 recursion collapse? |
+| `benchmark.py` | standalone d/2-vs-d/3 scaling run, no datasets on disk |
+| `make_bench_tex.py` | turns the `results/*.json` into `paper/benchmarks.tex` |
+
+Each writes JSON to `benchmarks/results/`; `make_bench_tex.py` picks up whichever
+files exist, so the report regenerates cleanly from `crossbench.json` alone.
+`wfg_hard_probe.py` needs the instances from
+[renaudlr/moo-nondominated-sets](https://github.com/renaudlr/moo-nondominated-sets):
+
+```bash
+python benchmarks/wfg_hard_probe.py --data path/to/wfg_hard/min --check
+```
+
 The C code in `c/` is a standalone C99 library (no dependencies beyond libm)
 covering `chan_hypervolume.py` and `hv_baselines.py`. The Chan port is
 validated against brute-force inclusion-exclusion and against randomised cases
