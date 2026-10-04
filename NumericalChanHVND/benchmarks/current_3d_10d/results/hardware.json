@@ -1,0 +1,8 @@
+{
+  "cpu_model": "AMD Ryzen 7 5800H with Radeon Graphics         ",
+  "physical_cores": 8,
+  "logical_processors": 16,
+  "installed_memory_bytes": 17024741376,
+  "cpu_affinity": "not pinned",
+  "other_workloads": "Benchmark algorithms run sequentially; no concurrent solver or oracle workloads were launched by this task"
+}

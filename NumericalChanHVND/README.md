@@ -75,6 +75,9 @@ not large dense 10D performance guarantees. Numerical array enumeration is
 used only by independent test oracles, never by the solver.
 
 - [Report PDF](paper/numerical_chan_2d_10d.pdf) and [LaTeX source](paper/numerical_chan_2d_10d.tex).
+- [Current 3D-10D comparison](benchmarks/current_3d_10d/RESULTS.md):
+  two sizes and two input families in every dimension, plus direct magnitude;
+  uses the new whole-contraction backend in 4D and labels the other backends.
 - [Benchmark findings](benchmarks/RESULTS.md), raw JSON/CSV, saved input datasets.
 - Exact and floating validation records: `numerical_chan_results.json`,
   `numba_verification.json`.
@@ -90,6 +93,17 @@ The default local block schedule is necessary for the proof. Do not infer
 that an arbitrary `block_levels` stress-test override has the same bound.
 
 ## Measured performance
+
+The [current 3D-10D run](benchmarks/current_3d_10d/RESULTS.md) records 40 inputs
+and 165 comparisons: 162 complete, three hybrid timeouts, no value mismatches.
+An independent exact rational oracle also checks 31 inputs. Across four
+ordinary-HV cases each, the 3D compiled sweep has median speedup 1.20x over
+numerical Python, and the 4D whole-contraction backend has median speedup
+5.12x over the previous hybrid. In 5D-10D, dimension-specific median hybrid
+times are 1.51-2.52x slower than numerical Python on completed pairs.
+The whole-contraction backend has not yet been generalized beyond 4D.
+
+### Earlier hybrid comparison
 
 On 20 completed matched ordinary-HV cases in dimensions 4-10, the hybrid
 Numba backend was a median 1.93x slower than numerical Python and 21.25x

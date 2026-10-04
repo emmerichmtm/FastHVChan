@@ -64,6 +64,10 @@ is a stress-test override and has no arbitrary-use complexity guarantee.
 
 ## Measured performance
 
+The subsequent [3D-10D benchmark](../NumericalChanHVND/benchmarks/current_3d_10d/RESULTS.md)
+includes further 4D whole-contraction versus hybrid comparisons, alongside the
+current implementations in the other dimensions and direct magnitude cases.
+
 The [current 4D benchmark](benchmarks/whole_loop/RESULTS.md) measures the new
 whole-contraction backend against the earlier hybrid, older compiled prefix
 solver, and Python Chan implementations on seven common inputs. It improves
