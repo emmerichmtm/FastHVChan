@@ -4,6 +4,13 @@ Standalone numerical hypervolume and dominated-set L1 magnitude engines.
 Every integer dimension from 2 to 10 is supported, including 5, 7, and 9.
 The two original Chan implementations at the repository root are unchanged.
 
+The new [adaptive compiled backend](ADAPTIVE_COMPILED.md) supports 2D-10D,
+including complete native contractions, cell pruning and enabled adaptive
+compression in 4D-10D. Use `numerical_chan_compiled.hypervolume` for this version.
+Its [benchmarks](benchmarks/compiled_2d_10d/RESULTS.md) compare it with the earlier
+implementations. The schedule-specific bounds below describe the original
+locally scheduled engine; this adaptive implementation has a separate policy.
+
 | Dimensions | Method | Arithmetic bound |
 |---|---|---|
 | 2 | Descending numerical sweep | O(n log n) |
@@ -33,6 +40,9 @@ retained for magnitude. Dimension is inferred from nonempty input or checked
 with `dimension=...`. Integer/Fraction arithmetic is exact; floats are supported.
 
 ## Float64 Numba backend
+
+For the latest implementation, see [adaptive compiled use and design](ADAPTIVE_COMPILED.md).
+The interface described in this section is the earlier hybrid backend.
 
 For 4D, the [dedicated entry point](../NumericalChanHV4D/README.md) now compiles
 whole contractions and keeps term states native across recursion. The generic
@@ -75,7 +85,9 @@ not large dense 10D performance guarantees. Numerical array enumeration is
 used only by independent test oracles, never by the solver.
 
 - [Report PDF](paper/numerical_chan_2d_10d.pdf) and [LaTeX source](paper/numerical_chan_2d_10d.tex).
-- [Current 3D-10D comparison](benchmarks/current_3d_10d/RESULTS.md):
+- [Adaptive compiled 2D-10D comparison](benchmarks/compiled_2d_10d/RESULTS.md):
+  complete native contractions in all dimensions, with compression enabled.
+- [Previous 3D-10D comparison](benchmarks/current_3d_10d/RESULTS.md):
   two sizes and two input families in every dimension, plus direct magnitude;
   uses the new whole-contraction backend in 4D and labels the other backends.
 - [Benchmark findings](benchmarks/RESULTS.md), raw JSON/CSV, saved input datasets.
@@ -94,14 +106,32 @@ that an arbitrary `block_levels` stress-test override has the same bound.
 
 ## Measured performance
 
-The [current 3D-10D run](benchmarks/current_3d_10d/RESULTS.md) records 40 inputs
+The [adaptive compiled 2D-10D run](benchmarks/compiled_2d_10d/RESULTS.md)
+records 48 inputs and 187 workers. All 48 compiled runs completed and agreed
+with the available references. On ordinary-HV inputs in 4D-10D, it beat Python
+Chan d/3 on 26/28 pairs (median speedup 2.02x), and original numerical Python
+on 26/27 completed pairs (median 6.29x). Python Chan d/2 was faster on all 28
+of those inputs. Timings use three warm repetitions and show substantial
+variability; these small inputs do not establish an asymptotic exponent.
+
+Compression is enabled. The main default benchmark inputs stay below its
+size threshold; forced cases exercise it separately. A larger
+[structured default-settings probe](benchmarks/compiled_2d_10d/NATURAL_COMPRESSION.md)
+executes six compressions on 1,552 boxes and agrees with both Chan references.
+That probe is a correctness and execution check, not a warm speed comparison.
+The [new verification suite](verify_compiled.py) also checks repeated
+compression and both HV and magnitude in all supported dimensions.
+
+### Previous 3D-10D comparison
+
+The [previous 3D-10D run](benchmarks/current_3d_10d/RESULTS.md) records 40 inputs
 and 165 comparisons: 162 complete, three hybrid timeouts, no value mismatches.
 An independent exact rational oracle also checks 31 inputs. Across four
 ordinary-HV cases each, the 3D compiled sweep has median speedup 1.20x over
 numerical Python, and the 4D whole-contraction backend has median speedup
 5.12x over the previous hybrid. In 5D-10D, dimension-specific median hybrid
 times are 1.51-2.52x slower than numerical Python on completed pairs.
-The whole-contraction backend has not yet been generalized beyond 4D.
+At the time of that run, whole contractions were compiled only in 4D.
 
 ### Earlier hybrid comparison
 

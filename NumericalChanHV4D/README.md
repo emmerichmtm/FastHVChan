@@ -23,6 +23,12 @@ standard-library backend. Floating input can suffer cancellation.
 
 ## Numba
 
+The newer [adaptive compiled engine](../NumericalChanHVND/ADAPTIVE_COMPILED.md)
+adds Chan-style cell simplification and adaptive compression. Its 4D convenience
+entry point is `numerical_chan4_adaptive.hypervolume4`; it also supports all
+dimensions 2-10 through the generic interface. The scheduled backend below is
+retained unchanged for comparison.
+
 ```bash
 python -m pip install -r requirements.txt
 ```
@@ -46,6 +52,9 @@ compilation; reported performance measurements distinguish it from warm calls.
 
 ## Report, tests, and timings
 
+- [Adaptive compiled 2D-10D design](../NumericalChanHVND/ADAPTIVE_COMPILED.md)
+  and [latest timings](../NumericalChanHVND/benchmarks/compiled_2d_10d/RESULTS.md).
+  `python ../NumericalChanHVND/verify_compiled.py` validates this new backend.
 - [Whole-contraction JIT report (PDF)](paper/whole_loop_jit_4d_report.pdf) /
   [self-contained LaTeX source](paper/whole_loop_jit_4d_report.tex): recursion,
   contraction proof, magnitude equivalence, verification and 4D performance.
@@ -63,6 +72,17 @@ The default block schedule is part of the complexity proof. `block_levels`
 is a stress-test override and has no arbitrary-use complexity guarantee.
 
 ## Measured performance
+
+The latest [adaptive compiled benchmark](../NumericalChanHVND/benchmarks/compiled_2d_10d/RESULTS.md)
+includes a 24-point 4D sphere case: 17.0 ms for the new compiled solver,
+28.6 ms for Python Chan d/3, and 1,878.0 ms for the original numerical Python.
+Python Chan d/2 was faster at 6.2 ms. The new default compression gate stays
+enabled; a separate [1,552-box structural probe](../NumericalChanHVND/benchmarks/compiled_2d_10d/NATURAL_COMPRESSION.md)
+executes six compressions and matches both references. Repeated compression
+is also covered by the new correctness suite. See the full report for timing
+variability and the distinction between default and forced cases.
+
+### Previous scheduled-backend measurements
 
 The subsequent [3D-10D benchmark](../NumericalChanHVND/benchmarks/current_3d_10d/RESULTS.md)
 includes further 4D whole-contraction versus hybrid comparisons, alongside the
