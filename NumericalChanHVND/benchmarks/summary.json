@@ -1,0 +1,13 @@
+{
+  "status_counts": {
+    "ok": 145,
+    "timeout": 11
+  },
+  "cases": 40,
+  "algorithm_runs": 156,
+  "max_scaled_difference": 3.3142749650105513e-16,
+  "recursive_hv_numba_over_python_median": 1.9321275610135098,
+  "recursive_hv_numba_over_chan_dby3_median": 21.253721867684995,
+  "matched_recursive_hv_numba_python_cases": 20,
+  "matched_recursive_hv_numba_chan_cases": 20
+}

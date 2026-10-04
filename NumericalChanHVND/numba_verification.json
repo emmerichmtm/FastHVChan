@@ -1,0 +1,26 @@
+{
+  "status": "All checks passed.",
+  "checks": {
+    "end_to_end": 144,
+    "signed_four_slot_sums": 9,
+    "compression_cells": 2044,
+    "repeated_compression_instances": 6,
+    "compiled_skyline_updates": 320
+  },
+  "max_scaled_error": 3.5930654884856423e-14,
+  "nopython_signature_counts": {
+    "nonzero": 1,
+    "direction": 1,
+    "prefix_sum": 1,
+    "search_array": 3,
+    "normalize": 1,
+    "suffix_mask": 1,
+    "sweep_ranked": 1,
+    "skyline_insert": 1
+  },
+  "seconds": 33.7837683998514,
+  "tolerance": {
+    "relative": 2e-09,
+    "absolute": 2e-10
+  }
+}

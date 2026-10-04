@@ -1,0 +1,652 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern,amsmath,amssymb,amsthm,mathtools}
+\usepackage[a4paper,margin=25mm]{geometry}
+\usepackage{microtype,booktabs,array,enumitem,xcolor}
+\usepackage[colorlinks=true,linkcolor=blue!50!black,urlcolor=blue!50!black,citecolor=blue!50!black]{hyperref}
+\setlength{\emergencystretch}{3em}
+\setlength{\parskip}{.3em}
+\setlist{nosep}
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newcommand{\HV}{\operatorname{HV}}
+\newcommand{\Mag}{\operatorname{Mag}}
+\newcommand{\wtO}{\widetilde O}
+\newcommand{\1}{\mathbf1}
+\newcommand{\SumOut}{\operatorname{SumOut}}
+\newcommand{\Push}{\operatorname{Push}}
+\hypersetup{pdftitle={Numerical Hypervolume and Magnitude in Dimensions Two to Ten},
+pdfsubject={Finite weighted chains, low-dimensional sweeps, and pairwise Chan recursion}}
+\title{Numerical Hypervolume and Magnitude\\in Dimensions Two to Ten\\[.5em]
+\large Sweeps in 2D and 3D; pairwise Chan recursion in 4D--10D}
+\author{Research working report}
+\date{4 October 2026}
+\begin{document}
+\maketitle
+\begin{abstract}
+We extend the numerical four-dimensional construction to every integer
+dimension from two to ten, including odd dimensions. The input is a finite
+set of nonnegative corners defining boxes anchored at the origin. The same
+coordinate-cell representation computes ordinary hypervolume and the
+dominated-set $\ell_1$ magnitude by changing the one-dimensional masses.
+No symbolic integration or numerical quadrature is used.
+
+Two and three dimensions use direct numerical sweeps with
+$O(n\log n)$ arithmetic complexity. In dimensions four through ten, a
+dimension-independent prefix-sum elimination kernel, paired coordinate
+order, weighted geometric cuts, and block-mass compression give
+$\wtO_d(n^{d/3})$ arithmetic complexity. Odd dimensions finish each round
+with one singleton operation. Compression temporarily uses $2d$ variables,
+so the ten-dimensional implementation includes twenty-variable compression.
+An explicit local block schedule accounts for representation growth.
+
+The accompanying standalone Python implementation supports all nine
+dimensions. Exact inclusion--exclusion tests, skyline-update tests, and
+compression tests accompany it. The exponent is Chan's; this is a numerical
+formulation and implementation, with potentially large dimension-dependent
+constants, not a claim of improved exponents or competitive practical speed.
+\end{abstract}
+\newpage
+\tableofcontents
+\newpage
+
+\section{What is now available}
+The implementation \texttt{numerical\_chan.py} accepts dimensions
+$d=2,3,\ldots,10$. The earlier four-dimensional file remains a separate
+reference implementation. A user-facing call is
+\begin{quote}\ttfamily\small
+from numerical\_chan import hypervolume, magnitude, NumericalChan\\
+hv = hypervolume(points)\hfill\# infer dimension\\
+mag = magnitude(points)\\
+solver = NumericalChan(dimension=7)\\
+hv = solver.compute(points)
+\end{quote}
+Here \texttt{points} contains nonnegative box corners; it is not a list
+of arbitrary lower and upper box endpoints. A reference-point conversion
+for conventional minimization data is given in Section~\ref{sec:usage}.
+
+\begin{theorem}[Fixed-dimensional numerical bounds]\label{thm:main}
+For every fixed $d\in\{2,\ldots,10\}$, the algorithm computes the
+hypervolume and dominated-set $\ell_1$ magnitude of $n$ anchored boxes.
+Its arithmetic complexity is
+\[
+\begin{cases}
+O(n\log(n+2)),&d=2,3,\\
+O_d(n^{d/3}\log^{c_d}(n+2)),&4\le d\le10,
+\end{cases}
+\]
+where $c_d$ is a constant depending only on $d$. All evaluations use finite
+numerical arrays, comparisons, integer searches, and arithmetic. No
+Cartesian product grid of coordinate cells is constructed by the solver.
+\end{theorem}
+Arithmetic has unit cost in this theorem. Exact rational arithmetic can
+have additional bit cost. Floating-point use can suffer cancellation;
+the theorem is not a numerical-error guarantee. The notation $\wtO_d$
+suppresses polylogarithms in $n$ and constants depending on the fixed
+dimension. It does not suppress polynomial factors in $n$.
+
+\begin{center}
+\begin{tabular}{@{}clcc@{}}
+\toprule
+$d$&Numerical method&Bound&Variables in compression\\\midrule
+2&Descending sweep&$O(n\log n)$&---\\
+3&Sweep with a skyline tree&$O(n\log n)$&---\\
+4&$2+2$ recursion&$\wtO(n^{4/3})$&8\\
+5&$2+2+1$ recursion&$\wtO(n^{5/3})$&10\\
+6&$2+2+2$ recursion&$\wtO(n^2)$&12\\
+7&$2+2+2+1$ recursion&$\wtO(n^{7/3})$&14\\
+8&$2+2+2+2$ recursion&$\wtO(n^{8/3})$&16\\
+9&$2+2+2+2+1$ recursion&$\wtO(n^3)$&18\\
+10&$2+2+2+2+2$ recursion&$\wtO(n^{10/3})$&20\\
+\bottomrule
+\end{tabular}
+\end{center}
+The pair notation specifies elimination and cut order. It does not assert
+that the geometric problem factors into independent two-dimensional
+problems. Relations between different pairs are retained.
+
+\section{The common numerical representation}
+For $P\subset\mathbb R_{\ge0}^d$, let
+\[
+D(P)=\bigcup_{p\in P}\prod_{i=1}^d[0,p_i].
+\]
+We compute either $\HV_d(P)=\lambda_d(D(P))$ or
+\[
+\Mag(D(P))=\left(\bigotimes_{i=1}^d
+           (\delta_0+\tfrac12\lambda)\right)(D(P)),
+\]
+using Emmerich's dominated-set magnitude formula~\cite{emmerich}.
+The measure includes mass on coordinate faces and at the origin.
+
+On each coordinate axis, sort the distinct positive corner coordinates:
+$0=c_{i,0}<c_{i,1}<\cdots<c_{i,m_i}$. Use cells $\{0\}$ and
+$(c_{i,k-1},c_{i,k}]$. Their numerical masses are
+\begin{equation}
+\begin{array}{c|cc}
+&a_i(0)&a_i(k),\ k\ge1\\\hline
+\text{hypervolume}&0&c_{i,k}-c_{i,k-1}\\
+\text{magnitude}&1&(c_{i,k}-c_{i,k-1})/2
+\end{array}                                      \label{eq:masses}
+\end{equation}
+Replace each corner by its rank vector $r(p)$. On cell indices $k$,
+box membership is exactly $k_i\le r_i(p)$ for all $i$.
+Consequently, summing the product masses of covered index cells is exact.
+Only the $d$ axis arrays are constructed, with total length at most
+$d(n+1)$; sorting and rank lookup cost $O_d(n\log n)$.
+
+The anchor cell is retained even when it has zero hypervolume mass.
+The empty input has value zero for both measures, whereas a single
+origin point has hypervolume zero and magnitude one. Duplicate corners
+and tied coordinates require no general-position assumption.
+
+\section{Two dimensions: one descending sweep}
+Let $A_2(t)=\sum_{j=0}^t a_2(j)$, and set $A_2(-1)=0$.
+Scan the first-axis index $x$ in decreasing order. Before charging cell
+$x$, insert all boxes whose first coordinate rank is $x$.
+Maintain
+\[
+H=\max\{A_2(r_2(p)):r_1(p)\ge x\},
+\]
+with empty maximum zero. Add $a_1(x)H$ to the answer.
+All intervals in the second coordinate share their anchor, so their union
+mass is the largest prefix mass. Each point is inserted once.
+
+The scan itself is linear after sorting. Including preprocessing gives
+$O(n\log n)$ time and $O(n)$ space. This computes either measure simply
+by using the appropriate masses in \eqref{eq:masses}.
+
+\section{Three dimensions: a numerical skyline tree}\label{sec:3d}
+Again scan first-axis indices in decreasing order, inserting every box
+before charging its first-axis cell. The active cross-section is a union
+of anchored rectangles in coordinates two and three.
+Let $A_3(t)=\sum_{j=0}^t a_3(j)$, with $A_3(-1)=0$, and define
+\[
+h(y)=\max\{A_3(r_3(p)): p\text{ is active and }r_2(p)\ge y\},
+\]
+where the empty maximum is zero. The cross-section mass is
+\begin{equation}
+                         V=\sum_y a_2(y)h(y).       \label{eq:skyline}
+\end{equation}
+The array $h$ is nonincreasing. Inserting a rectangle with second rank $u$
+and third-coordinate prefix mass $v$ performs the update
+\[
+                         h(y)\gets\max(h(y),v)\quad(y\le u).
+\]
+
+\begin{lemma}[One interval changes]
+Let $\ell$ be the first index with $h(\ell)<v$, or the array length if
+there is none. If $\ell>u$, nothing changes. Otherwise the update assigns
+the constant value $v$ on exactly $[\ell,u]$.
+\end{lemma}
+\begin{proof}
+Nonincreasing order implies $h(y)\ge v$ before $\ell$, and $h(y)<v$
+at every subsequent index. The insertion affects only the prefix ending
+at $u$. Its changed set is therefore the stated interval. The updated
+array remains nonincreasing at both ends of that interval.
+\end{proof}
+
+A lazy segment tree stores, for each index interval $I$, its minimum
+height and its weighted total $\sum_{y\in I}a_2(y)h(y)$. It also stores
+a pending constant assignment when one exists. The mass
+$\sum_{y\in I}a_2(y)$ is obtained from a fixed prefix array.
+\begin{enumerate}
+\item Find the first height below $v$ by descending into the first tree
+child whose minimum is below $v$.
+\item If it lies in $[0,u]$, assign $v$ on $[\ell,u]$ with lazy propagation.
+An assigned node's weighted total becomes $v\sum_{y\in I}a_2(y)$.
+\item Read $V$ at the tree root, and add $a_1(x)V$ after all insertions at $x$.
+\end{enumerate}
+Both tree operations cost $O(\log n)$, and there are $n$ insertions and
+$O(n)$ first-axis cells. This proves the three-dimensional part of
+Theorem~\ref{thm:main}, with $O(n)$ space.
+Zero-weight cells cause no exception: comparisons concern heights,
+and a weighted sum can include zero masses.
+
+\section{The common elimination kernel for dimensions four to ten}
+This section gives the same finite-array kernel for any fixed number
+$p$ of variables. During compression, $p$ can be as large as $2d$.
+Each variable $k_i$ ranges over a finite chain
+$E_i=\{0,\ldots,s_i-1\}$. A term is
+\begin{equation}
+T(k)=c\prod_i a_i(k_i)\prod_e\1[k_{j_e}\mathrel{\bowtie_e}f_e(k_{i_e})],
+\qquad i_e<j_e,\quad\bowtie_e\in\{\le,\ge\}. \label{eq:term}
+\end{equation}
+The unary arrays and scalar coefficient can be signed. Cutoff arrays are
+integer-valued and monotone. For each unordered pair retain at most four
+slots: upper or lower bound, each with nondecreasing or nonincreasing
+cutoff. Within one slot, combine upper bounds by minimum and lower bounds
+by maximum. Opposite monotonicities remain separate.
+
+Thus a term uses $O_p(M)$ entries, where $M=\sum_i s_i$.
+Sentinels $-1$ and $s_j$ encode empty upper and lower rays; no infinite
+numerical values or decorated open endpoints are needed.
+
+\subsection{Comparisons remain numerical}
+An active bound is either a constant or a monotone array $A(k_i)$.
+To impose $A(k_i)\le B(k_j)$, use the following rules.
+\begin{itemize}
+\item If the two variables coincide, multiply their unary array by the
+Boolean comparison array. It may oscillate; unary weights need not be monotone.
+\item If one bound is constant, the comparison is also a unary Boolean array.
+\item For distinct variables, invert the monotone array on the larger-index
+variable by binary search. This produces one monotone cutoff in a pair slot.
+\end{itemize}
+Strict comparisons use the corresponding strict search boundary. The
+total work per comparison is $O_p(M\log(M+2))$.
+
+\subsection{Eliminating one variable}
+For an index $q\in\{0,\ldots,s-1\}$ to eliminate, invert every incident
+pair predicate into a lower or upper bound on $q$. Include constant bounds
+$0$ and $s-1$. At most $2p-1$ lower and $2p-1$ upper candidates occur,
+because each other variable supplies at most two of each kind.
+
+For each pair of candidate labels, impose the comparisons saying that
+$L$ is the first maximizing lower bound and $U$ the first minimizing
+upper bound, and impose $L\le U$. Earlier labels are defeated strictly;
+later labels are defeated weakly. These regions are disjoint and exhaust
+the feasible assignments of the surviving variables.
+
+Build the numerical prefix $P(t)=\sum_{q<t}a(q)$. On a label region,
+the eliminated sum is exactly
+\begin{equation}
+                            P(U+1)-P(L).            \label{eq:prefix}
+\end{equation}
+Each summand is a scalar or a unary array in the variable supplying the
+bound. Multiply it into the surviving term with the appropriate sign.
+When both bounds use the same variable, combine their difference directly.
+The prefix need not be monotone: it becomes a unary weight, never an
+inverse cutoff.
+
+\begin{lemma}[Closure]
+One application of $\SumOut$ emits at most
+$B_p=2(2p-1)^2$ terms in the same four-slot class, in
+$O_p(M\log(M+2))$ arithmetic operations per input term.
+\end{lemma}
+\begin{proof}
+There are at most $(2p-1)^2$ winning label pairs. Each emits at most two
+terms from \eqref{eq:prefix}. All label comparisons are of the forms just
+described; merging same-slot constraints preserves monotonicity. No new
+variable or new coordinate domain is introduced. A dimension-bounded
+number of array scans and binary searches gives the work bound.
+\end{proof}
+
+\subsection{Pairs and the odd-dimensional final step}
+For an ordered axis list $(1,\ldots,d)$, apply $\SumOut$ to $(1,2)$,
+then $(3,4)$, and so on. If $d$ is odd, eliminate $d$ alone at the end.
+This is exactly the same one-variable operation, not a new odd-dimensional
+case or a padding dimension. Cross-pair constraints remain in the state.
+No Cartesian table on a coordinate pair is constructed.
+
+\section{Compression by block masses in $2d$ variables}\label{sec:push}
+Suppose a geometric cell has $m$ surviving hard boxes. On each current
+axis, place a block boundary immediately after each surviving box cutoff
+strictly below the cell's upper endpoint. The blocks are contiguous integer
+intervals $I_i(t_i)=[L_i(t_i),R_i(t_i)]$, with at most $m+1$ per axis.
+Define the desired coarse mass by
+\begin{equation}
+        (\Push F)(t)=\sum_{k_i\in I_i(t_i),\ 1\le i\le d}F(k).
+                                                        \label{eq:push}
+\end{equation}
+This equation specifies the answer; it does not instruct the implementation
+to enumerate the block products.
+
+For each old term, add new variables $t_1,\ldots,t_d$ with unit unary
+weights and the $2d$ membership comparisons
+$L_i(t_i)\le k_i\le R_i(t_i)$. There are now $2d$ variables.
+Eliminate only the old variables, in consecutive pairs with an odd final
+singleton when necessary. Rename the $d$ surviving block variables.
+
+\begin{lemma}[Mass compression and reuse]\label{lem:push}
+If the old state has $S$ terms and total axis length $M$, compression
+emits at most $C_d S$ terms, where
+\[
+                           C_d=\prod_{p=d+1}^{2d}B_p.
+\]
+It costs $O_d(S(M+m)\log(M+m+2))$ operations. The output uses
+$O_d(C_d S(m+1))$ array entries. For any future mask $g$ constant on
+the current block products,
+\[
+                      \sum_k F(k)g(k)=\sum_t(\Push F)(t)g(t).
+\]
+\end{lemma}
+\begin{proof}
+Apply the closure lemma $d$ times. The combined old and new axis length is
+$M+O_d(m+1)$ and only decreases during elimination. Every remaining array
+is indexed by one coarse axis. For the final identity, partition the
+finite sum by block products and move the constant value of $g$ outside
+each inner sum. Every surviving box cutoff was used to create the blocks;
+future box masks and cuts therefore have the required constancy.
+\end{proof}
+No density is reconstructed and no division by cell measure is performed.
+An anchor may be merged into a neighbouring block when future predicates
+do not distinguish it; its mass is then retained in the block sum.
+For $d=10$ this operation genuinely lifts to twenty variables and removes
+ten. The implementation does not substitute a four-dimensional compressor.
+
+\section{The geometric recursion in any fixed $d\ge4$}
+The recursion stores the current index cell $\Gamma=\prod_i[\ell_i,u_i]$,
+a numerical state $F$, and the list $B$ of unabsorbed boxes. Its invariant is
+\begin{equation}
+U(F,B,\Gamma)=\sum_{k\in\Gamma}F(k)
+                   \prod_{p\in B}(1-\1[k\le p]).   \label{eq:invariant}
+\end{equation}
+Initially $F=\prod_i a_i$. Return total bounding-box mass minus $U$.
+After compression, $F$ stores coarse masses; the same invariant holds.
+
+\subsection{Absorb one- and two-sided boxes}
+Discard a box if some $p_i<\ell_i$. Otherwise call axis $i$ active if
+$p_i<u_i$. A box with no active axis covers the cell, so $U=0$.
+A box with one active axis $i$ is absorbed by zeroing the corresponding
+unary entries $k_i\le p_i$ in every term.
+
+For a group of boxes with active axes $i<j$, build the suffix maximum
+\[
+f(k_i)=\max\{p_j:p_i\ge k_i\},\qquad\max\varnothing=-1.
+\]
+Their common uncovered predicate is $k_j\ge f(k_i)+1$, a nonincreasing
+lower cutoff. Absorb it into the state and discard the group's boxes.
+The suffix array is built for the group, not separately for every box.
+Absorption never increases the number of terms. Every retained hard box
+has at least three active axes.
+
+\subsection{Weighted cuts and one full round}
+Cycle through axes $1,\ldots,d$. Relative to the current axis, their
+cyclic positions are $0,\ldots,d-1$. Each triple $J$ of active axes of
+each hard box contributes weight
+\[
+                            \omega(J)=2^{\sum_{j\in J}\mathrm{pos}(j)/d}.
+\]
+Let $\Phi$ be their sum. For fixed $d$, $\Phi$ is within constant factors
+of the number of hard boxes. On the current axis, take a weighted median
+of the cutoff coordinates of triples containing that axis.
+Split after that index $c$ into $[\ell,c]$ and $[c+1,u]$.
+These cells are disjoint, including at atomic anchors.
+
+\begin{lemma}[Potential contraction]
+After the cut and cyclic advance, each child has potential at most
+$2^{-3/d}\Phi$. If no triple uses the axis, skip the cut and advance;
+the same bound holds.
+\end{lemma}
+\begin{proof}
+At most half of the weight of triples using the cut axis survives in
+either child. A surviving such triple increases its position sum by
+$d-3$, so its weight changes by $2^{(d-3)/d}$; half of this factor is
+$2^{-3/d}$. Every other triple reduces its position sum by three and
+changes by exactly $2^{-3/d}$. Restriction introduces no new active triple.
+If there is no candidate, only the latter case is present.
+\end{proof}
+It follows that a full $d$-axis round has at most $2^d$ descendants,
+each with potential at most $\Phi/8$. This explains the exponent $d/3$,
+but a total-work proof must also charge the numerical state.
+
+\subsection{Integer weights and the block schedule}
+With $n_0$ original points, set $A=(n_0+2)^2$. A triple's position sum
+$s$ is an integer from $3$ through $3d-6$. Use
+\[
+                     W_s=\left\lceil(A^d2^s)^{1/d}\right\rceil
+\]
+as its integer median weight. Binary search computes this root using
+integer powers; no floating-point root is used. The approximation satisfies
+\[
+        2^{s/d}\le W_s/A\le(1+1/A)2^{s/d}.
+\]
+Thus the contraction gains at most a factor $1+1/A$ per level. Over
+$O_d(\log n_0)$ levels the total distortion is bounded by a constant.
+The combinatorial weights use $O_d(\log n_0)$ bits.
+
+At the start of each block of geometric levels, set
+\begin{equation}
+ Q=\left\lceil\frac{\sum W_s}{A}\right\rceil,\qquad
+ q=\max\left\{1,\left\lfloor\frac{\log_2 Q}{4d}\right\rfloor\right\}.
+                                                        \label{eq:schedule}
+\end{equation}
+Run $q$ full rounds, or $dq$ levels. At each surviving block leaf absorb
+newly easy boxes, compress using the remaining hard cutoffs, and start
+a new block using its own $Q$. Skips consume one level just as cuts do.
+For odd $d$, a round consists of pairs and the last singleton axis.
+
+\subsection{Explicit recursive procedure}
+\begin{quote}\ttfamily\small
+Solve(state, boxes, cell, axis, levels-left):\\
+\hspace*{1em}discard disjoint boxes; absorb all easy boxes\\
+\hspace*{1em}if a box covers cell or state is zero: return 0\\
+\hspace*{1em}if at most b hard boxes remain: return Base(state, boxes, cell)\\
+\hspace*{1em}if levels-left is zero:\\
+\hspace*{2em}state = Push(state, remaining hard-cutoff blocks)\\
+\hspace*{2em}relabel boxes and cell; initialize dq levels by (\ref{eq:schedule})\\
+\hspace*{1em}choose a weighted median on axis\\
+\hspace*{1em}if none: recurse on same cell with next axis and one fewer level\\
+\hspace*{1em}else: recurse on both disjoint children and add their answers
+\end{quote}
+The first block is also initialized by \eqref{eq:schedule}. For a fixed
+constant $b$ (default two), the base case expands the product in
+\eqref{eq:invariant} into $2^b$ signed rectangle sums. Evaluate each
+rectangle by paired $\SumOut$ calls, with an odd final singleton.
+This inclusion--exclusion is constant-size; it is not applied to the full
+input list.
+
+\section{Proof of the full arithmetic bound}
+Discretization, absorption, disjoint splitting, exact one-variable sums,
+and Lemma~\ref{lem:push} prove correctness inductively. The base case is
+the finite inclusion--exclusion identity, so the returned value is exact.
+
+For the work bound, let $N=\Phi$ and $S$ be the state term count at a
+block entry. Apart from the root, the axis length is $O_d(N)$ because
+the preceding compression retained only surviving hard cutoffs. The root
+has $O_d(n)$ entries and can be charged at root size even if many boxes
+are absorbed immediately.
+
+Put $\beta_d=1-3/(4d)$. For sufficiently large $N$,
+\eqref{eq:schedule} gives $q=(\log_2N)/(4d)+O_d(1)$.
+There are $O_d(2^{dq})=O_d(N^{1/4})$ nodes and leaves in the block.
+Each is charged $\wtO_d(SN)$ work, including compression or an early
+numerical base case. Each surviving child block has potential
+$O_d(N^{\beta_d})$ and at most $C_dS$ terms. Thus
+\begin{equation}
+T_d(N,S)\le c_1N^{1/4}T_d(c_2N^{\beta_d},C_dS)
+                         +\wtO_d(SN^{5/4}).        \label{eq:recurrence}
+\end{equation}
+All constants depend only on $d$. Once $N$ is bounded by a fixed constant,
+only a bounded number of further levels is possible by geometric
+contraction, so the base cost is $O_d(S)$.
+
+At macro-depth $g$, the largest size is at most $c_3N^{\beta_d^g}$.
+There are $O_d(\log\log(N+2))$ macro-generations, giving at most
+$C_d^gS=S\log^{O_d(1)}(N+2)$ terms along a path.
+No assumption that empirical merging keeps the term count small is needed.
+The number of macro-nodes at depth $g$ is at most
+\[
+c_4^gN^{\frac14\sum_{h<g}\beta_d^h}
+       =c_4^gN^{\frac d3(1-\beta_d^g)}.
+\]
+Multiplying by the per-node charge gives, apart from polylogarithms,
+\[
+ S N^{\frac d3(1-\beta_d^g)+\frac54\beta_d^g}
+ =S N^{\frac d3-(\frac d3-\frac54)\beta_d^g}
+ \le S N^{d/3},
+\]
+because $d/3>5/4$ for $d\ge4$. Constants raised to $g$ and the number
+of levels contribute only polylogarithmic factors. Summation proves
+$T_d(N,S)=\wtO_d(SN^{d/3})$. At the root $S=1$, $N=O_d(n)$; its
+possibly longer arrays cost at most $\wtO_d(n^{5/4})$, also within the
+bound. Together with the sweeps this proves Theorem~\ref{thm:main}.
+
+This particular block recurrence would not establish $\wtO(n)$ for
+$d=3$: its block-work exponent is $5/4$. That is why the implementation
+selects the skyline sweep there. Merely substituting $d=3$ in the final
+formula would be unjustified.
+
+\section{Magnitude and hypervolume in both directions}
+For any dimension covered here, finite inclusion--exclusion and
+coordinatewise minima give
+\begin{equation}
+            \Mag(D(P))=\HV_d(\{\1+p/2:p\in P\}).   \label{eq:affine}
+\end{equation}
+Indeed, the mass of one anchored box is $\prod_i(1+p_i/2)$, and the
+affine map commutes with intersections described by coordinatewise minima.
+The identity also holds for empty input.
+
+Conversely, if every coordinate of every HV corner $q$ is at least one,
+\[
+                    \HV_d(Q)=\Mag(D(\{2(q-\1):q\in Q\})).
+\]
+For arbitrary strictly positive corners choose $s>0$ with $sq_i\ge1$;
+then
+\[
+                  \HV_d(Q)=s^{-d}\Mag(D(\{2(sq-\1):q\in Q\})).
+\]
+Zero-coordinate boxes can first be discarded for this inverse HV
+transformation because their $d$-dimensional volume is zero. They must
+not be discarded for direct magnitude computation. If no boxes remain,
+return zero. These transformations preserve the polynomial exponent.
+
+\section{Examples and use of the implementation}\label{sec:usage}
+The same two-box example works in every supported dimension:
+\[
+p=(2,1,1,\ldots,1),\qquad q=(1,2,1,\ldots,1).
+\]
+Their intersection has every extent one. Hence
+\[
+               \HV_d(\{p,q\})=3,\qquad
+               \Mag(D(\{p,q\}))=\frac{15}{4}(\tfrac32)^{d-2}.
+\]
+An example call in seven dimensions is
+\begin{quote}\ttfamily\small
+points = [(2, 1, 1, 1, 1, 1, 1), (1, 2, 1, 1, 1, 1, 1)]\\
+assert hypervolume(points) == 3\\
+assert magnitude(points) == Fraction(3645, 128)
+\end{quote}
+Here \texttt{Fraction} is imported from the standard-library
+\texttt{fractions} module. Integer and \texttt{Fraction} coordinates retain
+exact rational arithmetic. No third-party Python package is needed.
+
+For minimization points $a$ and a reference point $r$ with $a_i\le r_i$,
+convert to extents $p_i=r_i-a_i$. Then
+$\lambda_d(\bigcup_a[a,r])=\HV_d(\{r-a\})$ by reflection and translation.
+Input points outside this reference region must be handled explicitly;
+the core interface rejects negative extents. The magnitude interface
+applies to the resulting origin-anchored dominated set and its product
+measure, as defined above.
+
+\texttt{NumericalChan(dimension=d)} fixes the expected dimension and
+checks every point. Without that argument, a nonempty input supplies its
+dimension; an empty input returns zero. All dimensions must lie between
+two and ten. Nonfinite or negative coordinates, mixed coordinate counts,
+and out-of-range dimensions are rejected.
+
+The optional \texttt{block\_levels} parameter is a test override. An
+arbitrary fixed override is not the schedule covered by the asymptotic
+theorem. The low-dimensional sweeps do not use it. Production calls should
+leave it unset. The implementation exposes counters through
+\texttt{solver.stats} for diagnostics.
+
+\section{The Numba backend and measured performance}\label{sec:numba}
+The file \texttt{numerical\_chan\_numba.py} provides a separate
+\texttt{float64} backend. In dimensions two and three, the numerical sweep
+and skyline-tree operations run in Numba's nopython mode. In dimensions
+four through ten, Numba compiles array scans, monotonicity checks, prefix
+sums, cutoff searches, normalization, and suffix masks. Geometric recursion,
+winning-bound enumeration, and structural term management remain Python.
+This is a hybrid implementation. No fastmath or parallel execution is used.
+
+The exact standard-library backend remains available independently.
+The Numba version converts its coordinates and masses to floating point;
+it does not preserve exact rational arithmetic. A first call may include
+compilation or cache loading. Reported steady-state timings exclude that
+first call, and separate fresh-cache probes record first-use cost.
+
+\input{benchmark_results_nd.tex}
+
+\section{Validation and practical scope}\label{sec:validation}
+The verifier \texttt{verify\_numerical\_chan.py} uses independent exact
+oracles. In each of the nine dimensions it checks empty input, the origin,
+zero coordinates, duplicate and dominated corners, cyclic antichains,
+random positive integer instances, and rational coordinates against
+inclusion--exclusion. It also checks both directions of the affine
+magnitude--HV transformation.
+
+The skyline tree is compared after each insertion with a dense
+one-dimensional array. Compression is checked at every lifted dimension
+$2d=4,6,\ldots,20$: the verifier explicitly enumerates small fine grids
+and compares their block sums with the emitted numerical state. It then
+applies a new aligned cross-axis mask and compresses a second time.
+The Cartesian enumeration belongs only to the independent verifier.
+
+For dimensions four through ten, additional instances force repeated
+geometric compression with a deliberately short test-only block length.
+These extend a genuinely four-dimensional instance by common extents in
+the additional coordinates, so the expected multiplicative factor is
+known. These structured tests exercise high-dimensional execution; they
+do not establish practical behaviour on large, fully coupled 10D inputs.
+Small general instances are tested separately.
+
+The exact integer-root inequalities are checked directly. Geometric
+potential diagnostics use floating evaluation of the theoretical
+algebraic weights with a tolerance; measure comparisons and compression
+comparisons use exact arithmetic. Full counts and diagnostic states are
+recorded in \texttt{numerical\_chan\_results.json}.
+The exact suite passes 234 end-to-end cases, 248 first-compression cell
+checks, 18 second compressions, and 14 forced repeated-recursion instances.
+The separate Numba suite passes 144 end-to-end comparisons with an exact
+inclusion--exclusion oracle, 2,044 compression-cell comparisons,
+nine signed four-slot sums, six repeated-compression instances, and
+320 direct checks of the compiled skyline update. Its maximum scaled
+end-to-end discrepancy in this suite is $3.60\times10^{-14}$.
+These are observed validation results, not a uniform error bound.
+
+The constants $C_d$ can be very large and the hidden logarithmic exponent
+depends on them. The prototype uses exact-key merging and normalization
+of unary factors to reduce practical state size, but the correctness and
+raw-emission proof do not require successful merging. If deterministic
+comparison-based term handling is desired, optional merging can be omitted
+or replaced by sorting. Even quadratic merging overhead in the
+polylogarithmic term count changes only a hidden logarithmic factor.
+These measurements do not establish an asymptotic speed advantage.
+
+\section{Relation to Chan and the supplied repositories}
+The geometric potential, absorption of locally one- and two-sided
+orthants, and periodic compression follow Chan's orthant framework
+in Sections 4.1--4.2 of~\cite{chan}. The simplification is its finite
+numerical realization: explicit cell masses, four monotone slots per
+coordinate pair, prefix-sum elimination, and block-mass pushforward.
+The locally chosen blocks make representation growth part of the proof.
+
+The supplied \texttt{FastHVChan} repository~\cite{fastrepo} and
+\texttt{HV4DMagnitude} repository~\cite{magrepo}, including its
+\texttt{HV468DMagnitude} reports, supplied the implementation context.
+The earlier four-dimensional report described six- and eight-dimensional
+extensions mathematically; the present implementation and tests extend
+the actual numerical engine through ten dimensions, including five,
+seven, and nine. Dedicated 2D and 3D sweeps complete the requested range.
+
+The construction preserves Chan's high-dimensional exponent. It neither
+proves a sub-$n^{4/3}$ four-dimensional bound nor requires the previously
+unproved global batching lemma for that stronger target.
+
+\begin{thebibliography}{9}
+\raggedright
+\bibitem{chan}
+T. M. Chan. \emph{Klee's Measure Problem Made Easy}.
+Proceedings of FOCS 2013, pp. 410--419. DOI: 10.1109/FOCS.2013.51.
+Author's August 2013 version, Sections 4.1--4.2:
+\url{https://tmc.web.engr.illinois.edu/easyklee8_13.pdf}.
+
+\bibitem{emmerich}
+M. T. M. Emmerich. \emph{The Magnitude of Dominated Sets: A Pareto Compliant
+Indicator Grounded in Metric Geometry}. arXiv:2604.18147, 2026.
+\url{https://arxiv.org/abs/2604.18147}.
+
+\bibitem{fastrepo}
+M. Emmerich and collaborators. \emph{FastHVChan}.
+Repository snapshot \texttt{08539aa99e94}, inspected 4 October 2026.
+\url{https://github.com/emmerichmtm/FastHVChan}.
+
+\bibitem{magrepo}
+M. Emmerich and collaborators. \emph{HV4DMagnitude}, including the
+pair-elimination reports and the \texttt{HV468DMagnitude} code and audits.
+Repository snapshot \texttt{0c668e765202}, inspected 4 October 2026.
+\url{https://github.com/emmerichmtm/HV4DMagnitude}.
+\end{thebibliography}
+\end{document}

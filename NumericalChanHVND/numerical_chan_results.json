@@ -1,0 +1,767 @@
+{
+  "status": "All checks passed.",
+  "dimensions": [
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10
+  ],
+  "checks": {
+    "skyline_updates": 320,
+    "integer_roots": 45,
+    "end_to_end_exact_instances": 234,
+    "affine_equivalences": 18,
+    "first_compression_cells": 248,
+    "second_compressions": 18,
+    "forced_repeated_recursion": 14,
+    "face_contraction_checks": 350,
+    "invalid_inputs": 6
+  },
+  "seconds": 80.362,
+  "details": [
+    {
+      "dimension": 2,
+      "lifted_variables": 4,
+      "magnitude": false,
+      "compression_stats": {
+        "term_eliminations": 15,
+        "max_lower_candidates": 3,
+        "max_upper_candidates": 3,
+        "raw_terms": 28,
+        "peak_terms": 7,
+        "compressions": 2
+      }
+    },
+    {
+      "dimension": 2,
+      "lifted_variables": 4,
+      "magnitude": true,
+      "compression_stats": {
+        "term_eliminations": 16,
+        "max_lower_candidates": 3,
+        "max_upper_candidates": 3,
+        "raw_terms": 29,
+        "peak_terms": 8,
+        "compressions": 2
+      }
+    },
+    {
+      "dimension": 2,
+      "aggregate_end_to_end_stats": {
+        "input_points": 84,
+        "dimension": 52,
+        "initial_cells": 180,
+        "sweep_insertions": 84,
+        "sweep_cells": 82
+      }
+    },
+    {
+      "dimension": 3,
+      "lifted_variables": 6,
+      "magnitude": false,
+      "compression_stats": {
+        "term_eliminations": 66,
+        "max_lower_candidates": 4,
+        "max_upper_candidates": 3,
+        "raw_terms": 148,
+        "peak_terms": 25,
+        "compressions": 2
+      }
+    },
+    {
+      "dimension": 3,
+      "lifted_variables": 6,
+      "magnitude": true,
+      "compression_stats": {
+        "term_eliminations": 68,
+        "max_lower_candidates": 4,
+        "max_upper_candidates": 3,
+        "raw_terms": 151,
+        "peak_terms": 26,
+        "compressions": 2
+      }
+    },
+    {
+      "dimension": 3,
+      "aggregate_end_to_end_stats": {
+        "input_points": 84,
+        "dimension": 78,
+        "initial_cells": 254,
+        "sweep_insertions": 84,
+        "sweep_cells": 80
+      }
+    },
+    {
+      "dimension": 4,
+      "lifted_variables": 8,
+      "magnitude": false,
+      "compression_stats": {
+        "term_eliminations": 199,
+        "max_lower_candidates": 4,
+        "max_upper_candidates": 3,
+        "raw_terms": 426,
+        "peak_terms": 79,
+        "compressions": 2
+      }
+    },
+    {
+      "dimension": 4,
+      "lifted_variables": 8,
+      "magnitude": true,
+      "compression_stats": {
+        "term_eliminations": 238,
+        "max_lower_candidates": 4,
+        "max_upper_candidates": 4,
+        "raw_terms": 530,
+        "peak_terms": 90,
+        "compressions": 2
+      }
+    },
+    {
+      "dimension": 4,
+      "aggregate_end_to_end_stats": {
+        "input_points": 84,
+        "dimension": 104,
+        "initial_cells": 362,
+        "nodes": 120,
+        "max_generation": 0,
+        "box_classifications": 386,
+        "absorbed_boxes": 184,
+        "blocks": 12,
+        "cuts": 48,
+        "term_eliminations": 507,
+        "max_lower_candidates": 36,
+        "max_upper_candidates": 20,
+        "raw_terms": 647,
+        "peak_terms": 40,
+        "base_calls": 62
+      }
+    },
+    {
+      "dimension": 5,
+      "lifted_variables": 10,
+      "magnitude": false,
+      "compression_stats": {
+        "term_eliminations": 209,
+        "max_lower_candidates": 5,
+        "max_upper_candidates": 3,
+        "raw_terms": 450,
+        "peak_terms": 65,
+        "compressions": 2
+      }
+    },
+    {
+      "dimension": 5,
+      "lifted_variables": 10,
+      "magnitude": true,
+      "compression_stats": {
+        "term_eliminations": 477,
+        "max_lower_candidates": 5,
+        "max_upper_candidates": 4,
+        "raw_terms": 1026,
+        "peak_terms": 156,
+        "compressions": 2
+      }
+    },
+    {
+      "dimension": 5,
+      "aggregate_end_to_end_stats": {
+        "input_points": 84,
+        "dimension": 130,
+        "initial_cells": 452,
+        "nodes": 220,
+        "max_generation": 0,
+        "box_classifications": 702,
+        "absorbed_boxes": 298,
+        "blocks": 12,
+        "cuts": 98,
+        "term_eliminations": 1168,
+        "max_lower_candidates": 42,
+        "max_upper_candidates": 24,
+        "raw_terms": 1367,
+        "peak_terms": 50,
+        "base_calls": 114
+      }
+    },
+    {
+      "dimension": 6,
+      "lifted_variables": 12,
+      "magnitude": false,
+      "compression_stats": {
+        "term_eliminations": 275,
+        "max_lower_candidates": 5,
+        "max_upper_candidates": 3,
+        "raw_terms": 516,
+        "peak_terms": 65,
+        "compressions": 2
+      }
+    },
+    {
+      "dimension": 6,
+      "lifted_variables": 12,
+      "magnitude": true,
+      "compression_stats": {
+        "term_eliminations": 634,
+        "max_lower_candidates": 5,
+        "max_upper_candidates": 4,
+        "raw_terms": 1183,
+        "peak_terms": 156,
+        "compressions": 2
+      }
+    },
+    {
+      "dimension": 6,
+      "aggregate_end_to_end_stats": {
+        "input_points": 84,
+        "dimension": 156,
+        "initial_cells": 540,
+        "nodes": 318,
+        "max_generation": 6,
+        "box_classifications": 1034,
+        "absorbed_boxes": 416,
+        "blocks": 20,
+        "cuts": 144,
+        "term_eliminations": 3290,
+        "max_lower_candidates": 44,
+        "max_upper_candidates": 28,
+        "raw_terms": 4756,
+        "peak_terms": 288,
+        "compressions": 8,
+        "base_calls": 160,
+        "axis_skips": 6
+      }
+    },
+    {
+      "dimension": 7,
+      "lifted_variables": 14,
+      "magnitude": false,
+      "compression_stats": {
+        "term_eliminations": 341,
+        "max_lower_candidates": 5,
+        "max_upper_candidates": 3,
+        "raw_terms": 582,
+        "peak_terms": 65,
+        "compressions": 2
+      }
+    },
+    {
+      "dimension": 7,
+      "lifted_variables": 14,
+      "magnitude": true,
+      "compression_stats": {
+        "term_eliminations": 791,
+        "max_lower_candidates": 5,
+        "max_upper_candidates": 4,
+        "raw_terms": 1340,
+        "peak_terms": 156,
+        "compressions": 2
+      }
+    },
+    {
+      "dimension": 7,
+      "aggregate_end_to_end_stats": {
+        "input_points": 84,
+        "dimension": 182,
+        "initial_cells": 636,
+        "nodes": 558,
+        "max_generation": 8,
+        "box_classifications": 1642,
+        "absorbed_boxes": 632,
+        "blocks": 28,
+        "cuts": 266,
+        "term_eliminations": 6111,
+        "max_lower_candidates": 42,
+        "max_upper_candidates": 32,
+        "raw_terms": 7309,
+        "peak_terms": 326,
+        "compressions": 14,
+        "base_calls": 278,
+        "axis_skips": 2
+      }
+    },
+    {
+      "dimension": 8,
+      "lifted_variables": 16,
+      "magnitude": false,
+      "compression_stats": {
+        "term_eliminations": 407,
+        "max_lower_candidates": 5,
+        "max_upper_candidates": 3,
+        "raw_terms": 648,
+        "peak_terms": 65,
+        "compressions": 2
+      }
+    },
+    {
+      "dimension": 8,
+      "lifted_variables": 16,
+      "magnitude": true,
+      "compression_stats": {
+        "term_eliminations": 948,
+        "max_lower_candidates": 5,
+        "max_upper_candidates": 4,
+        "raw_terms": 1497,
+        "peak_terms": 156,
+        "compressions": 2
+      }
+    },
+    {
+      "dimension": 8,
+      "aggregate_end_to_end_stats": {
+        "input_points": 84,
+        "dimension": 208,
+        "initial_cells": 732,
+        "nodes": 1068,
+        "max_generation": 6,
+        "box_classifications": 2978,
+        "absorbed_boxes": 1096,
+        "blocks": 58,
+        "cuts": 512,
+        "term_eliminations": 17607,
+        "max_lower_candidates": 43,
+        "max_upper_candidates": 31,
+        "raw_terms": 20177,
+        "peak_terms": 800,
+        "compressions": 44,
+        "axis_skips": 20,
+        "base_calls": 512
+      }
+    },
+    {
+      "dimension": 9,
+      "lifted_variables": 18,
+      "magnitude": false,
+      "compression_stats": {
+        "term_eliminations": 473,
+        "max_lower_candidates": 5,
+        "max_upper_candidates": 3,
+        "raw_terms": 714,
+        "peak_terms": 65,
+        "compressions": 2
+      }
+    },
+    {
+      "dimension": 9,
+      "lifted_variables": 18,
+      "magnitude": true,
+      "compression_stats": {
+        "term_eliminations": 1105,
+        "max_lower_candidates": 5,
+        "max_upper_candidates": 4,
+        "raw_terms": 1654,
+        "peak_terms": 156,
+        "compressions": 2
+      }
+    },
+    {
+      "dimension": 9,
+      "aggregate_end_to_end_stats": {
+        "input_points": 84,
+        "dimension": 234,
+        "initial_cells": 802,
+        "nodes": 1571,
+        "max_generation": 8,
+        "box_classifications": 4399,
+        "absorbed_boxes": 1577,
+        "blocks": 78,
+        "cuts": 745,
+        "term_eliminations": 61936,
+        "max_lower_candidates": 42,
+        "max_upper_candidates": 34,
+        "raw_terms": 77679,
+        "peak_terms": 2661,
+        "compressions": 64,
+        "axis_skips": 57,
+        "base_calls": 759
+      }
+    },
+    {
+      "dimension": 10,
+      "lifted_variables": 20,
+      "magnitude": false,
+      "compression_stats": {
+        "term_eliminations": 539,
+        "max_lower_candidates": 5,
+        "max_upper_candidates": 3,
+        "raw_terms": 780,
+        "peak_terms": 65,
+        "compressions": 2
+      }
+    },
+    {
+      "dimension": 10,
+      "lifted_variables": 20,
+      "magnitude": true,
+      "compression_stats": {
+        "term_eliminations": 1262,
+        "max_lower_candidates": 5,
+        "max_upper_candidates": 4,
+        "raw_terms": 1811,
+        "peak_terms": 156,
+        "compressions": 2
+      }
+    },
+    {
+      "dimension": 10,
+      "aggregate_end_to_end_stats": {
+        "input_points": 84,
+        "dimension": 260,
+        "initial_cells": 912,
+        "nodes": 2406,
+        "max_generation": 8,
+        "box_classifications": 6494,
+        "absorbed_boxes": 2180,
+        "blocks": 114,
+        "cuts": 1132,
+        "term_eliminations": 191365,
+        "max_lower_candidates": 42,
+        "max_upper_candidates": 34,
+        "raw_terms": 223743,
+        "peak_terms": 9184,
+        "compressions": 98,
+        "base_calls": 1144,
+        "axis_skips": 118
+      }
+    },
+    {
+      "dimension": 4,
+      "forced_blocks": 2,
+      "magnitude": false,
+      "stats": {
+        "input_points": 12,
+        "dimension": 4,
+        "initial_cells": 29,
+        "nodes": 25,
+        "max_generation": 2,
+        "box_classifications": 128,
+        "absorbed_boxes": 57,
+        "blocks": 6,
+        "cuts": 12,
+        "term_eliminations": 973,
+        "max_lower_candidates": 4,
+        "max_upper_candidates": 4,
+        "raw_terms": 1307,
+        "peak_terms": 112,
+        "compressions": 5,
+        "base_calls": 13
+      }
+    },
+    {
+      "dimension": 4,
+      "forced_blocks": 2,
+      "magnitude": true,
+      "stats": {
+        "input_points": 12,
+        "dimension": 4,
+        "initial_cells": 29,
+        "nodes": 25,
+        "max_generation": 2,
+        "box_classifications": 128,
+        "absorbed_boxes": 57,
+        "blocks": 6,
+        "cuts": 12,
+        "term_eliminations": 1384,
+        "max_lower_candidates": 4,
+        "max_upper_candidates": 4,
+        "raw_terms": 2032,
+        "peak_terms": 128,
+        "compressions": 5,
+        "base_calls": 13
+      }
+    },
+    {
+      "dimension": 5,
+      "forced_blocks": 2,
+      "magnitude": false,
+      "stats": {
+        "input_points": 12,
+        "dimension": 5,
+        "initial_cells": 31,
+        "nodes": 26,
+        "max_generation": 2,
+        "box_classifications": 130,
+        "absorbed_boxes": 57,
+        "blocks": 6,
+        "cuts": 12,
+        "term_eliminations": 1253,
+        "max_lower_candidates": 4,
+        "max_upper_candidates": 4,
+        "raw_terms": 1587,
+        "peak_terms": 112,
+        "compressions": 5,
+        "base_calls": 13,
+        "axis_skips": 1
+      }
+    },
+    {
+      "dimension": 5,
+      "forced_blocks": 2,
+      "magnitude": true,
+      "stats": {
+        "input_points": 12,
+        "dimension": 5,
+        "initial_cells": 31,
+        "nodes": 26,
+        "max_generation": 2,
+        "box_classifications": 130,
+        "absorbed_boxes": 57,
+        "blocks": 6,
+        "cuts": 12,
+        "term_eliminations": 1781,
+        "max_lower_candidates": 4,
+        "max_upper_candidates": 4,
+        "raw_terms": 2429,
+        "peak_terms": 128,
+        "compressions": 5,
+        "base_calls": 13,
+        "axis_skips": 1
+      }
+    },
+    {
+      "dimension": 6,
+      "forced_blocks": 2,
+      "magnitude": false,
+      "stats": {
+        "input_points": 12,
+        "dimension": 6,
+        "initial_cells": 33,
+        "nodes": 27,
+        "max_generation": 3,
+        "box_classifications": 132,
+        "absorbed_boxes": 57,
+        "blocks": 7,
+        "cuts": 12,
+        "term_eliminations": 1970,
+        "max_lower_candidates": 5,
+        "max_upper_candidates": 4,
+        "raw_terms": 2955,
+        "peak_terms": 112,
+        "compressions": 6,
+        "base_calls": 13,
+        "axis_skips": 2
+      }
+    },
+    {
+      "dimension": 6,
+      "forced_blocks": 2,
+      "magnitude": true,
+      "stats": {
+        "input_points": 12,
+        "dimension": 6,
+        "initial_cells": 33,
+        "nodes": 27,
+        "max_generation": 3,
+        "box_classifications": 132,
+        "absorbed_boxes": 57,
+        "blocks": 7,
+        "cuts": 12,
+        "term_eliminations": 3148,
+        "max_lower_candidates": 5,
+        "max_upper_candidates": 4,
+        "raw_terms": 5237,
+        "peak_terms": 236,
+        "compressions": 6,
+        "base_calls": 13,
+        "axis_skips": 2
+      }
+    },
+    {
+      "dimension": 7,
+      "forced_blocks": 2,
+      "magnitude": false,
+      "stats": {
+        "input_points": 12,
+        "dimension": 7,
+        "initial_cells": 35,
+        "nodes": 28,
+        "max_generation": 3,
+        "box_classifications": 134,
+        "absorbed_boxes": 57,
+        "blocks": 7,
+        "cuts": 12,
+        "term_eliminations": 2319,
+        "max_lower_candidates": 5,
+        "max_upper_candidates": 4,
+        "raw_terms": 3304,
+        "peak_terms": 112,
+        "compressions": 6,
+        "base_calls": 13,
+        "axis_skips": 3
+      }
+    },
+    {
+      "dimension": 7,
+      "forced_blocks": 2,
+      "magnitude": true,
+      "stats": {
+        "input_points": 12,
+        "dimension": 7,
+        "initial_cells": 35,
+        "nodes": 28,
+        "max_generation": 3,
+        "box_classifications": 134,
+        "absorbed_boxes": 57,
+        "blocks": 7,
+        "cuts": 12,
+        "term_eliminations": 3699,
+        "max_lower_candidates": 5,
+        "max_upper_candidates": 4,
+        "raw_terms": 5788,
+        "peak_terms": 236,
+        "compressions": 6,
+        "base_calls": 13,
+        "axis_skips": 3
+      }
+    },
+    {
+      "dimension": 8,
+      "forced_blocks": 2,
+      "magnitude": false,
+      "stats": {
+        "input_points": 12,
+        "dimension": 8,
+        "initial_cells": 37,
+        "nodes": 29,
+        "max_generation": 4,
+        "box_classifications": 136,
+        "absorbed_boxes": 57,
+        "blocks": 8,
+        "cuts": 12,
+        "term_eliminations": 2975,
+        "max_lower_candidates": 5,
+        "max_upper_candidates": 4,
+        "raw_terms": 4480,
+        "peak_terms": 112,
+        "compressions": 7,
+        "base_calls": 13,
+        "axis_skips": 4
+      }
+    },
+    {
+      "dimension": 8,
+      "forced_blocks": 2,
+      "magnitude": true,
+      "stats": {
+        "input_points": 12,
+        "dimension": 8,
+        "initial_cells": 37,
+        "nodes": 29,
+        "max_generation": 4,
+        "box_classifications": 136,
+        "absorbed_boxes": 57,
+        "blocks": 8,
+        "cuts": 12,
+        "term_eliminations": 4992,
+        "max_lower_candidates": 5,
+        "max_upper_candidates": 4,
+        "raw_terms": 8246,
+        "peak_terms": 236,
+        "compressions": 7,
+        "base_calls": 13,
+        "axis_skips": 4
+      }
+    },
+    {
+      "dimension": 9,
+      "forced_blocks": 2,
+      "magnitude": false,
+      "stats": {
+        "input_points": 12,
+        "dimension": 9,
+        "initial_cells": 39,
+        "nodes": 30,
+        "max_generation": 4,
+        "box_classifications": 138,
+        "absorbed_boxes": 57,
+        "blocks": 8,
+        "cuts": 12,
+        "term_eliminations": 3353,
+        "max_lower_candidates": 5,
+        "max_upper_candidates": 4,
+        "raw_terms": 4858,
+        "peak_terms": 112,
+        "compressions": 7,
+        "base_calls": 13,
+        "axis_skips": 5
+      }
+    },
+    {
+      "dimension": 9,
+      "forced_blocks": 2,
+      "magnitude": true,
+      "stats": {
+        "input_points": 12,
+        "dimension": 9,
+        "initial_cells": 39,
+        "nodes": 30,
+        "max_generation": 4,
+        "box_classifications": 138,
+        "absorbed_boxes": 57,
+        "blocks": 8,
+        "cuts": 12,
+        "term_eliminations": 5615,
+        "max_lower_candidates": 5,
+        "max_upper_candidates": 4,
+        "raw_terms": 8869,
+        "peak_terms": 236,
+        "compressions": 7,
+        "base_calls": 13,
+        "axis_skips": 5
+      }
+    },
+    {
+      "dimension": 10,
+      "forced_blocks": 2,
+      "magnitude": false,
+      "stats": {
+        "input_points": 12,
+        "dimension": 10,
+        "initial_cells": 41,
+        "nodes": 31,
+        "max_generation": 5,
+        "box_classifications": 140,
+        "absorbed_boxes": 57,
+        "blocks": 9,
+        "cuts": 12,
+        "term_eliminations": 4045,
+        "max_lower_candidates": 5,
+        "max_upper_candidates": 4,
+        "raw_terms": 5886,
+        "peak_terms": 112,
+        "compressions": 8,
+        "base_calls": 13,
+        "axis_skips": 6
+      }
+    },
+    {
+      "dimension": 10,
+      "forced_blocks": 2,
+      "magnitude": true,
+      "stats": {
+        "input_points": 12,
+        "dimension": 10,
+        "initial_cells": 41,
+        "nodes": 31,
+        "max_generation": 5,
+        "box_classifications": 140,
+        "absorbed_boxes": 57,
+        "blocks": 9,
+        "cuts": 12,
+        "term_eliminations": 7000,
+        "max_lower_candidates": 5,
+        "max_upper_candidates": 4,
+        "raw_terms": 11046,
+        "peak_terms": 236,
+        "compressions": 8,
+        "base_calls": 13,
+        "axis_skips": 6
+      }
+    }
+  ],
+  "scope": "Exact arithmetic except floating diagnostics for face potential. High-dimensional tests are small; no practical speed claim."
+}

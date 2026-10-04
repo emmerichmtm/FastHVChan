@@ -1,0 +1,615 @@
+{
+  "environment": {
+    "python": "3.12.14 (main, Aug 25 2026, 14:01:42) [MSC v.1944 64 bit (AMD64)]",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "cpu": "AMD64 Family 25 Model 80 Stepping 0, AuthenticAMD",
+    "numpy": "2.5.3",
+    "numba": "0.68.0",
+    "logical_cpus": 16
+  },
+  "repeats": 3,
+  "timeout_seconds": 35.0,
+  "reference_sha256": {
+    "chan_orthant_dby3.py": "7fa161f4092426af03a4b2fa5098dac649ec82f9ccfe797bd64d49b4f6384e1e",
+    "chan_hypervolume.py": "d2e40db7d88e03ed6944ee2f7dbf782f69d262ad10a809cd4a8918ddecf87c85"
+  },
+  "timing_scope": "End-to-end float64 call including rank preprocessing and API transforms; imports excluded; first call recorded separately; warm median reported. Numba backend is hybrid, not a fully compiled recursion. All algorithms have one untimed first call; dominance prefilter disabled.",
+  "rows": [
+    {
+      "id": "sphere-d4-n12-hv",
+      "family": "sphere",
+      "d": 4,
+      "n": 12,
+      "magnitude": false,
+      "algorithm": "numerical_python",
+      "event": "finished",
+      "status": "ok",
+      "value": 0.09364056270326393,
+      "first_call_seconds": 0.028300500009208918,
+      "seconds": [
+        0.030380700016394258,
+        0.0280691001098603,
+        0.02799380011856556
+      ],
+      "median_seconds": 0.0280691001098603,
+      "scaled_difference": 0.0
+    },
+    {
+      "id": "sphere-d4-n12-hv",
+      "family": "sphere",
+      "d": 4,
+      "n": 12,
+      "magnitude": false,
+      "algorithm": "numerical_numba",
+      "event": "finished",
+      "status": "ok",
+      "value": 0.09364056270326393,
+      "first_call_seconds": 0.30625680019147694,
+      "seconds": [
+        0.0411338999401778,
+        0.040371800074353814,
+        0.041224899934604764
+      ],
+      "median_seconds": 0.0411338999401778,
+      "scaled_difference": 0.0
+    },
+    {
+      "id": "sphere-d4-n12-hv",
+      "family": "sphere",
+      "d": 4,
+      "n": 12,
+      "magnitude": false,
+      "algorithm": "chan_dby3",
+      "event": "finished",
+      "status": "ok",
+      "value": 0.09364056270326404,
+      "first_call_seconds": 0.011952899862080812,
+      "seconds": [
+        0.011026500025764108,
+        0.012222799938172102,
+        0.01274330005981028
+      ],
+      "median_seconds": 0.012222799938172102,
+      "scaled_difference": 1.1102230246251565e-16
+    },
+    {
+      "id": "sphere-d4-n12-hv",
+      "family": "sphere",
+      "d": 4,
+      "n": 12,
+      "magnitude": false,
+      "algorithm": "chan_dby2",
+      "event": "finished",
+      "status": "ok",
+      "value": 0.09364056270326404,
+      "first_call_seconds": 0.002059499965980649,
+      "seconds": [
+        0.002062999876216054,
+        0.00171849993057549,
+        0.0017601000145077705
+      ],
+      "median_seconds": 0.0017601000145077705,
+      "scaled_difference": 1.1102230246251565e-16
+    },
+    {
+      "id": "sphere-d4-n12-mag",
+      "family": "sphere",
+      "d": 4,
+      "n": 12,
+      "magnitude": true,
+      "algorithm": "numerical_python",
+      "event": "finished",
+      "status": "ok",
+      "value": 3.741128109067695,
+      "first_call_seconds": 0.03031019982881844,
+      "seconds": [
+        0.027674400014802814,
+        0.028300999896600842,
+        0.02841549995355308
+      ],
+      "median_seconds": 0.028300999896600842,
+      "scaled_difference": 0.0
+    },
+    {
+      "id": "sphere-d4-n12-mag",
+      "family": "sphere",
+      "d": 4,
+      "n": 12,
+      "magnitude": true,
+      "algorithm": "numerical_numba",
+      "event": "finished",
+      "status": "ok",
+      "value": 3.741128109067695,
+      "first_call_seconds": 0.3418580999132246,
+      "seconds": [
+        0.04330219980329275,
+        0.04490620014257729,
+        0.04289969988167286
+      ],
+      "median_seconds": 0.04330219980329275,
+      "scaled_difference": 0.0
+    },
+    {
+      "id": "sphere-d4-n12-mag",
+      "family": "sphere",
+      "d": 4,
+      "n": 12,
+      "magnitude": true,
+      "algorithm": "chan_dby3",
+      "event": "finished",
+      "status": "ok",
+      "value": 3.7411281090676947,
+      "first_call_seconds": 0.011527300113812089,
+      "seconds": [
+        0.011667600134387612,
+        0.01259990013204515,
+        0.012690899893641472
+      ],
+      "median_seconds": 0.01259990013204515,
+      "scaled_difference": 1.1870462515669678e-16
+    },
+    {
+      "id": "sphere-d4-n12-mag",
+      "family": "sphere",
+      "d": 4,
+      "n": 12,
+      "magnitude": true,
+      "algorithm": "chan_dby2",
+      "event": "finished",
+      "status": "ok",
+      "value": 3.741128109067694,
+      "first_call_seconds": 0.001586599973961711,
+      "seconds": [
+        0.0026996999513357878,
+        0.0019805000629276037,
+        0.0017342998180538416
+      ],
+      "median_seconds": 0.0019805000629276037,
+      "scaled_difference": 2.3740925031339357e-16
+    },
+    {
+      "id": "sphere-d4-n24-hv",
+      "family": "sphere",
+      "d": 4,
+      "n": 24,
+      "magnitude": false,
+      "algorithm": "numerical_python",
+      "event": "finished",
+      "status": "ok",
+      "value": 0.13701622818303283,
+      "first_call_seconds": 1.4903329000808299,
+      "seconds": [
+        1.4600961999967694,
+        1.4636737999971956,
+        1.5055849999189377
+      ],
+      "median_seconds": 1.4636737999971956,
+      "scaled_difference": 0.0
+    },
+    {
+      "id": "sphere-d4-n24-hv",
+      "family": "sphere",
+      "d": 4,
+      "n": 24,
+      "magnitude": false,
+      "algorithm": "numerical_numba",
+      "event": "finished",
+      "status": "ok",
+      "value": 0.13701622818303272,
+      "first_call_seconds": 2.6642471000086516,
+      "seconds": [
+        2.3145795001182705,
+        2.339785899966955,
+        2.3927738999482244
+      ],
+      "median_seconds": 2.339785899966955,
+      "scaled_difference": 1.1102230246251565e-16
+    },
+    {
+      "id": "sphere-d4-n24-hv",
+      "family": "sphere",
+      "d": 4,
+      "n": 24,
+      "magnitude": false,
+      "algorithm": "chan_dby3",
+      "event": "finished",
+      "status": "ok",
+      "value": 0.13701622818303266,
+      "first_call_seconds": 0.028997199842706323,
+      "seconds": [
+        0.02749120001681149,
+        0.0272489998023957,
+        0.026844099862501025
+      ],
+      "median_seconds": 0.0272489998023957,
+      "scaled_difference": 1.6653345369377348e-16
+    },
+    {
+      "id": "sphere-d4-n24-hv",
+      "family": "sphere",
+      "d": 4,
+      "n": 24,
+      "magnitude": false,
+      "algorithm": "chan_dby2",
+      "event": "finished",
+      "status": "ok",
+      "value": 0.13701622818303266,
+      "first_call_seconds": 0.005305000115185976,
+      "seconds": [
+        0.005442399997264147,
+        0.005180299980565906,
+        0.005556900054216385
+      ],
+      "median_seconds": 0.005442399997264147,
+      "scaled_difference": 1.6653345369377348e-16
+    },
+    {
+      "id": "sphere-d4-n48-hv",
+      "family": "sphere",
+      "d": 4,
+      "n": 48,
+      "magnitude": false,
+      "algorithm": "numerical_python",
+      "status": "timeout",
+      "timeout_seconds": 35.0,
+      "event": "warmup_done",
+      "first_call_seconds": 24.117621300043538,
+      "value": 0.16660783045934724
+    },
+    {
+      "id": "sphere-d4-n48-hv",
+      "family": "sphere",
+      "d": 4,
+      "n": 48,
+      "magnitude": false,
+      "algorithm": "numerical_numba",
+      "status": "timeout",
+      "timeout_seconds": 35.0,
+      "event": "warmup_done",
+      "first_call_seconds": 26.241763799916953,
+      "value": 0.16660783045934724
+    },
+    {
+      "id": "sphere-d4-n48-hv",
+      "family": "sphere",
+      "d": 4,
+      "n": 48,
+      "magnitude": false,
+      "algorithm": "chan_dby3",
+      "event": "finished",
+      "status": "ok",
+      "value": 0.16660783045934702,
+      "first_call_seconds": 0.10374530008994043,
+      "seconds": [
+        0.09665490011684597,
+        0.10325159993954003,
+        0.1298644000198692
+      ],
+      "median_seconds": 0.10325159993954003,
+      "scaled_difference": 0.0
+    },
+    {
+      "id": "sphere-d4-n48-hv",
+      "family": "sphere",
+      "d": 4,
+      "n": 48,
+      "magnitude": false,
+      "algorithm": "chan_dby2",
+      "event": "finished",
+      "status": "ok",
+      "value": 0.1666078304593469,
+      "first_call_seconds": 0.017379799857735634,
+      "seconds": [
+        0.016188699984923005,
+        0.019435600144788623,
+        0.018491899827495217
+      ],
+      "median_seconds": 0.018491899827495217,
+      "scaled_difference": 1.1102230246251565e-16
+    },
+    {
+      "id": "tied_grid-d4-n12-hv",
+      "family": "tied_grid",
+      "d": 4,
+      "n": 12,
+      "magnitude": false,
+      "algorithm": "numerical_python",
+      "event": "finished",
+      "status": "ok",
+      "value": 0.20654296875,
+      "first_call_seconds": 0.0044420999474823475,
+      "seconds": [
+        0.004569199867546558,
+        0.004651600029319525,
+        0.005022100172936916
+      ],
+      "median_seconds": 0.004651600029319525,
+      "scaled_difference": 0.0
+    },
+    {
+      "id": "tied_grid-d4-n12-hv",
+      "family": "tied_grid",
+      "d": 4,
+      "n": 12,
+      "magnitude": false,
+      "algorithm": "numerical_numba",
+      "event": "finished",
+      "status": "ok",
+      "value": 0.20654296875,
+      "first_call_seconds": 0.2922107002232224,
+      "seconds": [
+        0.005499499849975109,
+        0.006453600013628602,
+        0.007784700021147728
+      ],
+      "median_seconds": 0.006453600013628602,
+      "scaled_difference": 0.0
+    },
+    {
+      "id": "tied_grid-d4-n12-hv",
+      "family": "tied_grid",
+      "d": 4,
+      "n": 12,
+      "magnitude": false,
+      "algorithm": "chan_dby3",
+      "event": "finished",
+      "status": "ok",
+      "value": 0.20654296875,
+      "first_call_seconds": 0.0034440001472830772,
+      "seconds": [
+        0.0030980000738054514,
+        0.0030062999576330185,
+        0.003003200050443411
+      ],
+      "median_seconds": 0.0030062999576330185,
+      "scaled_difference": 0.0
+    },
+    {
+      "id": "tied_grid-d4-n12-hv",
+      "family": "tied_grid",
+      "d": 4,
+      "n": 12,
+      "magnitude": false,
+      "algorithm": "chan_dby2",
+      "event": "finished",
+      "status": "ok",
+      "value": 0.20654296875,
+      "first_call_seconds": 0.0006764999125152826,
+      "seconds": [
+        0.0005748998373746872,
+        0.0005475999787449837,
+        0.0005403000395745039
+      ],
+      "median_seconds": 0.0005475999787449837,
+      "scaled_difference": 0.0
+    },
+    {
+      "id": "tied_grid-d4-n12-mag",
+      "family": "tied_grid",
+      "d": 4,
+      "n": 12,
+      "magnitude": true,
+      "algorithm": "numerical_python",
+      "event": "finished",
+      "status": "ok",
+      "value": 3.688446044921875,
+      "first_call_seconds": 0.004297100007534027,
+      "seconds": [
+        0.004032999975606799,
+        0.004118699813261628,
+        0.003925899975001812
+      ],
+      "median_seconds": 0.004032999975606799,
+      "scaled_difference": 0.0
+    },
+    {
+      "id": "tied_grid-d4-n12-mag",
+      "family": "tied_grid",
+      "d": 4,
+      "n": 12,
+      "magnitude": true,
+      "algorithm": "numerical_numba",
+      "event": "finished",
+      "status": "ok",
+      "value": 3.688446044921875,
+      "first_call_seconds": 0.29502510000020266,
+      "seconds": [
+        0.006479599978774786,
+        0.005413200007751584,
+        0.006345999892801046
+      ],
+      "median_seconds": 0.006345999892801046,
+      "scaled_difference": 0.0
+    },
+    {
+      "id": "tied_grid-d4-n12-mag",
+      "family": "tied_grid",
+      "d": 4,
+      "n": 12,
+      "magnitude": true,
+      "algorithm": "chan_dby3",
+      "event": "finished",
+      "status": "ok",
+      "value": 3.688446044921875,
+      "first_call_seconds": 0.0036883000284433365,
+      "seconds": [
+        0.003486800007522106,
+        0.003575199982151389,
+        0.00301179988309741
+      ],
+      "median_seconds": 0.003486800007522106,
+      "scaled_difference": 0.0
+    },
+    {
+      "id": "tied_grid-d4-n12-mag",
+      "family": "tied_grid",
+      "d": 4,
+      "n": 12,
+      "magnitude": true,
+      "algorithm": "chan_dby2",
+      "event": "finished",
+      "status": "ok",
+      "value": 3.688446044921875,
+      "first_call_seconds": 0.0006752000190317631,
+      "seconds": [
+        0.0006935000419616699,
+        0.0005610000807791948,
+        0.0005546999163925648
+      ],
+      "median_seconds": 0.0005610000807791948,
+      "scaled_difference": 0.0
+    },
+    {
+      "id": "tied_grid-d4-n24-hv",
+      "family": "tied_grid",
+      "d": 4,
+      "n": 24,
+      "magnitude": false,
+      "algorithm": "numerical_python",
+      "event": "finished",
+      "status": "ok",
+      "value": 0.3662109375,
+      "first_call_seconds": 0.04447499988600612,
+      "seconds": [
+        0.04536570003256202,
+        0.04467159998603165,
+        0.04711619997397065
+      ],
+      "median_seconds": 0.04536570003256202,
+      "scaled_difference": 0.0
+    },
+    {
+      "id": "tied_grid-d4-n24-hv",
+      "family": "tied_grid",
+      "d": 4,
+      "n": 24,
+      "magnitude": false,
+      "algorithm": "numerical_numba",
+      "event": "finished",
+      "status": "ok",
+      "value": 0.3662109375,
+      "first_call_seconds": 0.37108159996569157,
+      "seconds": [
+        0.07644199999049306,
+        0.07094620005227625,
+        0.07712500006891787
+      ],
+      "median_seconds": 0.07644199999049306,
+      "scaled_difference": 0.0
+    },
+    {
+      "id": "tied_grid-d4-n24-hv",
+      "family": "tied_grid",
+      "d": 4,
+      "n": 24,
+      "magnitude": false,
+      "algorithm": "chan_dby3",
+      "event": "finished",
+      "status": "ok",
+      "value": 0.3662109375,
+      "first_call_seconds": 0.007117599947378039,
+      "seconds": [
+        0.006733300164341927,
+        0.0065916001331061125,
+        0.006412999937310815
+      ],
+      "median_seconds": 0.0065916001331061125,
+      "scaled_difference": 0.0
+    },
+    {
+      "id": "tied_grid-d4-n24-hv",
+      "family": "tied_grid",
+      "d": 4,
+      "n": 24,
+      "magnitude": false,
+      "algorithm": "chan_dby2",
+      "event": "finished",
+      "status": "ok",
+      "value": 0.3662109375,
+      "first_call_seconds": 0.00119420001283288,
+      "seconds": [
+        0.0013929998967796564,
+        0.0015285999979823828,
+        0.0010911999270319939
+      ],
+      "median_seconds": 0.0013929998967796564,
+      "scaled_difference": 0.0
+    },
+    {
+      "id": "tied_grid-d4-n48-hv",
+      "family": "tied_grid",
+      "d": 4,
+      "n": 48,
+      "magnitude": false,
+      "algorithm": "numerical_python",
+      "event": "finished",
+      "status": "ok",
+      "value": 0.5537109375,
+      "first_call_seconds": 0.08561239996924996,
+      "seconds": [
+        0.08485330012626946,
+        0.07046819990500808,
+        0.07468460011295974
+      ],
+      "median_seconds": 0.07468460011295974,
+      "scaled_difference": 0.0
+    },
+    {
+      "id": "tied_grid-d4-n48-hv",
+      "family": "tied_grid",
+      "d": 4,
+      "n": 48,
+      "magnitude": false,
+      "algorithm": "numerical_numba",
+      "event": "finished",
+      "status": "ok",
+      "value": 0.5537109375,
+      "first_call_seconds": 0.4668973998632282,
+      "seconds": [
+        0.1623828001320362,
+        0.13580320007167757,
+        0.13272239989601076
+      ],
+      "median_seconds": 0.13580320007167757,
+      "scaled_difference": 0.0
+    },
+    {
+      "id": "tied_grid-d4-n48-hv",
+      "family": "tied_grid",
+      "d": 4,
+      "n": 48,
+      "magnitude": false,
+      "algorithm": "chan_dby3",
+      "event": "finished",
+      "status": "ok",
+      "value": 0.5537109375,
+      "first_call_seconds": 0.0020049000158905983,
+      "seconds": [
+        0.0016499999910593033,
+        0.0018385997973382473,
+        0.0021292001474648714
+      ],
+      "median_seconds": 0.0018385997973382473,
+      "scaled_difference": 0.0
+    },
+    {
+      "id": "tied_grid-d4-n48-hv",
+      "family": "tied_grid",
+      "d": 4,
+      "n": 48,
+      "magnitude": false,
+      "algorithm": "chan_dby2",
+      "event": "finished",
+      "status": "ok",
+      "value": 0.5537109375,
+      "first_call_seconds": 0.0010788999497890472,
+      "seconds": [
+        0.0009690001606941223,
+        0.0009939000010490417,
+        0.000973499845713377
+      ],
+      "median_seconds": 0.000973499845713377,
+      "scaled_difference": 0.0
+    }
+  ]
+}

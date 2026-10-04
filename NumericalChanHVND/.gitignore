@@ -1,0 +1,9 @@
+__pycache__/
+*.pyc
+*.nbc
+*.nbi
+.numba_cache/
+*.log
+*.aux
+*.out
+*.toc

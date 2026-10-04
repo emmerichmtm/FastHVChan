@@ -1,0 +1,51 @@
+The reproducible benchmark compares the numerical Python and Numba
+backends with the repository's unmodified Python implementations of Chan
+Section~4.2 ($d/3$) and Section~2 ($d/2$). The baseline commit is
+\texttt{08539aa99e94}; neither baseline uses Numba. All timed inputs are
+floating point. Dominance prefiltering is disabled, and input preprocessing
+and coordinate transforms are included. For magnitude, the references use
+the affine HV transformation.
+
+Each entry below is the median of three calls after one untimed first call.
+Workers run sequentially. A 35-second limit covers the entire worker,
+including startup, its first call and all repeats; ``timeout'' is not a
+per-call runtime. Raw repeats and first-call times are in the accompanying
+JSON/CSV. No ratio is assigned to a timeout.
+
+\begin{center}\small
+\begin{tabular}{@{}lrrrr@{}}
+\toprule
+Case&Numerical Python&Numba&Chan 4.2&Chan 2\\
+\midrule
+sphere, 12, HV&0.028069&0.041134&0.012223&0.0017601\\
+sphere, 12, Mag&0.028301&0.043302&0.0126&0.0019805\\
+sphere, 24, HV&1.4637&2.3398&0.027249&0.0054424\\
+sphere, 48, HV&timeout&timeout&0.10325&0.018492\\
+grid, 12, HV&0.0046516&0.0064536&0.0030063&0.0005476\\
+grid, 12, Mag&0.004033&0.006346&0.0034868&0.000561\\
+grid, 24, HV&0.045366&0.076442&0.0065916&0.001393\\
+grid, 48, HV&0.074685&0.1358&0.0018386&0.0009735\\
+\bottomrule
+\end{tabular}
+\end{center}
+All times are seconds. The ND overview uses spherical, mutually
+nondominated fronts; the full data additionally includes tied-grid inputs
+and magnitude evaluations. These small cases do not measure asymptotic exponents.
+
+For completed matched ordinary-HV cases in 4D, the median ratio Numba numerical / Python numerical was 1.60x (5 cases). The median ratio Numba numerical / the repository's Python Section~4.2 implementation was 11.60x (5 cases). Ratios above one mean the Numba version was slower. These are medians of per-case ratios for this small benchmark set. They do not support a practical speedup claim for this four-dimensional implementation.
+
+Across completed comparisons the maximum scaled disagreement was $3.31\times10^{-16}$, where scaling divides by $\max(1,|\text{reference value}|)$. This is an observed check, not a uniform error bound.
+
+Fresh-cache first-use probes (module imports excluded) gave:
+\begin{center}\small
+\begin{tabular}{@{}crr@{}}\toprule
+Dimension&First use (s)&Second use (s)\\\midrule
+2&2.5352&9.72e-05\\
+3&2.496&0.0001481\\
+4&1.9391&0.0030841\\
+\bottomrule
+\end{tabular}
+\end{center}
+The first call includes both compilation and computation; it is not pure compiler time.
+
+Environment: CPython 3.12.14, NumPy 2.5.3, Numba 0.68.0, Windows.

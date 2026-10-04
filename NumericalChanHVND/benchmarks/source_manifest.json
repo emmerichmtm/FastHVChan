@@ -1,0 +1,10 @@
+{
+  "baseline_commit": "08539aa99e94e181d7230a8288885b3294621c9e",
+  "normalized_lf_sha256": {
+    "numerical_chan.py": "1778f7ac8bed5f1252c0c64145db98322e6173e47098a25cd420510935c3800f",
+    "numerical_chan_numba.py": "0db67a57ab1e0c2c52fdfd570f020ca458e025e725f66ab29e76fc8d580217f3",
+    "benchmark_numerical_chan.py": "ee3ebadb2f95bd9a19b98038cbc1e62d3bc82a61e7af57f5cbafdfb10e8ffec7",
+    "measure_cold_start.py": "770bf5507bcb1c365a507d5bb423dd5f6a6ad75fd61d76b8c567114f6886b247"
+  },
+  "cold_probe_reproduction": "Run measure_cold_start.py D OUTPUT_JSON in a new process with a fresh empty NUMBA_CACHE_DIR for each D in 2,3,4."
+}

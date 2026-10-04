@@ -1,0 +1,104 @@
+[
+  {
+    "dimension": 2,
+    "points": [
+      [
+        1,
+        2
+      ],
+      [
+        2,
+        3
+      ],
+      [
+        3,
+        4
+      ],
+      [
+        4,
+        5
+      ],
+      [
+        5,
+        1
+      ]
+    ],
+    "value": 21.0,
+    "first_use_seconds": 2.5352129999082536,
+    "second_use_seconds": 9.720004163682461e-05,
+    "scope": "Module imports excluded; first call includes actual JIT compilation and computation with a fresh empty cache. Not pure compiler time."
+  },
+  {
+    "dimension": 3,
+    "points": [
+      [
+        1,
+        2,
+        3
+      ],
+      [
+        2,
+        3,
+        4
+      ],
+      [
+        3,
+        4,
+        5
+      ],
+      [
+        4,
+        5,
+        1
+      ],
+      [
+        5,
+        1,
+        2
+      ]
+    ],
+    "value": 71.0,
+    "first_use_seconds": 2.4960130001418293,
+    "second_use_seconds": 0.000148099847137928,
+    "scope": "Module imports excluded; first call includes actual JIT compilation and computation with a fresh empty cache. Not pure compiler time."
+  },
+  {
+    "dimension": 4,
+    "points": [
+      [
+        1,
+        2,
+        3,
+        4
+      ],
+      [
+        2,
+        3,
+        4,
+        5
+      ],
+      [
+        3,
+        4,
+        5,
+        1
+      ],
+      [
+        4,
+        5,
+        1,
+        2
+      ],
+      [
+        5,
+        1,
+        2,
+        3
+      ]
+    ],
+    "value": 191.0,
+    "first_use_seconds": 1.9390942000318319,
+    "second_use_seconds": 0.0030841000843793154,
+    "scope": "Module imports excluded; first call includes actual JIT compilation and computation with a fresh empty cache. Not pure compiler time."
+  }
+]
