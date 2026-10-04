@@ -1,0 +1,3126 @@
+[
+  {
+    "algorithm": "old_prefix_numba",
+    "case": "sphere-s42-n20",
+    "event": "done",
+    "status": "ok",
+    "value": 1.1257677901991459,
+    "counters": {
+      "nodes": 61,
+      "box_integrals": 81,
+      "prefix_queries": 1296,
+      "covers": 0,
+      "slab_shrinks": 13
+    },
+    "profile_seconds": 0.0339082,
+    "calls": 40833,
+    "profile": [
+      {
+        "file": "fastkernel.py",
+        "line": 250,
+        "function": "query",
+        "primitive_calls": 1296,
+        "calls": 1296,
+        "self_seconds": 0.0089685,
+        "cumulative_seconds": 0.009446300000000001
+      },
+      {
+        "file": "solver.py",
+        "line": 180,
+        "function": "_box_integral",
+        "primitive_calls": 81,
+        "calls": 81,
+        "self_seconds": 0.0029696,
+        "cumulative_seconds": 0.0215468
+      },
+      {
+        "file": "core.py",
+        "line": 125,
+        "function": "__init__",
+        "primitive_calls": 732,
+        "calls": 732,
+        "self_seconds": 0.002203,
+        "cumulative_seconds": 0.0033661000000000003
+      },
+      {
+        "file": "solver.py",
+        "line": 120,
+        "function": "_absorb",
+        "primitive_calls": 61,
+        "calls": 61,
+        "self_seconds": 0.0021105,
+        "cumulative_seconds": 0.009666600000000001
+      },
+      {
+        "file": "prefix4.py",
+        "line": 111,
+        "function": "_build_unary",
+        "primitive_calls": 81,
+        "calls": 81,
+        "self_seconds": 0.0017003,
+        "cumulative_seconds": 0.0028347000000000003
+      },
+      {
+        "file": "~",
+        "line": 0,
+        "function": "<built-in method numpy.asarray>",
+        "primitive_calls": 1863,
+        "calls": 1863,
+        "self_seconds": 0.0015546000000000002,
+        "cumulative_seconds": 0.0015546000000000002
+      },
+      {
+        "file": "fastkernel.py",
+        "line": 222,
+        "function": "__init__",
+        "primitive_calls": 81,
+        "calls": 81,
+        "self_seconds": 0.0012582000000000001,
+        "cumulative_seconds": 0.0037659000000000004
+      },
+      {
+        "file": "~",
+        "line": 0,
+        "function": "<built-in method builtins.any>",
+        "primitive_calls": 1807,
+        "calls": 1807,
+        "self_seconds": 0.0010878,
+        "cumulative_seconds": 0.0016605
+      },
+      {
+        "file": "core.py",
+        "line": 180,
+        "function": "staircase_from_quadrants",
+        "primitive_calls": 366,
+        "calls": 366,
+        "self_seconds": 0.0009595000000000001,
+        "cumulative_seconds": 0.0035005
+      },
+      {
+        "file": "~",
+        "line": 0,
+        "function": "<built-in method builtins.len>",
+        "primitive_calls": 7127,
+        "calls": 7127,
+        "self_seconds": 0.0008701000000000001,
+        "cumulative_seconds": 0.0008701000000000001
+      },
+      {
+        "file": "~",
+        "line": 0,
+        "function": "<method 'append' of 'list' objects>",
+        "primitive_calls": 5201,
+        "calls": 5201,
+        "self_seconds": 0.0008315000000000001,
+        "cumulative_seconds": 0.0008315000000000001
+      },
+      {
+        "file": "prefix4.py",
+        "line": 275,
+        "function": "K_fast",
+        "primitive_calls": 1296,
+        "calls": 1296,
+        "self_seconds": 0.0007492,
+        "cumulative_seconds": 0.0139614
+      },
+      {
+        "file": "~",
+        "line": 0,
+        "function": "<built-in method builtins.sorted>",
+        "primitive_calls": 771,
+        "calls": 771,
+        "self_seconds": 0.0006228000000000001,
+        "cumulative_seconds": 0.0007088
+      },
+      {
+        "file": "solver.py",
+        "line": 163,
+        "function": "_base_case",
+        "primitive_calls": 31,
+        "calls": 31,
+        "self_seconds": 0.0006012000000000001,
+        "cumulative_seconds": 0.022387800000000003
+      },
+      {
+        "file": "solver.py",
+        "line": 216,
+        "function": "_clamp",
+        "primitive_calls": 366,
+        "calls": 366,
+        "self_seconds": 0.0006011,
+        "cumulative_seconds": 0.0024833000000000004
+      },
+      {
+        "file": "prefix4.py",
+        "line": 84,
+        "function": "all_values",
+        "primitive_calls": 81,
+        "calls": 81,
+        "self_seconds": 0.0005497000000000001,
+        "cumulative_seconds": 0.0012334000000000002
+      },
+      {
+        "file": "fastkernel.py",
+        "line": 270,
+        "function": "_grid_array",
+        "primitive_calls": 162,
+        "calls": 162,
+        "self_seconds": 0.0004988,
+        "cumulative_seconds": 0.0008217000000000001
+      },
+      {
+        "file": "~",
+        "line": 0,
+        "function": "<built-in method builtins.sum>",
+        "primitive_calls": 1498,
+        "calls": 1498,
+        "self_seconds": 0.0004841,
+        "cumulative_seconds": 0.000656
+      },
+      {
+        "file": "~",
+        "line": 0,
+        "function": "<built-in method builtins.all>",
+        "primitive_calls": 664,
+        "calls": 664,
+        "self_seconds": 0.0004667,
+        "cumulative_seconds": 0.0008223000000000001
+      },
+      {
+        "file": "~",
+        "line": 0,
+        "function": "<method 'update' of 'set' objects>",
+        "primitive_calls": 972,
+        "calls": 972,
+        "self_seconds": 0.00045860000000000003,
+        "cumulative_seconds": 0.0006128
+      },
+      {
+        "file": "solver.py",
+        "line": 86,
+        "function": "_measure",
+        "primitive_calls": 1,
+        "calls": 61,
+        "self_seconds": 0.000453,
+        "cumulative_seconds": 0.033649200000000004
+      },
+      {
+        "file": "~",
+        "line": 0,
+        "function": "<built-in method builtins.min>",
+        "primitive_calls": 1183,
+        "calls": 1183,
+        "self_seconds": 0.00042300000000000004,
+        "cumulative_seconds": 0.0004311
+      },
+      {
+        "file": "solver.py",
+        "line": 124,
+        "function": "<genexpr>",
+        "primitive_calls": 2986,
+        "calls": 2986,
+        "self_seconds": 0.0003912,
+        "cumulative_seconds": 0.0003912
+      },
+      {
+        "file": "solver.py",
+        "line": 194,
+        "function": "_cut_candidates",
+        "primitive_calls": 30,
+        "calls": 30,
+        "self_seconds": 0.0003884,
+        "cumulative_seconds": 0.0007163
+      },
+      {
+        "file": "core.py",
+        "line": 150,
+        "function": "__call__",
+        "primitive_calls": 1142,
+        "calls": 1142,
+        "self_seconds": 0.0002879,
+        "cumulative_seconds": 0.0004327
+      },
+      {
+        "file": "solver.py",
+        "line": 218,
+        "function": "<genexpr>",
+        "primitive_calls": 862,
+        "calls": 862,
+        "self_seconds": 0.00019380000000000002,
+        "cumulative_seconds": 0.0003133
+      },
+      {
+        "file": "~",
+        "line": 0,
+        "function": "<built-in method numpy.zeros>",
+        "primitive_calls": 337,
+        "calls": 337,
+        "self_seconds": 0.000191,
+        "cumulative_seconds": 0.000191
+      },
+      {
+        "file": "core.py",
+        "line": 88,
+        "function": "prefix_open",
+        "primitive_calls": 1142,
+        "calls": 1142,
+        "self_seconds": 0.00016820000000000002,
+        "cumulative_seconds": 0.00016820000000000002
+      },
+      {
+        "file": "prefix4.py",
+        "line": 99,
+        "function": "__init__",
+        "primitive_calls": 81,
+        "calls": 81,
+        "self_seconds": 0.00016810000000000002,
+        "cumulative_seconds": 0.0030028000000000003
+      },
+      {
+        "file": "prefix4.py",
+        "line": 87,
+        "function": "<genexpr>",
+        "primitive_calls": 1163,
+        "calls": 1163,
+        "self_seconds": 0.0001542,
+        "cumulative_seconds": 0.0001542
+      },
+      {
+        "file": "~",
+        "line": 0,
+        "function": "<built-in method _bisect.bisect_right>",
+        "primitive_calls": 1142,
+        "calls": 1142,
+        "self_seconds": 0.0001448,
+        "cumulative_seconds": 0.0001448
+      },
+      {
+        "file": "core.py",
+        "line": 128,
+        "function": "<genexpr>",
+        "primitive_calls": 1014,
+        "calls": 1014,
+        "self_seconds": 0.00014460000000000002,
+        "cumulative_seconds": 0.00014460000000000002
+      },
+      {
+        "file": "solver.py",
+        "line": 207,
+        "function": "<genexpr>",
+        "primitive_calls": 456,
+        "calls": 456,
+        "self_seconds": 0.00014230000000000002,
+        "cumulative_seconds": 0.00014230000000000002
+      },
+      {
+        "file": "~",
+        "line": 0,
+        "function": "<method 'get' of 'dict' objects>",
+        "primitive_calls": 518,
+        "calls": 518,
+        "self_seconds": 0.00013440000000000001,
+        "cumulative_seconds": 0.00013440000000000001
+      },
+      {
+        "file": "core.py",
+        "line": 130,
+        "function": "<genexpr>",
+        "primitive_calls": 806,
+        "calls": 806,
+        "self_seconds": 0.00011970000000000001,
+        "cumulative_seconds": 0.00011970000000000001
+      },
+      {
+        "file": "solver.py",
+        "line": 57,
+        "function": "__init__",
+        "primitive_calls": 1,
+        "calls": 1,
+        "self_seconds": 9.26e-05,
+        "cumulative_seconds": 9.26e-05
+      },
+      {
+        "file": "core.py",
+        "line": 190,
+        "function": "<genexpr>",
+        "primitive_calls": 518,
+        "calls": 518,
+        "self_seconds": 8.6e-05,
+        "cumulative_seconds": 8.6e-05
+      },
+      {
+        "file": "solver.py",
+        "line": 126,
+        "function": "<genexpr>",
+        "primitive_calls": 557,
+        "calls": 557,
+        "self_seconds": 7.31e-05,
+        "cumulative_seconds": 7.31e-05
+      },
+      {
+        "file": "solver.py",
+        "line": 173,
+        "function": "<genexpr>",
+        "primitive_calls": 405,
+        "calls": 405,
+        "self_seconds": 6.98e-05,
+        "cumulative_seconds": 6.98e-05
+      },
+      {
+        "file": "~",
+        "line": 0,
+        "function": "<built-in method builtins.max>",
+        "primitive_calls": 244,
+        "calls": 244,
+        "self_seconds": 6.42e-05,
+        "cumulative_seconds": 6.42e-05
+      },
+      {
+        "file": "solver.py",
+        "line": 69,
+        "function": "hypervolume",
+        "primitive_calls": 1,
+        "calls": 1,
+        "self_seconds": 6.26e-05,
+        "cumulative_seconds": 0.0337808
+      },
+      {
+        "file": "solver.py",
+        "line": 90,
+        "function": "<genexpr>",
+        "primitive_calls": 305,
+        "calls": 305,
+        "self_seconds": 5.75e-05,
+        "cumulative_seconds": 5.75e-05
+      },
+      {
+        "file": "solver.py",
+        "line": 138,
+        "function": "<genexpr>",
+        "primitive_calls": 350,
+        "calls": 350,
+        "self_seconds": 5.53e-05,
+        "cumulative_seconds": 5.53e-05
+      },
+      {
+        "file": "~",
+        "line": 0,
+        "function": "<method 'setdefault' of 'dict' objects>",
+        "primitive_calls": 152,
+        "calls": 152,
+        "self_seconds": 5.36e-05,
+        "cumulative_seconds": 5.36e-05
+      },
+      {
+        "file": "solver.py",
+        "line": 98,
+        "function": "<genexpr>",
+        "primitive_calls": 305,
+        "calls": 305,
+        "self_seconds": 5.27e-05,
+        "cumulative_seconds": 5.27e-05
+      },
+      {
+        "file": "solver.py",
+        "line": 225,
+        "function": "_weighted_median",
+        "primitive_calls": 30,
+        "calls": 30,
+        "self_seconds": 4.7000000000000004e-05,
+        "cumulative_seconds": 0.0001408
+      },
+      {
+        "file": "solver.py",
+        "line": 227,
+        "function": "<genexpr>",
+        "primitive_calls": 202,
+        "calls": 202,
+        "self_seconds": 2.96e-05,
+        "cumulative_seconds": 2.96e-05
+      },
+      {
+        "file": "~",
+        "line": 0,
+        "function": "<method 'disable' of '_lsprof.Profiler' objects>",
+        "primitive_calls": 1,
+        "calls": 1,
+        "self_seconds": 2.58e-05,
+        "cumulative_seconds": 2.58e-05
+      },
+      {
+        "file": "~",
+        "line": 0,
+        "function": "<method 'sort' of 'list' objects>",
+        "primitive_calls": 30,
+        "calls": 30,
+        "self_seconds": 2.0700000000000002e-05,
+        "cumulative_seconds": 2.0700000000000002e-05
+      },
+      {
+        "file": "compare_prefix4.py",
+        "line": 69,
+        "function": "solve",
+        "primitive_calls": 1,
+        "calls": 1,
+        "self_seconds": 1.7100000000000002e-05,
+        "cumulative_seconds": 0.033890500000000004
+      },
+      {
+        "file": "<string>",
+        "line": 2,
+        "function": "__init__",
+        "primitive_calls": 61,
+        "calls": 61,
+        "self_seconds": 1.6100000000000002e-05,
+        "cumulative_seconds": 1.6100000000000002e-05
+      },
+      {
+        "file": "solver.py",
+        "line": 71,
+        "function": "<genexpr>",
+        "primitive_calls": 100,
+        "calls": 100,
+        "self_seconds": 1.6000000000000003e-05,
+        "cumulative_seconds": 1.6000000000000003e-05
+      },
+      {
+        "file": "solver.py",
+        "line": 72,
+        "function": "<genexpr>",
+        "primitive_calls": 100,
+        "calls": 100,
+        "self_seconds": 1.39e-05,
+        "cumulative_seconds": 1.39e-05
+      },
+      {
+        "file": "solver.py",
+        "line": 76,
+        "function": "<genexpr>",
+        "primitive_calls": 5,
+        "calls": 5,
+        "self_seconds": 3.5000000000000004e-06,
+        "cumulative_seconds": 2.3e-05
+      },
+      {
+        "file": "solver.py",
+        "line": 75,
+        "function": "<genexpr>",
+        "primitive_calls": 5,
+        "calls": 5,
+        "self_seconds": 7.000000000000001e-07,
+        "cumulative_seconds": 7.000000000000001e-07
+      }
+    ]
+  },
+  {
+    "algorithm": "old_prefix_object_python",
+    "case": "sphere-s42-n20",
+    "event": "done",
+    "status": "ok",
+    "value": 1.125767790199147,
+    "counters": {
+      "nodes": 61,
+      "box_integrals": 81,
+      "prefix_queries": 1296,
+      "covers": 0,
+      "slab_shrinks": 13
+    },
+    "profile_seconds": 1.1280694000000004,
+    "calls": 2999666,
+    "profile": [
+      {
+        "file": "prefix4.py",
+        "line": 234,
+        "function": "source_separable",
+        "primitive_calls": 65628,
+        "calls": 65628,
+        "self_seconds": 0.19748500000000002,
+        "cumulative_seconds": 0.7914789000000001
+      },
+      {
+        "file": "identities.py",
+        "line": 50,
+        "function": "prefix_bound_gt",
+        "primitive_calls": 283478,
+        "calls": 283478,
+        "self_seconds": 0.1585437,
+        "cumulative_seconds": 0.2546761
+      },
+      {
+        "file": "core.py",
+        "line": 288,
+        "function": "walk",
+        "primitive_calls": 1296,
+        "calls": 90344,
+        "self_seconds": 0.1336157,
+        "cumulative_seconds": 1.0587401
+      },
+      {
+        "file": "~",
+        "line": 0,
+        "function": "<built-in method builtins.len>",
+        "primitive_calls": 640537,
+        "calls": 640537,
+        "self_seconds": 0.0685385,
+        "cumulative_seconds": 0.0685385
+      },
+      {
+        "file": "~",
+        "line": 0,
+        "function": "<built-in method _bisect.bisect_right>",
+        "primitive_calls": 451656,
+        "calls": 451656,
+        "self_seconds": 0.06420010000000001,
+        "cumulative_seconds": 0.06420010000000001
+      },
+      {
+        "file": "prefix4.py",
+        "line": 284,
+        "function": "integrand",
+        "primitive_calls": 78992,
+        "calls": 78992,
+        "self_seconds": 0.0578262,
+        "cumulative_seconds": 0.8822153
+      },
+      {
+        "file": "core.py",
+        "line": 150,
+        "function": "__call__",
+        "primitive_calls": 145762,
+        "calls": 145762,
+        "self_seconds": 0.0397937,
+        "cumulative_seconds": 0.0606012
+      },
+      {
+        "file": "prefix4.py",
+        "line": 205,
+        "function": "_branch1",
+        "primitive_calls": 65628,
+        "calls": 65628,
+        "self_seconds": 0.0388753,
+        "cumulative_seconds": 0.07105320000000001
+      },
+      {
+        "file": "prefix4.py",
+        "line": 63,
+        "function": "mass",
+        "primitive_calls": 110290,
+        "calls": 110290,
+        "self_seconds": 0.0370554,
+        "cumulative_seconds": 0.055194200000000006
+      },
+      {
+        "file": "~",
+        "line": 0,
+        "function": "<built-in method builtins.min>",
+        "primitive_calls": 132439,
+        "calls": 132439,
+        "self_seconds": 0.0321718,
+        "cumulative_seconds": 0.03218
+      },
+      {
+        "file": "prefix4.py",
+        "line": 167,
+        "function": "Q",
+        "primitive_calls": 20966,
+        "calls": 20966,
+        "self_seconds": 0.024053400000000003,
+        "cumulative_seconds": 0.0649242
+      },
+      {
+        "file": "core.py",
+        "line": 254,
+        "function": "cells_1d",
+        "primitive_calls": 2592,
+        "calls": 2592,
+        "self_seconds": 0.0236542,
+        "cumulative_seconds": 0.029229900000000003
+      },
+      {
+        "file": "prefix4.py",
+        "line": 176,
+        "function": "rho3",
+        "primitive_calls": 65628,
+        "calls": 65628,
+        "self_seconds": 0.0207699,
+        "cumulative_seconds": 0.08409530000000001
+      },
+      {
+        "file": "prefix4.py",
+        "line": 56,
+        "function": "cap",
+        "primitive_calls": 131256,
+        "calls": 131256,
+        "self_seconds": 0.0203388,
+        "cumulative_seconds": 0.0203388
+      },
+      {
+        "file": "prefix4.py",
+        "line": 146,
+        "function": "Y",
+        "primitive_calls": 65628,
+        "calls": 65628,
+        "self_seconds": 0.0203214,
+        "cumulative_seconds": 0.0525011
+      },
+      {
+        "file": "prefix4.py",
+        "line": 179,
+        "function": "rho4",
+        "primitive_calls": 65628,
+        "calls": 65628,
+        "self_seconds": 0.019838,
+        "cumulative_seconds": 0.0789551
+      },
+      {
+        "file": "prefix4.py",
+        "line": 182,
+        "function": "sig3",
+        "primitive_calls": 65628,
+        "calls": 65628,
+        "self_seconds": 0.0197155,
+        "cumulative_seconds": 0.0785207
+      },
+      {
+        "file": "prefix4.py",
+        "line": 185,
+        "function": "sig4",
+        "primitive_calls": 65628,
+        "calls": 65628,
+        "self_seconds": 0.019649700000000003,
+        "cumulative_seconds": 0.07776430000000001
+      },
+      {
+        "file": "~",
+        "line": 0,
+        "function": "<method 'pop' of 'list' objects>",
+        "primitive_calls": 89048,
+        "calls": 89048,
+        "self_seconds": 0.0180639,
+        "cumulative_seconds": 0.0180639
+      },
+      {
+        "file": "~",
+        "line": 0,
+        "function": "<method 'append' of 'list' objects>",
+        "primitive_calls": 112611,
+        "calls": 112611,
+        "self_seconds": 0.0178378,
+        "cumulative_seconds": 0.0178378
+      },
+      {
+        "file": "prefix4.py",
+        "line": 149,
+        "function": "P",
+        "primitive_calls": 41932,
+        "calls": 41932,
+        "self_seconds": 0.0153427,
+        "cumulative_seconds": 0.019494300000000003
+      },
+      {
+        "file": "core.py",
+        "line": 82,
+        "function": "prefix_closed",
+        "primitive_calls": 89062,
+        "calls": 89062,
+        "self_seconds": 0.0147136,
+        "cumulative_seconds": 0.0147136
+      },
+      {
+        "file": "prefix4.py",
+        "line": 143,
+        "function": "X",
+        "primitive_calls": 44662,
+        "calls": 44662,
+        "self_seconds": 0.014164300000000001,
+        "cumulative_seconds": 0.037178800000000005
+      },
+      {
+        "file": "prefix4.py",
+        "line": 282,
+        "function": "K_decomposed",
+        "primitive_calls": 1296,
+        "calls": 1296,
+        "self_seconds": 0.007739200000000001,
+        "cumulative_seconds": 1.1019021
+      },
+      {
+        "file": "core.py",
+        "line": 88,
+        "function": "prefix_open",
+        "primitive_calls": 43336,
+        "calls": 43336,
+        "self_seconds": 0.0066502,
+        "cumulative_seconds": 0.0066502
+      },
+      {
+        "file": "core.py",
+        "line": 275,
+        "function": "brute_integral",
+        "primitive_calls": 1296,
+        "calls": 1296,
+        "self_seconds": 0.0061929,
+        "cumulative_seconds": 1.0941629000000002
+      },
+      {
+        "file": "solver.py",
+        "line": 180,
+        "function": "_box_integral",
+        "primitive_calls": 81,
+        "calls": 81,
+        "self_seconds": 0.0059489,
+        "cumulative_seconds": 1.1135172
+      },
+      {
+        "file": "prefix4.py",
+        "line": 226,
+        "function": "_left_value",
+        "primitive_calls": 7424,
+        "calls": 7424,
+        "self_seconds": 0.0049419,
+        "cumulative_seconds": 0.008571
+      },
+      {
+        "file": "~",
+        "line": 0,
+        "function": "<built-in method builtins.sorted>",
+        "primitive_calls": 3201,
+        "calls": 3201,
+        "self_seconds": 0.0029131,
+        "cumulative_seconds": 0.0030112000000000003
+      },
+      {
+        "file": "core.py",
+        "line": 125,
+        "function": "__init__",
+        "primitive_calls": 732,
+        "calls": 732,
+        "self_seconds": 0.0029100000000000003,
+        "cumulative_seconds": 0.0043391
+      },
+      {
+        "file": "solver.py",
+        "line": 120,
+        "function": "_absorb",
+        "primitive_calls": 61,
+        "calls": 61,
+        "self_seconds": 0.0023493000000000003,
+        "cumulative_seconds": 0.0114087
+      },
+      {
+        "file": "prefix4.py",
+        "line": 111,
+        "function": "_build_unary",
+        "primitive_calls": 81,
+        "calls": 81,
+        "self_seconds": 0.0022184,
+        "cumulative_seconds": 0.0034842000000000002
+      },
+      {
+        "file": "~",
+        "line": 0,
+        "function": "<built-in method builtins.any>",
+        "primitive_calls": 1807,
+        "calls": 1807,
+        "self_seconds": 0.0012624000000000001,
+        "cumulative_seconds": 0.0019365
+      },
+      {
+        "file": "core.py",
+        "line": 180,
+        "function": "staircase_from_quadrants",
+        "primitive_calls": 366,
+        "calls": 366,
+        "self_seconds": 0.0010810000000000001,
+        "cumulative_seconds": 0.0040441
+      },
+      {
+        "file": "solver.py",
+        "line": 163,
+        "function": "_base_case",
+        "primitive_calls": 31,
+        "calls": 31,
+        "self_seconds": 0.0007175,
+        "cumulative_seconds": 1.1145487
+      },
+      {
+        "file": "solver.py",
+        "line": 216,
+        "function": "_clamp",
+        "primitive_calls": 366,
+        "calls": 366,
+        "self_seconds": 0.0006969000000000001,
+        "cumulative_seconds": 0.0033190000000000003
+      },
+      {
+        "file": "~",
+        "line": 0,
+        "function": "<built-in method builtins.sum>",
+        "primitive_calls": 1498,
+        "calls": 1498,
+        "self_seconds": 0.0006907,
+        "cumulative_seconds": 0.0008935000000000001
+      },
+      {
+        "file": "solver.py",
+        "line": 86,
+        "function": "_measure",
+        "primitive_calls": 1,
+        "calls": 61,
+        "self_seconds": 0.0006294,
+        "cumulative_seconds": 1.1279084000000001
+      },
+      {
+        "file": "~",
+        "line": 0,
+        "function": "<method 'update' of 'set' objects>",
+        "primitive_calls": 972,
+        "calls": 972,
+        "self_seconds": 0.0005633000000000001,
+        "cumulative_seconds": 0.0007334
+      },
+      {
+        "file": "prefix4.py",
+        "line": 84,
+        "function": "all_values",
+        "primitive_calls": 81,
+        "calls": 81,
+        "self_seconds": 0.000492,
+        "cumulative_seconds": 0.0013328
+      },
+      {
+        "file": "~",
+        "line": 0,
+        "function": "<built-in method builtins.all>",
+        "primitive_calls": 664,
+        "calls": 664,
+        "self_seconds": 0.0004733,
+        "cumulative_seconds": 0.0008439000000000001
+      },
+      {
+        "file": "solver.py",
+        "line": 194,
+        "function": "_cut_candidates",
+        "primitive_calls": 30,
+        "calls": 30,
+        "self_seconds": 0.0004394,
+        "cumulative_seconds": 0.000813
+      },
+      {
+        "file": "solver.py",
+        "line": 124,
+        "function": "<genexpr>",
+        "primitive_calls": 2986,
+        "calls": 2986,
+        "self_seconds": 0.00043870000000000004,
+        "cumulative_seconds": 0.00043870000000000004
+      },
+      {
+        "file": "prefix4.py",
+        "line": 99,
+        "function": "__init__",
+        "primitive_calls": 81,
+        "calls": 81,
+        "self_seconds": 0.0002594,
+        "cumulative_seconds": 0.0037436
+      },
+      {
+        "file": "solver.py",
+        "line": 218,
+        "function": "<genexpr>",
+        "primitive_calls": 862,
+        "calls": 862,
+        "self_seconds": 0.00021060000000000002,
+        "cumulative_seconds": 0.0003366
+      },
+      {
+        "file": "core.py",
+        "line": 130,
+        "function": "<genexpr>",
+        "primitive_calls": 806,
+        "calls": 806,
+        "self_seconds": 0.0001729,
+        "cumulative_seconds": 0.0001729
+      },
+      {
+        "file": "~",
+        "line": 0,
+        "function": "<method 'get' of 'dict' objects>",
+        "primitive_calls": 518,
+        "calls": 518,
+        "self_seconds": 0.00017230000000000001,
+        "cumulative_seconds": 0.00017230000000000001
+      },
+      {
+        "file": "solver.py",
+        "line": 207,
+        "function": "<genexpr>",
+        "primitive_calls": 456,
+        "calls": 456,
+        "self_seconds": 0.0001722,
+        "cumulative_seconds": 0.0001722
+      },
+      {
+        "file": "prefix4.py",
+        "line": 87,
+        "function": "<genexpr>",
+        "primitive_calls": 1163,
+        "calls": 1163,
+        "self_seconds": 0.00017010000000000001,
+        "cumulative_seconds": 0.00017010000000000001
+      },
+      {
+        "file": "core.py",
+        "line": 128,
+        "function": "<genexpr>",
+        "primitive_calls": 1014,
+        "calls": 1014,
+        "self_seconds": 0.0001404,
+        "cumulative_seconds": 0.0001404
+      },
+      {
+        "file": "core.py",
+        "line": 190,
+        "function": "<genexpr>",
+        "primitive_calls": 518,
+        "calls": 518,
+        "self_seconds": 9.810000000000001e-05,
+        "cumulative_seconds": 9.810000000000001e-05
+      },
+      {
+        "file": "solver.py",
+        "line": 173,
+        "function": "<genexpr>",
+        "primitive_calls": 405,
+        "calls": 405,
+        "self_seconds": 8.47e-05,
+        "cumulative_seconds": 8.47e-05
+      },
+      {
+        "file": "solver.py",
+        "line": 126,
+        "function": "<genexpr>",
+        "primitive_calls": 557,
+        "calls": 557,
+        "self_seconds": 7.460000000000001e-05,
+        "cumulative_seconds": 7.460000000000001e-05
+      },
+      {
+        "file": "solver.py",
+        "line": 90,
+        "function": "<genexpr>",
+        "primitive_calls": 305,
+        "calls": 305,
+        "self_seconds": 7.24e-05,
+        "cumulative_seconds": 7.24e-05
+      },
+      {
+        "file": "solver.py",
+        "line": 138,
+        "function": "<genexpr>",
+        "primitive_calls": 350,
+        "calls": 350,
+        "self_seconds": 7.02e-05,
+        "cumulative_seconds": 7.02e-05
+      },
+      {
+        "file": "~",
+        "line": 0,
+        "function": "<method 'setdefault' of 'dict' objects>",
+        "primitive_calls": 152,
+        "calls": 152,
+        "self_seconds": 6.54e-05,
+        "cumulative_seconds": 6.54e-05
+      },
+      {
+        "file": "~",
+        "line": 0,
+        "function": "<built-in method builtins.max>",
+        "primitive_calls": 244,
+        "calls": 244,
+        "self_seconds": 6.26e-05,
+        "cumulative_seconds": 6.26e-05
+      },
+      {
+        "file": "solver.py",
+        "line": 98,
+        "function": "<genexpr>",
+        "primitive_calls": 305,
+        "calls": 305,
+        "self_seconds": 5.89e-05,
+        "cumulative_seconds": 5.89e-05
+      },
+      {
+        "file": "solver.py",
+        "line": 225,
+        "function": "_weighted_median",
+        "primitive_calls": 30,
+        "calls": 30,
+        "self_seconds": 5.5400000000000005e-05,
+        "cumulative_seconds": 0.0001538
+      },
+      {
+        "file": "solver.py",
+        "line": 69,
+        "function": "hypervolume",
+        "primitive_calls": 1,
+        "calls": 1,
+        "self_seconds": 5.2600000000000005e-05,
+        "cumulative_seconds": 1.1280285
+      },
+      {
+        "file": "~",
+        "line": 0,
+        "function": "<method 'disable' of '_lsprof.Profiler' objects>",
+        "primitive_calls": 1,
+        "calls": 1,
+        "self_seconds": 3.3100000000000005e-05,
+        "cumulative_seconds": 3.3100000000000005e-05
+      },
+      {
+        "file": "solver.py",
+        "line": 227,
+        "function": "<genexpr>",
+        "primitive_calls": 202,
+        "calls": 202,
+        "self_seconds": 3.0600000000000005e-05,
+        "cumulative_seconds": 3.0600000000000005e-05
+      },
+      {
+        "file": "<string>",
+        "line": 2,
+        "function": "__init__",
+        "primitive_calls": 61,
+        "calls": 61,
+        "self_seconds": 2.3800000000000003e-05,
+        "cumulative_seconds": 2.3800000000000003e-05
+      },
+      {
+        "file": "~",
+        "line": 0,
+        "function": "<method 'sort' of 'list' objects>",
+        "primitive_calls": 30,
+        "calls": 30,
+        "self_seconds": 2.32e-05,
+        "cumulative_seconds": 2.32e-05
+      },
+      {
+        "file": "solver.py",
+        "line": 71,
+        "function": "<genexpr>",
+        "primitive_calls": 100,
+        "calls": 100,
+        "self_seconds": 1.59e-05,
+        "cumulative_seconds": 1.59e-05
+      },
+      {
+        "file": "compare_prefix4.py",
+        "line": 69,
+        "function": "solve",
+        "primitive_calls": 1,
+        "calls": 1,
+        "self_seconds": 1.39e-05,
+        "cumulative_seconds": 1.1280445000000001
+      },
+      {
+        "file": "solver.py",
+        "line": 72,
+        "function": "<genexpr>",
+        "primitive_calls": 100,
+        "calls": 100,
+        "self_seconds": 1.2600000000000001e-05,
+        "cumulative_seconds": 1.2600000000000001e-05
+      },
+      {
+        "file": "solver.py",
+        "line": 76,
+        "function": "<genexpr>",
+        "primitive_calls": 5,
+        "calls": 5,
+        "self_seconds": 3.4e-06,
+        "cumulative_seconds": 2.2100000000000002e-05
+      },
+      {
+        "file": "solver.py",
+        "line": 57,
+        "function": "__init__",
+        "primitive_calls": 1,
+        "calls": 1,
+        "self_seconds": 2.1000000000000002e-06,
+        "cumulative_seconds": 2.1000000000000002e-06
+      },
+      {
+        "file": "solver.py",
+        "line": 75,
+        "function": "<genexpr>",
+        "primitive_calls": 5,
+        "calls": 5,
+        "self_seconds": 9.000000000000001e-07,
+        "cumulative_seconds": 9.000000000000001e-07
+      }
+    ]
+  },
+  {
+    "algorithm": "new_numba",
+    "case": "sphere-s42-n20",
+    "event": "done",
+    "status": "ok",
+    "value": 1.1257677901991463,
+    "counters": {
+      "input_points": 20,
+      "dimension": 4,
+      "initial_cells": 84,
+      "nodes": 61,
+      "max_generation": 1,
+      "box_classifications": 390,
+      "absorbed_boxes": 165,
+      "blocks": 11,
+      "cuts": 30,
+      "term_eliminations": 7441,
+      "max_lower_candidates": 6,
+      "max_upper_candidates": 7,
+      "raw_terms": 10809,
+      "peak_terms": 625,
+      "compressions": 10,
+      "base_calls": 31
+    },
+    "profile_seconds": 3.5242437,
+    "calls": 3285965,
+    "profile": [
+      {
+        "file": "numerical_chan_numba.py",
+        "line": 170,
+        "function": "emitted",
+        "primitive_calls": 11177,
+        "calls": 11177,
+        "self_seconds": 0.3341547,
+        "cumulative_seconds": 2.3799771
+      },
+      {
+        "file": "numerical_chan_numba.py",
+        "line": 27,
+        "function": "<genexpr>",
+        "primitive_calls": 637655,
+        "calls": 637655,
+        "self_seconds": 0.3157377,
+        "cumulative_seconds": 0.3157377
+      },
+      {
+        "file": "numerical_chan_numba.py",
+        "line": 107,
+        "function": "multiply_unary",
+        "primitive_calls": 140657,
+        "calls": 140657,
+        "self_seconds": 0.2958911,
+        "cumulative_seconds": 0.9018456
+      },
+      {
+        "file": "numerical_chan_numba.py",
+        "line": 127,
+        "function": "impose",
+        "primitive_calls": 85846,
+        "calls": 85846,
+        "self_seconds": 0.2866825,
+        "cumulative_seconds": 1.6619814000000002
+      },
+      {
+        "file": "numerical_chan_numba.py",
+        "line": 112,
+        "function": "add_edge",
+        "primitive_calls": 36307,
+        "calls": 36307,
+        "self_seconds": 0.2787141,
+        "cumulative_seconds": 1.1778455
+      },
+      {
+        "file": "numerical_chan_numba.py",
+        "line": 275,
+        "function": "rectangle_sum",
+        "primitive_calls": 82,
+        "calls": 82,
+        "self_seconds": 0.25115170000000003,
+        "cumulative_seconds": 2.7651160000000004
+      },
+      {
+        "file": "numerical_chan_numba.py",
+        "line": 26,
+        "function": "alive",
+        "primitive_calls": 168790,
+        "calls": 168790,
+        "self_seconds": 0.23290490000000003,
+        "cumulative_seconds": 0.7071313
+      },
+      {
+        "file": "_methods.py",
+        "line": 96,
+        "function": "_clip",
+        "primitive_calls": 36307,
+        "calls": 36307,
+        "self_seconds": 0.21009260000000002,
+        "cumulative_seconds": 0.3010371
+      },
+      {
+        "file": "~",
+        "line": 0,
+        "function": "<built-in method builtins.all>",
+        "primitive_calls": 139978,
+        "calls": 211610,
+        "self_seconds": 0.15856250000000002,
+        "cumulative_seconds": 1.7337393
+      },
+      {
+        "file": "numerical_chan_numba.py",
+        "line": 147,
+        "function": "merge",
+        "primitive_calls": 368,
+        "calls": 368,
+        "self_seconds": 0.1280646,
+        "cumulative_seconds": 2.6259445
+      },
+      {
+        "file": "~",
+        "line": 0,
+        "function": "<built-in method numpy.arange>",
+        "primitive_calls": 115763,
+        "calls": 115763,
+        "self_seconds": 0.11876710000000001,
+        "cumulative_seconds": 0.11876710000000001
+      },
+      {
+        "file": "~",
+        "line": 0,
+        "function": "<method 'reduce' of 'numpy.ufunc' objects>",
+        "primitive_calls": 72614,
+        "calls": 72614,
+        "self_seconds": 0.0962808,
+        "cumulative_seconds": 0.0962808
+      },
+      {
+        "file": "numerical_chan_numba.py",
+        "line": 23,
+        "function": "copy",
+        "primitive_calls": 70968,
+        "calls": 70968,
+        "self_seconds": 0.0793602,
+        "cumulative_seconds": 0.14226360000000002
+      },
+      {
+        "file": "getlimits.py",
+        "line": 399,
+        "function": "__init__",
+        "primitive_calls": 72614,
+        "calls": 72614,
+        "self_seconds": 0.0687145,
+        "cumulative_seconds": 0.0687145
+      },
+      {
+        "file": "fromnumeric.py",
+        "line": 2245,
+        "function": "clip",
+        "primitive_calls": 36307,
+        "calls": 36307,
+        "self_seconds": 0.0521715,
+        "cumulative_seconds": 0.41346920000000004
+      },
+      {
+        "file": "~",
+        "line": 0,
+        "function": "<method 'copy' of 'dict' objects>",
+        "primitive_calls": 141936,
+        "calls": 141936,
+        "self_seconds": 0.0494983,
+        "cumulative_seconds": 0.0494983
+      },
+      {
+        "file": "numerical_chan_numba.py",
+        "line": 205,
+        "function": "<genexpr>",
+        "primitive_calls": 74764,
+        "calls": 74764,
+        "self_seconds": 0.0401006,
+        "cumulative_seconds": 0.9886053
+      },
+      {
+        "file": "~",
+        "line": 0,
+        "function": "<built-in method builtins.len>",
+        "primitive_calls": 241902,
+        "calls": 241902,
+        "self_seconds": 0.0378305,
+        "cumulative_seconds": 0.0378305
+      },
+      {
+        "file": "~",
+        "line": 0,
+        "function": "<method 'values' of 'dict' objects>",
+        "primitive_calls": 184041,
+        "calls": 184041,
+        "self_seconds": 0.037736200000000004,
+        "cumulative_seconds": 0.037736200000000004
+      },
+      {
+        "file": "serialize.py",
+        "line": 30,
+        "function": "_numba_unpickle",
+        "primitive_calls": 86663,
+        "calls": 86663,
+        "self_seconds": 0.036599400000000004,
+        "cumulative_seconds": 0.036599400000000004
+      },
+      {
+        "file": "numerical_chan_numba.py",
+        "line": 96,
+        "function": "unique_bounds",
+        "primitive_calls": 14882,
+        "calls": 14882,
+        "self_seconds": 0.030120200000000003,
+        "cumulative_seconds": 0.0501146
+      },
+      {
+        "file": "fromnumeric.py",
+        "line": 48,
+        "function": "_wrapfunc",
+        "primitive_calls": 36307,
+        "calls": 36307,
+        "self_seconds": 0.0272048,
+        "cumulative_seconds": 0.3612977
+      },
+      {
+        "file": "~",
+        "line": 0,
+        "function": "<built-in method numpy.asarray>",
+        "primitive_calls": 39935,
+        "calls": 39935,
+        "self_seconds": 0.026213300000000002,
+        "cumulative_seconds": 0.026213300000000002
+      },
+      {
+        "file": "~",
+        "line": 0,
+        "function": "<method 'clip' of 'numpy.ndarray' objects>",
+        "primitive_calls": 36307,
+        "calls": 36307,
+        "self_seconds": 0.024430900000000002,
+        "cumulative_seconds": 0.32546800000000004
+      },
+      {
+        "file": "~",
+        "line": 0,
+        "function": "<method 'min' of 'numpy.ndarray' objects>",
+        "primitive_calls": 36307,
+        "calls": 36307,
+        "self_seconds": 0.0232468,
+        "cumulative_seconds": 0.09352880000000001
+      },
+      {
+        "file": "numerical_chan_numba.py",
+        "line": 200,
+        "function": "<genexpr>",
+        "primitive_calls": 39688,
+        "calls": 39688,
+        "self_seconds": 0.0221247,
+        "cumulative_seconds": 0.48394820000000005
+      },
+      {
+        "file": "~",
+        "line": 0,
+        "function": "<method 'tobytes' of 'numpy.ndarray' objects>",
+        "primitive_calls": 80811,
+        "calls": 80811,
+        "self_seconds": 0.0207576,
+        "cumulative_seconds": 0.0207576
+      },
+      {
+        "file": "~",
+        "line": 0,
+        "function": "<method 'max' of 'numpy.ndarray' objects>",
+        "primitive_calls": 36307,
+        "calls": 36307,
+        "self_seconds": 0.01866,
+        "cumulative_seconds": 0.0699592
+      },
+      {
+        "file": "~",
+        "line": 0,
+        "function": "<built-in method builtins.sorted>",
+        "primitive_calls": 17208,
+        "calls": 17208,
+        "self_seconds": 0.0169943,
+        "cumulative_seconds": 0.0169943
+      },
+      {
+        "file": "numerical_chan_numba.py",
+        "line": 158,
+        "function": "<genexpr>",
+        "primitive_calls": 41275,
+        "calls": 41275,
+        "self_seconds": 0.0165013,
+        "cumulative_seconds": 0.024617200000000002
+      },
+      {
+        "file": "numerical_chan_numba.py",
+        "line": 157,
+        "function": "<genexpr>",
+        "primitive_calls": 35619,
+        "calls": 35619,
+        "self_seconds": 0.0141749,
+        "cumulative_seconds": 0.0211871
+      },
+      {
+        "file": "getlimits.py",
+        "line": 410,
+        "function": "min",
+        "primitive_calls": 36307,
+        "calls": 36307,
+        "self_seconds": 0.013683500000000001,
+        "cumulative_seconds": 0.013683500000000001
+      },
+      {
+        "file": "_methods.py",
+        "line": 43,
+        "function": "_amin",
+        "primitive_calls": 36307,
+        "calls": 36307,
+        "self_seconds": 0.013652200000000001,
+        "cumulative_seconds": 0.07028200000000001
+      },
+      {
+        "file": "<string>",
+        "line": 2,
+        "function": "__init__",
+        "primitive_calls": 70969,
+        "calls": 70969,
+        "self_seconds": 0.013405400000000001,
+        "cumulative_seconds": 0.013405400000000001
+      },
+      {
+        "file": "_methods.py",
+        "line": 39,
+        "function": "_amax",
+        "primitive_calls": 36307,
+        "calls": 36307,
+        "self_seconds": 0.011648200000000001,
+        "cumulative_seconds": 0.0512992
+      },
+      {
+        "file": "~",
+        "line": 0,
+        "function": "<method 'setdefault' of 'dict' objects>",
+        "primitive_calls": 36017,
+        "calls": 36017,
+        "self_seconds": 0.0113123,
+        "cumulative_seconds": 0.0113123
+      },
+      {
+        "file": "numerical_chan_numba.py",
+        "line": 477,
+        "function": "_absorb",
+        "primitive_calls": 61,
+        "calls": 61,
+        "self_seconds": 0.0105932,
+        "cumulative_seconds": 0.2014168
+      },
+      {
+        "file": "numeric.py",
+        "line": 323,
+        "function": "full",
+        "primitive_calls": 3628,
+        "calls": 3628,
+        "self_seconds": 0.0104711,
+        "cumulative_seconds": 0.0177128
+      },
+      {
+        "file": "~",
+        "line": 0,
+        "function": "<method 'items' of 'dict' objects>",
+        "primitive_calls": 40551,
+        "calls": 40551,
+        "self_seconds": 0.0093075,
+        "cumulative_seconds": 0.0093075
+      },
+      {
+        "file": "~",
+        "line": 0,
+        "function": "<built-in method builtins.getattr>",
+        "primitive_calls": 36307,
+        "calls": 36307,
+        "self_seconds": 0.008624900000000001,
+        "cumulative_seconds": 0.008624900000000001
+      },
+      {
+        "file": "getlimits.py",
+        "line": 423,
+        "function": "max",
+        "primitive_calls": 36307,
+        "calls": 36307,
+        "self_seconds": 0.0085465,
+        "cumulative_seconds": 0.0085465
+      },
+      {
+        "file": "~",
+        "line": 0,
+        "function": "<method 'append' of 'list' objects>",
+        "primitive_calls": 31045,
+        "calls": 31045,
+        "self_seconds": 0.0083815,
+        "cumulative_seconds": 0.0083815
+      },
+      {
+        "file": "numerical_chan_numba.py",
+        "line": 518,
+        "function": "_node",
+        "primitive_calls": 1,
+        "calls": 61,
+        "self_seconds": 0.0078737,
+        "cumulative_seconds": 3.5241814000000002
+      },
+      {
+        "file": "numerical_chan_numba.py",
+        "line": 510,
+        "function": "_base",
+        "primitive_calls": 31,
+        "calls": 31,
+        "self_seconds": 0.007368800000000001,
+        "cumulative_seconds": 2.7731872
+      },
+      {
+        "file": "fromnumeric.py",
+        "line": 2240,
+        "function": "_clip_dispatcher",
+        "primitive_calls": 36307,
+        "calls": 36307,
+        "self_seconds": 0.007001,
+        "cumulative_seconds": 0.007001
+      },
+      {
+        "file": "~",
+        "line": 0,
+        "function": "<method 'pop' of 'dict' objects>",
+        "primitive_calls": 14106,
+        "calls": 14106,
+        "self_seconds": 0.006155600000000001,
+        "cumulative_seconds": 0.006155600000000001
+      },
+      {
+        "file": "numerical_chan_numba.py",
+        "line": 168,
+        "function": "eliminate_one",
+        "primitive_calls": 368,
+        "calls": 368,
+        "self_seconds": 0.005674200000000001,
+        "cumulative_seconds": 2.6316187
+      },
+      {
+        "file": "~",
+        "line": 0,
+        "function": "<built-in method builtins.max>",
+        "primitive_calls": 15322,
+        "calls": 15322,
+        "self_seconds": 0.0054282,
+        "cumulative_seconds": 0.0054282
+      },
+      {
+        "file": "numerical_chan_numba.py",
+        "line": 236,
+        "function": "sum_out",
+        "primitive_calls": 92,
+        "calls": 92,
+        "self_seconds": 0.005060800000000001,
+        "cumulative_seconds": 2.6366974
+      },
+      {
+        "file": "~",
+        "line": 0,
+        "function": "<built-in method numpy.empty>",
+        "primitive_calls": 3668,
+        "calls": 3668,
+        "self_seconds": 0.0035141,
+        "cumulative_seconds": 0.0035141
+      },
+      {
+        "file": "numerical_chan_numba.py",
+        "line": 250,
+        "function": "push_blocks",
+        "primitive_calls": 10,
+        "calls": 10,
+        "self_seconds": 0.0026278,
+        "cumulative_seconds": 0.5400697
+      },
+      {
+        "file": "~",
+        "line": 0,
+        "function": "<built-in method builtins.sum>",
+        "primitive_calls": 396,
+        "calls": 797,
+        "self_seconds": 0.0007831,
+        "cumulative_seconds": 0.0015575
+      },
+      {
+        "file": "multiarray.py",
+        "line": 1088,
+        "function": "copyto",
+        "primitive_calls": 3668,
+        "calls": 3668,
+        "self_seconds": 0.0007547000000000001,
+        "cumulative_seconds": 0.0007547000000000001
+      },
+      {
+        "file": "numerical_chan_numba.py",
+        "line": 513,
+        "function": "<genexpr>",
+        "primitive_calls": 410,
+        "calls": 410,
+        "self_seconds": 0.0005389,
+        "cumulative_seconds": 0.0006609000000000001
+      },
+      {
+        "file": "~",
+        "line": 0,
+        "function": "<built-in method builtins.any>",
+        "primitive_calls": 473,
+        "calls": 493,
+        "self_seconds": 0.0004958,
+        "cumulative_seconds": 0.0010009
+      },
+      {
+        "file": "numerical_chan_numba.py",
+        "line": 481,
+        "function": "<genexpr>",
+        "primitive_calls": 1776,
+        "calls": 1776,
+        "self_seconds": 0.0003104,
+        "cumulative_seconds": 0.0003104
+      },
+      {
+        "file": "~",
+        "line": 0,
+        "function": "<built-in method numpy.array>",
+        "primitive_calls": 129,
+        "calls": 129,
+        "self_seconds": 0.0002629,
+        "cumulative_seconds": 0.0002629
+      },
+      {
+        "file": "numerical_chan_numba.py",
+        "line": 547,
+        "function": "<genexpr>",
+        "primitive_calls": 1136,
+        "calls": 1136,
+        "self_seconds": 0.00018360000000000002,
+        "cumulative_seconds": 0.00018360000000000002
+      },
+      {
+        "file": "numerical_chan_numba.py",
+        "line": 447,
+        "function": "compute",
+        "primitive_calls": 1,
+        "calls": 1,
+        "self_seconds": 0.0001574,
+        "cumulative_seconds": 3.5246484000000002
+      },
+      {
+        "file": "numeric.py",
+        "line": 170,
+        "function": "ones",
+        "primitive_calls": 40,
+        "calls": 40,
+        "self_seconds": 0.00012240000000000002,
+        "cumulative_seconds": 0.00016260000000000002
+      },
+      {
+        "file": "~",
+        "line": 0,
+        "function": "<built-in method builtins.min>",
+        "primitive_calls": 328,
+        "calls": 328,
+        "self_seconds": 0.00012200000000000001,
+        "cumulative_seconds": 0.00012200000000000001
+      },
+      {
+        "file": "numerical_chan_numba.py",
+        "line": 277,
+        "function": "<genexpr>",
+        "primitive_calls": 410,
+        "calls": 410,
+        "self_seconds": 8.64e-05,
+        "cumulative_seconds": 8.64e-05
+      },
+      {
+        "file": "numerical_chan_numba.py",
+        "line": 103,
+        "function": "ordered_unique",
+        "primitive_calls": 44,
+        "calls": 44,
+        "self_seconds": 8.49e-05,
+        "cumulative_seconds": 0.0001095
+      },
+      {
+        "file": "numerical_chan_numba.py",
+        "line": 537,
+        "function": "<genexpr>",
+        "primitive_calls": 468,
+        "calls": 468,
+        "self_seconds": 6.88e-05,
+        "cumulative_seconds": 6.88e-05
+      },
+      {
+        "file": "numerical_chan_numba.py",
+        "line": 532,
+        "function": "<genexpr>",
+        "primitive_calls": 200,
+        "calls": 200,
+        "self_seconds": 6.52e-05,
+        "cumulative_seconds": 0.000101
+      },
+      {
+        "file": "compare_prefix4.py",
+        "line": 78,
+        "function": "solve",
+        "primitive_calls": 1,
+        "calls": 1,
+        "self_seconds": 5.0600000000000003e-05,
+        "cumulative_seconds": 3.5247116000000003
+      },
+      {
+        "file": "numerical_chan_numba.py",
+        "line": 286,
+        "function": "<genexpr>",
+        "primitive_calls": 156,
+        "calls": 156,
+        "self_seconds": 3.62e-05,
+        "cumulative_seconds": 3.62e-05
+      },
+      {
+        "file": "~",
+        "line": 0,
+        "function": "<built-in method _bisect.bisect_right>",
+        "primitive_calls": 160,
+        "calls": 160,
+        "self_seconds": 3.58e-05,
+        "cumulative_seconds": 3.58e-05
+      },
+      {
+        "file": "~",
+        "line": 0,
+        "function": "<method 'disable' of '_lsprof.Profiler' objects>",
+        "primitive_calls": 1,
+        "calls": 1,
+        "self_seconds": 3.3600000000000004e-05,
+        "cumulative_seconds": 3.3600000000000004e-05
+      },
+      {
+        "file": "~",
+        "line": 0,
+        "function": "<built-in method builtins.isinstance>",
+        "primitive_calls": 81,
+        "calls": 81,
+        "self_seconds": 3.24e-05,
+        "cumulative_seconds": 8.03e-05
+      }
+    ]
+  },
+  {
+    "algorithm": "new_numba_no_compression",
+    "case": "sphere-s42-n20",
+    "event": "done",
+    "status": "ok",
+    "value": 1.1257677901991463,
+    "counters": {
+      "input_points": 20,
+      "dimension": 4,
+      "initial_cells": 84,
+      "nodes": 61,
+      "max_generation": 0,
+      "box_classifications": 390,
+      "absorbed_boxes": 165,
+      "blocks": 1,
+      "cuts": 30,
+      "term_eliminations": 526,
+      "max_lower_candidates": 4,
+      "max_upper_candidates": 3,
+      "raw_terms": 709,
+      "peak_terms": 11,
+      "base_calls": 31
+    },
+    "profile_seconds": 0.0818063,
+    "calls": 82860,
+    "profile": [
+      {
+        "file": "numerical_chan_numba.py",
+        "line": 170,
+        "function": "emitted",
+        "primitive_calls": 1037,
+        "calls": 1037,
+        "self_seconds": 0.012658200000000001,
+        "cumulative_seconds": 0.0547961
+      },
+      {
+        "file": "numerical_chan_numba.py",
+        "line": 147,
+        "function": "merge",
+        "primitive_calls": 328,
+        "calls": 328,
+        "self_seconds": 0.006695400000000001,
+        "cumulative_seconds": 0.066495
+      },
+      {
+        "file": "numerical_chan_numba.py",
+        "line": 127,
+        "function": "impose",
+        "primitive_calls": 2234,
+        "calls": 2234,
+        "self_seconds": 0.0065544,
+        "cumulative_seconds": 0.027631600000000003
+      },
+      {
+        "file": "numerical_chan_numba.py",
+        "line": 107,
+        "function": "multiply_unary",
+        "primitive_calls": 2642,
+        "calls": 2642,
+        "self_seconds": 0.0057816000000000005,
+        "cumulative_seconds": 0.015756000000000003
+      },
+      {
+        "file": "numerical_chan_numba.py",
+        "line": 27,
+        "function": "<genexpr>",
+        "primitive_calls": 11213,
+        "calls": 11213,
+        "self_seconds": 0.0055372,
+        "cumulative_seconds": 0.0055372
+      },
+      {
+        "file": "numerical_chan_numba.py",
+        "line": 26,
+        "function": "alive",
+        "primitive_calls": 3831,
+        "calls": 3831,
+        "self_seconds": 0.0045732,
+        "cumulative_seconds": 0.0135475
+      },
+      {
+        "file": "~",
+        "line": 0,
+        "function": "<built-in method builtins.all>",
+        "primitive_calls": 3969,
+        "calls": 5478,
+        "self_seconds": 0.0036643,
+        "cumulative_seconds": 0.0300465
+      },
+      {
+        "file": "numerical_chan_numba.py",
+        "line": 112,
+        "function": "add_edge",
+        "primitive_calls": 342,
+        "calls": 342,
+        "self_seconds": 0.0028662,
+        "cumulative_seconds": 0.0123263
+      },
+      {
+        "file": "_methods.py",
+        "line": 96,
+        "function": "_clip",
+        "primitive_calls": 342,
+        "calls": 342,
+        "self_seconds": 0.002514,
+        "cumulative_seconds": 0.0035147000000000004
+      },
+      {
+        "file": "numerical_chan_numba.py",
+        "line": 23,
+        "function": "copy",
+        "primitive_calls": 2334,
+        "calls": 2334,
+        "self_seconds": 0.0024814000000000004,
+        "cumulative_seconds": 0.0041843
+      },
+      {
+        "file": "numerical_chan_numba.py",
+        "line": 275,
+        "function": "rectangle_sum",
+        "primitive_calls": 82,
+        "calls": 82,
+        "self_seconds": 0.002473,
+        "cumulative_seconds": 0.07412350000000001
+      },
+      {
+        "file": "numerical_chan_numba.py",
+        "line": 96,
+        "function": "unique_bounds",
+        "primitive_calls": 1052,
+        "calls": 1052,
+        "self_seconds": 0.0015937000000000002,
+        "cumulative_seconds": 0.0024832
+      },
+      {
+        "file": "~",
+        "line": 0,
+        "function": "<built-in method numpy.arange>",
+        "primitive_calls": 1268,
+        "calls": 1268,
+        "self_seconds": 0.0015568000000000001,
+        "cumulative_seconds": 0.0015568000000000001
+      },
+      {
+        "file": "numerical_chan_numba.py",
+        "line": 477,
+        "function": "_absorb",
+        "primitive_calls": 61,
+        "calls": 61,
+        "self_seconds": 0.0012995,
+        "cumulative_seconds": 0.0043855000000000005
+      },
+      {
+        "file": "~",
+        "line": 0,
+        "function": "<method 'copy' of 'dict' objects>",
+        "primitive_calls": 4668,
+        "calls": 4668,
+        "self_seconds": 0.0012505,
+        "cumulative_seconds": 0.0012505
+      },
+      {
+        "file": "numerical_chan_numba.py",
+        "line": 205,
+        "function": "<genexpr>",
+        "primitive_calls": 2374,
+        "calls": 2374,
+        "self_seconds": 0.0011595000000000002,
+        "cumulative_seconds": 0.022278100000000002
+      },
+      {
+        "file": "~",
+        "line": 0,
+        "function": "<method 'values' of 'dict' objects>",
+        "primitive_calls": 5212,
+        "calls": 5212,
+        "self_seconds": 0.0010962,
+        "cumulative_seconds": 0.0010962
+      },
+      {
+        "file": "~",
+        "line": 0,
+        "function": "<method 'reduce' of 'numpy.ufunc' objects>",
+        "primitive_calls": 684,
+        "calls": 684,
+        "self_seconds": 0.0010722000000000001,
+        "cumulative_seconds": 0.0010722000000000001
+      },
+      {
+        "file": "serialize.py",
+        "line": 30,
+        "function": "_numba_unpickle",
+        "primitive_calls": 2333,
+        "calls": 2333,
+        "self_seconds": 0.0010257,
+        "cumulative_seconds": 0.0010257
+      },
+      {
+        "file": "numerical_chan_numba.py",
+        "line": 518,
+        "function": "_node",
+        "primitive_calls": 1,
+        "calls": 61,
+        "self_seconds": 0.0009089,
+        "cumulative_seconds": 0.0815689
+      },
+      {
+        "file": "~",
+        "line": 0,
+        "function": "<built-in method builtins.len>",
+        "primitive_calls": 5526,
+        "calls": 5526,
+        "self_seconds": 0.0008852,
+        "cumulative_seconds": 0.0008852
+      },
+      {
+        "file": "numeric.py",
+        "line": 323,
+        "function": "full",
+        "primitive_calls": 312,
+        "calls": 312,
+        "self_seconds": 0.000777,
+        "cumulative_seconds": 0.0013307
+      },
+      {
+        "file": "~",
+        "line": 0,
+        "function": "<built-in method builtins.sorted>",
+        "primitive_calls": 1246,
+        "calls": 1246,
+        "self_seconds": 0.0007683000000000001,
+        "cumulative_seconds": 0.0007683000000000001
+      },
+      {
+        "file": "getlimits.py",
+        "line": 399,
+        "function": "__init__",
+        "primitive_calls": 684,
+        "calls": 684,
+        "self_seconds": 0.0007583000000000001,
+        "cumulative_seconds": 0.0007583000000000001
+      },
+      {
+        "file": "numerical_chan_numba.py",
+        "line": 168,
+        "function": "eliminate_one",
+        "primitive_calls": 328,
+        "calls": 328,
+        "self_seconds": 0.0006014000000000001,
+        "cumulative_seconds": 0.0670964
+      },
+      {
+        "file": "~",
+        "line": 0,
+        "function": "<built-in method builtins.sum>",
+        "primitive_calls": 386,
+        "calls": 738,
+        "self_seconds": 0.0006012000000000001,
+        "cumulative_seconds": 0.0011527
+      },
+      {
+        "file": "numerical_chan_numba.py",
+        "line": 236,
+        "function": "sum_out",
+        "primitive_calls": 82,
+        "calls": 82,
+        "self_seconds": 0.0005843,
+        "cumulative_seconds": 0.0676938
+      },
+      {
+        "file": "~",
+        "line": 0,
+        "function": "<method 'tobytes' of 'numpy.ndarray' objects>",
+        "primitive_calls": 2069,
+        "calls": 2069,
+        "self_seconds": 0.0005721000000000001,
+        "cumulative_seconds": 0.0005721000000000001
+      },
+      {
+        "file": "fromnumeric.py",
+        "line": 2245,
+        "function": "clip",
+        "primitive_calls": 342,
+        "calls": 342,
+        "self_seconds": 0.0005584,
+        "cumulative_seconds": 0.0047107
+      },
+      {
+        "file": "~",
+        "line": 0,
+        "function": "<method 'items' of 'dict' objects>",
+        "primitive_calls": 2511,
+        "calls": 2511,
+        "self_seconds": 0.0005502,
+        "cumulative_seconds": 0.0005502
+      },
+      {
+        "file": "~",
+        "line": 0,
+        "function": "<method 'setdefault' of 'dict' objects>",
+        "primitive_calls": 1683,
+        "calls": 1683,
+        "self_seconds": 0.0005468000000000001,
+        "cumulative_seconds": 0.0005468000000000001
+      },
+      {
+        "file": "numerical_chan_numba.py",
+        "line": 510,
+        "function": "_base",
+        "primitive_calls": 31,
+        "calls": 31,
+        "self_seconds": 0.0005221000000000001,
+        "cumulative_seconds": 0.0752164
+      },
+      {
+        "file": "numerical_chan_numba.py",
+        "line": 157,
+        "function": "<genexpr>",
+        "primitive_calls": 1509,
+        "calls": 1509,
+        "self_seconds": 0.000521,
+        "cumulative_seconds": 0.0007741
+      },
+      {
+        "file": "~",
+        "line": 0,
+        "function": "<built-in method numpy.asarray>",
+        "primitive_calls": 654,
+        "calls": 654,
+        "self_seconds": 0.0004797,
+        "cumulative_seconds": 0.0004797
+      },
+      {
+        "file": "~",
+        "line": 0,
+        "function": "<built-in method builtins.any>",
+        "primitive_calls": 473,
+        "calls": 493,
+        "self_seconds": 0.00046990000000000004,
+        "cumulative_seconds": 0.0009648
+      },
+      {
+        "file": "~",
+        "line": 0,
+        "function": "<built-in method builtins.max>",
+        "primitive_calls": 1441,
+        "calls": 1441,
+        "self_seconds": 0.00045680000000000004,
+        "cumulative_seconds": 0.00045680000000000004
+      },
+      {
+        "file": "<string>",
+        "line": 2,
+        "function": "__init__",
+        "primitive_calls": 2335,
+        "calls": 2335,
+        "self_seconds": 0.00045260000000000005,
+        "cumulative_seconds": 0.00045260000000000005
+      },
+      {
+        "file": "numerical_chan_numba.py",
+        "line": 513,
+        "function": "<genexpr>",
+        "primitive_calls": 410,
+        "calls": 410,
+        "self_seconds": 0.00043210000000000004,
+        "cumulative_seconds": 0.0005375
+      },
+      {
+        "file": "numerical_chan_numba.py",
+        "line": 158,
+        "function": "<genexpr>",
+        "primitive_calls": 1225,
+        "calls": 1225,
+        "self_seconds": 0.0003614,
+        "cumulative_seconds": 0.0005167
+      },
+      {
+        "file": "numerical_chan_numba.py",
+        "line": 200,
+        "function": "<genexpr>",
+        "primitive_calls": 782,
+        "calls": 782,
+        "self_seconds": 0.000297,
+        "cumulative_seconds": 0.0019547
+      },
+      {
+        "file": "~",
+        "line": 0,
+        "function": "<method 'append' of 'list' objects>",
+        "primitive_calls": 1216,
+        "calls": 1216,
+        "self_seconds": 0.0002952,
+        "cumulative_seconds": 0.0002952
+      },
+      {
+        "file": "numerical_chan_numba.py",
+        "line": 481,
+        "function": "<genexpr>",
+        "primitive_calls": 1776,
+        "calls": 1776,
+        "self_seconds": 0.00029,
+        "cumulative_seconds": 0.00029
+      },
+      {
+        "file": "fromnumeric.py",
+        "line": 48,
+        "function": "_wrapfunc",
+        "primitive_calls": 342,
+        "calls": 342,
+        "self_seconds": 0.00028910000000000003,
+        "cumulative_seconds": 0.0041523
+      },
+      {
+        "file": "~",
+        "line": 0,
+        "function": "<method 'clip' of 'numpy.ndarray' objects>",
+        "primitive_calls": 342,
+        "calls": 342,
+        "self_seconds": 0.0002596,
+        "cumulative_seconds": 0.0037743000000000004
+      },
+      {
+        "file": "~",
+        "line": 0,
+        "function": "<built-in method numpy.empty>",
+        "primitive_calls": 312,
+        "calls": 312,
+        "self_seconds": 0.0002523,
+        "cumulative_seconds": 0.0002523
+      },
+      {
+        "file": "~",
+        "line": 0,
+        "function": "<method 'min' of 'numpy.ndarray' objects>",
+        "primitive_calls": 342,
+        "calls": 342,
+        "self_seconds": 0.00023700000000000001,
+        "cumulative_seconds": 0.0010136000000000001
+      },
+      {
+        "file": "~",
+        "line": 0,
+        "function": "<method 'pop' of 'dict' objects>",
+        "primitive_calls": 592,
+        "calls": 592,
+        "self_seconds": 0.0002142,
+        "cumulative_seconds": 0.0002142
+      },
+      {
+        "file": "~",
+        "line": 0,
+        "function": "<method 'max' of 'numpy.ndarray' objects>",
+        "primitive_calls": 342,
+        "calls": 342,
+        "self_seconds": 0.0001909,
+        "cumulative_seconds": 0.0007723000000000001
+      },
+      {
+        "file": "numerical_chan_numba.py",
+        "line": 547,
+        "function": "<genexpr>",
+        "primitive_calls": 1136,
+        "calls": 1136,
+        "self_seconds": 0.00017940000000000002,
+        "cumulative_seconds": 0.00017940000000000002
+      },
+      {
+        "file": "getlimits.py",
+        "line": 410,
+        "function": "min",
+        "primitive_calls": 342,
+        "calls": 342,
+        "self_seconds": 0.0001541,
+        "cumulative_seconds": 0.0001541
+      },
+      {
+        "file": "_methods.py",
+        "line": 43,
+        "function": "_amin",
+        "primitive_calls": 342,
+        "calls": 342,
+        "self_seconds": 0.00014780000000000001,
+        "cumulative_seconds": 0.0007766
+      },
+      {
+        "file": "_methods.py",
+        "line": 39,
+        "function": "_amax",
+        "primitive_calls": 342,
+        "calls": 342,
+        "self_seconds": 0.00013800000000000002,
+        "cumulative_seconds": 0.0005814
+      },
+      {
+        "file": "~",
+        "line": 0,
+        "function": "<built-in method numpy.array>",
+        "primitive_calls": 49,
+        "calls": 49,
+        "self_seconds": 0.0001373,
+        "cumulative_seconds": 0.0001373
+      },
+      {
+        "file": "numerical_chan_numba.py",
+        "line": 447,
+        "function": "compute",
+        "primitive_calls": 1,
+        "calls": 1,
+        "self_seconds": 0.0001292,
+        "cumulative_seconds": 0.0820299
+      },
+      {
+        "file": "~",
+        "line": 0,
+        "function": "<built-in method builtins.min>",
+        "primitive_calls": 328,
+        "calls": 328,
+        "self_seconds": 0.0001054,
+        "cumulative_seconds": 0.0001054
+      },
+      {
+        "file": "~",
+        "line": 0,
+        "function": "<built-in method builtins.getattr>",
+        "primitive_calls": 342,
+        "calls": 342,
+        "self_seconds": 8.89e-05,
+        "cumulative_seconds": 8.89e-05
+      },
+      {
+        "file": "getlimits.py",
+        "line": 423,
+        "function": "max",
+        "primitive_calls": 342,
+        "calls": 342,
+        "self_seconds": 8.83e-05,
+        "cumulative_seconds": 8.83e-05
+      },
+      {
+        "file": "numerical_chan_numba.py",
+        "line": 277,
+        "function": "<genexpr>",
+        "primitive_calls": 410,
+        "calls": 410,
+        "self_seconds": 7.92e-05,
+        "cumulative_seconds": 7.92e-05
+      },
+      {
+        "file": "fromnumeric.py",
+        "line": 2240,
+        "function": "_clip_dispatcher",
+        "primitive_calls": 342,
+        "calls": 342,
+        "self_seconds": 7.280000000000001e-05,
+        "cumulative_seconds": 7.280000000000001e-05
+      },
+      {
+        "file": "multiarray.py",
+        "line": 1088,
+        "function": "copyto",
+        "primitive_calls": 312,
+        "calls": 312,
+        "self_seconds": 6.330000000000001e-05,
+        "cumulative_seconds": 6.330000000000001e-05
+      },
+      {
+        "file": "compare_prefix4.py",
+        "line": 78,
+        "function": "solve",
+        "primitive_calls": 1,
+        "calls": 1,
+        "self_seconds": 5.27e-05,
+        "cumulative_seconds": 0.0821019
+      },
+      {
+        "file": "~",
+        "line": 0,
+        "function": "<built-in method builtins.isinstance>",
+        "primitive_calls": 81,
+        "calls": 81,
+        "self_seconds": 3.3600000000000004e-05,
+        "cumulative_seconds": 8.570000000000001e-05
+      },
+      {
+        "file": "numerical_chan_numba.py",
+        "line": 286,
+        "function": "<genexpr>",
+        "primitive_calls": 156,
+        "calls": 156,
+        "self_seconds": 3.26e-05,
+        "cumulative_seconds": 3.26e-05
+      },
+      {
+        "file": "~",
+        "line": 0,
+        "function": "<method 'disable' of '_lsprof.Profiler' objects>",
+        "primitive_calls": 1,
+        "calls": 1,
+        "self_seconds": 3.2500000000000004e-05,
+        "cumulative_seconds": 3.2500000000000004e-05
+      },
+      {
+        "file": "numerical_chan_numba.py",
+        "line": 537,
+        "function": "<genexpr>",
+        "primitive_calls": 272,
+        "calls": 272,
+        "self_seconds": 3.12e-05,
+        "cumulative_seconds": 3.12e-05
+      },
+      {
+        "file": "numerical_chan_numba.py",
+        "line": 555,
+        "function": "<genexpr>",
+        "primitive_calls": 202,
+        "calls": 202,
+        "self_seconds": 2.9e-05,
+        "cumulative_seconds": 2.9e-05
+      },
+      {
+        "file": "numerical_chan_numba.py",
+        "line": 462,
+        "function": "<genexpr>",
+        "primitive_calls": 100,
+        "calls": 100,
+        "self_seconds": 2.5e-05,
+        "cumulative_seconds": 3.8900000000000004e-05
+      },
+      {
+        "file": "~",
+        "line": 0,
+        "function": "<built-in method _abc._abc_instancecheck>",
+        "primitive_calls": 81,
+        "calls": 81,
+        "self_seconds": 2.29e-05,
+        "cumulative_seconds": 3.0200000000000002e-05
+      },
+      {
+        "file": "<frozen abc>",
+        "line": 117,
+        "function": "__instancecheck__",
+        "primitive_calls": 81,
+        "calls": 81,
+        "self_seconds": 2.19e-05,
+        "cumulative_seconds": 5.2100000000000006e-05
+      },
+      {
+        "file": "~",
+        "line": 0,
+        "function": "<method 'sort' of 'list' objects>",
+        "primitive_calls": 30,
+        "calls": 30,
+        "self_seconds": 2.04e-05,
+        "cumulative_seconds": 2.04e-05
+      }
+    ]
+  },
+  {
+    "algorithm": "chan_dby3",
+    "case": "sphere-s42-n20",
+    "event": "done",
+    "status": "ok",
+    "value": 1.1257677901991467,
+    "counters": {
+      "nodes": 61,
+      "peak_terms": 1,
+      "compressions": 0
+    },
+    "profile_seconds": 0.08646989999999999,
+    "calls": 139686,
+    "profile": [
+      {
+        "file": "chan_orthant_dby3.py",
+        "line": 137,
+        "function": "__init__",
+        "primitive_calls": 4419,
+        "calls": 4419,
+        "self_seconds": 0.008463100000000001,
+        "cumulative_seconds": 0.010939800000000001
+      },
+      {
+        "file": "chan_orthant_dby3.py",
+        "line": 566,
+        "function": "_eliminate_axis",
+        "primitive_calls": 307,
+        "calls": 307,
+        "self_seconds": 0.0080952,
+        "cumulative_seconds": 0.058216800000000006
+      },
+      {
+        "file": "chan_orthant_dby3.py",
+        "line": 187,
+        "function": "_zip",
+        "primitive_calls": 968,
+        "calls": 968,
+        "self_seconds": 0.0041836,
+        "cumulative_seconds": 0.0061352
+      },
+      {
+        "file": "chan_orthant_dby3.py",
+        "line": 489,
+        "function": "_prune_term",
+        "primitive_calls": 588,
+        "calls": 588,
+        "self_seconds": 0.004107100000000001,
+        "cumulative_seconds": 0.012046000000000001
+      },
+      {
+        "file": "~",
+        "line": 0,
+        "function": "<method 'append' of 'list' objects>",
+        "primitive_calls": 19982,
+        "calls": 19982,
+        "self_seconds": 0.003359,
+        "cumulative_seconds": 0.003359
+      },
+      {
+        "file": "chan_orthant_dby3.py",
+        "line": 415,
+        "function": "is_dead",
+        "primitive_calls": 1993,
+        "calls": 1993,
+        "self_seconds": 0.0029696,
+        "cumulative_seconds": 0.0073578
+      },
+      {
+        "file": "chan_orthant_dby3.py",
+        "line": 406,
+        "function": "clone",
+        "primitive_calls": 2861,
+        "calls": 2861,
+        "self_seconds": 0.0027340000000000003,
+        "cumulative_seconds": 0.0034131
+      },
+      {
+        "file": "~",
+        "line": 0,
+        "function": "<built-in method builtins.all>",
+        "primitive_calls": 6090,
+        "calls": 6090,
+        "self_seconds": 0.0027059000000000002,
+        "cumulative_seconds": 0.0041516
+      },
+      {
+        "file": "chan_orthant_dby3.py",
+        "line": 310,
+        "function": "__call__",
+        "primitive_calls": 1783,
+        "calls": 1783,
+        "self_seconds": 0.0025773000000000003,
+        "cumulative_seconds": 0.0051145
+      },
+      {
+        "file": "~",
+        "line": 0,
+        "function": "<built-in method builtins.sorted>",
+        "primitive_calls": 3486,
+        "calls": 3486,
+        "self_seconds": 0.0024686,
+        "cumulative_seconds": 0.0038232
+      },
+      {
+        "file": "chan_orthant_dby3.py",
+        "line": 546,
+        "function": "_merge_terms",
+        "primitive_calls": 781,
+        "calls": 781,
+        "self_seconds": 0.0022917000000000002,
+        "cumulative_seconds": 0.0155262
+      },
+      {
+        "file": "~",
+        "line": 0,
+        "function": "<built-in method builtins.len>",
+        "primitive_calls": 18139,
+        "calls": 18139,
+        "self_seconds": 0.0022107000000000003,
+        "cumulative_seconds": 0.0022107000000000003
+      },
+      {
+        "file": "chan_orthant_dby3.py",
+        "line": 170,
+        "function": "monotone_dir",
+        "primitive_calls": 972,
+        "calls": 972,
+        "self_seconds": 0.0022008,
+        "cumulative_seconds": 0.0041768000000000005
+      },
+      {
+        "file": "chan_orthant_dby3.py",
+        "line": 409,
+        "function": "key",
+        "primitive_calls": 1136,
+        "calls": 1136,
+        "self_seconds": 0.0020909,
+        "cumulative_seconds": 0.005735400000000001
+      },
+      {
+        "file": "chan_orthant_dby3.py",
+        "line": 203,
+        "function": "binary",
+        "primitive_calls": 910,
+        "calls": 910,
+        "self_seconds": 0.0020812,
+        "cumulative_seconds": 0.010265600000000001
+      },
+      {
+        "file": "chan_orthant_dby3.py",
+        "line": 300,
+        "function": "__init__",
+        "primitive_calls": 445,
+        "calls": 445,
+        "self_seconds": 0.0015654,
+        "cumulative_seconds": 0.0022523
+      },
+      {
+        "file": "chan_orthant_dby3.py",
+        "line": 937,
+        "function": "_absorb",
+        "primitive_calls": 61,
+        "calls": 61,
+        "self_seconds": 0.0015213000000000002,
+        "cumulative_seconds": 0.0042193000000000005
+      },
+      {
+        "file": "chan_orthant_dby3.py",
+        "line": 248,
+        "function": "_ray_boundary",
+        "primitive_calls": 617,
+        "calls": 617,
+        "self_seconds": 0.0014440000000000002,
+        "cumulative_seconds": 0.0045595
+      },
+      {
+        "file": "~",
+        "line": 0,
+        "function": "<built-in method builtins.any>",
+        "primitive_calls": 2349,
+        "calls": 2349,
+        "self_seconds": 0.0013967,
+        "cumulative_seconds": 0.0041807
+      },
+      {
+        "file": "chan_orthant_dby3.py",
+        "line": 684,
+        "function": "_dedupe_bounds",
+        "primitive_calls": 890,
+        "calls": 890,
+        "self_seconds": 0.0012670000000000001,
+        "cumulative_seconds": 0.0020663
+      },
+      {
+        "file": "chan_orthant_dby3.py",
+        "line": 182,
+        "function": "all_zero",
+        "primitive_calls": 1311,
+        "calls": 1311,
+        "self_seconds": 0.0012535,
+        "cumulative_seconds": 0.0024161
+      },
+      {
+        "file": "chan_orthant_dby3.py",
+        "line": 341,
+        "function": "_less_than",
+        "primitive_calls": 1286,
+        "calls": 1286,
+        "self_seconds": 0.0012183,
+        "cumulative_seconds": 0.0063426
+      },
+      {
+        "file": "chan_orthant_dby3.py",
+        "line": 480,
+        "function": "_restrict_step",
+        "primitive_calls": 964,
+        "calls": 964,
+        "self_seconds": 0.0012132,
+        "cumulative_seconds": 0.0041843
+      },
+      {
+        "file": "~",
+        "line": 0,
+        "function": "<built-in method builtins.max>",
+        "primitive_calls": 4549,
+        "calls": 4549,
+        "self_seconds": 0.001204,
+        "cumulative_seconds": 0.001204
+      },
+      {
+        "file": "~",
+        "line": 0,
+        "function": "<built-in method builtins.min>",
+        "primitive_calls": 4376,
+        "calls": 4376,
+        "self_seconds": 0.0011898,
+        "cumulative_seconds": 0.0011982000000000002
+      },
+      {
+        "file": "chan_orthant_dby3.py",
+        "line": 223,
+        "function": "compare_const",
+        "primitive_calls": 728,
+        "calls": 728,
+        "self_seconds": 0.0011862,
+        "cumulative_seconds": 0.0030464000000000003
+      },
+      {
+        "file": "chan_orthant_dby3.py",
+        "line": 695,
+        "function": "integrate_terms",
+        "primitive_calls": 82,
+        "calls": 82,
+        "self_seconds": 0.0011106,
+        "cumulative_seconds": 0.0768709
+      },
+      {
+        "file": "chan_orthant_dby3.py",
+        "line": 656,
+        "function": "_ray_preimage_function",
+        "primitive_calls": 201,
+        "calls": 201,
+        "self_seconds": 0.0010411,
+        "cumulative_seconds": 0.005539700000000001
+      },
+      {
+        "file": "chan_orthant_dby3.py",
+        "line": 836,
+        "function": "_measure",
+        "primitive_calls": 1,
+        "calls": 61,
+        "self_seconds": 0.0008592000000000001,
+        "cumulative_seconds": 0.0861881
+      },
+      {
+        "file": "chan_orthant_dby3.py",
+        "line": 396,
+        "function": "__init__",
+        "primitive_calls": 3307,
+        "calls": 3307,
+        "self_seconds": 0.0008035000000000001,
+        "cumulative_seconds": 0.0008035000000000001
+      },
+      {
+        "file": "~",
+        "line": 0,
+        "function": "<method 'items' of 'dict' objects>",
+        "primitive_calls": 3877,
+        "calls": 3877,
+        "self_seconds": 0.0007999000000000001,
+        "cumulative_seconds": 0.0007999000000000001
+      },
+      {
+        "file": "chan_orthant_dby3.py",
+        "line": 530,
+        "function": "_prune_terms",
+        "primitive_calls": 450,
+        "calls": 450,
+        "self_seconds": 0.0007225,
+        "cumulative_seconds": 0.0200269
+      },
+      {
+        "file": "chan_orthant_dby3.py",
+        "line": 428,
+        "function": "mul_dens",
+        "primitive_calls": 1130,
+        "calls": 1130,
+        "self_seconds": 0.000679,
+        "cumulative_seconds": 0.011123000000000001
+      },
+      {
+        "file": "chan_orthant_dby3.py",
+        "line": 456,
+        "function": "apply",
+        "primitive_calls": 1286,
+        "calls": 1286,
+        "self_seconds": 0.0006494000000000001,
+        "cumulative_seconds": 0.008418100000000001
+      },
+      {
+        "file": "chan_orthant_dby3.py",
+        "line": 183,
+        "function": "<genexpr>",
+        "primitive_calls": 3015,
+        "calls": 3015,
+        "self_seconds": 0.0006109,
+        "cumulative_seconds": 0.0006109
+      },
+      {
+        "file": "chan_orthant_dby3.py",
+        "line": 419,
+        "function": "<genexpr>",
+        "primitive_calls": 2311,
+        "calls": 2311,
+        "self_seconds": 0.0006100000000000001,
+        "cumulative_seconds": 0.0023355000000000003
+      },
+      {
+        "file": "chan_orthant_dby3.py",
+        "line": 412,
+        "function": "<genexpr>",
+        "primitive_calls": 2102,
+        "calls": 2102,
+        "self_seconds": 0.0005717000000000001,
+        "cumulative_seconds": 0.000723
+      },
+      {
+        "file": "~",
+        "line": 0,
+        "function": "<built-in method _bisect.bisect_right>",
+        "primitive_calls": 2747,
+        "calls": 2747,
+        "self_seconds": 0.0005700000000000001,
+        "cumulative_seconds": 0.0005700000000000001
+      },
+      {
+        "file": "chan_orthant_dby3.py",
+        "line": 213,
+        "function": "times",
+        "primitive_calls": 889,
+        "calls": 889,
+        "self_seconds": 0.0005124,
+        "cumulative_seconds": 0.010444
+      },
+      {
+        "file": "chan_orthant_dby3.py",
+        "line": 411,
+        "function": "<genexpr>",
+        "primitive_calls": 1856,
+        "calls": 1856,
+        "self_seconds": 0.0005101,
+        "cumulative_seconds": 0.0006316000000000001
+      },
+      {
+        "file": "chan_orthant_dby3.py",
+        "line": 315,
+        "function": "compose",
+        "primitive_calls": 276,
+        "calls": 276,
+        "self_seconds": 0.0005048,
+        "cumulative_seconds": 0.0031448
+      },
+      {
+        "file": "chan_orthant_dby3.py",
+        "line": 1003,
+        "function": "_cut_candidates",
+        "primitive_calls": 30,
+        "calls": 30,
+        "self_seconds": 0.0004904,
+        "cumulative_seconds": 0.0009767
+      },
+      {
+        "file": "chan_orthant_dby3.py",
+        "line": 236,
+        "function": "clamp",
+        "primitive_calls": 276,
+        "calls": 276,
+        "self_seconds": 0.00046740000000000003,
+        "cumulative_seconds": 0.0015396000000000001
+      },
+      {
+        "file": "chan_orthant_dby3.py",
+        "line": 172,
+        "function": "<genexpr>",
+        "primitive_calls": 1890,
+        "calls": 1890,
+        "self_seconds": 0.000467,
+        "cumulative_seconds": 0.000467
+      },
+      {
+        "file": "chan_orthant_dby3.py",
+        "line": 173,
+        "function": "<genexpr>",
+        "primitive_calls": 2442,
+        "calls": 2442,
+        "self_seconds": 0.00044600000000000005,
+        "cumulative_seconds": 0.00044600000000000005
+      },
+      {
+        "file": "~",
+        "line": 0,
+        "function": "<method 'values' of 'dict' objects>",
+        "primitive_calls": 2185,
+        "calls": 2185,
+        "self_seconds": 0.0004375,
+        "cumulative_seconds": 0.0004375
+      },
+      {
+        "file": "chan_orthant_dby3.py",
+        "line": 422,
+        "function": "<genexpr>",
+        "primitive_calls": 1964,
+        "calls": 1964,
+        "self_seconds": 0.00042270000000000003,
+        "cumulative_seconds": 0.00042270000000000003
+      },
+      {
+        "file": "chan_orthant_dby3.py",
+        "line": 214,
+        "function": "mul",
+        "primitive_calls": 2139,
+        "calls": 2139,
+        "self_seconds": 0.0003909,
+        "cumulative_seconds": 0.0003909
+      },
+      {
+        "file": "chan_orthant_dby3.py",
+        "line": 521,
+        "function": "<genexpr>",
+        "primitive_calls": 1540,
+        "calls": 1540,
+        "self_seconds": 0.000368,
+        "cumulative_seconds": 0.000368
+      },
+      {
+        "file": "chan_orthant_dby3.py",
+        "line": 337,
+        "function": "_bound_key",
+        "primitive_calls": 1112,
+        "calls": 1112,
+        "self_seconds": 0.00034070000000000004,
+        "cumulative_seconds": 0.0003798
+      },
+      {
+        "file": "chan_orthant_dby3.py",
+        "line": 946,
+        "function": "<genexpr>",
+        "primitive_calls": 1773,
+        "calls": 1773,
+        "self_seconds": 0.0003197,
+        "cumulative_seconds": 0.0003197
+      },
+      {
+        "file": "chan_orthant_dby3.py",
+        "line": 830,
+        "function": "_active",
+        "primitive_calls": 1813,
+        "calls": 1813,
+        "self_seconds": 0.00031800000000000003,
+        "cumulative_seconds": 0.00031800000000000003
+      },
+      {
+        "file": "~",
+        "line": 0,
+        "function": "<built-in method _bisect.bisect_left>",
+        "primitive_calls": 1706,
+        "calls": 1706,
+        "self_seconds": 0.00031380000000000004,
+        "cumulative_seconds": 0.00031380000000000004
+      },
+      {
+        "file": "chan_orthant_dby3.py",
+        "line": 159,
+        "function": "key",
+        "primitive_calls": 1908,
+        "calls": 1908,
+        "self_seconds": 0.00031190000000000005,
+        "cumulative_seconds": 0.00031190000000000005
+      },
+      {
+        "file": "chan_orthant_dby3.py",
+        "line": 244,
+        "function": "<lambda>",
+        "primitive_calls": 2120,
+        "calls": 2120,
+        "self_seconds": 0.0003075,
+        "cumulative_seconds": 0.0003075
+      },
+      {
+        "file": "chan_orthant_dby3.py",
+        "line": 700,
+        "function": "range_of",
+        "primitive_calls": 1284,
+        "calls": 1284,
+        "self_seconds": 0.0002888,
+        "cumulative_seconds": 0.0002888
+      },
+      {
+        "file": "chan_orthant_dby3.py",
+        "line": 166,
+        "function": "__call__",
+        "primitive_calls": 742,
+        "calls": 742,
+        "self_seconds": 0.0002545,
+        "cumulative_seconds": 0.00039810000000000003
+      },
+      {
+        "file": "~",
+        "line": 0,
+        "function": "<method 'add' of 'set' objects>",
+        "primitive_calls": 1112,
+        "calls": 1112,
+        "self_seconds": 0.0002464,
+        "cumulative_seconds": 0.0002464
+      },
+      {
+        "file": "chan_orthant_dby3.py",
+        "line": 524,
+        "function": "<genexpr>",
+        "primitive_calls": 1207,
+        "calls": 1207,
+        "self_seconds": 0.00023630000000000002,
+        "cumulative_seconds": 0.00023630000000000002
+      },
+      {
+        "file": "chan_orthant_dby3.py",
+        "line": 431,
+        "function": "add_cond",
+        "primitive_calls": 100,
+        "calls": 100,
+        "self_seconds": 0.0002031,
+        "cumulative_seconds": 0.0010698
+      },
+      {
+        "file": "chan_orthant_dby3.py",
+        "line": 242,
+        "function": "<lambda>",
+        "primitive_calls": 1154,
+        "calls": 1154,
+        "self_seconds": 0.0001855,
+        "cumulative_seconds": 0.0001855
+      },
+      {
+        "file": "chan_orthant_dby3.py",
+        "line": 228,
+        "function": "compare",
+        "primitive_calls": 58,
+        "calls": 58,
+        "self_seconds": 0.00018030000000000002,
+        "cumulative_seconds": 0.0008887000000000001
+      },
+      {
+        "file": "~",
+        "line": 0,
+        "function": "<built-in method builtins.sum>",
+        "primitive_calls": 202,
+        "calls": 202,
+        "self_seconds": 0.00017600000000000002,
+        "cumulative_seconds": 0.0003505
+      },
+      {
+        "file": "chan_orthant_dby3.py",
+        "line": 153,
+        "function": "const",
+        "primitive_calls": 224,
+        "calls": 224,
+        "self_seconds": 0.00017,
+        "cumulative_seconds": 0.0005957
+      },
+      {
+        "file": "chan_orthant_dby3.py",
+        "line": 1017,
+        "function": "<genexpr>",
+        "primitive_calls": 456,
+        "calls": 456,
+        "self_seconds": 0.0001488,
+        "cumulative_seconds": 0.0001488
+      },
+      {
+        "file": "~",
+        "line": 0,
+        "function": "<method 'pop' of 'dict' objects>",
+        "primitive_calls": 445,
+        "calls": 445,
+        "self_seconds": 0.00013470000000000002,
+        "cumulative_seconds": 0.00013470000000000002
+      },
+      {
+        "file": "chan_orthant_dby3.py",
+        "line": 1025,
+        "function": "_staircase",
+        "primitive_calls": 45,
+        "calls": 45,
+        "self_seconds": 0.00012150000000000001,
+        "cumulative_seconds": 0.00030230000000000003
+      },
+      {
+        "file": "~",
+        "line": 0,
+        "function": "<method 'index' of 'list' objects>",
+        "primitive_calls": 376,
+        "calls": 376,
+        "self_seconds": 0.00010700000000000001,
+        "cumulative_seconds": 0.00010700000000000001
+      },
+      {
+        "file": "chan_orthant_dby3.py",
+        "line": 243,
+        "function": "<lambda>",
+        "primitive_calls": 639,
+        "calls": 639,
+        "self_seconds": 0.00010350000000000001,
+        "cumulative_seconds": 0.00010350000000000001
+      },
+      {
+        "file": "chan_orthant_dby3.py",
+        "line": 806,
+        "function": "complement_measure",
+        "primitive_calls": 1,
+        "calls": 1,
+        "self_seconds": 9.130000000000001e-05,
+        "cumulative_seconds": 0.0863271
+      }
+    ]
+  }
+]

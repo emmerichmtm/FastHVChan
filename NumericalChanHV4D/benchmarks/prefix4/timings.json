@@ -1,0 +1,1553 @@
+{
+  "environment": {
+    "python": "3.12.14 (main, Aug 25 2026, 14:01:42) [MSC v.1944 64 bit (AMD64)]",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "cpu": "AMD64 Family 25 Model 80 Stepping 0, AuthenticAMD",
+    "numba": "0.68.0",
+    "numpy": "2.5.3"
+  },
+  "repeats": 3,
+  "timeout_seconds": 35.0,
+  "rows": [
+    {
+      "id": "sphere-s42-n10",
+      "family": "sphere",
+      "seed": 42,
+      "n": 10,
+      "algorithm": "chan_dby3",
+      "event": "done",
+      "status": "ok",
+      "value": 0.735291270700164,
+      "counters": {
+        "nodes": 19,
+        "peak_terms": 1,
+        "compressions": 0
+      },
+      "seconds": [
+        0.007572399917989969,
+        0.007117800181731582,
+        0.007518999977037311
+      ],
+      "median_seconds": 0.007518999977037311,
+      "first_seconds": 0.007556800032034516,
+      "scaled_error": 0.0
+    },
+    {
+      "id": "sphere-s42-n10",
+      "family": "sphere",
+      "seed": 42,
+      "n": 10,
+      "algorithm": "new_python",
+      "event": "done",
+      "status": "ok",
+      "value": 0.7352912707001639,
+      "counters": {
+        "input_points": 10,
+        "dimension": 4,
+        "initial_cells": 44,
+        "nodes": 21,
+        "max_generation": 0,
+        "box_classifications": 114,
+        "absorbed_boxes": 49,
+        "blocks": 1,
+        "cuts": 10,
+        "term_eliminations": 154,
+        "max_lower_candidates": 3,
+        "max_upper_candidates": 2,
+        "raw_terms": 189,
+        "peak_terms": 5,
+        "base_calls": 11
+      },
+      "seconds": [
+        0.008095900062471628,
+        0.01001870003528893,
+        0.008842899929732084
+      ],
+      "median_seconds": 0.008842899929732084,
+      "first_seconds": 0.010372400050982833,
+      "scaled_error": 1.1102230246251565e-16
+    },
+    {
+      "id": "sphere-s42-n10",
+      "family": "sphere",
+      "seed": 42,
+      "n": 10,
+      "algorithm": "new_numba_no_compression",
+      "event": "done",
+      "status": "ok",
+      "value": 0.7352912707001639,
+      "counters": {
+        "input_points": 10,
+        "dimension": 4,
+        "initial_cells": 44,
+        "nodes": 21,
+        "max_generation": 0,
+        "box_classifications": 114,
+        "absorbed_boxes": 49,
+        "blocks": 1,
+        "cuts": 10,
+        "term_eliminations": 155,
+        "max_lower_candidates": 3,
+        "max_upper_candidates": 2,
+        "raw_terms": 190,
+        "peak_terms": 5,
+        "base_calls": 11
+      },
+      "seconds": [
+        0.010619599837809801,
+        0.010972000192850828,
+        0.011485999915748835
+      ],
+      "median_seconds": 0.010972000192850828,
+      "first_seconds": 0.2982013002038002,
+      "scaled_error": 1.1102230246251565e-16
+    },
+    {
+      "id": "sphere-s42-n10",
+      "family": "sphere",
+      "seed": 42,
+      "n": 10,
+      "algorithm": "old_prefix_object_python",
+      "event": "done",
+      "status": "ok",
+      "value": 0.7352912707001642,
+      "counters": {
+        "nodes": 19,
+        "box_integrals": 25,
+        "prefix_queries": 400,
+        "covers": 0,
+        "slab_shrinks": 5
+      },
+      "seconds": [
+        0.06886969995684922,
+        0.07203829986974597,
+        0.06984029989689589
+      ],
+      "median_seconds": 0.06984029989689589,
+      "first_seconds": 0.06668390007689595,
+      "kernel_nopython_signatures": 0,
+      "numba_disabled": "0",
+      "scaled_error": 2.220446049250313e-16
+    },
+    {
+      "id": "sphere-s42-n10",
+      "family": "sphere",
+      "seed": 42,
+      "n": 10,
+      "algorithm": "old_prefix_numba",
+      "event": "done",
+      "status": "ok",
+      "value": 0.735291270700164,
+      "counters": {
+        "nodes": 19,
+        "box_integrals": 25,
+        "prefix_queries": 400,
+        "covers": 0,
+        "slab_shrinks": 5
+      },
+      "seconds": [
+        0.005422699963673949,
+        0.005079399794340134,
+        0.005295000039041042
+      ],
+      "median_seconds": 0.005295000039041042,
+      "first_seconds": 1.0644108999986202,
+      "kernel_nopython_signatures": 1,
+      "numba_disabled": "0",
+      "scaled_error": 0.0
+    },
+    {
+      "id": "sphere-s42-n10",
+      "family": "sphere",
+      "seed": 42,
+      "n": 10,
+      "algorithm": "new_numba",
+      "event": "done",
+      "status": "ok",
+      "value": 0.7352912707001639,
+      "counters": {
+        "input_points": 10,
+        "dimension": 4,
+        "initial_cells": 44,
+        "nodes": 21,
+        "max_generation": 0,
+        "box_classifications": 114,
+        "absorbed_boxes": 49,
+        "blocks": 1,
+        "cuts": 10,
+        "term_eliminations": 155,
+        "max_lower_candidates": 3,
+        "max_upper_candidates": 2,
+        "raw_terms": 190,
+        "peak_terms": 5,
+        "base_calls": 11
+      },
+      "seconds": [
+        0.009205299895256758,
+        0.01027899980545044,
+        0.009258799953386188
+      ],
+      "median_seconds": 0.009258799953386188,
+      "first_seconds": 0.32157220016233623,
+      "scaled_error": 1.1102230246251565e-16
+    },
+    {
+      "id": "sphere-s42-n10",
+      "family": "sphere",
+      "seed": 42,
+      "n": 10,
+      "algorithm": "chan_dby2",
+      "event": "done",
+      "status": "ok",
+      "value": 0.735291270700164,
+      "counters": {},
+      "seconds": [
+        0.0015149000100791454,
+        0.0015589999966323376,
+        0.0014100000262260437
+      ],
+      "median_seconds": 0.0015149000100791454,
+      "first_seconds": 0.0017872999887913465,
+      "scaled_error": 0.0
+    },
+    {
+      "id": "sphere-s42-n10",
+      "family": "sphere",
+      "seed": 42,
+      "n": 10,
+      "algorithm": "old_prefix_flat_python",
+      "event": "done",
+      "status": "ok",
+      "value": 0.735291270700164,
+      "counters": {
+        "nodes": 19,
+        "box_integrals": 25,
+        "prefix_queries": 400,
+        "covers": 0,
+        "slab_shrinks": 5
+      },
+      "seconds": [
+        0.059645900037139654,
+        0.06909099989570677,
+        0.07352590002119541
+      ],
+      "median_seconds": 0.06909099989570677,
+      "first_seconds": 0.9955149998422712,
+      "kernel_nopython_signatures": 0,
+      "numba_disabled": "1",
+      "scaled_error": 0.0
+    },
+    {
+      "id": "sphere-s42-n20",
+      "family": "sphere",
+      "seed": 42,
+      "n": 20,
+      "algorithm": "chan_dby2",
+      "event": "done",
+      "status": "ok",
+      "value": 1.1257677901991467,
+      "counters": {},
+      "seconds": [
+        0.005983100039884448,
+        0.0050849998369812965,
+        0.005167300114408135
+      ],
+      "median_seconds": 0.005167300114408135,
+      "first_seconds": 0.005172299919649959,
+      "scaled_error": 0.0
+    },
+    {
+      "id": "sphere-s42-n20",
+      "family": "sphere",
+      "seed": 42,
+      "n": 20,
+      "algorithm": "old_prefix_numba",
+      "event": "done",
+      "status": "ok",
+      "value": 1.1257677901991459,
+      "counters": {
+        "nodes": 61,
+        "box_integrals": 81,
+        "prefix_queries": 1296,
+        "covers": 0,
+        "slab_shrinks": 13
+      },
+      "seconds": [
+        0.020407400093972683,
+        0.023364799795672297,
+        0.021521300077438354
+      ],
+      "median_seconds": 0.021521300077438354,
+      "first_seconds": 1.2190103000029922,
+      "kernel_nopython_signatures": 1,
+      "numba_disabled": "0",
+      "scaled_error": 7.889534835092481e-16
+    },
+    {
+      "id": "sphere-s42-n20",
+      "family": "sphere",
+      "seed": 42,
+      "n": 20,
+      "algorithm": "old_prefix_object_python",
+      "event": "done",
+      "status": "ok",
+      "value": 1.125767790199147,
+      "counters": {
+        "nodes": 61,
+        "box_integrals": 81,
+        "prefix_queries": 1296,
+        "covers": 0,
+        "slab_shrinks": 13
+      },
+      "seconds": [
+        0.23725180001929402,
+        0.25626039993949234,
+        0.25003829994238913
+      ],
+      "median_seconds": 0.25003829994238913,
+      "first_seconds": 0.2332130998838693,
+      "kernel_nopython_signatures": 0,
+      "numba_disabled": "0",
+      "scaled_error": 1.9723837087731203e-16
+    },
+    {
+      "id": "sphere-s42-n20",
+      "family": "sphere",
+      "seed": 42,
+      "n": 20,
+      "algorithm": "old_prefix_flat_python",
+      "event": "done",
+      "status": "ok",
+      "value": 1.1257677901991459,
+      "counters": {
+        "nodes": 61,
+        "box_integrals": 81,
+        "prefix_queries": 1296,
+        "covers": 0,
+        "slab_shrinks": 13
+      },
+      "seconds": [
+        0.2630952999461442,
+        0.25541720003820956,
+        0.24505470017902553
+      ],
+      "median_seconds": 0.25541720003820956,
+      "first_seconds": 1.1657549000810832,
+      "kernel_nopython_signatures": 0,
+      "numba_disabled": "1",
+      "scaled_error": 7.889534835092481e-16
+    },
+    {
+      "id": "sphere-s42-n20",
+      "family": "sphere",
+      "seed": 42,
+      "n": 20,
+      "algorithm": "new_python",
+      "event": "done",
+      "status": "ok",
+      "value": 1.1257677901991463,
+      "counters": {
+        "input_points": 20,
+        "dimension": 4,
+        "initial_cells": 84,
+        "nodes": 61,
+        "max_generation": 1,
+        "box_classifications": 390,
+        "absorbed_boxes": 165,
+        "blocks": 11,
+        "cuts": 30,
+        "term_eliminations": 7441,
+        "max_lower_candidates": 6,
+        "max_upper_candidates": 7,
+        "raw_terms": 10809,
+        "peak_terms": 625,
+        "compressions": 10,
+        "base_calls": 31
+      },
+      "seconds": [
+        1.2874373998492956,
+        1.2910277999471873,
+        1.3348564999178052
+      ],
+      "median_seconds": 1.2910277999471873,
+      "first_seconds": 1.2701153999660164,
+      "scaled_error": 3.9447674175462406e-16
+    },
+    {
+      "id": "sphere-s42-n20",
+      "family": "sphere",
+      "seed": 42,
+      "n": 20,
+      "algorithm": "new_numba_no_compression",
+      "event": "done",
+      "status": "ok",
+      "value": 1.1257677901991463,
+      "counters": {
+        "input_points": 20,
+        "dimension": 4,
+        "initial_cells": 84,
+        "nodes": 61,
+        "max_generation": 0,
+        "box_classifications": 390,
+        "absorbed_boxes": 165,
+        "blocks": 1,
+        "cuts": 30,
+        "term_eliminations": 526,
+        "max_lower_candidates": 4,
+        "max_upper_candidates": 3,
+        "raw_terms": 709,
+        "peak_terms": 11,
+        "base_calls": 31
+      },
+      "seconds": [
+        0.0497401999309659,
+        0.04519039997830987,
+        0.044987999834120274
+      ],
+      "median_seconds": 0.04519039997830987,
+      "first_seconds": 0.3467862999532372,
+      "scaled_error": 3.9447674175462406e-16
+    },
+    {
+      "id": "sphere-s42-n20",
+      "family": "sphere",
+      "seed": 42,
+      "n": 20,
+      "algorithm": "new_numba",
+      "event": "done",
+      "status": "ok",
+      "value": 1.1257677901991463,
+      "counters": {
+        "input_points": 20,
+        "dimension": 4,
+        "initial_cells": 84,
+        "nodes": 61,
+        "max_generation": 1,
+        "box_classifications": 390,
+        "absorbed_boxes": 165,
+        "blocks": 11,
+        "cuts": 30,
+        "term_eliminations": 7441,
+        "max_lower_candidates": 6,
+        "max_upper_candidates": 7,
+        "raw_terms": 10809,
+        "peak_terms": 625,
+        "compressions": 10,
+        "base_calls": 31
+      },
+      "seconds": [
+        2.0872702999040484,
+        2.032304000109434,
+        2.3390237998683006
+      ],
+      "median_seconds": 2.0872702999040484,
+      "first_seconds": 2.5399179002270103,
+      "scaled_error": 3.9447674175462406e-16
+    },
+    {
+      "id": "sphere-s42-n20",
+      "family": "sphere",
+      "seed": 42,
+      "n": 20,
+      "algorithm": "chan_dby3",
+      "event": "done",
+      "status": "ok",
+      "value": 1.1257677901991467,
+      "counters": {
+        "nodes": 61,
+        "peak_terms": 1,
+        "compressions": 0
+      },
+      "seconds": [
+        0.03563519986346364,
+        0.03818179992958903,
+        0.03523699985817075
+      ],
+      "median_seconds": 0.03563519986346364,
+      "first_seconds": 0.033612400060519576,
+      "scaled_error": 0.0
+    },
+    {
+      "id": "sphere-s42-n40",
+      "family": "sphere",
+      "seed": 42,
+      "n": 40,
+      "algorithm": "old_prefix_object_python",
+      "event": "done",
+      "status": "ok",
+      "value": 1.2820566059655683,
+      "counters": {
+        "nodes": 153,
+        "box_integrals": 219,
+        "prefix_queries": 3504,
+        "covers": 0,
+        "slab_shrinks": 63
+      },
+      "seconds": [
+        0.7781527999322861,
+        0.7856517001055181,
+        0.7934415000490844
+      ],
+      "median_seconds": 0.7856517001055181,
+      "first_seconds": 0.7278726000804454,
+      "kernel_nopython_signatures": 0,
+      "numba_disabled": "0",
+      "scaled_error": 3.4638814525322857e-16
+    },
+    {
+      "id": "sphere-s42-n40",
+      "family": "sphere",
+      "seed": 42,
+      "n": 40,
+      "algorithm": "old_prefix_numba",
+      "event": "done",
+      "status": "ok",
+      "value": 1.2820566059655691,
+      "counters": {
+        "nodes": 153,
+        "box_integrals": 219,
+        "prefix_queries": 3504,
+        "covers": 0,
+        "slab_shrinks": 63
+      },
+      "seconds": [
+        0.058728500036522746,
+        0.06234299996867776,
+        0.06982999993488193
+      ],
+      "median_seconds": 0.06234299996867776,
+      "first_seconds": 1.0516433999873698,
+      "kernel_nopython_signatures": 1,
+      "numba_disabled": "0",
+      "scaled_error": 3.4638814525322857e-16
+    },
+    {
+      "id": "sphere-s42-n40",
+      "family": "sphere",
+      "seed": 42,
+      "n": 40,
+      "algorithm": "new_numba",
+      "status": "timeout",
+      "budget_seconds": 35.0
+    },
+    {
+      "id": "sphere-s42-n40",
+      "family": "sphere",
+      "seed": 42,
+      "n": 40,
+      "algorithm": "new_python",
+      "status": "timeout",
+      "budget_seconds": 35.0
+    },
+    {
+      "id": "sphere-s42-n40",
+      "family": "sphere",
+      "seed": 42,
+      "n": 40,
+      "algorithm": "chan_dby3",
+      "event": "done",
+      "status": "ok",
+      "value": 1.2820566059655687,
+      "counters": {
+        "nodes": 159,
+        "peak_terms": 1,
+        "compressions": 0
+      },
+      "seconds": [
+        0.11159290000796318,
+        0.11015639989636838,
+        0.12404229980893433
+      ],
+      "median_seconds": 0.11159290000796318,
+      "first_seconds": 0.11456170002929866,
+      "scaled_error": 0.0
+    },
+    {
+      "id": "sphere-s42-n40",
+      "family": "sphere",
+      "seed": 42,
+      "n": 40,
+      "algorithm": "new_numba_no_compression",
+      "event": "done",
+      "status": "ok",
+      "value": 1.2820566059655685,
+      "counters": {
+        "input_points": 40,
+        "dimension": 4,
+        "initial_cells": 164,
+        "nodes": 157,
+        "max_generation": 0,
+        "box_classifications": 1204,
+        "absorbed_boxes": 510,
+        "blocks": 1,
+        "cuts": 78,
+        "term_eliminations": 1540,
+        "max_lower_candidates": 4,
+        "max_upper_candidates": 3,
+        "raw_terms": 2058,
+        "peak_terms": 13,
+        "base_calls": 79
+      },
+      "seconds": [
+        0.14132860000245273,
+        0.14206370012834668,
+        0.14768569986335933
+      ],
+      "median_seconds": 0.14206370012834668,
+      "first_seconds": 0.46057330002076924,
+      "scaled_error": 1.7319407262661429e-16
+    },
+    {
+      "id": "sphere-s42-n40",
+      "family": "sphere",
+      "seed": 42,
+      "n": 40,
+      "algorithm": "chan_dby2",
+      "event": "done",
+      "status": "ok",
+      "value": 1.2820566059655687,
+      "counters": {},
+      "seconds": [
+        0.021396799944341183,
+        0.01929800002835691,
+        0.018374700099229813
+      ],
+      "median_seconds": 0.01929800002835691,
+      "first_seconds": 0.021149700041860342,
+      "scaled_error": 0.0
+    },
+    {
+      "id": "sphere-s42-n40",
+      "family": "sphere",
+      "seed": 42,
+      "n": 40,
+      "algorithm": "old_prefix_flat_python",
+      "event": "done",
+      "status": "ok",
+      "value": 1.2820566059655691,
+      "counters": {
+        "nodes": 153,
+        "box_integrals": 219,
+        "prefix_queries": 3504,
+        "covers": 0,
+        "slab_shrinks": 63
+      },
+      "seconds": [
+        0.8210711998399347,
+        0.8033522998448461,
+        0.8043829998932779
+      ],
+      "median_seconds": 0.8043829998932779,
+      "first_seconds": 1.5741445000749081,
+      "kernel_nopython_signatures": 0,
+      "numba_disabled": "1",
+      "scaled_error": 3.4638814525322857e-16
+    },
+    {
+      "id": "sphere-s99-n20",
+      "family": "sphere",
+      "seed": 99,
+      "n": 20,
+      "algorithm": "old_prefix_numba",
+      "event": "done",
+      "status": "ok",
+      "value": 1.0518916636514908,
+      "counters": {
+        "nodes": 49,
+        "box_integrals": 86,
+        "prefix_queries": 1376,
+        "covers": 0,
+        "slab_shrinks": 12
+      },
+      "seconds": [
+        0.025857900036498904,
+        0.02192449988797307,
+        0.021475299960002303
+      ],
+      "median_seconds": 0.02192449988797307,
+      "first_seconds": 1.264402500120923,
+      "kernel_nopython_signatures": 1,
+      "numba_disabled": "0",
+      "scaled_error": 4.221815089858879e-16
+    },
+    {
+      "id": "sphere-s99-n20",
+      "family": "sphere",
+      "seed": 99,
+      "n": 20,
+      "algorithm": "new_numba_no_compression",
+      "event": "done",
+      "status": "ok",
+      "value": 1.051891663651491,
+      "counters": {
+        "input_points": 20,
+        "dimension": 4,
+        "initial_cells": 84,
+        "nodes": 49,
+        "max_generation": 0,
+        "box_classifications": 358,
+        "absorbed_boxes": 146,
+        "blocks": 1,
+        "cuts": 24,
+        "term_eliminations": 545,
+        "max_lower_candidates": 3,
+        "max_upper_candidates": 2,
+        "raw_terms": 712,
+        "peak_terms": 5,
+        "base_calls": 25
+      },
+      "seconds": [
+        0.0375090001616627,
+        0.037848100066185,
+        0.04091030010022223
+      ],
+      "median_seconds": 0.037848100066185,
+      "first_seconds": 0.3060435999650508,
+      "scaled_error": 2.1109075449294396e-16
+    },
+    {
+      "id": "sphere-s99-n20",
+      "family": "sphere",
+      "seed": 99,
+      "n": 20,
+      "algorithm": "new_python",
+      "event": "done",
+      "status": "ok",
+      "value": 1.0518916636514908,
+      "counters": {
+        "input_points": 20,
+        "dimension": 4,
+        "initial_cells": 84,
+        "nodes": 49,
+        "max_generation": 1,
+        "box_classifications": 358,
+        "absorbed_boxes": 146,
+        "blocks": 10,
+        "cuts": 24,
+        "term_eliminations": 8579,
+        "max_lower_candidates": 5,
+        "max_upper_candidates": 6,
+        "raw_terms": 11055,
+        "peak_terms": 403,
+        "compressions": 9,
+        "base_calls": 25
+      },
+      "seconds": [
+        1.143958899891004,
+        1.1608644998632371,
+        1.1473158998414874
+      ],
+      "median_seconds": 1.1473158998414874,
+      "first_seconds": 1.1150042000226676,
+      "scaled_error": 4.221815089858879e-16
+    },
+    {
+      "id": "sphere-s99-n20",
+      "family": "sphere",
+      "seed": 99,
+      "n": 20,
+      "algorithm": "chan_dby2",
+      "event": "done",
+      "status": "ok",
+      "value": 1.0518916636514912,
+      "counters": {},
+      "seconds": [
+        0.006765400059521198,
+        0.0059825999196618795,
+        0.005684999981895089
+      ],
+      "median_seconds": 0.0059825999196618795,
+      "first_seconds": 0.007084900047630072,
+      "scaled_error": 0.0
+    },
+    {
+      "id": "sphere-s99-n20",
+      "family": "sphere",
+      "seed": 99,
+      "n": 20,
+      "algorithm": "old_prefix_flat_python",
+      "event": "done",
+      "status": "ok",
+      "value": 1.0518916636514908,
+      "counters": {
+        "nodes": 49,
+        "box_integrals": 86,
+        "prefix_queries": 1376,
+        "covers": 0,
+        "slab_shrinks": 12
+      },
+      "seconds": [
+        0.3394090000074357,
+        0.33962179999798536,
+        0.31933870003558695
+      ],
+      "median_seconds": 0.3394090000074357,
+      "first_seconds": 1.103382800007239,
+      "kernel_nopython_signatures": 0,
+      "numba_disabled": "1",
+      "scaled_error": 4.221815089858879e-16
+    },
+    {
+      "id": "sphere-s99-n20",
+      "family": "sphere",
+      "seed": 99,
+      "n": 20,
+      "algorithm": "new_numba",
+      "event": "done",
+      "status": "ok",
+      "value": 1.0518916636514908,
+      "counters": {
+        "input_points": 20,
+        "dimension": 4,
+        "initial_cells": 84,
+        "nodes": 49,
+        "max_generation": 1,
+        "box_classifications": 358,
+        "absorbed_boxes": 146,
+        "blocks": 10,
+        "cuts": 24,
+        "term_eliminations": 8617,
+        "max_lower_candidates": 5,
+        "max_upper_candidates": 6,
+        "raw_terms": 11087,
+        "peak_terms": 403,
+        "compressions": 9,
+        "base_calls": 25
+      },
+      "seconds": [
+        1.852712200023234,
+        1.8852099000941962,
+        1.8546743001788855
+      ],
+      "median_seconds": 1.8546743001788855,
+      "first_seconds": 2.227661499986425,
+      "scaled_error": 4.221815089858879e-16
+    },
+    {
+      "id": "sphere-s99-n20",
+      "family": "sphere",
+      "seed": 99,
+      "n": 20,
+      "algorithm": "chan_dby3",
+      "event": "done",
+      "status": "ok",
+      "value": 1.0518916636514912,
+      "counters": {
+        "nodes": 49,
+        "peak_terms": 1,
+        "compressions": 0
+      },
+      "seconds": [
+        0.034804799826815724,
+        0.034505899995565414,
+        0.03526809997856617
+      ],
+      "median_seconds": 0.034804799826815724,
+      "first_seconds": 0.03756299987435341,
+      "scaled_error": 0.0
+    },
+    {
+      "id": "sphere-s99-n20",
+      "family": "sphere",
+      "seed": 99,
+      "n": 20,
+      "algorithm": "old_prefix_object_python",
+      "event": "done",
+      "status": "ok",
+      "value": 1.0518916636514914,
+      "counters": {
+        "nodes": 49,
+        "box_integrals": 86,
+        "prefix_queries": 1376,
+        "covers": 0,
+        "slab_shrinks": 12
+      },
+      "seconds": [
+        0.3433298000600189,
+        0.3275146000087261,
+        0.3307996999938041
+      ],
+      "median_seconds": 0.3307996999938041,
+      "first_seconds": 0.34386130003258586,
+      "kernel_nopython_signatures": 0,
+      "numba_disabled": "0",
+      "scaled_error": 2.1109075449294396e-16
+    },
+    {
+      "id": "sphere-s99-n40",
+      "family": "sphere",
+      "seed": 99,
+      "n": 40,
+      "algorithm": "chan_dby3",
+      "event": "done",
+      "status": "ok",
+      "value": 1.2158041567386595,
+      "counters": {
+        "nodes": 151,
+        "peak_terms": 1,
+        "compressions": 0
+      },
+      "seconds": [
+        0.10436409991234541,
+        0.11250410019420087,
+        0.11145090009085834
+      ],
+      "median_seconds": 0.11145090009085834,
+      "first_seconds": 0.10520479991100729,
+      "scaled_error": 0.0
+    },
+    {
+      "id": "sphere-s99-n40",
+      "family": "sphere",
+      "seed": 99,
+      "n": 40,
+      "algorithm": "chan_dby2",
+      "event": "done",
+      "status": "ok",
+      "value": 1.2158041567386595,
+      "counters": {},
+      "seconds": [
+        0.019527200143784285,
+        0.021044599823653698,
+        0.021312500117346644
+      ],
+      "median_seconds": 0.021044599823653698,
+      "first_seconds": 0.020194600103423,
+      "scaled_error": 0.0
+    },
+    {
+      "id": "sphere-s99-n40",
+      "family": "sphere",
+      "seed": 99,
+      "n": 40,
+      "algorithm": "old_prefix_object_python",
+      "event": "done",
+      "status": "ok",
+      "value": 1.2158041567386597,
+      "counters": {
+        "nodes": 145,
+        "box_integrals": 208,
+        "prefix_queries": 3328,
+        "covers": 0,
+        "slab_shrinks": 59
+      },
+      "seconds": [
+        0.7159850001335144,
+        0.688684199936688,
+        0.8161412999033928
+      ],
+      "median_seconds": 0.7159850001335144,
+      "first_seconds": 0.6795235997997224,
+      "kernel_nopython_signatures": 0,
+      "numba_disabled": "0",
+      "scaled_error": 1.826318849909644e-16
+    },
+    {
+      "id": "sphere-s99-n40",
+      "family": "sphere",
+      "seed": 99,
+      "n": 40,
+      "algorithm": "old_prefix_flat_python",
+      "event": "done",
+      "status": "ok",
+      "value": 1.2158041567386597,
+      "counters": {
+        "nodes": 145,
+        "box_integrals": 208,
+        "prefix_queries": 3328,
+        "covers": 0,
+        "slab_shrinks": 59
+      },
+      "seconds": [
+        0.6995937000028789,
+        0.6954379000235349,
+        0.6937372998800129
+      ],
+      "median_seconds": 0.6954379000235349,
+      "first_seconds": 1.7326148999854922,
+      "kernel_nopython_signatures": 0,
+      "numba_disabled": "1",
+      "scaled_error": 1.826318849909644e-16
+    },
+    {
+      "id": "sphere-s99-n40",
+      "family": "sphere",
+      "seed": 99,
+      "n": 40,
+      "algorithm": "old_prefix_numba",
+      "event": "done",
+      "status": "ok",
+      "value": 1.2158041567386597,
+      "counters": {
+        "nodes": 145,
+        "box_integrals": 208,
+        "prefix_queries": 3328,
+        "covers": 0,
+        "slab_shrinks": 59
+      },
+      "seconds": [
+        0.05454290006309748,
+        0.051383000100031495,
+        0.05286059994250536
+      ],
+      "median_seconds": 0.05286059994250536,
+      "first_seconds": 1.2051900001242757,
+      "kernel_nopython_signatures": 1,
+      "numba_disabled": "0",
+      "scaled_error": 1.826318849909644e-16
+    },
+    {
+      "id": "sphere-s99-n40",
+      "family": "sphere",
+      "seed": 99,
+      "n": 40,
+      "algorithm": "new_numba_no_compression",
+      "event": "done",
+      "status": "ok",
+      "value": 1.2158041567386597,
+      "counters": {
+        "input_points": 40,
+        "dimension": 4,
+        "initial_cells": 164,
+        "nodes": 161,
+        "max_generation": 0,
+        "box_classifications": 1242,
+        "absorbed_boxes": 524,
+        "blocks": 1,
+        "cuts": 80,
+        "term_eliminations": 1669,
+        "max_lower_candidates": 4,
+        "max_upper_candidates": 3,
+        "raw_terms": 2234,
+        "peak_terms": 12,
+        "base_calls": 81
+      },
+      "seconds": [
+        0.16564629995264113,
+        0.1576914000324905,
+        0.1486670000012964
+      ],
+      "median_seconds": 0.1576914000324905,
+      "first_seconds": 0.4511394000146538,
+      "scaled_error": 1.826318849909644e-16
+    },
+    {
+      "id": "sphere-s99-n40",
+      "family": "sphere",
+      "seed": 99,
+      "n": 40,
+      "algorithm": "new_python",
+      "status": "timeout",
+      "budget_seconds": 35.0
+    },
+    {
+      "id": "sphere-s99-n40",
+      "family": "sphere",
+      "seed": 99,
+      "n": 40,
+      "algorithm": "new_numba",
+      "status": "timeout",
+      "budget_seconds": 35.0
+    },
+    {
+      "id": "grid-s7-n20",
+      "family": "grid",
+      "seed": 7,
+      "n": 20,
+      "algorithm": "new_numba_no_compression",
+      "event": "done",
+      "status": "ok",
+      "value": 0.7578125,
+      "counters": {
+        "input_points": 20,
+        "dimension": 4,
+        "initial_cells": 20,
+        "nodes": 11,
+        "max_generation": 0,
+        "box_classifications": 80,
+        "absorbed_boxes": 45,
+        "blocks": 1,
+        "cuts": 5,
+        "peak_terms": 4,
+        "base_calls": 6,
+        "term_eliminations": 39,
+        "max_lower_candidates": 4,
+        "max_upper_candidates": 3,
+        "raw_terms": 51
+      },
+      "seconds": [
+        0.00590720004402101,
+        0.0050240999553352594,
+        0.005950300022959709
+      ],
+      "median_seconds": 0.00590720004402101,
+      "first_seconds": 0.3001731999684125,
+      "scaled_error": 0.0
+    },
+    {
+      "id": "grid-s7-n20",
+      "family": "grid",
+      "seed": 7,
+      "n": 20,
+      "algorithm": "new_numba",
+      "event": "done",
+      "status": "ok",
+      "value": 0.7578125,
+      "counters": {
+        "input_points": 20,
+        "dimension": 4,
+        "initial_cells": 20,
+        "nodes": 11,
+        "max_generation": 0,
+        "box_classifications": 80,
+        "absorbed_boxes": 45,
+        "blocks": 1,
+        "cuts": 5,
+        "peak_terms": 4,
+        "base_calls": 6,
+        "term_eliminations": 39,
+        "max_lower_candidates": 4,
+        "max_upper_candidates": 3,
+        "raw_terms": 51
+      },
+      "seconds": [
+        0.0055494001135230064,
+        0.005903000012040138,
+        0.005493700038641691
+      ],
+      "median_seconds": 0.0055494001135230064,
+      "first_seconds": 0.3041711999103427,
+      "scaled_error": 0.0
+    },
+    {
+      "id": "grid-s7-n20",
+      "family": "grid",
+      "seed": 7,
+      "n": 20,
+      "algorithm": "old_prefix_numba",
+      "event": "done",
+      "status": "ok",
+      "value": 0.7578125,
+      "counters": {
+        "nodes": 1,
+        "box_integrals": 4,
+        "prefix_queries": 64,
+        "covers": 0,
+        "slab_shrinks": 1
+      },
+      "seconds": [
+        0.0010205002035945654,
+        0.0008340999484062195,
+        0.0007342000026255846
+      ],
+      "median_seconds": 0.0008340999484062195,
+      "first_seconds": 1.0391284001525491,
+      "kernel_nopython_signatures": 1,
+      "numba_disabled": "0",
+      "scaled_error": 0.0
+    },
+    {
+      "id": "grid-s7-n20",
+      "family": "grid",
+      "seed": 7,
+      "n": 20,
+      "algorithm": "new_python",
+      "event": "done",
+      "status": "ok",
+      "value": 0.7578125,
+      "counters": {
+        "input_points": 20,
+        "dimension": 4,
+        "initial_cells": 20,
+        "nodes": 11,
+        "max_generation": 0,
+        "box_classifications": 80,
+        "absorbed_boxes": 45,
+        "blocks": 1,
+        "cuts": 5,
+        "peak_terms": 4,
+        "base_calls": 6,
+        "term_eliminations": 39,
+        "max_lower_candidates": 4,
+        "max_upper_candidates": 3,
+        "raw_terms": 51
+      },
+      "seconds": [
+        0.003469100221991539,
+        0.003365200012922287,
+        0.003424299880862236
+      ],
+      "median_seconds": 0.003424299880862236,
+      "first_seconds": 0.004048400092869997,
+      "scaled_error": 0.0
+    },
+    {
+      "id": "grid-s7-n20",
+      "family": "grid",
+      "seed": 7,
+      "n": 20,
+      "algorithm": "chan_dby2",
+      "event": "done",
+      "status": "ok",
+      "value": 0.7578125,
+      "counters": {},
+      "seconds": [
+        0.00034239981323480606,
+        0.0003233000170439482,
+        0.000317899975925684
+      ],
+      "median_seconds": 0.0003233000170439482,
+      "first_seconds": 0.0005731000564992428,
+      "scaled_error": 0.0
+    },
+    {
+      "id": "grid-s7-n20",
+      "family": "grid",
+      "seed": 7,
+      "n": 20,
+      "algorithm": "old_prefix_object_python",
+      "event": "done",
+      "status": "ok",
+      "value": 0.7578125,
+      "counters": {
+        "nodes": 1,
+        "box_integrals": 4,
+        "prefix_queries": 64,
+        "covers": 0,
+        "slab_shrinks": 1
+      },
+      "seconds": [
+        0.0022597999777644873,
+        0.0016830000095069408,
+        0.0023984999861568213
+      ],
+      "median_seconds": 0.0022597999777644873,
+      "first_seconds": 0.002709000138565898,
+      "kernel_nopython_signatures": 0,
+      "numba_disabled": "0",
+      "scaled_error": 0.0
+    },
+    {
+      "id": "grid-s7-n20",
+      "family": "grid",
+      "seed": 7,
+      "n": 20,
+      "algorithm": "old_prefix_flat_python",
+      "event": "done",
+      "status": "ok",
+      "value": 0.7578125,
+      "counters": {
+        "nodes": 1,
+        "box_integrals": 4,
+        "prefix_queries": 64,
+        "covers": 0,
+        "slab_shrinks": 1
+      },
+      "seconds": [
+        0.0015447000041604042,
+        0.001828600186854601,
+        0.0015960999298840761
+      ],
+      "median_seconds": 0.0015960999298840761,
+      "first_seconds": 0.7966164001263678,
+      "kernel_nopython_signatures": 0,
+      "numba_disabled": "1",
+      "scaled_error": 0.0
+    },
+    {
+      "id": "grid-s7-n20",
+      "family": "grid",
+      "seed": 7,
+      "n": 20,
+      "algorithm": "chan_dby3",
+      "event": "done",
+      "status": "ok",
+      "value": 0.7578125,
+      "counters": {
+        "nodes": 1,
+        "peak_terms": 1,
+        "compressions": 0
+      },
+      "seconds": [
+        0.0029476999770849943,
+        0.002021400025114417,
+        0.0022251999471336603
+      ],
+      "median_seconds": 0.0022251999471336603,
+      "first_seconds": 0.00252169999293983,
+      "scaled_error": 0.0
+    },
+    {
+      "id": "uniform-s17-n20",
+      "family": "uniform",
+      "seed": 17,
+      "n": 20,
+      "algorithm": "new_numba",
+      "event": "done",
+      "status": "ok",
+      "value": 0.2318458787687978,
+      "counters": {
+        "input_points": 20,
+        "dimension": 4,
+        "initial_cells": 84,
+        "nodes": 55,
+        "max_generation": 1,
+        "box_classifications": 382,
+        "absorbed_boxes": 159,
+        "blocks": 7,
+        "cuts": 27,
+        "term_eliminations": 4165,
+        "max_lower_candidates": 5,
+        "max_upper_candidates": 4,
+        "raw_terms": 5272,
+        "peak_terms": 208,
+        "compressions": 6,
+        "base_calls": 28
+      },
+      "seconds": [
+        0.8679051999934018,
+        0.8320861000102013,
+        0.8199895001016557
+      ],
+      "median_seconds": 0.8320861000102013,
+      "first_seconds": 1.0762881999835372,
+      "scaled_error": 1.1102230246251565e-16
+    },
+    {
+      "id": "uniform-s17-n20",
+      "family": "uniform",
+      "seed": 17,
+      "n": 20,
+      "algorithm": "old_prefix_flat_python",
+      "event": "done",
+      "status": "ok",
+      "value": 0.2318458787687976,
+      "counters": {
+        "nodes": 49,
+        "box_integrals": 68,
+        "prefix_queries": 1088,
+        "covers": 0,
+        "slab_shrinks": 18
+      },
+      "seconds": [
+        0.1396303998772055,
+        0.14915479999035597,
+        0.1329214998986572
+      ],
+      "median_seconds": 0.1396303998772055,
+      "first_seconds": 1.0163333998061717,
+      "kernel_nopython_signatures": 0,
+      "numba_disabled": "1",
+      "scaled_error": 1.1102230246251565e-16
+    },
+    {
+      "id": "uniform-s17-n20",
+      "family": "uniform",
+      "seed": 17,
+      "n": 20,
+      "algorithm": "old_prefix_object_python",
+      "event": "done",
+      "status": "ok",
+      "value": 0.2318458787687976,
+      "counters": {
+        "nodes": 49,
+        "box_integrals": 68,
+        "prefix_queries": 1088,
+        "covers": 0,
+        "slab_shrinks": 18
+      },
+      "seconds": [
+        0.13134659989736974,
+        0.12944699986837804,
+        0.12792179989628494
+      ],
+      "median_seconds": 0.12944699986837804,
+      "first_seconds": 0.12828469998203218,
+      "kernel_nopython_signatures": 0,
+      "numba_disabled": "0",
+      "scaled_error": 1.1102230246251565e-16
+    },
+    {
+      "id": "uniform-s17-n20",
+      "family": "uniform",
+      "seed": 17,
+      "n": 20,
+      "algorithm": "old_prefix_numba",
+      "event": "done",
+      "status": "ok",
+      "value": 0.2318458787687976,
+      "counters": {
+        "nodes": 49,
+        "box_integrals": 68,
+        "prefix_queries": 1088,
+        "covers": 0,
+        "slab_shrinks": 18
+      },
+      "seconds": [
+        0.014546399936079979,
+        0.013926299987360835,
+        0.015902400016784668
+      ],
+      "median_seconds": 0.014546399936079979,
+      "first_seconds": 1.1530669999774545,
+      "kernel_nopython_signatures": 1,
+      "numba_disabled": "0",
+      "scaled_error": 1.1102230246251565e-16
+    },
+    {
+      "id": "uniform-s17-n20",
+      "family": "uniform",
+      "seed": 17,
+      "n": 20,
+      "algorithm": "new_python",
+      "event": "done",
+      "status": "ok",
+      "value": 0.2318458787687978,
+      "counters": {
+        "input_points": 20,
+        "dimension": 4,
+        "initial_cells": 84,
+        "nodes": 55,
+        "max_generation": 1,
+        "box_classifications": 382,
+        "absorbed_boxes": 159,
+        "blocks": 7,
+        "cuts": 27,
+        "term_eliminations": 4165,
+        "max_lower_candidates": 5,
+        "max_upper_candidates": 4,
+        "raw_terms": 5272,
+        "peak_terms": 208,
+        "compressions": 6,
+        "base_calls": 28
+      },
+      "seconds": [
+        0.5000310998875648,
+        0.48977519990876317,
+        0.5136183998547494
+      ],
+      "median_seconds": 0.5000310998875648,
+      "first_seconds": 0.48711059987545013,
+      "scaled_error": 1.1102230246251565e-16
+    },
+    {
+      "id": "uniform-s17-n20",
+      "family": "uniform",
+      "seed": 17,
+      "n": 20,
+      "algorithm": "new_numba_no_compression",
+      "event": "done",
+      "status": "ok",
+      "value": 0.2318458787687978,
+      "counters": {
+        "input_points": 20,
+        "dimension": 4,
+        "initial_cells": 84,
+        "nodes": 55,
+        "max_generation": 0,
+        "box_classifications": 382,
+        "absorbed_boxes": 159,
+        "blocks": 1,
+        "cuts": 27,
+        "term_eliminations": 350,
+        "max_lower_candidates": 4,
+        "max_upper_candidates": 2,
+        "raw_terms": 435,
+        "peak_terms": 6,
+        "base_calls": 28
+      },
+      "seconds": [
+        0.02646129997447133,
+        0.029709800146520138,
+        0.03040730021893978
+      ],
+      "median_seconds": 0.029709800146520138,
+      "first_seconds": 0.3111760998144746,
+      "scaled_error": 1.1102230246251565e-16
+    },
+    {
+      "id": "uniform-s17-n20",
+      "family": "uniform",
+      "seed": 17,
+      "n": 20,
+      "algorithm": "chan_dby2",
+      "event": "done",
+      "status": "ok",
+      "value": 0.2318458787687977,
+      "counters": {},
+      "seconds": [
+        0.0024052998051047325,
+        0.0023713998962193727,
+        0.0027230000123381615
+      ],
+      "median_seconds": 0.0024052998051047325,
+      "first_seconds": 0.002890600124374032,
+      "scaled_error": 0.0
+    },
+    {
+      "id": "uniform-s17-n20",
+      "family": "uniform",
+      "seed": 17,
+      "n": 20,
+      "algorithm": "chan_dby3",
+      "event": "done",
+      "status": "ok",
+      "value": 0.2318458787687977,
+      "counters": {
+        "nodes": 55,
+        "peak_terms": 1,
+        "compressions": 0
+      },
+      "seconds": [
+        0.018634399864822626,
+        0.01843450008891523,
+        0.01986250001937151
+      ],
+      "median_seconds": 0.018634399864822626,
+      "first_seconds": 0.01853360002860427,
+      "scaled_error": 0.0
+    }
+  ],
+  "source_hashes": {
+    "HV4DMagnitude/solver.py": "bb176cbe85d2c40e0ff8b125a0e9134113a2d13f7baebdaa10bc8e261f28dd2b",
+    "HV4DMagnitude/fastkernel.py": "a2471e7427c4b6490412c9729df45f5723249bc8aacd3eaa5a27543b292bb76f",
+    "outputs/numerical_chan.py": "8bab012e272675daf517c81e18f492c94e86758b93df16c29d9733ff5174eb86",
+    "outputs/numerical_chan_numba.py": "233bd55d91a49f71c2d8f1ea80d35a40598c1a3677588aae64e3be4561f65e34",
+    "FastHVChan-publish/chan_orthant_dby3.py": "7fa161f4092426af03a4b2fa5098dac649ec82f9ccfe797bd64d49b4f6384e1e",
+    "FastHVChan-publish/chan_hypervolume.py": "d2e40db7d88e03ed6944ee2f7dbf782f69d262ad10a809cd4a8918ddecf87c85"
+  },
+  "independent_small_oracle": [
+    {
+      "algorithm": "chan_dby3",
+      "scaled_error": 0.0
+    },
+    {
+      "algorithm": "new_python",
+      "scaled_error": 1.1102230246251565e-16
+    },
+    {
+      "algorithm": "new_numba_no_compression",
+      "scaled_error": 1.1102230246251565e-16
+    },
+    {
+      "algorithm": "old_prefix_object_python",
+      "scaled_error": 2.220446049250313e-16
+    },
+    {
+      "algorithm": "old_prefix_numba",
+      "scaled_error": 0.0
+    },
+    {
+      "algorithm": "new_numba",
+      "scaled_error": 1.1102230246251565e-16
+    },
+    {
+      "algorithm": "chan_dby2",
+      "scaled_error": 0.0
+    },
+    {
+      "algorithm": "old_prefix_flat_python",
+      "scaled_error": 0.0
+    }
+  ]
+}

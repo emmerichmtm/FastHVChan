@@ -52,6 +52,20 @@ is a stress-test override and has no arbitrary-use complexity guarantee.
 
 ## Measured performance
 
+The [4D follow-up audit](benchmarks/prefix4/REPORT.md) also measures the older
+compiled `HV4DMagnitude` prefix solver on common saved inputs. On spherical
+fronts with 20 or 40 points, that solver is 1.59-2.11x faster than Python
+Chan d/3; at 20 points it is 84.59-96.99x faster than this default Numba backend.
+Whole-loop compilation and the cost of the new compression policy explain
+the difference. Chan d/2 remains fastest on these small test cases.
+
+The audit includes [LaTeX](paper/prefix4_performance_audit.tex),
+[PDF](paper/prefix4_performance_audit.pdf), raw repeats, inputs, profiles,
+compilation and compression ablations, and a separate magnitude-kernel bug
+reproducer. It establishes measured 4D performance, not an asymptotic improvement.
+
+The earlier comparison below did not include the older compiled prefix solver:
+
 On the five completed matched ordinary-HV 4D cases, the hybrid Numba backend
 was a median 1.60x slower than numerical Python and 11.60x slower than
 the existing Python Chan Section-4.2 implementation. The spherical n=48

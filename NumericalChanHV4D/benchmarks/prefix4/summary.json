@@ -1,0 +1,61 @@
+{
+  "statuses": {
+    "ok": 52,
+    "timeout": 4
+  },
+  "max_scaled_error": 7.889534835092481e-16,
+  "ratios": [
+    {
+      "case": "sphere-s42-n10",
+      "chan_dby3_over_old_numba": 1.420018870934522,
+      "old_flat_python_over_old_numba": 13.048347381734786,
+      "new_no_compression_over_old_numba": 2.0721435527766165,
+      "new_numba_over_old_numba": 1.7485929905796591,
+      "new_numba_over_no_compression": 0.8438570716959216
+    },
+    {
+      "case": "sphere-s42-n20",
+      "chan_dby3_over_old_numba": 1.6558107426243016,
+      "old_flat_python_over_old_numba": 11.868112015499179,
+      "new_no_compression_over_old_numba": 2.099798795412215,
+      "new_numba_over_old_numba": 96.98625512369571,
+      "new_numba_over_no_compression": 46.1883563966214
+    },
+    {
+      "case": "sphere-s42-n40",
+      "chan_dby3_over_old_numba": 1.7899828379133096,
+      "old_flat_python_over_old_numba": 12.902539183186795,
+      "new_no_compression_over_old_numba": 2.278743406633015
+    },
+    {
+      "case": "sphere-s99-n20",
+      "chan_dby3_over_old_numba": 1.5874843214055836,
+      "old_flat_python_over_old_numba": 15.480809219900259,
+      "new_no_compression_over_old_numba": 1.726292515659479,
+      "new_numba_over_old_numba": 84.59368786771222,
+      "new_numba_over_no_compression": 49.00310179204809
+    },
+    {
+      "case": "sphere-s99-n40",
+      "chan_dby3_over_old_numba": 2.1083926442772047,
+      "old_flat_python_over_old_numba": 13.156072779725136,
+      "new_no_compression_over_old_numba": 2.9831557001624263
+    },
+    {
+      "case": "grid-s7-n20",
+      "chan_dby3_over_old_numba": 2.6677857388500326,
+      "old_flat_python_over_old_numba": 1.9135595595394415,
+      "new_no_compression_over_old_numba": 7.0821249363560845,
+      "new_numba_over_old_numba": 6.653159641271627,
+      "new_numba_over_no_compression": 0.939429860537709
+    },
+    {
+      "case": "uniform-s17-n20",
+      "chan_dby3_over_old_numba": 1.2810317292736486,
+      "old_flat_python_over_old_numba": 9.598966100943986,
+      "new_no_compression_over_old_numba": 2.042416012007879,
+      "new_numba_over_old_numba": 57.20220148398004,
+      "new_numba_over_no_compression": 28.007125457141868
+    }
+  ]
+}

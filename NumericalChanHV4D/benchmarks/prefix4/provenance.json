@@ -1,0 +1,44 @@
+{
+  "old_repository": "https://github.com/emmerichmtm/HV4DMagnitude",
+  "old_commit": "0c668e76520201f41ac0f144caa8d468d6c84e86",
+  "reference_repository": "https://github.com/emmerichmtm/FastHVChan",
+  "reference_commit": "08539aa99e94e181d7230a8288885b3294621c9e",
+  "new_source_commit_prefix": "97012f7",
+  "new_sources_equal_packaged_sources_ignoring_newlines": true,
+  "hardware": {
+    "cpu": "AMD Ryzen 7 5800H",
+    "physical_cores": 8,
+    "logical_processors": 16,
+    "physical_memory_bytes": 17024741376
+  },
+  "environment": {
+    "python": "3.12.14 (main, Aug 25 2026, 14:01:42) [MSC v.1944 64 bit (AMD64)]",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "cpu": "AMD64 Family 25 Model 80 Stepping 0, AuthenticAMD",
+    "numba": "0.68.0",
+    "numpy": "2.5.3"
+  },
+  "measurement_date": "2026-10-04",
+  "source_sha256": {
+    "old/solver.py": "bb176cbe85d2c40e0ff8b125a0e9134113a2d13f7baebdaa10bc8e261f28dd2b",
+    "old/prefix4.py": "9214e7c65bc2e6df2c4ef4e27544c0001b9351bc8abd1021bf123ec8bb6f0c8e",
+    "old/fastkernel.py": "a2471e7427c4b6490412c9729df45f5723249bc8aacd3eaa5a27543b292bb76f",
+    "old/core.py": "7d8204b933379e529dbe779d03b45cb759235ad8d26d0eaac05ad5bca4d04b51",
+    "old/identities.py": "f1f77b5ed4370fd0ae00365b6b6ba3fb18935e19651fcaf5bb05e3a8504d168e",
+    "new/numerical_chan.py": "8bab012e272675daf517c81e18f492c94e86758b93df16c29d9733ff5174eb86",
+    "new/numerical_chan_numba.py": "233bd55d91a49f71c2d8f1ea80d35a40598c1a3677588aae64e3be4561f65e34",
+    "reference/chan_orthant_dby3.py": "7fa161f4092426af03a4b2fa5098dac649ec82f9ccfe797bd64d49b4f6384e1e",
+    "reference/chan_hypervolume.py": "d2e40db7d88e03ed6944ee2f7dbf782f69d262ad10a809cd4a8918ddecf87c85"
+  },
+  "source_sha256_lf_normalized": {
+    "old/solver.py": "bb176cbe85d2c40e0ff8b125a0e9134113a2d13f7baebdaa10bc8e261f28dd2b",
+    "old/prefix4.py": "9214e7c65bc2e6df2c4ef4e27544c0001b9351bc8abd1021bf123ec8bb6f0c8e",
+    "old/fastkernel.py": "a2471e7427c4b6490412c9729df45f5723249bc8aacd3eaa5a27543b292bb76f",
+    "old/core.py": "faaa16c7b98ed9c9d58b63bfd381afab7582e5eb5c42dd18256760284f23f7d1",
+    "old/identities.py": "f1f77b5ed4370fd0ae00365b6b6ba3fb18935e19651fcaf5bb05e3a8504d168e",
+    "new/numerical_chan.py": "1778f7ac8bed5f1252c0c64145db98322e6173e47098a25cd420510935c3800f",
+    "new/numerical_chan_numba.py": "0db67a57ab1e0c2c52fdfd570f020ca458e025e725f66ab29e76fc8d580217f3",
+    "reference/chan_orthant_dby3.py": "41db5d040f79996fdde5b7b085728841514ea33be8e192ca6134ad9268a37f07",
+    "reference/chan_hypervolume.py": "da2e122d08c7ce5e2e4ce5c6a31bd5fd0fe466752dd7b64a8ed40e333e82e132"
+  }
+}

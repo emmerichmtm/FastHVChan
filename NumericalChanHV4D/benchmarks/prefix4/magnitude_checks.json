@@ -1,0 +1,116 @@
+{
+  "direct_kernel": [
+    {
+      "measure": "Lebesgue",
+      "query": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "expected": 1.0,
+      "packed": 1.0,
+      "decomposed": 1.0,
+      "brute": 1.0,
+      "packed_matches": true
+    },
+    {
+      "measure": "Lebesgue",
+      "query": [
+        1.0,
+        1.0,
+        0.0,
+        0.0
+      ],
+      "expected": 0.0,
+      "packed": 0.0,
+      "decomposed": 0.0,
+      "brute": 0.0,
+      "packed_matches": true
+    },
+    {
+      "measure": "magnitude",
+      "query": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "expected": 5.0625,
+      "packed": 2.25,
+      "decomposed": 5.0625,
+      "brute": 5.0625,
+      "packed_matches": false
+    },
+    {
+      "measure": "magnitude",
+      "query": [
+        1.0,
+        1.0,
+        0.0,
+        0.0
+      ],
+      "expected": 2.25,
+      "packed": 0.0,
+      "decomposed": 2.25,
+      "brute": 2.25,
+      "packed_matches": false
+    }
+  ],
+  "affine_transform": [
+    {
+      "corners": [
+        [
+          1,
+          1,
+          1,
+          1
+        ]
+      ],
+      "exact_magnitude": "81/16",
+      "transformed_hv": 5.0625
+    },
+    {
+      "corners": [
+        [
+          1,
+          1,
+          0,
+          0
+        ]
+      ],
+      "exact_magnitude": "9/4",
+      "transformed_hv": 2.25
+    },
+    {
+      "corners": [
+        [
+          1,
+          4,
+          3,
+          2
+        ],
+        [
+          2,
+          3,
+          4,
+          1
+        ],
+        [
+          3,
+          2,
+          1,
+          4
+        ],
+        [
+          4,
+          1,
+          2,
+          3
+        ]
+      ],
+      "exact_magnitude": "765/16",
+      "transformed_hv": 47.8125
+    }
+  ]
+}
