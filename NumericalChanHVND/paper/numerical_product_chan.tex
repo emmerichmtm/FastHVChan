@@ -1,0 +1,1277 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern,amsmath,amssymb,amsthm}
+\usepackage[a4paper,margin=25mm]{geometry}
+\usepackage{microtype,booktabs,tabularx,array,enumitem,xcolor}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning}
+\usepackage[colorlinks=true,linkcolor=blue!45!black,citecolor=blue!45!black,urlcolor=blue!45!black]{hyperref}
+\usepackage{listings}
+\lstset{basicstyle=\small\ttfamily,columns=fullflexible,keepspaces=true,
+breaklines=true,frame=single,rulecolor=\color{black!20},xleftmargin=3pt,xrightmargin=3pt}
+\setlength{\emergencystretch}{3em}
+\setlength{\parskip}{.25em}
+\setcounter{tocdepth}{1}
+\setlist{itemsep=.15em,topsep=.35em}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{remark}[theorem]{Remark}
+\newcommand{\HV}{\operatorname{HV}}
+\newcommand{\Mag}{\operatorname{Mag}}
+\newcommand{\wtO}{\widetilde O}
+\newcommand{\ind}{\mathbf 1}
+\newcommand{\R}{\mathbb R}
+\newcommand{\N}{\mathbb N}
+\newcommand{\Push}{\operatorname{Push}}
+\newcommand{\supp}{\operatorname{supp}}
+\DeclareMathOperator{\diag}{diag}
+\hypersetup{pdftitle={Numerical Chan Recursion for Hypervolume and Dominated-Set Magnitude},
+pdfsubject={Product measures, exact finite contractions, and preservation of the d/3 exponent}}
+\title{Numerical Chan Recursion for Hypervolume\\and Dominated-Set Magnitude\\[.6em]
+\large Product measures, finite contractions, and preservation\\of the $d/3$ complexity exponent}
+\author{Technical report accompanying \texttt{FastHVChan}}
+\date{4 October 2026}
+\begin{document}
+\maketitle
+\begin{abstract}
+Hypervolume measures the region dominated by a finite approximation set and
+is a central indicator in evolutionary multiobjective optimization. Its
+geometric formulation is the union measure of boxes sharing an anchor.
+We give a self-contained numerical formulation of Chan's orthant recursion,
+written for both optimization and computational geometry readers. The
+integrals are evaluated by exact finite cell masses, prefix sums and
+monotone integer-cutoff constraints. No quadrature or general symbolic
+integration is required. The simplification is representational; Chan's
+own step-function integrals also admit finite arithmetic evaluation.
+
+For the $\ell_1$ magnitude of dominated sets, we explain the metric
+definition, prove the anchored-box product-measure formula, and give
+linear-size reductions to and from ordinary hypervolume. Product measures
+factor coordinate weights, while pair constraints retain geometric
+dependence. We prove closure under numerical elimination and block-mass
+compression, then account for the entire recursive computation. A local
+checkpoint policy, optionally skipping compression when the state is
+already small, retains Chan's $\wtO_d(n^{d/3})$ arithmetic bound for every
+fixed $d\ge4$. Thus the numerical treatment retains the exponent; it does
+not improve it. Dimensions two and three use $O(n\log n)$ sweeps.
+
+The accompanying implementation covers dimensions two through ten. We
+separate the locally scheduled implementation covered by the proof from
+an earlier compiled adaptive variant used in the archived experiments.
+Those measurements demonstrate practical gains over the Python $d/3$
+reference on many small inputs, but neither establish an exponent nor
+show universal superiority over the simpler $d/2$ reference.
+\end{abstract}
+\vspace{.3em}
+\noindent\textbf{Keywords:} hypervolume indicator; Klee's measure problem;
+metric magnitude; product measure; orthants; numerical elimination;
+compression; evolutionary multiobjective optimization.
+\newpage
+\tableofcontents
+\newpage
+
+\section{Purpose, audiences, and the precise claim}
+\label{sec:introduction}
+
+In multiobjective optimization, the output of a search is usually a set
+of mutually incomparable objective vectors. An indicator assigns a scalar
+value to this set, for assessment or for selection during the search.
+The hypervolume indicator rewards the size of the region dominated by
+the vectors relative to a reference point. Repeated indicator evaluations
+can therefore be a computational bottleneck; see the optimization
+background in~\cite{emmerichdeutz2018}.
+
+For computational geometry, the same problem is a restricted union-measure
+problem. The boxes share an anchor, equivalently they are orthants clipped
+to a bounding box. This restriction is stronger than arbitrary Klee
+measure input. Chan's general-box algorithm has an $O(n^{d/2})$ bound,
+whereas his orthant framework obtains
+$O(n^{d/3}\log^{O_d(1)}n)$ for fixed $d\ge4$~\cite{chan2013}.
+The reference implementations in our experiments are named after these
+two exponents. A better exponent does not by itself imply a smaller
+runtime on a small input.
+
+The objective here is to explain the orthant algorithm using numerical
+objects that can be inspected and compiled: ordered coordinate cells,
+their masses, monotone cutoff arrays, and signed sums of products.
+The presentation preserves the geometric recursion and the compression
+that make the bound possible. Simply replacing integrals by sums, or
+compiling a slow loop, would not be a sufficient complexity argument.
+
+\paragraph{For the EMO reader.}
+The main message is that HV and dominated-set magnitude can use one
+geometric engine. Their different meanings enter through one-dimensional
+weights. The proof also explains why the engine absorbs simple boxes
+before dividing the remaining instance, and why compression is an
+essential part of a high-dimensional algorithm.
+
+\paragraph{For the computational geometry reader.}
+The new presentation specializes the functional algebra to a finite
+ordered grid, including atomic measures. Its role is to make the
+implementation and its invariants explicit. We provide both a schedule
+that charges representation growth and a guarded version of that schedule.
+We do not claim a new orthant exponent, a new lower bound, or a new
+independent planar factorization.
+
+\paragraph{What the complexity statement covers.}
+Our main bound applies to the local checkpoint algorithm of
+Sections~\ref{sec:geometry}--\ref{sec:complexity}. It includes the fixed
+local schedule already used by the standard-library numerical version
+and the new compiled local-checkpoint driver. The earlier experimental
+compiled driver uses an interval based on the \emph{original} input size.
+We do not attach the local-schedule theorem to that different policy.
+Section~\ref{sec:software} maps these statements to actual files.
+
+\section{Dominated regions, reference points, and product measures}
+\label{sec:product}
+
+For a finite set $A\subseteq\R_{\ge0}^d$, define
+\[
+ Q(a)=\prod_{i=1}^d[0,a_i],\qquad
+ D(A)=\bigcup_{a\in A}Q(a),\qquad
+ \HV_d(A)=\lambda_d(D(A)).
+\]
+The set $D(A)$ is a down-set in the nonnegative orthant: if $x\in D(A)$
+and $0\le y\le x$ coordinatewise, then $y\in D(A)$.
+We call $a$ a generator or an upper corner. Repeated or dominated
+generators do not change the region. All statements allow tied and zero
+coordinates; no general-position hypothesis is needed.
+
+For minimization vectors $p$ and a reference vector $r$ satisfying
+$p_i\le r_i$, the conventional region is
+$\bigcup_p\prod_i[p_i,r_i]$. The reflection $x\mapsto r-x$ turns it into
+$D(\{r-p\})$. This is a volume-preserving map and an $\ell_1$ isometry.
+Thus the upper-corner convention changes neither HV nor metric magnitude
+of the corresponding region. The reference point still determines which
+region is measured.
+
+Let $\nu_i$ be a nonnegative measure on the $i$th coordinate axis, finite
+on the bounding interval, and let
+\[
+ \nu=\bigotimes_{i=1}^d\nu_i,
+ \qquad F_i(t)=\nu_i([0,t]).
+\]
+Product structure means that a box has mass
+$\nu(Q(a))=\prod_iF_i(a_i)$. It does \emph{not} mean that a union of boxes
+is a Cartesian product. The following elementary reduction captures
+exactly what can be factored.
+
+\begin{proposition}[Cumulative-coordinate reduction]\label{prop:cdf}
+For finite $A\subseteq\R_{\ge0}^d$, put
+$F(A)=\{(F_1(a_1),\ldots,F_d(a_d)):a\in A\}$. Then
+\[
+                  \nu(D(A))=\HV_d(F(A)).
+\]
+If all required cumulative values are supplied, the reduction needs
+$O(nd)$ arithmetic and coordinate operations, preserves dimension, and
+does not increase the number of generators.
+\end{proposition}
+\begin{proof}
+Every nonempty intersection of input boxes is $Q(m_J)$, where
+$m_{J,i}=\min_{a\in J}a_i$. Since each $F_i$ is nondecreasing,
+$F_i(m_{J,i})=\min_{a\in J}F_i(a_i)$. The mass of the intersection
+therefore equals the volume of the intersection of its transformed
+anchored boxes. Finite inclusion--exclusion proves the equality for the
+unions. The empty input gives zero on both sides.
+\end{proof}
+
+The proof is an identity, not an exponential-time implementation:
+inclusion--exclusion is used to establish the reduction; a union algorithm
+computes its right side. Atoms and flat parts of the cumulative functions
+are allowed. This is generally a transformation of \emph{generators},
+not an ordinary invertible change of coordinates on the entire region.
+When cumulative values require preprocessing, their construction cost
+must be added to the HV computation.
+
+\section{What dominated-set magnitude means}
+\label{sec:magnitude}
+
+\subsection{From similarity to metric magnitude}
+For a finite metric space $X=\{x_1,\ldots,x_m\}$, form the similarity
+matrix $Z_{ij}=e^{-\operatorname{dist}(x_i,x_j)}$. When $Z$ is invertible,
+its magnitude is $\ind^TZ^{-1}\ind$. Equivalently, solve $Zw=\ind$ and
+sum the weights. Closely spaced points have high similarity and do not
+behave like entirely independent units. This is the metric analogue of
+counting developed in the magnitude literature~\cite{leinstermeckes2017}.
+
+For a compact region, an applicable continuous formulation uses a finite
+signed \emph{weight measure} $W$ supported on the region, with
+\begin{equation}
+ \int_D e^{-\operatorname{dist}(x,y)}\,dW(y)=1
+                    \quad\text{for every }x\in D.
+ \label{eq:weightmeasure}
+\end{equation}
+In the positive-definite setting used here, existence of such a weight
+measure gives $\Mag(D)=W(D)$~\cite{leinstermeckes2017}. We construct one
+explicitly for anchored box unions, so no limiting discretization of the
+metric space is needed for their computation. The quantity of interest is
+$\Mag(D(A))$, \emph{not} the magnitude of the finite generator set $A$.
+
+For $\operatorname{dist}(x,y)=\|x-y\|_1$, the key identity is
+\begin{equation}
+ e^{-\|x-y\|_1}=\prod_{i=1}^d e^{-|x_i-y_i|}.
+ \label{eq:exp-product}
+\end{equation}
+The sum in the distance becomes a product in the kernel. This tensor
+structure is the connection between metric magnitude and the product
+algebra below. The resulting algorithm evaluates no exponentials or
+similarity-matrix inverses.
+
+For completeness, positivity and the weight-measure rule have a short
+energy explanation here. The one-dimensional Laplace kernel has positive
+Fourier transform $2/(1+\xi^2)$; its tensor product is positive definite.
+For finite signed measures $\eta$ on $D$, write
+$E(\eta)=\iint e^{-\|x-y\|_1}\,d\eta(x)d\eta(y)$.
+The energy characterization of magnitude is
+$\sup_{\eta\ne0}\eta(D)^2/E(\eta)$ in this setting.
+If $W$ satisfies~\eqref{eq:weightmeasure}, then
+$\langle\eta,W\rangle=\eta(D)$ and $E(W)=W(D)$.
+Cauchy--Schwarz gives $\eta(D)^2/E(\eta)\le W(D)$, with equality
+for $\eta=W$. This justifies the rule used in the proof below and
+explains its relation to the finite matrix formula.
+
+\subsection{A direct proof for anchored boxes}
+For $a\ge0$, let
+\[
+ w_a=\tfrac12\bigl(\delta_0+\delta_a+\lambda|_{[0,a]}\bigr).
+\]
+When $a=0$, the coincident endpoint atoms give $w_0=\delta_0$.
+Splitting an elementary integral at $x$ shows that, for every $x\ge0$,
+\begin{equation}
+ \int_{[0,a]}e^{-|x-y|}\,dw_a(y)=e^{-(x-a)_+},
+ \qquad w_a([0,a])=1+a/2,
+ \label{eq:interval-potential}
+\end{equation}
+where $t_+=\max(t,0)$. For $0\le x\le a$, the integral of the density
+is $1-(e^{-x}+e^{-(a-x)})/2$; the two atoms supply the missing terms.
+For $x>a$, all contributions have the common factor $e^{-(x-a)}$.
+
+Tensor products of these interval measures give a weight measure for
+$Q(a)$ and yield $\Mag(Q(a))=\prod_i(1+a_i/2)$. More is true.
+
+\begin{theorem}[Product computing measure for dominated sets]
+\label{thm:magnitude}
+Let $A$ be any finite set of nonnegative corners. With
+\[
+                  \mu=\bigotimes_{i=1}^d
+                         (\delta_0+\tfrac12\lambda),
+\]
+the $\ell_1$ magnitude of its dominated region satisfies
+\begin{equation}
+                         \Mag(D(A))=\mu(D(A)).
+ \label{eq:mag-product}
+\end{equation}
+The magnitude of the empty region is taken to be zero.
+\end{theorem}
+\begin{proof}
+Assume $A=\{a^1,\ldots,a^n\}$ is nonempty. For nonempty
+$J\subseteq\{1,\ldots,n\}$, let $m_J$ be the coordinatewise minimum
+of its corners and let $W_J=\bigotimes_i w_{m_{J,i}}$. Define
+\[
+             W=\sum_{\varnothing\ne J\subseteq[n]}
+                       (-1)^{|J|+1}W_J.
+\]
+This is a finite signed measure supported on $D(A)$. Its potential at a
+nonnegative point $x$ is the same signed sum of
+$\exp(-\sum_i(x_i-m_{J,i})_+)$, by
+\eqref{eq:exp-product}--\eqref{eq:interval-potential}.
+If $x\in D(A)$, choose $k$ with $x\le a^k$. Pair every nonempty
+$J$ not containing $k$ with $J\cup\{k\}$. Their potentials agree:
+replacing $m_{J,i}$ by $\min(m_{J,i},a_i^k)$ leaves
+$(x_i-m_{J,i})_+$ unchanged because $a_i^k\ge x_i$.
+All these pairs cancel. The unpaired subset $\{k\}$ has potential one.
+Thus $W$ satisfies~\eqref{eq:weightmeasure}.
+
+Its total mass is
+\[
+ W(D(A))=\sum_{\varnothing\ne J\subseteq[n]}(-1)^{|J|+1}
+                      \prod_i(1+m_{J,i}/2).
+\]
+The last product is also $\mu(Q(m_J))$. Inclusion--exclusion for the
+positive measure $\mu$ now gives $W(D(A))=\mu(D(A))$.
+\end{proof}
+
+Equation~\eqref{eq:mag-product} is the dominated-set formula
+in~\cite{emmerich2026}. The proof above spells out why it is legitimate
+on this class, without assuming that magnitude is a valuation on arbitrary
+sets. The positive \emph{computing measure} $\mu$ is not in general the
+kernel weight measure $W$. For instance, the translated interval $[1,2]$
+has metric magnitude $3/2$ by translation invariance, but its mass under
+the fixed-anchor measure $\delta_0+\lambda/2$ is $1/2$. Consequently,
+this formula does not directly identify arbitrary Klee-measure instances
+with the metric magnitude of their unions.
+
+\subsection{Faces, Pareto compliance, and scale}
+Expanding the product measure in~\eqref{eq:mag-product} gives
+\begin{equation}
+ \Mag(D(A))=\sum_{I\subseteq[d]}2^{-|I|}
+                       \lambda_{|I|}(\pi_I D(A)).
+ \label{eq:projection}
+\end{equation}
+For a nonempty region the zero-dimensional term is one; for the empty
+region all terms are zero. The reason projections appear is specific to
+down-sets: the section obtained by setting coordinates outside $I$ to
+zero coincides with the projection onto $I$.
+In two dimensions the formula is
+\[
+ 1+\tfrac12(\text{horizontal extent}+\text{vertical extent})
+                      +\tfrac14(\text{area}).
+\]
+In higher dimensions it combines all coordinate-projection volumes,
+including the full-dimensional HV. The algorithm need not enumerate
+these $2^d$ projections; one product measure contains them all.
+
+Proper inclusion of two finite dominated regions strictly increases
+$\mu$, hence magnitude. To see strictness, take $p\in D(B)\setminus D(A)$.
+Closedness of $D(A)$ leaves a sufficiently small lower rectangle near $p$
+outside $D(A)$; use intervals on the positive coordinates of $p$ and
+origin atoms on its zero coordinates. This rectangle has positive $\mu$
+mass and lies in $D(B)$. If $p=0$, its atomic mass is already positive.
+This explains Pareto compliance at the region level. Adding an already
+dominated generator changes neither indicator. A new box of zero
+full-dimensional volume can change magnitude through a lower-dimensional
+face even when it leaves ordinary HV unchanged.
+
+Magnitude uses a metric and therefore a length scale. For the distance
+$\tau\|x-y\|_1$, with $\tau>0$, the computing measure becomes
+$\bigotimes_i(\delta_0+\tfrac\tau2\lambda)$. Its value is a polynomial
+in $\tau$, whose degree-$d$ term is $(\tau/2)^d\HV_d(A)$
+(and vanishes when the full-dimensional HV is zero).
+Changing objective units without correspondingly specifying the metric
+changes the indicator. Product structure gives a clear algebraic
+description of this choice; it does not remove the choice.
+
+\section{Magnitude and hypervolume: both reductions}
+\label{sec:reductions}
+
+\begin{corollary}[Magnitude to HV]\label{cor:mag-to-hv}
+For finite nonnegative corners,
+\begin{equation}
+ \Mag(D(A))=\HV_d\bigl(\{\ind+a/2:a\in A\}\bigr).
+ \label{eq:forward}
+\end{equation}
+\end{corollary}
+\begin{proof}
+Apply Proposition~\ref{prop:cdf} with $F_i(t)=1+t/2$ and
+Theorem~\ref{thm:magnitude}.
+\end{proof}
+
+The anchor on the right of~\eqref{eq:forward} remains zero. The affine
+image of $[0,a_i]$ would instead be $[1,1+a_i/2]$. Thus this is not a
+statement that translating a region adds volume. Transforming the
+generators and rebuilding their anchored boxes includes precisely the
+face contributions represented by the atoms.
+
+\begin{proposition}[HV to magnitude]\label{prop:reverse}
+For an HV input $B\subseteq\R_{\ge0}^d$, discard corners with any zero
+coordinate. If none remain, the HV is zero. Otherwise put
+\[
+ \delta_i=\min_{b\in B}b_i>0,
+ \qquad c_i(b)=2(b_i/\delta_i-1).
+\]
+Then
+\begin{equation}
+ \HV_d(B)=\left(\prod_i\delta_i\right)
+                 \Mag\bigl(D(\{c(b):b\in B\})\bigr).
+ \label{eq:reverse}
+\end{equation}
+\end{proposition}
+\begin{proof}
+The discarded boxes have zero $d$-dimensional volume. Scaling the
+remaining $i$th coordinates by $1/\delta_i$ multiplies their HV by
+$\prod_i\delta_i^{-1}$ and gives extents at least one. For these
+normalized corners, $1+c_i(b)/2=b_i/\delta_i$. Apply
+\eqref{eq:forward} and undo the volume scale.
+\end{proof}
+
+Both directions require one indicator evaluation and $O(nd)$ preprocessing.
+They preserve dimension and input size. Therefore an arithmetic upper
+bound transfers in both directions, and so does a conditional lower bound
+within a computational model supporting these arithmetic transformations.
+This observation alone proves no new hardness result. Bit complexity and
+restrictions on integer coordinates require their own accounting.
+Zero coordinates created by~\eqref{eq:reverse} must be retained in the
+\emph{magnitude} instance. Discarding them would invalidate the reduction.
+
+\begin{example}[One example in both directions]\label{ex:two-box}
+Take $A=\{(2,1),(1,2)\}$. Its HV is $2+2-1=3$, whereas its magnitude is
+\[
+ 3+3-\tfrac94=\tfrac{15}{4}
+       =1+\tfrac12(2+2)+\tfrac14\cdot3.
+\]
+The forward reduction gives corners $(2,3/2)$ and $(3/2,2)$, with HV
+$15/4$. The reverse reduction applied to the original HV instance gives
+$(2,0)$ and $(0,2)$: the magnitude of these two anchored line segments
+is $2+2-1=3$. Adding $(3,0)$ to the original set leaves its HV at $3$
+and increases its magnitude to $17/4$.
+\end{example}
+
+\begin{figure}[tb]
+\centering
+\begin{tikzpicture}[scale=1.25,>=Stealth]
+ \begin{scope}
+ \fill[blue!12] (0,0)--(2,0)--(2,1)--(1,1)--(1,2)--(0,2)--cycle;
+ \draw[very thick,blue!60!black] (0,0)--(2,0)--(2,1)--(1,1)--(1,2)--(0,2)--cycle;
+ \draw[->] (-.15,0)--(2.65,0) node[right] {$x_1$};
+ \draw[->] (0,-.15)--(0,2.5) node[above] {$x_2$};
+ \fill (2,1) circle(1.5pt) node[right] {\small$(2,1)$};
+ \fill (1,2) circle(1.5pt) node[above right] {\small$(1,2)$};
+ \fill[orange!85!black] (0,0) circle(2.2pt);
+ \node at (1,-.6) {$\HV=3,\quad\Mag=15/4$};
+ \end{scope}
+ \node at (3.9,1.1) {$a\mapsto\ind+a/2$};
+ \draw[->,thick] (3,0.7)--(4.8,0.7);
+ \begin{scope}[xshift=6cm]
+ \fill[teal!14] (0,0)--(2,0)--(2,1.5)--(1.5,1.5)--(1.5,2)--(0,2)--cycle;
+ \draw[very thick,teal!60!black] (0,0)--(2,0)--(2,1.5)--(1.5,1.5)--(1.5,2)--(0,2)--cycle;
+ \draw[->] (-.15,0)--(2.65,0) node[right] {$y_1$};
+ \draw[->] (0,-.15)--(0,2.5) node[above] {$y_2$};
+ \fill (2,1.5) circle(1.5pt);
+ \fill (1.5,2) circle(1.5pt);
+ \node at (1,-.6) {$\HV=15/4$};
+ \end{scope}
+\end{tikzpicture}
+\caption{The transformed generators define a new anchored region. The
+left region's magnitude equals the right region's ordinary area. The
+origin atom and lower-dimensional contributions are represented by the
+enlargement of anchored extents, not by a translation of the shaded set.}
+\label{fig:shift}
+\end{figure}
+
+\section{Exact discretization and the numerical meaning of an integral}
+\label{sec:discrete}
+
+On axis $i$, sort the distinct positive generator coordinates and write
+$0=c_{i,0}<c_{i,1}<\cdots<c_{i,m_i}$. Use the cells
+\[
+ C_{i,0}=\{0\},\qquad C_{i,k}=(c_{i,k-1},c_{i,k}]\quad(k\ge1).
+\]
+Their masses are as follows.
+\begin{center}
+\begin{tabular}{@{}lll@{}}
+\toprule
+Measure & $w_i(0)$ & $w_i(k)$ for $k\ge1$\\\midrule
+Ordinary HV & $0$ & $c_{i,k}-c_{i,k-1}$\\
+Dominated-set magnitude & $1$ & $(c_{i,k}-c_{i,k-1})/2$\\
+General product measure & $\nu_i(\{0\})$ & $\nu_i(C_{i,k})$\\
+\bottomrule
+\end{tabular}
+\end{center}
+Every generator becomes a rank vector $r(a)$. Membership in its box is
+exactly $k_i\le r_i(a)$ on all axes. Therefore
+\begin{equation}
+ \nu(D(A))=\sum_{k_1=0}^{m_1}\cdots\sum_{k_d=0}^{m_d}
+       \ind[\exists a\in A:\ k\le r(a)]\prod_iw_i(k_i).
+ \label{eq:finite-sum}
+\end{equation}
+This is an exact identity, not a mesh approximation. The algorithm stores
+only the separate axis arrays, of total length $O_d(n)$, and structured
+constraints. It does not construct the potentially $O(n^d)$ product grid
+displayed in the definition of the sum.
+
+Consider a one-dimensional step density $h$ and let $w(k)$ be its
+integral over cell $k$. For a union of whole consecutive cells,
+\[
+          \int_{\bigcup_{k=L}^U C_k}h(x)\,dx
+             =\sum_{k=L}^U w(k)=P(U+1)-P(L),
+ \qquad P(t)=\sum_{k<t}w(k).
+\]
+A step-function implementation stores breakpoints, density values, and
+an antiderivative represented by cumulative interval contributions.
+A cell-mass implementation stores the $w(k)$ and their prefixes directly.
+These are two finite arithmetic descriptions of the same operation.
+
+The difference matters in implementation. Integer ranks handle strict
+and weak endpoints explicitly, atomic masses need no special integration
+convention, and the bulk operations compile into loops over typed arrays.
+There is no general symbolic-expression manipulation and no quadrature
+error. Nevertheless, evaluating a known step-function antiderivative was
+already numerical arithmetic in the Python Chan reference. The
+simplification is an explicit finite representation, not the elimination
+of a computer algebra system that the reference never used.
+
+For Example~\ref{ex:two-box}, the axis coordinates are $(0,1,2)$.
+HV masses are $(0,1,1)$ and magnitude masses are $(1,1/2,1/2)$.
+On the $3\times3$ rank grid, the only uncovered cell within the enclosing
+square is $(2,2)$. Thus HV is $4-1=3$ and magnitude is
+$4-1/4=15/4$. This tiny grid is useful for explanation and testing;
+the high-dimensional solver avoids enumerating its analogue.
+
+\section{Why product structure helps, and what remains coupled}
+\label{sec:structure}
+
+Product measures let the initial state be stored as $d$ unary arrays
+instead of a table with one entry per product cell. They also let us sum
+an unconstrained variable by a single scalar factor. Geometry enters
+through predicates. After absorbing a two-sided box or eliminating a
+variable, the state generally ceases to be one independent product.
+It remains a \emph{sum of constrained products}, which is the useful
+closure property.
+
+For example, in four dimensions let
+\[
+ A=\{(2,1,1,1),(1,1,2,1)\}.
+\]
+Its HV is $3$, but the product of the HVs of the projections on coordinate
+pairs $(1,2)$ and $(3,4)$ is $2\cdot2=4$. The projected calculation has
+lost the information about which extents occur together in a generator.
+Our representation keeps constraints connecting the pairs.
+
+This also explains the scope of a ``$2+2$ split''. In 4D we may eliminate
+axes $(1,2)$ and then $(3,4)$. Finite sums justify that grouping without
+an independence assumption. The implementation performs the two scalar
+eliminations within each pair; it does not provide a separate constant-time
+joint planar contraction. For odd $d$, the last coordinate is a singleton.
+No dummy dimension is needed.
+
+Another benefit is that compression preserves masses directly. A block
+can contain an origin atom, positive-length cells, or zero-mass HV cells.
+Its total mass is a sum. There is no need to divide by a cell's volume or
+reconstruct an artificial continuous density. This is particularly useful
+for magnitude, whose boundary contributions must survive every recursive
+restriction and compression.
+
+\section{Finite contraction with monotone pair constraints}
+\label{sec:contraction}
+
+Let $p$ variables range over finite chains $E_i=\{0,\ldots,s_i-1\}$.
+The number $p$ is at most $d$ in a state and at most $2d$ during compression.
+A term has the form
+\begin{equation}
+ T(k)=c\prod_i u_i(k_i)
+           \prod_e\ind[k_{j_e}\mathrel{\bowtie_e} f_e(k_{i_e})],
+ \qquad i_e<j_e,\quad \bowtie_e\in\{\le,\ge\}.
+ \label{eq:term}
+\end{equation}
+Coefficients and unary arrays may be signed. The integer cutoff arrays
+$f_e$ are monotone. For each unordered variable pair we keep four possible
+classes: upper or lower inequality, each with a nondecreasing or
+nonincreasing cutoff. Same-class upper bounds combine by minimum and
+lower bounds by maximum. Cutoffs of opposite monotonicities stay separate.
+The sentinels $-1$ and $s_j$ encode impossible upper and lower bounds.
+
+A state $F$ is a sum of $S$ such terms. If $M=\sum_i s_i$, its storage
+is $O_p(SM)$; it is not a dense $p$-dimensional array. The signed
+representation is an algebraic device. It does not assert that the
+underlying initial measure has negative mass.
+
+\subsection{How comparisons stay in this class}
+Bounds on a variable are constants or monotone arrays in one other
+variable. Consider a comparison $A(k_i)\le B(k_j)$.
+If $i=j$, evaluate it entrywise and multiply the resulting Boolean array
+into $u_i$. This array need not be monotone. If one side is constant,
+the comparison is likewise a unary mask. Otherwise, search the monotone
+array associated with the larger-index variable. For a nondecreasing
+$B$, for example, $A(k_i)\le B(k_j)$ becomes
+\[
+ k_j\ge \min\{t:B(t)\ge A(k_i)\},
+\]
+with an impossible-bound sentinel when the set is empty. Binary searches
+handle plateaus and strict inequalities using the appropriate first or
+last admissible position. The result is a monotone cutoff array.
+Nonincreasing arrays reverse the inequality direction in the same way.
+All four classes are needed for closure under these comparisons.
+
+\subsection{First-winner elimination}
+To sum out a variable $q$, rewrite each incident predicate as a lower or
+upper bound on $q$, inverting its monotone cutoff if needed. Include the
+domain endpoints. The feasible interval is
+\[
+ L(k)=\max_a L_a(k),\qquad U(k)=\min_b U_b(k).
+\]
+Each candidate depends on at most one surviving variable. Give the
+candidates a fixed order. For every pair $(a,b)$, let $G_{ab}$ assert
+that $L_a$ is the \emph{first} maximizing lower bound, $U_b$ is the
+\emph{first} minimizing upper bound, and $L_a\le U_b$.
+For the lower winner, the comparisons with earlier candidates are
+strict and those with later candidates weak; the upper winner has the
+analogous rule. Thus ties do not create overlaps.
+
+With $P_q(t)=\sum_{r<t}u_q(r)$, the part of the sum on this winner region is
+\begin{equation}
+ G_{ab}(k)\,[P_q(U_b(k)+1)-P_q(L_a(k))].
+ \label{eq:winner}
+\end{equation}
+All factors in~\eqref{eq:term} that do not involve $q$ remain in place.
+Each prefix evaluation in~\eqref{eq:winner} is constant or unary in the
+variable supplying its bound. If the two bounds have different source
+variables, split the difference into two signed terms; if they have the
+same source, one unary difference suffices. In particular, a signed prefix
+array is never assumed monotone and is never inverted as a cutoff.
+
+\begin{lemma}[Numerical closure]\label{lem:closure}
+Eliminating one of $p$ variables from one term produces at most
+\[
+                         B_p=2(2p-1)^2
+\]
+terms of the form~\eqref{eq:term}. For fixed $p$, it costs
+$O_p(M\log(M+2))$ arithmetic and comparison operations per incoming term,
+apart from optional merging of equal resulting terms.
+\end{lemma}
+\begin{proof}
+Each other variable contributes at most two lower and two upper candidates;
+with a domain endpoint there are at most $2p-1$ of each. There are therefore
+at most $(2p-1)^2$ winner pairs. Their guards are comparisons of the forms
+already described, hence can be represented by unary or pair masks.
+The winner regions partition the feasible assignments, and each produces
+at most two terms by~\eqref{eq:winner}. A dimension-bounded number of
+array scans and binary searches establishes the cost. No new variable
+or larger coordinate domain is introduced.
+\end{proof}
+
+For a numerical illustration, take $u=(1,2,3,4)$, so
+$P=(0,1,3,6,10)$. If the winning bounds are $L=1$ and $U=2$,
+the contracted mass is $P(3)-P(1)=6-1=5$. Bounds that depend on other
+variables select different entries of this same prefix array.
+The winner guards explain how the solver shares that calculation while
+retaining the conditions under which those entries apply.
+
+Equal terms may be normalized and merged, and zero terms discarded.
+These operations are valuable in practice, but the proof of closure and
+the global bound do not assume that cancellation or merging is successful.
+This distinction is essential: a small experimental term count cannot
+substitute for a worst-case argument.
+
+\section{Compression is a mass-preserving change of index set}
+\label{sec:compression}
+
+Suppose $m$ hard boxes remain in a recursive cell. On every axis, put a
+block boundary immediately after each hard-box cutoff below the cell's
+upper endpoint. The resulting consecutive blocks are
+$I_i(t_i)=[\ell_i(t_i),r_i(t_i)]$, with at most $m+1$ blocks per axis.
+Define a coarse state by
+\begin{equation}
+ (\Push F)(t)=\sum_{k_i\in I_i(t_i)\,\forall i}F(k).
+ \label{eq:push}
+\end{equation}
+This is a specification by a finite sum, not an instruction to enumerate
+every product of blocks.
+
+For each term, introduce the $d$ new variables $t_i$ with unary weight
+one and the comparisons
+$\ell_i(t_i)\le k_i\le r_i(t_i)$. There are now $2d$ variables.
+Eliminate just the old $k_i$ variables using Lemma~\ref{lem:closure}.
+The result is a sum of terms on the block indices. The old variables
+can be eliminated in consecutive pairs, with a final singleton for
+odd $d$.
+
+\begin{lemma}[Compression and future masks]\label{lem:compression}
+If $F$ has $S$ terms and total axis length $M$, the compression emits at
+most $C_dS$ terms, where
+\[
+                       C_d=\prod_{p=d+1}^{2d}B_p.
+\]
+Its work is $\wtO_d(S(M+m+1))$ before optional merging. The output has
+total axis length $O_d(m+1)$ and storage $O_d(C_dS(m+1))$.
+For every mask $g$ constant on each product of blocks,
+\begin{equation}
+             \sum_k F(k)g(k)=\sum_t(\Push F)(t)g(t).
+ \label{eq:maskreuse}
+\end{equation}
+\end{lemma}
+\begin{proof}
+Apply Lemma~\ref{lem:closure} to the $d$ old variables. The combined
+axis length is $M+O_d(m+1)$ and decreases during elimination. Every
+surviving unary and cutoff array is indexed by a single coarse axis.
+For~\eqref{eq:maskreuse}, partition the sum over the disjoint products
+of blocks and move the constant value of $g$ outside each inner sum.
+\end{proof}
+
+All surviving hard-box boundaries were used when making the blocks.
+Future restrictions and cuts based on these boxes are therefore aligned
+with them. Descendants introduce no new original coordinates: clipping
+uses current cell boundaries and surviving hard cutoffs. The compression
+can consequently be reused throughout the descendant recursion until
+another compression is appropriate.
+
+Compression coarsens the coordinate vocabulary. It need not decrease
+the number of terms or the total stored entries immediately. The factor
+$C_d$ is dimension dependent and can be large. In the actual natural
+compression probe, one compression changes one term into 296 terms.
+The benefit required by the proof is that the array lengths now depend
+on the remaining hard boxes rather than the old coordinate history.
+The proof must charge this growth in term count as well as the shorter
+arrays.
+
+\section{Geometric recursion and its invariant}
+\label{sec:geometry}
+
+At a node, let $\Gamma=\prod_i[l_i,h_i]$ be an inclusive integer-index
+cell, $B$ the remaining boxes, and $F$ the numerical state. The quantity
+computed is uncovered mass:
+\begin{equation}
+ U(F,B,\Gamma)=\sum_{k\in\Gamma}F(k)
+                          \prod_{b\in B}(1-\ind[k\le b]).
+ \label{eq:invariant}
+\end{equation}
+Initially $F(k)=\prod_iw_i(k_i)$. The final answer is the mass of the
+enclosing box minus $U$. After compression, $F$ denotes block masses;
+the same invariant still applies.
+
+\subsection{Simplify before cutting}
+A box is disjoint if $b_i<l_i$ for some $i$ and can be discarded.
+Otherwise, call axis $i$ active if $b_i<h_i$. There are four cases.
+\begin{enumerate}
+\item With no active axis, the box covers the cell and $U=0$.
+\item With one active axis $i$, its covered region is a slab. Its
+complement tightens the lower bound to $b_i+1$, or equivalently multiplies
+the state by the unary mask $\ind[k_i>b_i]$.
+\item For boxes with exactly two active axes $i<j$, combine the group
+using a suffix maximum:
+\[
+ f(k_i)=\max\{b_j:b\text{ in the group},\ b_i\ge k_i\},
+ \qquad\max\varnothing=-1.
+\]
+The group is uncovered precisely when $k_j\ge f(k_i)+1$. This is one
+nonincreasing lower cutoff, which can be absorbed into every term.
+\item Every remaining hard box has at least three active axes.
+\end{enumerate}
+Thus simple boxes are replaced by unary or pair constraints. Absorbing
+them does not multiply the number of terms. Shared extents produced by
+clipping are included automatically; they need not exist in the original
+input.
+
+The compiled driver also crops the state to the current cell, removes
+constraints that become impossible or tautological on nonzero support,
+and merges equal states. These are exact restrictions, not approximations.
+All cell endpoints are inclusive. A split after rank $c$ gives
+$[l,c]$ and $[c+1,h]$; a slab covering through rank $c$ leaves ranks
+starting at $c+1$. Cropping shifts cutoff values by the target-axis
+offset. It does not introduce a new magnitude atom at the new rank zero.
+
+\subsection{Why three active axes produce the exponent $d/3$}
+Cycle through coordinate axes. At the current axis, let the cyclic
+positions of the axes be $0,1,\ldots,d-1$. For each hard box and each
+triple $J$ of its active axes, assign weight
+\[
+                     \omega(J)=2^{\sum_{j\in J}\operatorname{pos}(j)/d}.
+\]
+Let $\Phi$ be their total weight. For fixed $d$ and nonempty hard input,
+$\Phi=\Theta_d(m)$, where $m$ is the number of hard boxes.
+Choose a weighted median of the current-axis cutoff coordinates,
+using weights of the triples containing that axis, and split after it.
+Then advance the cyclic axis. If there are no candidate triples, simply
+advance the axis without a cut.
+
+\begin{lemma}[Weighted contraction]\label{lem:potential}
+With the exact weights above, each child after a cut and cyclic advance
+has potential at most $2^{-3/d}\Phi$. An advance with no candidate has
+the same bound and only one child.
+\end{lemma}
+\begin{proof}
+For a triple not using the current axis, the cyclic advance subtracts
+three from the sum of its positions, multiplying its weight by
+$2^{-3/d}$. A triple using the axis instead increases its position sum
+by $d-3$. At most half the current-axis triple weight survives in either
+child: in the left child, a cutoff at or beyond the cut becomes inactive;
+in the right child, a cutoff at or below the cut is disjoint. Tied cutoffs
+at the median therefore cause no ambiguity. The combined factor for these
+triples is at most $\tfrac12 2^{(d-3)/d}=2^{-3/d}$.
+Restriction and further absorption introduce no new active triples.
+When the axis has no candidate, only the first type of triple is present.
+\end{proof}
+
+One full round of $d$ advances has at most $2^d$ descendants, each with
+potential at most $\Phi/8$. Balancing $2^d$ branches against a size
+reduction by $8$ suggests exponent $d/3$. This geometric observation
+alone does not bound the work: large numerical histories could still be
+carried into all those descendants. Section~\ref{sec:complexity} supplies
+the missing accounting.
+
+\subsection{Integer median weights}
+Let $n_0$ be the original input size and $A_0=(n_0+2)^2$. Instead of
+storing irrational weights, use
+\begin{equation}
+ W_s=\left\lceil(A_0^d2^s)^{1/d}\right\rceil,
+ \qquad 3\le s\le3d-6.
+ \label{eq:integerweights}
+\end{equation}
+Integer power comparisons compute these ceiling roots. They satisfy
+\[
+ 2^{s/d}\le W_s/A_0\le(1+A_0^{-1})2^{s/d}.
+\]
+Using their weighted median changes the potential contraction by at most
+$1+A_0^{-1}$ per advance. Over $O_d(\log(n_0+2))$ advances this has
+bounded cumulative effect. For each fixed $d$, sufficiently large $n_0$
+ensures $2^{-3/d}(1+A_0^{-1})$ is bounded below one by a
+dimension-dependent constant. Smaller inputs lie below a
+dimension-dependent constant-size threshold, where the finite grid
+gives a bounded number of cuts and axis skips. The integer weights have $O_d(\log(n_0+2))$
+bits. Their construction and use add only polylogarithmic work in our
+fixed-dimensional arithmetic analysis.
+
+\subsection{Small bases and low dimensions}
+If at most a fixed number $b$ of hard boxes remain (the code uses $b=2$),
+expand the product in~\eqref{eq:invariant}. Its $2^b$ terms are signed
+rectangle sums, each evaluated by numerical elimination. This is
+constant-size inclusion--exclusion; it is not an exponential expansion
+over all input boxes.
+
+In 2D, a descending first-coordinate sweep needs only the maximum active
+second-coordinate prefix mass. In 3D, the same sweep maintains the mass
+of a union of anchored rectangles. If $h(y)$ is the active maximum
+third-coordinate prefix mass, it is nonincreasing in the second rank.
+An inserted rectangle updates a prefix by $h(y)\gets\max(h(y),v)$.
+The affected part is one interval: from the first height below $v$ to the
+rectangle's last second-coordinate rank. A lazy segment tree locates
+that first height and assigns the interval in $O(\log n)$, maintaining
+$\sum_y w_2(y)h(y)$. Sorting and all insertions take $O(n\log n)$
+and $O(n)$ space. The same argument applies to both sets of nonnegative
+initial masses, including the magnitude atom.
+
+\section{A local compression policy that retains Chan's bound}
+\label{sec:complexity}
+
+\subsection{The checkpoint rule}
+A \emph{block} is a consecutive group of geometric advances along a
+path. At a block entry, after absorption, let $P$ be the total integer
+triple weight from~\eqref{eq:integerweights}, and put
+\begin{equation}
+ Q=\lceil P/A_0\rceil,\qquad
+ L=d\max\left\{1,\left\lfloor\frac{\log_2 Q}{4d}\right\rfloor\right\}.
+ \label{eq:localbudget}
+\end{equation}
+Give the block a budget of $L$ advances. Both cuts and axis skips consume
+one advance. At an uncompleted branch where the budget expires, simplify
+the node, then either:
+\begin{enumerate}
+\item compress onto its surviving hard-box blocks; or
+\item skip that compression only if the total stored array entries plus
+term count are at most $K_d(m+1)$, for a fixed dimension-dependent constant.
+\end{enumerate}
+In \emph{both} cases compute a fresh budget from the current $Q$.
+The implementation uses the equivalent threshold
+$\texttt{compress\_factor}\,d^2(m+2)$ with a fixed finite nonnegative
+factor (default eight). Taking factor zero forces compression at each
+checkpoint; it does not change the local checkpoint positions.
+
+The skip is justified by a certificate about current storage. It is not
+an arbitrary postponement. Resetting the budget even after a skip is
+what keeps the next checkpoint local to the smaller subproblem.
+
+\begin{center}
+\begin{minipage}{.97\linewidth}
+\begin{lstlisting}[caption={Local-checkpoint recursion; all cell bounds are inclusive.},label={alg:local}]
+Solve(B, F, cell, axis, remaining):
+    discard disjoint boxes; tighten slabs; crop F
+    absorb two-sided groups as monotone pair masks
+    if a box covers the cell or F is zero: return 0
+    if at most b hard boxes remain: return Base(B, F, cell)
+
+    if remaining == 0:
+        if stored_size(F) > fixed_factor*d*d*(len(B)+2):
+            F = Push(F, blocks at hard-box cutoffs)
+            reindex B and cell onto the block axes
+        remaining = unset    # reset even after a skip
+    if remaining is unset:
+        remaining = local_budget(current weighted potential)
+
+    if the current axis has no eligible hard cutoff:
+        return Solve(B, F, cell, next_axis, remaining-1)
+    c = weighted_median(current-axis hard cutoffs)
+    return Solve(left of c,  next_axis, remaining-1)
+         + Solve(right of c, next_axis, remaining-1)
+\end{lstlisting}
+\end{minipage}
+\end{center}
+
+\begin{theorem}[Numerical Chan bound with guarded compression]
+\label{thm:main}
+For fixed $d\ge4$ and fixed base size, the local-checkpoint algorithm
+computes the mass of a union of $n$ anchored boxes under a supplied
+product measure in
+\begin{equation}
+                   O_d(n^{d/3}\log^{c_d}(n+2))
+                       =\wtO_d(n^{d/3})
+ \label{eq:mainbound}
+\end{equation}
+arithmetic and comparison operations, for a constant $c_d$ depending
+only on $d$. This holds with compression at every checkpoint, or with
+the certified skip rule above. Initial coordinate sorting and mass
+construction are included when the cell masses take $O_d(n\log n)$ work
+to obtain. In particular it applies to ordinary HV and dominated-set
+$\ell_1$ magnitude. For $d=2,3$, the sweeps give $O(n\log n)$.
+\end{theorem}
+
+\begin{proof}
+\emph{Correctness.} Discretization is exact by~\eqref{eq:finite-sum}.
+Absorption preserves~\eqref{eq:invariant}; inclusive splitting partitions
+the cell disjointly. The base case is finite inclusion--exclusion followed
+by exact contractions. Lemma~\ref{lem:compression} preserves all later
+block-aligned restrictions. Skipping a compression leaves the state
+unchanged. Induction on the recursion proves the returned mass is correct.
+
+\emph{Representation at a block entry.} Let $N=\Phi$ after absorption,
+$m$ be the hard-box count, $S$ the term count, and $M$ the total length of
+the common axis domains. At every nonroot block entry,
+\[
+                       m=\Theta_d(N),\qquad M=O_d(N+1).
+\]
+After compression the second relation follows from the $m+1$ blocks per
+axis. After a skip it follows from the storage certificate: a nonempty
+term contains a unary array for every live axis, so $M$ is no greater
+than the certified total storage. Within a block, clipping and absorption
+do not lengthen domains or increase $S$. Compression multiplies the term
+count by at most $C_d$ from Lemma~\ref{lem:compression}.
+
+\emph{One block.} Since $Q=\Theta_d(N)$, for sufficiently large $N$ the
+budget is $L=\tfrac14\log_2N+O_d(1)$. The block contains
+$O_d(N^{1/4})$ nodes and leaves. At a surviving child checkpoint,
+Lemma~\ref{lem:potential} and the bounded integer-weight perturbation give
+\[
+                 N'\le c_dN^{\beta},\qquad
+                 \beta=1-\frac{3}{4d}<1.
+\]
+Each node can be charged $\wtO_d(S^2N)$, including coordinate scans,
+cut selection, contraction at an early base, or compression at a leaf.
+The square is a conservative deterministic allowance for comparing and
+merging terms; omitting merging gives a linear dependence on $S$.
+Thus the whole block costs $\wtO_d(S^2N^{5/4})$. In particular, no claim
+about beneficial cancellation is used.
+
+\emph{Number of blocks and term growth.} Above a sufficiently large
+fixed threshold, the recurrence $N'\le c_dN^\beta$ gives
+$G=O_d(\log\log(n+2))$ block generations on a path. Below that threshold,
+only a constant number of geometric advances remains: the potential
+contracts by a fixed factor, and a hard box has a fixed positive minimum
+triple weight. Consequently,
+\[
+                S\le C_d^G=\log^{O_d(1)}(n+2)
+\]
+along every path from the one-term initial state. Skipped checkpoints do
+not increase $S$ and do not invalidate the bound on generations, because
+they too restart the local budget.
+
+\emph{Summing the work.} Up to factors depending only on $d$, at
+macro-depth $g$ a subproblem size is bounded by $cN_0^{\beta^g}$, and
+the number of block entries is at most
+\[
+ a_d^g N_0^{\frac14\sum_{j<g}\beta^j}
+       =a_d^g N_0^{\frac d3(1-\beta^g)}.
+\]
+Constants raised to $g$, as well as $S^2$, are polylogarithmic in $n$.
+The sum of block costs at that depth is therefore bounded, up to such
+factors, by
+\[
+ N_0^{\frac d3(1-\beta^g)+\frac54\beta^g}
+  =N_0^{\frac d3-(\frac d3-\frac54)\beta^g}
+  \le N_0^{d/3},
+\]
+since $5/4<d/3$ for every $d\ge4$. Summing over all macro-depths adds
+only a polylogarithmic factor.
+
+\emph{The root and low dimensions.} Many boxes can be absorbed at the
+root while its arrays still have length $O_d(n)$. Its first block costs
+at most $\wtO_d(nN_0^{1/4})\le\wtO_d(n^{5/4})$, with $S=1$, or
+$\wtO_d(n)$ if it ends immediately. Both fit~\eqref{eq:mainbound}.
+Subsequent block entries obey the invariant already proved. The 2D and
+3D sweep analysis supplies their separate bounds; substituting $d=3$
+into this block-work calculation would not be justified.
+\end{proof}
+
+\subsection{Meaning of the retained exponent}
+The proof is a numerical realization of Chan's simplification,
+elimination, and compression framework~\cite{chan2013}. His functional
+closure and grid-preserving simplification appear in Lemmas 4.4 and 4.5;
+the orthant bound is in Section 4.2. Our local schedule makes the
+representation-growth charge explicit and permits the storage-certified
+skip. Neither atoms nor finite prefix sums cause an extra polynomial
+factor in $n$. In particular, 4D remains $\wtO(n^{4/3})$.
+
+\begin{center}
+\begin{tabular}{@{}clcc@{}}
+\toprule
+$d$ & Elimination grouping & Arithmetic bound & Lift variables\\\midrule
+2 & numerical sweep & $O(n\log n)$ & ---\\
+3 & sweep and skyline tree & $O(n\log n)$ & ---\\
+4 & $2+2$ & $\wtO(n^{4/3})$ & 8\\
+5 & $2+2+1$ & $\wtO(n^{5/3})$ & 10\\
+6 & $2+2+2$ & $\wtO(n^2)$ & 12\\
+7 & $2+2+2+1$ & $\wtO(n^{7/3})$ & 14\\
+8 & $2+2+2+2$ & $\wtO(n^{8/3})$ & 16\\
+9 & $2+2+2+2+1$ & $\wtO(n^3)$ & 18\\
+10 & $2+2+2+2+2$ & $\wtO(n^{10/3})$ & 20\\
+\bottomrule
+\end{tabular}
+\end{center}
+The theorem is fixed-dimensional: its hidden constants and logarithmic
+exponents may depend substantially on $d$. It is an arithmetic-operation
+bound, not a rational bit-complexity result or a floating-point stability
+theorem. It concerns total indicator evaluation, not all exclusive
+contributions, gradient evaluation, or online update sequences.
+
+\subsection{Why the older adaptive timings do not prove this theorem}
+The earlier compiled adaptive driver uses a level interval of roughly
+$0.1d\log_2n_0$, based on the original input size, combined with a size
+threshold. This does not restart local blocks at every smaller subproblem
+or skipped checkpoint. Moreover, even a locally chosen
+$0.1d\log_2N$ interval would give the crude block-work exponent $1+0.1d$,
+which is $1.4>4/3$ in 4D. The constant in~\eqref{eq:localbudget} is
+deliberate: block work grows like $N^{5/4}$, strictly below the target
+exponent in all dimensions under discussion.
+
+Accordingly, the statement ``the numerical treatment retains Chan's
+complexity'' is proved here for an explicit numerical algorithm and its
+local policy. It is not inferred from a familiar algorithm name, a
+compilation setting, or timing plots for a different policy.
+
+\section{Software realization and validation of the local policy}
+\label{sec:software}
+
+The repository~\cite{software} provides three relevant variants in
+\texttt{NumericalChanHVND}. They share the finite-mass problem formulation
+but should not be conflated.
+\begin{enumerate}
+\item \texttt{numerical\_chan.py} is the standard-library numerical
+implementation with locally chosen blocks and compression at each
+checkpoint. Integer and \texttt{Fraction} inputs can be evaluated with
+exact arithmetic. It is covered by the fixed-local-policy case of
+Theorem~\ref{thm:main}.
+\item \texttt{numerical\_chan\_compiled.py} is the previously published
+compiled adaptive driver. It adds cell pruning and native contractions,
+with the global-interval policy discussed above. The archived performance
+comparisons measure this variant.
+\item \texttt{numerical\_chan\_local\_compiled.py} is the local-checkpoint
+compiled driver accompanying this report. It reuses the same native
+kernel, cell restriction and base routines, and changes the scheduling
+to Listing~\ref{alg:local}. Theorem~\ref{thm:main} covers its algorithmic
+policy, with fixed base size and compression factor, under the stated
+arithmetic-operation model.
+\end{enumerate}
+All three support every integer dimension from two through ten. The
+theory is for any fixed dimension; ten is an implementation and testing
+range, not a mathematical barrier.
+
+\subsection{What is compiled}
+The file \texttt{compiled\_terms.py} stores coefficients, unary arrays,
+and pair constraints in typed native states. Numba compiles complete
+restriction, masking, variable elimination, state merging, base sums,
+and block compression. The geometric recursion remains readable Python.
+In 2D and 3D the numerical sweeps are compiled instead. The earlier hybrid
+Numba version compiled only smaller array helpers while Python retained
+much of the term construction and dispatch overhead.
+
+The kernel does not enable fast-math or parallel execution. Coefficients
+and unary masses are binary64 values, cutoff indices are integers, and
+median weights are the separately constructed Python integers. Dictionary
+copies share arrays only while those arrays are immutable; modifications
+allocate replacement arrays. State hashes are checked against full
+contents before equal terms are merged. Hash collisions cannot justify
+an algebraic equality. A limit on collision-chain comparisons may leave
+equivalent terms unmerged, which preserves their sum and does not affect
+the raw-emission proof.
+
+Compilation changes the cost of an operation, not the identity it
+evaluates. Reusing the native kernels under the local policy does not
+require a new elimination rule. Conversely, enabling Numba does not
+establish either exact real arithmetic or numerical stability. Signed
+cancellation can magnify floating-point errors even when the final
+indicator is positive.
+
+\subsection{Minimal use}
+From the repository root, in an environment with NumPy and Numba:
+\begin{lstlisting}[language=Python]
+from NumericalChanHVND.numerical_chan_local_compiled import (
+    hypervolume, magnitude, NumericalChanLocalCompiled)
+
+points = [(2, 1, 1, 1), (1, 2, 1, 1)]
+assert abs(hypervolume(points) - 3.0) < 1e-10
+assert abs(magnitude(points) - 135.0 / 16.0) < 1e-10
+
+solver = NumericalChanLocalCompiled(dimension=4)
+value = solver.compute(points)
+print(solver.stats)
+\end{lstlisting}
+The second value is $(15/4)(3/2)^2=135/16$. For minimization data,
+replace each point by its nonnegative extent vector $r-p$ before calling
+the solver. The public validation rejects negative or nonfinite extents.
+An empty input returns zero, whereas a single all-zero generator has
+magnitude one. No dominance filter is required for correctness.
+
+The local driver intentionally exposes no global interval or
+compression-disable option. Its compression factor is a fixed constant
+in the theorem; factor zero means compression at every scheduled
+checkpoint. Arbitrarily changing the block budget or making policy
+parameters depend on input size is outside the stated theorem.
+
+\subsection{Validation of the newly proved policy}
+The script \texttt{verify\_local\_compiled.py} and its saved JSON record
+check the new driver independently of the old timing experiment. They
+include 232 exact small-instance checks across dimensions 2--10, 24
+additional exact checkpoint-recursion instances, 18 checks of the two
+magnitude transformations, and 3,538 observed cyclic-advance and budget
+invariants. The trace checks that a skipped axis consumes a step and that
+a checkpoint resets its budget after either decision.
+
+A 64-point four-dimensional permuted antichain reaches two successive
+checkpoint generations. With factor zero it executes 63 compressions;
+with a sufficiently large fixed factor it executes 63 certified skips.
+Both settings agree with the independent Chan $d/2$ reference for HV and
+magnitude. These deliberately chosen settings validate both branches of
+the policy; they are not performance recommendations.
+
+The common-extent 1,552-box family described in
+Section~\ref{sec:experiments} also executes six \emph{default local-policy}
+compressions. Its HV is $6\,372\,330\,876$ and its magnitude is
+$411\,863\,688.75$, agreeing with the independently transformed Chan
+$d/2$ computations. These six events occur on different branches; this
+case alone does not demonstrate repeated compression on one path.
+
+All checks pass with maximum scaled discrepancy
+$5.6844\times10^{-13}$, using relative tolerance $2\times10^{-9}$ and
+absolute tolerance $2\times10^{-10}$. Cached import in a fresh process
+is also checked. The shared kernel's separate suite tests signed states,
+all cutoff orientations, inclusive crops, boundary atoms, repeated
+compression, and parent-state immutability. These tests corroborate the
+implementation; the complexity conclusion rests on
+Theorem~\ref{thm:main}, not on a finite test set.
+
+\input{numerical_product_chan_experiments.tex}
+
+\section{Structural simplifications and limits}
+\label{sec:discussion}
+
+The structural simplification can be stated precisely. Initially a
+product measure is stored as one unary factor per axis. Local geometric
+simplification replaces one- and two-sided boxes by unary and monotone
+pair predicates. Summing one variable introduces only a fixed-dimensional
+number of terms of the same form. Compression replaces long coordinate
+histories by masses on the surviving hard-box grid. The local schedule
+limits the number of representation-expanding checkpoints to
+$O_d(\log\log n)$ on a path. Together these properties preserve the
+$d/3$ exponent.
+
+Magnitude contributes a particularly clean interpretation of the initial
+weights. Its exponential kernel factors under the $\ell_1$ metric,
+anchored-box magnitude is a product of affine coordinate factors, and
+the union indicator is represented by the product measure with an origin
+atom. The affine generator transformation translates this problem to HV
+and back with no increase in dimension. This is a useful simplification
+and an equivalence of computational difficulty, not a faster union
+algorithm by itself.
+
+There are also clear limits. Multiplying answers from coordinate-pair
+projections loses dependence. After masks are introduced, independent
+product factors are insufficient; the pair constraints and signed sums
+are essential. Compression can create many such terms before any merging
+occurs. The finite closure constants and the logarithmic exponent in the
+proof may be large. These facts are consistent with a theoretically better
+exponent losing to a simpler method on the small benchmark inputs.
+
+The present result leaves the stricter target of an unrestricted
+$\wtO(n^{4/3-\varepsilon})$ 4D algorithm open. Obtaining it would require
+a stronger global bound or an additional structural reduction; neither
+the magnitude identity nor a $2+2$ ordering supplies that step. Similarly,
+HV--magnitude equivalence transports an established lower bound but does
+not manufacture a reduction from 3SUM, a clique problem, or arbitrary
+Klee measure input. Those are separate questions.
+
+For EMO software, this gives one interface for HV and dominated-set
+magnitude, including boundary cases. For geometric analysis, it gives
+an explicit finite representation and an accounting of retained histories.
+The numerical formulation retains Chan's exponent under the proved
+compression policy.
+
+\clearpage
+\appendix
+\section{A compact implementation and proof map}
+\label{app:map}
+
+The following table locates the main mathematical obligations. The names
+refer to files in \texttt{NumericalChanHVND}; the proof specifies exact
+arithmetic while the compiled code evaluates the same formulas in binary64.
+\begin{center}
+\small
+\begin{tabularx}{\linewidth}{@{}>{\raggedright\arraybackslash}p{.28\linewidth}>{\raggedright\arraybackslash}X@{}}
+\toprule
+Mathematical operation & Implementation location and invariant\\\midrule
+Axis cells and masses & \texttt{numerical\_chan\_numba.py},
+\texttt{compute}: origin atom plus interval masses; ranks preserve box membership.\\
+Cell simplification & \texttt{numerical\_chan\_compiled.py},
+\texttt{\_cell\_state}: disjointness, slab tightening, cropping and pair masks.\\
+Scalar contraction & \texttt{compiled\_terms.py},
+\texttt{eliminate}: first-winner guards and signed prefix differences.\\
+Block compression & \texttt{compiled\_terms.py},
+\texttt{push\_blocks}: lift to $2d$ variables, eliminate old axes, retain block masses.\\
+Local schedule & \texttt{numerical\_chan\_local\_compiled.py},
+\texttt{\_node} and \texttt{\_new\_block}: one budget step per cyclic advance;
+restart at every checkpoint.\\
+Validation & \texttt{verify\_compiled.py} checks the shared algebra;
+\texttt{verify\_local\_compiled.py} adds local scheduling and end-to-end checks.\\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+The experiments use the separate directory
+\texttt{benchmarks/compiled\_2d\_10d}, including saved input coordinates,
+all timing repetitions, source hashes, the exact-oracle record, and the
+natural-compression probe. Source revision \texttt{38587e7} identifies the
+previously benchmarked release; the locally scheduled driver was added
+with this report. A rerun of that driver's timing comparison is needed
+before applying any of the old speedup ratios to it.
+
+To reproduce correctness and build this manuscript from the repository
+root, use the following commands. LaTeX is run in the paper directory
+because the experimental section is a companion source file.
+\begin{lstlisting}
+python NumericalChanHVND/verify_local_compiled.py
+cd NumericalChanHVND/paper
+pdflatex -interaction=nonstopmode -halt-on-error numerical_product_chan.tex
+pdflatex -interaction=nonstopmode -halt-on-error numerical_product_chan.tex
+\end{lstlisting}
+The report uses the standard article class, A4 paper, 12-point text, and
+an inline \texttt{thebibliography} with \texttt{bibitem} entries. It can
+be compiled without a bibliography database or code execution by LaTeX.
+
+\clearpage
+\begin{thebibliography}{9}
+\raggedright
+\bibitem{chan2013}
+Timothy M. Chan.
+\newblock Klee's Measure Problem Made Easy.
+\newblock In \emph{Proceedings of the 54th Annual IEEE Symposium on
+Foundations of Computer Science (FOCS)}, pages 410--419, 2013.
+\newblock \url{https://doi.org/10.1109/FOCS.2013.51}.
+\newblock Author version, 10 August 2013:
+\url{https://tmc.web.engr.illinois.edu/easyklee8_13.pdf}.
+
+\bibitem{emmerich2026}
+Michael T. M. Emmerich.
+\newblock The Magnitude of Dominated Sets: A Pareto Compliant Indicator
+Grounded in Metric Geometry.
+\newblock arXiv:2604.18147v1, 2026.
+\newblock \url{https://doi.org/10.48550/arXiv.2604.18147}.
+
+\bibitem{leinstermeckes2017}
+Tom Leinster and Mark W. Meckes.
+\newblock The magnitude of a metric space: from category theory to
+geometric measure theory.
+\newblock In Nicola Gigli, editor, \emph{Measure Theory in Non-Smooth
+Spaces}, pages 156--193. De Gruyter, 2017.
+\newblock \url{https://doi.org/10.1515/9783110550832-005}.
+\newblock Preprint: \url{https://arxiv.org/abs/1606.00095}.
+
+\bibitem{emmerichdeutz2018}
+Michael T. M. Emmerich and Andr\'e H. Deutz.
+\newblock A tutorial on multiobjective optimization: fundamentals and
+evolutionary methods.
+\newblock \emph{Natural Computing}, 17:585--609, 2018.
+\newblock \url{https://doi.org/10.1007/s11047-018-9685-y}.
+
+\bibitem{software}
+\emph{FastHVChan: numerical hypervolume and magnitude implementations}.
+\newblock Repository of Michael Emmerich, including
+\texttt{NumericalChanHV4D} and \texttt{NumericalChanHVND}.
+\newblock Benchmark release: commit
+\texttt{38587e74918d815c8ebbdd50093e8b1897ace623}, 4 October 2026.
+\newblock Local-checkpoint implementation and manuscript: accompanying
+\texttt{NumericalChanHVND} files.
+\newblock \url{https://github.com/emmerichmtm/FastHVChan}.
+\end{thebibliography}
+\end{document}

@@ -1,0 +1,20 @@
+{
+  "status": "passed",
+  "pages": 24,
+  "paper": "A4",
+  "base_font_points": 12,
+  "compiler": "Tectonic (LaTeX/XeTeX), repeated passes to resolve references",
+  "undefined_references": 0,
+  "overfull_boxes": 0,
+  "underfull_boxes": 0,
+  "visual_review": "All 24 rendered pages inspected. Final pages 22-24 rechecked after pagination correction.",
+  "verification": "New local-driver record and archived benchmark source hashes all match.",
+  "scope": "Document layout and source provenance; numerical checks are in local_compiled_verification.json.",
+  "sha256": {
+    "numerical_product_chan.pdf": "5f7b45c01a6f15622d094b07012282728f432c562b5918e0e5a67b061fd7502f",
+    "numerical_product_chan_source.zip": "609f5392981218ff636c9cc20cebd86f70f92d25f3216356fb3ead7bad0153a2",
+    "numerical_product_chan.tex": "78c6bd2d6fcb248f699a9cf17e8f8c3c3075939167b85b5c2978ca1ff53c007f",
+    "numerical_product_chan_experiments.tex": "3181b539438a9544dc36d7eabb98068f9e32ae46cd78fbfba497d277367108f9",
+    "NUMERICAL_PRODUCT_REPORT.md": "eb33330406ff23dd1333b625e123ba3a7f4481ad34112350464da938d1058314"
+  }
+}

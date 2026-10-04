@@ -4,6 +4,21 @@ Standalone numerical hypervolume and dominated-set L1 magnitude engines.
 Every integer dimension from 2 to 10 is supported, including 5, 7, and 9.
 The two original Chan implementations at the repository root are unchanged.
 
+The [full research report (PDF)](paper/numerical_product_chan.pdf) and
+[LaTeX source](paper/numerical_product_chan.tex) explain magnitude, both HV
+transformations, finite contractions, and a proof retaining Chan's
+`O(n^(d/3) polylog(n))` arithmetic bound. The new
+[`numerical_chan_local_compiled.py`](numerical_chan_local_compiled.py)
+implements its local checkpoint policy, including compression skips only
+when the stored state is already small. Use this version when referring to
+that complexity theorem; the archived adaptive benchmark below measures
+a different policy. Run `python NumericalChanHVND/verify_local_compiled.py`
+from the repository root to validate it.
+
+```python
+from NumericalChanHVND.numerical_chan_local_compiled import hypervolume, magnitude
+```
+
 The new [adaptive compiled backend](ADAPTIVE_COMPILED.md) supports 2D-10D,
 including complete native contractions, cell pruning and enabled adaptive
 compression in 4D-10D. Use `numerical_chan_compiled.hypervolume` for this version.

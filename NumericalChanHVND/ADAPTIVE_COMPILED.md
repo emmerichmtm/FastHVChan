@@ -1,5 +1,14 @@
 # Adaptive compiled numerical hypervolume, 2D-10D
 
+**Theory-backed local policy:** the subsequent
+[full report](paper/numerical_product_chan.pdf) proves retention of Chan's
+`O(n^(d/3) polylog(n))` arithmetic bound for a locally restarted checkpoint
+schedule, implemented in
+[`numerical_chan_local_compiled.py`](numerical_chan_local_compiled.py).
+That driver shares the kernel described here, but changes the schedule.
+The older global-interval policy and archived timings described below remain
+unchanged; the new theorem and old speedup ratios must not be interchanged.
+
 The new `numerical_chan_compiled.py` keeps finite cell masses and moves complete
 state operations into Numba. In 4D-10D its geometric driver follows the
 simplification and adaptive-compression approach of this repository's

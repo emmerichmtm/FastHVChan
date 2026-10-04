@@ -52,6 +52,12 @@ compilation; reported performance measurements distinguish it from warm calls.
 
 ## Report, tests, and timings
 
+- [Full numerical HV/magnitude report (PDF)](../NumericalChanHVND/paper/numerical_product_chan.pdf)
+  and [LaTeX source](../NumericalChanHVND/paper/numerical_product_chan.tex):
+  self-contained theory for both audiences, both indicator reductions, and
+  the local compression policy retaining the `O(n^(4/3) polylog(n))` bound.
+  Its compiled implementation is the generic `numerical_chan_local_compiled`
+  module, which includes 4D.
 - [Adaptive compiled 2D-10D design](../NumericalChanHVND/ADAPTIVE_COMPILED.md)
   and [latest timings](../NumericalChanHVND/benchmarks/compiled_2d_10d/RESULTS.md).
   `python ../NumericalChanHVND/verify_compiled.py` validates this new backend.
