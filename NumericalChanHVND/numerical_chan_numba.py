@@ -515,6 +515,10 @@ class NumericalChanNumba:
         self.stats['base_calls'] += 1
         return answer
 
+    def _compress(self, terms, blocks):
+        """Backend hook; keep the geometric schedule independent of evaluation."""
+        return push_blocks(terms, blocks, self.stats)
+
     def _node(self, boxes, terms, lo, hi, axis, remaining, generation):
         self.stats['nodes'] += 1
         self.stats['max_generation'] = max(self.stats['max_generation'], generation)
@@ -528,7 +532,7 @@ class NumericalChanNumba:
         if remaining == 0:
             ends = [ordered_unique([hi[i]] + [p[i] for p in boxes if lo[i] <= p[i] < hi[i]]) for i in range(self.d)]
             blocks = [list(zip([lo[i]] + [x + 1 for x in ends[i][:-1]], ends[i])) for i in range(self.d)]
-            terms = push_blocks(terms, blocks, self.stats)
+            terms = self._compress(terms, blocks)
             boxes = [tuple(bisect_right(ends[i], p[i]) - 1 for i in range(self.d)) for p in boxes]
             lo, hi = (0,) * self.d, tuple(len(e) - 1 for e in ends)
             generation += 1
