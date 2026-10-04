@@ -61,12 +61,13 @@ already small, retains Chan's $\wtO_d(n^{d/3})$ arithmetic bound for every
 fixed $d\ge4$. Thus the numerical treatment retains the exponent; it does
 not improve it. Dimensions two and three use $O(n\log n)$ sweeps.
 
-The accompanying implementation covers dimensions two through ten. We
-separate the locally scheduled implementation covered by the proof from
-an earlier compiled adaptive variant used in the archived experiments.
-Those measurements demonstrate practical gains over the Python $d/3$
-reference on many small inputs, but neither establish an exponent nor
-show universal superiority over the simpler $d/2$ reference.
+The accompanying implementation covers dimensions two through ten.
+Experiments in 4D--6D use 64--1,024 points, with a 4,096-point 4D stress
+test, and compare the proved local policy, an earlier adaptive variant,
+and both Python Chan references. Completed timings, partial runs, and
+timeouts are kept distinct. Earlier small-input tests remain separate
+historical comparisons. The measurements do not establish an asymptotic
+exponent or universal practical superiority.
 \end{abstract}
 \vspace{.3em}
 \noindent\textbf{Keywords:} hypervolume indicator; Klee's measure problem;
@@ -1117,7 +1118,7 @@ magnitude. These deliberately chosen settings validate both branches of
 the policy; they are not performance recommendations.
 
 The common-extent 1,552-box family described in
-Section~\ref{sec:experiments} also executes six \emph{default local-policy}
+Section~\ref{sec:archived} also executes six \emph{default local-policy}
 compressions. Its HV is $6\,372\,330\,876$ and its magnitude is
 $411\,863\,688.75$, agreeing with the independently transformed Chan
 $d/2$ computations. These six events occur on different branches; this
@@ -1132,6 +1133,7 @@ compression, and parent-state immutability. These tests corroborate the
 implementation; the complexity conclusion rests on
 Theorem~\ref{thm:main}, not on a finite test set.
 
+\input{numerical_product_chan_larger.tex}
 \input{numerical_product_chan_experiments.tex}
 
 \section{Structural simplifications and limits}
@@ -1162,7 +1164,7 @@ product factors are insufficient; the pair constraints and signed sums
 are essential. Compression can create many such terms before any merging
 occurs. The finite closure constants and the logarithmic exponent in the
 proof may be large. These facts are consistent with a theoretically better
-exponent losing to a simpler method on the small benchmark inputs.
+exponent losing to a simpler method on the tested inputs.
 
 The present result leaves the stricter target of an unrestricted
 $\wtO(n^{4/3-\varepsilon})$ 4D algorithm open. Obtaining it would require
@@ -1208,17 +1210,18 @@ Validation & \texttt{verify\_compiled.py} checks the shared algebra;
 \end{tabularx}
 \end{center}
 
-The experiments use the separate directory
-\texttt{benchmarks/compiled\_2d\_10d}, including saved input coordinates,
-all timing repetitions, source hashes, the exact-oracle record, and the
-natural-compression probe. Source revision \texttt{38587e7} identifies the
-previously benchmarked release; the locally scheduled driver was added
-with this report. A rerun of that driver's timing comparison is needed
-before applying any of the old speedup ratios to it.
+The larger experiment uses \texttt{benchmarks/larger\_4d\_6d}, with
+saved coordinates, every retained repetition, partial runs and source
+hashes. Its unchanged solver sources are from revision \texttt{095fa73}.
+The earlier experiment remains in \texttt{benchmarks/compiled\_2d\_10d},
+including its exact-oracle record and natural-compression probe. Revision
+\texttt{38587e7} identifies that earlier release. The local driver is now
+timed explicitly in the larger comparison; old speedup ratios are not
+transferred to it.
 
 To reproduce correctness and build this manuscript from the repository
 root, use the following commands. LaTeX is run in the paper directory
-because the experimental section is a companion source file.
+because the experimental sections are companion source files.
 \begin{lstlisting}
 python NumericalChanHVND/verify_local_compiled.py
 cd NumericalChanHVND/paper
@@ -1268,10 +1271,10 @@ evolutionary methods.
 \emph{FastHVChan: numerical hypervolume and magnitude implementations}.
 \newblock Repository of Michael Emmerich, including
 \texttt{NumericalChanHV4D} and \texttt{NumericalChanHVND}.
-\newblock Benchmark release: commit
-\texttt{38587e74918d815c8ebbdd50093e8b1897ace623}, 4 October 2026.
-\newblock Local-checkpoint implementation and manuscript: accompanying
-\texttt{NumericalChanHVND} files.
+\newblock Solver releases: \texttt{38587e7} (archived small-input
+benchmark) and \texttt{095fa73} (larger 4D--6D comparison), 4 October 2026.
+\newblock Complete source hashes and samples: accompanying
+\texttt{NumericalChanHVND} benchmark files.
 \newblock \url{https://github.com/emmerichmtm/FastHVChan}.
 \end{thebibliography}
 \end{document}

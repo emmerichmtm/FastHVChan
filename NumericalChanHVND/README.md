@@ -11,8 +11,11 @@ transformations, finite contractions, and a proof retaining Chan's
 [`numerical_chan_local_compiled.py`](numerical_chan_local_compiled.py)
 implements its local checkpoint policy, including compression skips only
 when the stored state is already small. Use this version when referring to
-that complexity theorem; the archived adaptive benchmark below measures
-a different policy. Run `python NumericalChanHVND/verify_local_compiled.py`
+that complexity theorem. The [larger 4D–6D benchmark](benchmarks/larger_4d_6d/RESULTS.md)
+compares both policies on 64–1,024 points, plus a 4,096-point 4D stress test,
+and distinguishes complete medians, partial workers and unrun cases.
+The archived adaptive benchmark below measures a different policy.
+Run `python NumericalChanHVND/verify_local_compiled.py`
 from the repository root to validate it.
 
 ```python
@@ -100,6 +103,9 @@ not large dense 10D performance guarantees. Numerical array enumeration is
 used only by independent test oracles, never by the solver.
 
 - [Report PDF](paper/numerical_chan_2d_10d.pdf) and [LaTeX source](paper/numerical_chan_2d_10d.tex).
+- [Larger 4D–6D comparison](benchmarks/larger_4d_6d/RESULTS.md):
+  the proved local-checkpoint policy, the earlier compiled policy, and both
+  Python Chan references on nested nondominated sphere and simplex fronts.
 - [Adaptive compiled 2D-10D comparison](benchmarks/compiled_2d_10d/RESULTS.md):
   complete native contractions in all dimensions, with compression enabled.
 - [Previous 3D-10D comparison](benchmarks/current_3d_10d/RESULTS.md):
@@ -120,6 +126,15 @@ The default local block schedule is necessary for the proof. Do not infer
 that an arbitrary `block_levels` stress-test override has the same bound.
 
 ## Measured performance
+
+The [larger 4D–6D run](benchmarks/larger_4d_6d/RESULTS.md) measures the
+local-checkpoint policy on nested spherical and simplex fronts. On the
+sphere family, its warm medians are 3.49 s at 1,024 points in 4D, 5.22 s at
+512 points in 5D, and 10.37 s at 256 points in 6D. Larger cases include
+partial runs and timeouts, which are retained explicitly. At 4,096 points
+in 4D, its first call took 42.57 s versus 23.37 s for Python Chan d/3;
+neither completed the warm protocol. The smaller-case speedups should not
+be extrapolated to all sizes. See the report for all sizes and both families.
 
 The [adaptive compiled 2D-10D run](benchmarks/compiled_2d_10d/RESULTS.md)
 records 48 inputs and 187 workers. All 48 compiled runs completed and agreed

@@ -1,0 +1,100 @@
+\section{Experiments with larger inputs in 4D--6D}
+\label{sec:experiments}
+
+This additional experiment measures the local-checkpoint implementation covered by Theorem~\ref{thm:main}, alongside the earlier global-interval compiled variant and both Python Chan references. The solvers were unchanged from source revision \texttt{095fa73}; hashes identify the exact sources and inputs. Here $n$ denotes input generators, one per anchored box.
+
+The spherical inputs use $n=64,128,256,512,1024$ in each of dimensions four, five and six, and $n=4096$ in four dimensions. A second family on the positive simplex uses $n=64,256,1024$ in each dimension. Smaller inputs are nested prefixes within each family and dimension. Spherical coordinates are absolute Gaussian samples plus $0.01$, normalized in Euclidean norm; simplex coordinates are exponential samples plus $0.01$, normalized by their sum. Both constructions produce positive nondominated fronts.
+
+Each fresh sequential worker makes one first call and three warm calls, with a new solver on each call. Warm medians include input conversion and preprocessing but exclude imports and first use. Existing compilation caches are retained. The whole worker, including imports and all four calls, has a 45-second budget. A timeout therefore does not imply that one call took 45 seconds. Available partial timings and values are archived. After two consecutive timeouts in a solver/family/dimension series, larger sizes in that series are explicitly marked not run; no runtime is inferred for them.
+
+All default compression settings remain enabled. There is no dominance prefilter, fast-math or concurrent numerical worker. The processor is an AMD Ryzen 7 5800H with 16 logical CPUs. The environment is the same Windows/Python/Numba setup described in Section~\ref{sec:archived}. Ordinary system load is uncontrolled.
+
+Tables~\ref{tab:larger-sphere} and~\ref{tab:larger-simplex} report complete warm medians. Table~\ref{tab:larger-first} retains first-call observations on selected large inputs, including partial workers.
+
+\begin{table}[tbp]
+\centering\small
+\setlength{\tabcolsep}{5pt}
+\begin{tabular}{rrrrrr}
+\toprule
+$d$ & $n$ & \shortstack{Local\\compiled} & \shortstack{Earlier\\compiled} & \shortstack{Chan $d/3$\\Python} & \shortstack{Chan $d/2$\\Python} \\
+\midrule
+4 & 64 & 0.0518 & 0.0541 & 0.1243 & 0.0245 \\
+4 & 128 & 0.1431 & 0.1417 & 0.3472 & 0.0684 \\
+4 & 256 & 0.3427 & 0.3366 & 0.8913 & 0.1622 \\
+4 & 512 & 0.8485 & 0.9259 & 2.1206 & 0.3859 \\
+4 & 1024 & 3.4890 & 4.9178 & 4.7949 & 0.8810 \\
+4 & 4096 & TO[0] & TO[0] & TO[0] & 4.5595 \\
+5 & 64 & 0.2208 & 0.2145 & 0.6844 & 0.0878 \\
+5 & 128 & 0.6220 & 0.6149 & 1.9354 & 0.2568 \\
+5 & 256 & 1.9115 & 1.8885 & 6.0686 & 0.8202 \\
+5 & 512 & 5.2159 & 5.2239 & TO[1] & 2.0171 \\
+5 & 1024 & TO[1] & TO[0] & TO[0] & 5.0315 \\
+6 & 64 & 0.7754 & 0.7949 & 3.0187 & 0.2772 \\
+6 & 128 & 3.0644 & 3.0222 & 10.9978 & 1.2158 \\
+6 & 256 & 10.3680 & 10.2754 & TO[0] & 3.9232 \\
+6 & 512 & TO[0] & TO[0] & TO[0] & TO[2] \\
+6 & 1024 & TO[0] & TO[0] & NR & TO[0] \\
+\bottomrule
+\end{tabular}
+\caption{Sphere fronts at larger input sizes: warm median \emph{seconds}. Local compiled uses the proved local-checkpoint policy; earlier compiled uses the global-interval policy. TO[$k$] means worker timeout with $k$ complete warm calls; NR means not run after two smaller-size timeouts.}
+\label{tab:larger-sphere}
+\end{table}
+
+\begin{table}[tbp]
+\centering\small
+\setlength{\tabcolsep}{5pt}
+\begin{tabular}{rrrrrr}
+\toprule
+$d$ & $n$ & \shortstack{Local\\compiled} & \shortstack{Earlier\\compiled} & \shortstack{Chan $d/3$\\Python} & \shortstack{Chan $d/2$\\Python} \\
+\midrule
+4 & 64 & 0.0589 & 0.0543 & 0.1566 & 0.0262 \\
+4 & 256 & 0.3693 & 0.3574 & 0.9423 & 0.1621 \\
+4 & 1024 & 4.0905 & 5.4003 & 5.4955 & 0.9622 \\
+5 & 64 & 0.2168 & 0.2385 & 0.7958 & 0.1137 \\
+5 & 256 & 2.1954 & 2.2019 & 7.7507 & 0.9182 \\
+5 & 1024 & TO[0] & TO[0] & TO[0] & 6.1703 \\
+6 & 64 & 0.8562 & 0.8410 & 3.2904 & 0.3552 \\
+6 & 256 & TO[2] & TO[2] & TO[0] & 5.2442 \\
+6 & 1024 & TO[0] & TO[0] & TO[0] & TO[0] \\
+\bottomrule
+\end{tabular}
+\caption{Simplex fronts at larger input sizes: warm median \emph{seconds}. Local compiled uses the proved local-checkpoint policy; earlier compiled uses the global-interval policy. TO[$k$] means worker timeout with $k$ complete warm calls; NR means not run after two smaller-size timeouts.}
+\label{tab:larger-simplex}
+\end{table}
+
+\begin{table}[tbp]
+\centering\small
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{lrrrrrr}
+\toprule
+Front & $d$ & $n$ & \shortstack{Local\\compiled} & \shortstack{Earlier\\compiled} & \shortstack{Chan $d/3$\\Python} & \shortstack{Chan $d/2$\\Python} \\
+\midrule
+Sphere & 4 & 1024 & 5.868 & 7.325 & 4.772 & 0.885 \\
+Sphere & 4 & 4096 & 42.565 & 42.937 & 23.367 & 4.539 \\
+Sphere & 5 & 1024 & 22.582 & 31.550 & 43.535 & 4.932 \\
+Sphere & 6 & 512 & 36.826 & 36.728 & --- & 12.678 \\
+Sphere & 6 & 1024 & --- & --- & NR & 34.491 \\
+Simplex & 4 & 1024 & 6.377 & 7.522 & 5.494 & 0.959 \\
+Simplex & 5 & 1024 & 25.191 & 34.373 & --- & 6.544 \\
+Simplex & 6 & 1024 & --- & --- & --- & 43.563 \\
+\bottomrule
+\end{tabular}
+\caption{Retained first-call seconds on the largest inputs, including workers that later timed out. These are single observations, not warm medians; compiled first calls can include kernel initialization and cache loading. Imports are excluded. A dash means no first value returned within the worker budget; NR means not run.}
+\label{tab:larger-first}
+\end{table}
+
+There are 25 inputs and 100 planned algorithm/input rows: 74 complete workers, 25 timeouts, and 1 not run by the escalation rule. The local solver completes 18 of its 25 rows. The tables retain all planned sizes so the missing large cases remain visible.
+
+Against the earlier compiled solver, local compiled is faster on 8 of 18 complete pairs, with median reference/local ratio 0.991. These ratios omit censored pairs and are not universal speed guarantees.
+
+Against Python Chan $d/3$, local compiled is faster on 16 of 16 complete pairs, with median reference/local ratio 2.88. These ratios omit censored pairs and are not universal speed guarantees.
+
+Against Python Chan $d/2$, local compiled is faster on 0 of 18 complete pairs, with median reference/local ratio 0.417. These ratios omit censored pairs and are not universal speed guarantees.
+
+For four dimensions and $n=4096$, local compiled returns its first value in 42.565 seconds, versus 23.367 seconds for Python Chan $d/3$. Neither completes all three warm calls. This first-call observation shows why the complete-pair speedups should not be extrapolated to larger inputs; it is not a warm-median comparison.
+
+Compression is executed on 4 completed local inputs. Per-input checkpoint, compression and peak-term counts are retained with the raw data. The size rule is unchanged; absence of compression in an individual input is a recorded algorithm decision, not a disabled feature.
+
+All 321 returned values in 91 rows are checked against an available Chan $d/2$ value; there are 0 mismatches and the maximum scaled error is $4.4409\times10^{-16}$. This checks every retained first and warm value, including partial workers. A completed first reference value remains valid even if that worker later exceeds its budget. These are cross-implementation comparisons; the larger sets were not evaluated by an exponential exact inclusion--exclusion oracle.
+
+Among complete local workers, the ratio of slowest to fastest warm call has median 1.05 and maximum 1.26. The sample is one seeded front per dimension/family and three timed repetitions. It demonstrates performance and limits at larger $n$, not a fitted asymptotic exponent. The worst-case bound continues to rest on Theorem~\ref{thm:main}. Full inputs, statuses and retained samples are in \texttt{benchmarks/larger\_4d\_6d/results}.

@@ -1,0 +1,23 @@
+{
+  "status": "passed",
+  "datasets": 25,
+  "rows": 100,
+  "statuses": {
+    "ok": 74,
+    "timeout": 25,
+    "not_run_after_timeouts": 1
+  },
+  "checked_returned_values": 321,
+  "unverified_returned_values": 0,
+  "maximum_scaled_error": 4.440892098500626e-16,
+  "input_checks": "Cardinality, dimension, positivity, front normalization, and nested prefixes.",
+  "timing_checks": "Three samples and exact median for complete workers; no full median for partial workers.",
+  "validation": "Every retained first and warm value checked against available Chan d/2 first value.",
+  "sources_checked": 9,
+  "scope": "Record and cross-implementation audit; not an exact large-instance oracle.",
+  "sha256": {
+    "datasets.json": "69eb7feff78d54fe866d14a244c7251820c3d70d18850fad4078f84ee5d56b0b",
+    "timings.json": "f33028c1a80995e0e9b28a35a9ef0b6ca7f5a24f27d9c506c5d0e4ab6bb1a53f",
+    "timings.csv": "78cf57647abe814394f26643e3ba76cc8207307b66ff83bbe78fde38d8e3817d"
+  }
+}

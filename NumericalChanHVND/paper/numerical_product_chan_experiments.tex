@@ -1,5 +1,5 @@
-\section{Experiments and their interpretation}
-\label{sec:experiments}
+\section{Archived small-input experiments}
+\label{sec:archived}
 
 These measurements concern the previously published \emph{global-interval
 adaptive} implementation, archived with revision \texttt{38587e7}~\cite{software}.
@@ -162,5 +162,6 @@ match the archived dataset and timing files.
 The proofs concern exact arithmetic; the compiled implementation uses binary64
 and signed intermediate sums, without a general floating-point error bound.
 Local algebraic closure also does not establish the old adaptive driver's
-global runtime. The new local-checkpoint analysis is separate from this
-benchmark; practical performance of that policy remains to be measured.
+global runtime. The local-checkpoint analysis is separate from this
+archived benchmark. Section~\ref{sec:experiments} now measures that policy
+on larger inputs; the earlier speedup ratios are not applied to it.

@@ -58,8 +58,11 @@ compilation; reported performance measurements distinguish it from warm calls.
   the local compression policy retaining the `O(n^(4/3) polylog(n))` bound.
   Its compiled implementation is the generic `numerical_chan_local_compiled`
   module, which includes 4D.
+- [Larger 4D–6D timings](../NumericalChanHVND/benchmarks/larger_4d_6d/RESULTS.md):
+  4D inputs up to 4,096 points, with complete and partial workers clearly
+  distinguished; includes the proved local-checkpoint compiled policy.
 - [Adaptive compiled 2D-10D design](../NumericalChanHVND/ADAPTIVE_COMPILED.md)
-  and [latest timings](../NumericalChanHVND/benchmarks/compiled_2d_10d/RESULTS.md).
+  and [archived small-input timings](../NumericalChanHVND/benchmarks/compiled_2d_10d/RESULTS.md).
   `python ../NumericalChanHVND/verify_compiled.py` validates this new backend.
 - [Whole-contraction JIT report (PDF)](paper/whole_loop_jit_4d_report.pdf) /
   [self-contained LaTeX source](paper/whole_loop_jit_4d_report.tex): recursion,
@@ -79,7 +82,15 @@ is a stress-test override and has no arbitrary-use complexity guarantee.
 
 ## Measured performance
 
-The latest [adaptive compiled benchmark](../NumericalChanHVND/benchmarks/compiled_2d_10d/RESULTS.md)
+The [larger comparison](../NumericalChanHVND/benchmarks/larger_4d_6d/RESULTS.md)
+includes 4D spherical fronts with 64–4,096 points. At 1,024 points, the
+local-checkpoint compiled warm median is 3.49 s versus 4.79 s for Python
+Chan d/3 and 0.88 s for Python Chan d/2. At 4,096 points, the respective
+first calls took 42.57 s, 23.37 s, and 4.54 s; only Chan d/2 completed all
+warm repetitions within the 45-second worker budget. These first calls
+are not warm medians. A second simplex family is also included.
+
+The archived [adaptive compiled benchmark](../NumericalChanHVND/benchmarks/compiled_2d_10d/RESULTS.md)
 includes a 24-point 4D sphere case: 17.0 ms for the new compiled solver,
 28.6 ms for Python Chan d/3, and 1,878.0 ms for the original numerical Python.
 Python Chan d/2 was faster at 6.2 ms. The new default compression gate stays
