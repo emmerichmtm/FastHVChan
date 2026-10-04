@@ -25,17 +25,18 @@ Keep `NumericalChanHV4D` and `NumericalChanHVND` together and install
 1. **The geometric recursion remains Python.** It classifies orthants,
    absorbs easy constraints, chooses a weighted median, and recurses on the
    two children. Its compression schedule is unchanged.
-2. **The adapter has two numerical entry points.**
-   `NumericalChan4D._base` calls `base_sum`; `_compress` calls `push_blocks`.
-   Each packs its term list once, makes one native call, and records counters.
+2. **The adapter creates the native state once.** `_initial_terms` packs the
+   initial term. `_apply_easy` applies the classified constraints; `_base`
+   evaluates a leaf; `_compress` sums fine cells into blocks. Descendants keep
+   native term collections, so calls do not repeatedly pack or unpack them.
 3. **The entire contraction stays in Numba.** `compiled_terms.py` performs
    bound construction, winner enumeration, masks, prefix sums, signed term
    emission, normalization, merging, and successive variable elimination.
    Base evaluation also keeps its small inclusion-exclusion loop in Numba.
 
-The only change needed in the shared geometric engine is a `_compress` method
-that forwards to its existing evaluator. The 4D subclass overrides that method
-and `_base`; it does not duplicate the geometric recursion.
+The shared geometric engine exposes small methods for those operations. Its
+default methods retain the previous hybrid implementation, while the 4D
+subclass replaces the numerical operations. The geometric recursion is shared.
 
 ## The term representation
 
@@ -89,8 +90,9 @@ or object-mode fallback is enabled.
 
 The algorithm, recursion, compression schedule and measure are unchanged.
 The compilation boundary moves outward to enclose complete contractions.
-Python still performs geometry, packing and unpacking; this is not a claim
-that the entire solver is compiled. Compilation does not improve the
+Python still performs geometry and builds small mask/block metadata arrays;
+it packs the initial state once. This is not a claim that the entire solver
+is compiled. Compilation does not improve the
 asymptotic exponent, and it does not remove the intermediate terms produced
 by the scheduled compression.
 

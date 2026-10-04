@@ -22,6 +22,7 @@ UNARY = types.DictType(types.int64, FLOATS)
 EDGES = types.DictType(EDGE_KEY, INTS)
 TERM = types.NamedTuple((types.float64, UNARY, EDGES), PackedTerm)
 BOUND = types.NamedTuple((types.int64, INTS), Bound)
+MASK = types.Tuple((types.int64, types.int64, INTS))
 COUNTERS = ('raw_terms', 'term_eliminations', 'peak_terms',
             'max_lower_candidates', 'max_upper_candidates', 'compressions')
 
@@ -249,6 +250,21 @@ def sum_out(terms, count, stats):
 
 
 @njit(cache=True)
+def apply_easy(terms, slabs, masks):
+    """Copy the state and absorb unary/pair constraints without leaving Numba."""
+    updated = List.empty_list(TERM)
+    for old in terms:
+        term = copy_term(old)
+        for axis, cut in slabs:
+            multiply(term, axis, np.arange(len(term.unary[axis])) > cut)
+        for source, target, cutoff in masks:
+            add_edge(term, source, target, False, cutoff)
+        if alive(term):
+            updated.append(term)
+    return updated
+
+
+@njit(cache=True)
 def rectangle_sum(terms, lo, hi, stats):
     if np.any(lo > hi):
         return 0.
@@ -315,7 +331,7 @@ def push_blocks(terms, blocks, stats):
 
 
 def pack(terms):
-    """Cross the Python/native boundary once per complete contraction."""
+    """Create the initial native state; descendants keep this representation."""
     result = List.empty_list(TERM)
     for term in terms:
         unary, edges = Dict.empty(types.int64, FLOATS), Dict.empty(EDGE_KEY, INTS)

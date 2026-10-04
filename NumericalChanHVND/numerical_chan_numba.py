@@ -468,11 +468,14 @@ class NumericalChanNumba:
         self.weights = {s: ceil_root(scale ** self.d * (1 << s), self.d)
                         for s in range(3, 3 * self.d - 5)}
         total = prod(sum(w) for w in unary.values())
-        terms = [Term(1, unary, {})]
+        terms = self._initial_terms(unary)
         self.stats['initial_cells'] = sum(map(len, coords))
         uncovered = self._node(boxes, terms, (0,) * self.d,
                                tuple(len(c) - 1 for c in coords), 0, None, 0)
         return total - uncovered
+
+    def _initial_terms(self, unary):
+        return [Term(1, unary, {})]
 
     def _absorb(self, boxes, terms, lo, hi):
         hard, slabs, pairs = [], {}, {}
@@ -495,6 +498,11 @@ class NumericalChanNumba:
         for (i, j), points in pairs.items():
             f = suffix_mask(np.array(points, dtype=np.int64), len(terms[0].unary[i]))
             masks.append((i, j, f))
+        self.stats['absorbed_boxes'] += len(boxes) - len(hard)
+        return hard, self._apply_easy(terms, slabs, masks)
+
+    def _apply_easy(self, terms, slabs, masks):
+        """Backend hook for applying the already classified easy constraints."""
         updated = []
         for old in terms:
             term = old.copy()
@@ -504,8 +512,7 @@ class NumericalChanNumba:
                 add_edge(term, i, j, False, f)
             if term.alive():
                 updated.append(term)
-        self.stats['absorbed_boxes'] += len(boxes) - len(hard)
-        return hard, updated
+        return updated
 
     def _base(self, boxes, terms, lo, hi):
         answer = 0
