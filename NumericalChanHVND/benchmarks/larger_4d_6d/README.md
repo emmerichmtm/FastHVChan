@@ -43,3 +43,7 @@ python NumericalChanHVND/benchmarks/larger_4d_6d/audit_results.py
 
 The audit checks source hashes, nested inputs, complete-worker medians,
 timeout escalation, and every returned value against the available reference.
+The original byte hashes describe the measured Windows checkout. Git can
+change text line endings on checkout, so `results/source_provenance.json`
+also records hashes after normalizing CRLF to LF. The audit accepts this
+line-ending difference while still checking the source contents.

@@ -6,6 +6,7 @@ import json
 import math
 from pathlib import Path
 import statistics
+from source_provenance import verify_sources
 
 HERE = Path(__file__).resolve().parent
 ROOT = HERE.parents[2]
@@ -28,9 +29,7 @@ def main():
         for key in ('first_seconds', 'median_seconds'):
             expected = str(original[key]) if key in original else ''
             assert row[key] == expected
-    for name, expected in report['source_sha256'].items():
-        actual = hashlib.sha256((ROOT / name.replace('\\', '/')).read_bytes()).hexdigest()
-        assert actual == expected, name
+    verify_sources(report, HERE / 'results')
     series = {}
     for case in cases:
         assert len(case['points']) == case['n']

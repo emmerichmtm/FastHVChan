@@ -1,0 +1,41 @@
+{
+  "description": "The original raw byte hashes remain in timings.json. These additional hashes normalize CRLF to LF only, permitting verification across Git checkout settings.",
+  "sources": {
+    "NumericalChanHVND\\benchmarks\\larger_4d_6d\\benchmark_larger.py": {
+      "measured_sha256": "6fa5b279fdcb973b7de2d4e40e4047ba6b7d768d81fb6e621aaada90488a1ee8",
+      "lf_normalized_sha256": "6fa5b279fdcb973b7de2d4e40e4047ba6b7d768d81fb6e621aaada90488a1ee8"
+    },
+    "NumericalChanHVND\\benchmarks\\compiled_2d_10d\\benchmark_dimensions.py": {
+      "measured_sha256": "9740a5a3f9a51e09cd264382c2de20c38d67b76eb4a4282839a36833cd4af361",
+      "lf_normalized_sha256": "9740a5a3f9a51e09cd264382c2de20c38d67b76eb4a4282839a36833cd4af361"
+    },
+    "NumericalChanHVND\\benchmarks\\larger_4d_6d\\results\\datasets.json": {
+      "measured_sha256": "69eb7feff78d54fe866d14a244c7251820c3d70d18850fad4078f84ee5d56b0b",
+      "lf_normalized_sha256": "dfa57d15f842c0291dc25b7936a94e5f2dd6ff2069e23d8f9842a4bc94d06718"
+    },
+    "NumericalChanHVND\\numerical_chan_local_compiled.py": {
+      "measured_sha256": "2eb42724ef2f4c1109f7033394b2884e96278107d7b0772726b1d0f0ee28e74c",
+      "lf_normalized_sha256": "2eb42724ef2f4c1109f7033394b2884e96278107d7b0772726b1d0f0ee28e74c"
+    },
+    "NumericalChanHVND\\numerical_chan_compiled.py": {
+      "measured_sha256": "b9679a4dbc264b71132ad8555ecb81d20855c476c3362ec020d0809f4bc3e942",
+      "lf_normalized_sha256": "b9679a4dbc264b71132ad8555ecb81d20855c476c3362ec020d0809f4bc3e942"
+    },
+    "NumericalChanHVND\\compiled_terms.py": {
+      "measured_sha256": "f14154b7c1c452d0990d5643fdc87b19b5c962d4ce3f7fb7dffa1551e481d2b4",
+      "lf_normalized_sha256": "f14154b7c1c452d0990d5643fdc87b19b5c962d4ce3f7fb7dffa1551e481d2b4"
+    },
+    "NumericalChanHVND\\numerical_chan_numba.py": {
+      "measured_sha256": "773ae8dcfc57f43f4cd5dd87c7467eff0a8113eca443296eb09286210824b370",
+      "lf_normalized_sha256": "773ae8dcfc57f43f4cd5dd87c7467eff0a8113eca443296eb09286210824b370"
+    },
+    "chan_orthant_dby3.py": {
+      "measured_sha256": "7fa161f4092426af03a4b2fa5098dac649ec82f9ccfe797bd64d49b4f6384e1e",
+      "lf_normalized_sha256": "41db5d040f79996fdde5b7b085728841514ea33be8e192ca6134ad9268a37f07"
+    },
+    "chan_hypervolume.py": {
+      "measured_sha256": "d2e40db7d88e03ed6944ee2f7dbf782f69d262ad10a809cd4a8918ddecf87c85",
+      "lf_normalized_sha256": "da2e122d08c7ce5e2e4ce5c6a31bd5fd0fe466752dd7b64a8ed40e333e82e132"
+    }
+  }
+}

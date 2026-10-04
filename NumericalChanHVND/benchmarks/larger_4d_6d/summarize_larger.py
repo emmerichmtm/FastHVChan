@@ -1,10 +1,10 @@
 """Summarize archived larger-input measurements without rerunning solvers."""
 import argparse
 from collections import Counter
-import hashlib
 import json
 from pathlib import Path
 import statistics
+from source_provenance import verify_sources
 
 HERE = Path(__file__).resolve().parent
 ROOT = HERE.parents[2]
@@ -253,8 +253,7 @@ def main():
     report=json.loads((args.results/'timings.json').read_text(encoding='utf-8'))
     cases=json.loads((args.results/'datasets.json').read_text(encoding='utf-8'))
     assert 'finished_utc' in report, 'Wait for the full run before publishing'
-    for name,expected in report['source_sha256'].items():
-        assert hashlib.sha256((ROOT/name.replace('\\','/')).read_bytes()).hexdigest()==expected,name
+    verify_sources(report, args.results)
     info=facts(report,cases)
     (HERE/'RESULTS.md').write_text(markdown(report,cases,info),encoding='utf-8')
     (ROOT/'NumericalChanHVND/paper/numerical_product_chan_larger.tex').write_text(latex(report,cases,info),encoding='utf-8')
