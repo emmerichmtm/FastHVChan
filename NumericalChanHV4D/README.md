@@ -32,15 +32,24 @@ from numerical_chan4_numba import hypervolume4
 value = hypervolume4(points)
 ```
 
-This wrapper uses the shared float64 engine in `../NumericalChanHVND`.
-Keep both directories together. Array scans, prefix sums, normalization,
-suffix masks, and cutoff searches are compiled in Numba nopython mode;
-geometric and term recursion remains Python. No fastmath or parallelism.
+The 4D entry point now uses [whole compiled contractions](numerical_chan4_compiled.py).
+Term states stay native throughout recursion: constraint updates, elimination,
+merging, base evaluation and compression execute inside Numba. The geometric
+recursion stays readable Python and uses the same compression schedule.
+The [implementation guide](WHOLE_LOOP_JIT.md) explains the small adapter and
+the numerical kernel. No fastmath or parallelism is enabled.
+
+Keep both directories together: the geometric engine and basic helpers are
+shared with `../NumericalChanHVND`. That directory retains the earlier hybrid
+backend, which remains available as a comparison. First use can include JIT
+compilation; reported performance measurements distinguish it from warm calls.
 
 ## Report, tests, and timings
 
 - [LaTeX report](paper/numerical_chan4.tex) / [PDF](paper/numerical_chan4.pdf).
 - `python verify_numerical_chan4.py` runs exact correctness tests.
+- `python verify_whole_loop.py` checks the current compiled 4D backend,
+  including direct magnitude, signed terms, and repeated compression.
 - The shared Numba validation is `../NumericalChanHVND/verify_numba.py`.
 - [Measured comparison](benchmarks/RESULTS.md) includes unmodified Python
   Chan Section 4.2 and Section 2, Python numerical, and Numba numerical.
@@ -52,10 +61,25 @@ is a stress-test override and has no arbitrary-use complexity guarantee.
 
 ## Measured performance
 
+The [current 4D benchmark](benchmarks/whole_loop/RESULTS.md) measures the new
+whole-contraction backend against the earlier hybrid, older compiled prefix
+solver, and Python Chan implementations on seven common inputs. It improves
+the hybrid by 1.47-8.13x on completed matched cases (median 7.76x).
+On the seed-42 twenty-point sphere, time drops from 2.050 s to 0.252 s.
+The older prefix solver still takes only 0.019 s on that case; scheduled
+compression continues to create many more terms in the new algorithm.
+
+All seven new-backend cases finish, and all 33 completed algorithm/input
+comparisons agree. Raw inputs, timings, counters and profiles are included.
+The mathematical recursion and compression policy are unchanged by this JIT
+work; no improved asymptotic exponent is claimed.
+
+### Earlier audits of the hybrid backend
+
 The [4D follow-up audit](benchmarks/prefix4/REPORT.md) also measures the older
 compiled `HV4DMagnitude` prefix solver on common saved inputs. On spherical
 fronts with 20 or 40 points, that solver is 1.59-2.11x faster than Python
-Chan d/3; at 20 points it is 84.59-96.99x faster than this default Numba backend.
+Chan d/3; at 20 points it was 84.59-96.99x faster than the earlier hybrid backend.
 Whole-loop compilation and the cost of the new compression policy explain
 the difference. Chan d/2 remains fastest on these small test cases.
 

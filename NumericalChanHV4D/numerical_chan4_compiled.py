@@ -12,10 +12,9 @@ from numba.typed import List
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from NumericalChanHVND.numerical_chan_numba import NumericalChanNumba, Term
-try:
-    from . import compiled_terms as kernel
-except ImportError:  # Also support running directly from this directory.
-    import compiled_terms as kernel
+# A single module name keeps Numba's cached named-tuple types importable from
+# both a repository-package import and a script launched in this directory.
+from NumericalChanHV4D import compiled_terms as kernel
 
 
 class NumericalChan4D(NumericalChanNumba):

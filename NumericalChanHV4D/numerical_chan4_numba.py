@@ -1,13 +1,12 @@
-"""4D entry point for the shared float64 Numba engine in NumericalChanHVND."""
-from pathlib import Path
-import sys
-sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
-from NumericalChanHVND.numerical_chan_numba import NumericalChanNumba
+"""Stable 4D entry point: native term states and complete compiled contractions."""
+if __package__:
+    from .numerical_chan4_compiled import NumericalChan4D
+else:
+    from numerical_chan4_compiled import NumericalChan4D
 
 
-class NumericalChan4Numba(NumericalChanNumba):
-    def __init__(self, base_hard=2, block_levels=None):
-        super().__init__(dimension=4, base_hard=base_hard, block_levels=block_levels)
+class NumericalChan4Numba(NumericalChan4D):
+    """Backward-compatible class name for the whole-contraction 4D backend."""
 
 
 def hypervolume4(points, magnitude=False, **options):

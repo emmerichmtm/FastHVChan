@@ -1,0 +1,1488 @@
+{
+  "case": "sphere-s42-n20",
+  "algorithm": "whole_loop",
+  "value": 1.1257677901991463,
+  "counters": {
+    "input_points": 20,
+    "dimension": 4,
+    "initial_cells": 84,
+    "nodes": 61,
+    "max_generation": 1,
+    "box_classifications": 390,
+    "absorbed_boxes": 165,
+    "blocks": 11,
+    "cuts": 30,
+    "raw_terms": 10809,
+    "term_eliminations": 7441,
+    "peak_terms": 625,
+    "max_lower_candidates": 6,
+    "max_upper_candidates": 7,
+    "compressions": 10,
+    "base_calls": 31
+  },
+  "total_seconds": 2.8188764000000006,
+  "total_calls": 4129144,
+  "nopython_signatures": {
+    "base_sum": 1,
+    "push_blocks": 1
+  },
+  "source_hashes": {
+    "harness": "304538c2f9aa1747ec0793f4adbb0b0f7cd81379b9c6bedb45021d66e0128df9",
+    "datasets": "47c8037e82a95f24a56744c1fafe65fcdf43137892930f08d85ac9ff373a0abf",
+    "old/solver.py": "bb176cbe85d2c40e0ff8b125a0e9134113a2d13f7baebdaa10bc8e261f28dd2b",
+    "old/fastkernel.py": "a2471e7427c4b6490412c9729df45f5723249bc8aacd3eaa5a27543b292bb76f",
+    "old/prefix4.py": "9214e7c65bc2e6df2c4ef4e27544c0001b9351bc8abd1021bf123ec8bb6f0c8e",
+    "old/core.py": "7d8204b933379e529dbe779d03b45cb759235ad8d26d0eaac05ad5bca4d04b51",
+    "whole_loop/numerical_chan4_compiled.py": "3ad5372595110a8c6babdb1503ffcb0287d42d667d019f7a3245e10ad6873e7b",
+    "whole_loop/compiled_terms.py": "5a789015187169ebb6c467e02bd17d87e57619cb2fb40a64344282fd2a27eae5",
+    "hybrid/numerical_chan.py": "1778f7ac8bed5f1252c0c64145db98322e6173e47098a25cd420510935c3800f",
+    "hybrid/numerical_chan_numba.py": "3010d7fd79a0866df0bb3b21d38d973ce231868f32491fd8502ea2b8904eccbc",
+    "reference/chan_orthant_dby3.py": "7fa161f4092426af03a4b2fa5098dac649ec82f9ccfe797bd64d49b4f6384e1e",
+    "reference/chan_hypervolume.py": "d2e40db7d88e03ed6944ee2f7dbf782f69d262ad10a809cd4a8918ddecf87c85"
+  },
+  "by_self": [
+    {
+      "file": "C:\\Users\\emmer\\Documents\\Codex\\2026-09-30\\files-pasted-by-the-user-absolutely\\work\\numba-env\\Lib\\site-packages\\numba\\core\\types\\abstract.py",
+      "line": 121,
+      "function": "__hash__",
+      "primitive_calls": 117027,
+      "calls": 374090,
+      "self_seconds": 0.20195280000000002,
+      "cumulative_seconds": 0.42509450000000004
+    },
+    {
+      "file": "C:\\Users\\emmer\\Documents\\Codex\\2026-09-30\\files-pasted-by-the-user-absolutely\\work\\FastHVChan-publish\\NumericalChanHV4D\\numerical_chan4_compiled.py",
+      "line": 25,
+      "function": "_base",
+      "primitive_calls": 31,
+      "calls": 31,
+      "self_seconds": 0.1686049,
+      "cumulative_seconds": 2.4677279000000003
+    },
+    {
+      "file": "C:\\Users\\emmer\\Documents\\Codex\\2026-09-30\\files-pasted-by-the-user-absolutely\\work\\numba-env\\Lib\\site-packages\\numba\\core\\types\\abstract.py",
+      "line": 61,
+      "function": "__call__",
+      "primitive_calls": 32980,
+      "calls": 69500,
+      "self_seconds": 0.1335299,
+      "cumulative_seconds": 1.4999066
+    },
+    {
+      "file": "~",
+      "line": 0,
+      "function": "<built-in method builtins.hash>",
+      "primitive_calls": 117027,
+      "calls": 374090,
+      "self_seconds": 0.1253128,
+      "cumulative_seconds": 0.3166101
+    },
+    {
+      "file": "C:\\Users\\emmer\\Documents\\Codex\\2026-09-30\\files-pasted-by-the-user-absolutely\\work\\numba-env\\Lib\\site-packages\\numba\\typed\\typeddict.py",
+      "line": 182,
+      "function": "__setitem__",
+      "primitive_calls": 34847,
+      "calls": 34847,
+      "self_seconds": 0.1140401,
+      "cumulative_seconds": 0.1404987
+    },
+    {
+      "file": "~",
+      "line": 0,
+      "function": "<built-in method builtins.isinstance>",
+      "primitive_calls": 181370,
+      "calls": 181370,
+      "self_seconds": 0.0912005,
+      "cumulative_seconds": 0.22497850000000003
+    },
+    {
+      "file": "C:\\Users\\emmer\\Documents\\Codex\\2026-09-30\\files-pasted-by-the-user-absolutely\\work\\numba-env\\Lib\\site-packages\\numba\\core\\types\\abstract.py",
+      "line": 124,
+      "function": "__eq__",
+      "primitive_calls": 102521,
+      "calls": 117231,
+      "self_seconds": 0.0847794,
+      "cumulative_seconds": 0.1311002
+    },
+    {
+      "file": "C:\\Users\\emmer\\Documents\\Codex\\2026-09-30\\files-pasted-by-the-user-absolutely\\work\\FastHVChan-publish\\NumericalChanHV4D\\compiled_terms.py",
+      "line": 317,
+      "function": "pack",
+      "primitive_calls": 41,
+      "calls": 41,
+      "self_seconds": 0.0840564,
+      "cumulative_seconds": 2.3056288
+    },
+    {
+      "file": "C:\\Users\\emmer\\Documents\\Codex\\2026-09-30\\files-pasted-by-the-user-absolutely\\work\\numba-env\\Lib\\site-packages\\numba\\core\\types\\containers.py",
+      "line": 708,
+      "function": "__init__",
+      "primitive_calls": 14608,
+      "calls": 14608,
+      "self_seconds": 0.0746353,
+      "cumulative_seconds": 1.0444758
+    },
+    {
+      "file": "~",
+      "line": 0,
+      "function": "<built-in method _abc._abc_instancecheck>",
+      "primitive_calls": 248702,
+      "calls": 248702,
+      "self_seconds": 0.0731604,
+      "cumulative_seconds": 0.07316560000000001
+    },
+    {
+      "file": "~",
+      "line": 0,
+      "function": "<method 'get' of 'dict' objects>",
+      "primitive_calls": 69500,
+      "calls": 69500,
+      "self_seconds": 0.0690645,
+      "cumulative_seconds": 0.4759758
+    },
+    {
+      "file": "<frozen abc>",
+      "line": 117,
+      "function": "__instancecheck__",
+      "primitive_calls": 248702,
+      "calls": 248702,
+      "self_seconds": 0.060612400000000004,
+      "cumulative_seconds": 0.133778
+    },
+    {
+      "file": "C:\\Users\\emmer\\Documents\\Codex\\2026-09-30\\files-pasted-by-the-user-absolutely\\work\\numba-env\\Lib\\site-packages\\numba\\core\\types\\abstract.py",
+      "line": 49,
+      "function": "_intern",
+      "primitive_calls": 69500,
+      "calls": 69500,
+      "self_seconds": 0.0596659,
+      "cumulative_seconds": 0.5356417
+    },
+    {
+      "file": "C:\\Users\\emmer\\Documents\\Codex\\2026-09-30\\files-pasted-by-the-user-absolutely\\work\\numba-env\\Lib\\site-packages\\numba\\core\\types\\containers.py",
+      "line": 293,
+      "function": "__init__",
+      "primitive_calls": 14608,
+      "calls": 14608,
+      "self_seconds": 0.057628500000000006,
+      "cumulative_seconds": 0.1781035
+    },
+    {
+      "file": "C:\\Users\\emmer\\Documents\\Codex\\2026-09-30\\files-pasted-by-the-user-absolutely\\work\\numba-env\\Lib\\site-packages\\numba\\core\\types\\containers.py",
+      "line": 303,
+      "function": "__new__",
+      "primitive_calls": 14608,
+      "calls": 14608,
+      "self_seconds": 0.052776300000000005,
+      "cumulative_seconds": 0.1680393
+    },
+    {
+      "file": "C:\\Users\\emmer\\Documents\\Codex\\2026-09-30\\files-pasted-by-the-user-absolutely\\work\\numba-env\\Lib\\site-packages\\numba\\core\\types\\containers.py",
+      "line": 316,
+      "function": "__init__",
+      "primitive_calls": 14608,
+      "calls": 14608,
+      "self_seconds": 0.052253900000000006,
+      "cumulative_seconds": 0.3618845
+    },
+    {
+      "file": "C:\\Users\\emmer\\Documents\\Codex\\2026-09-30\\files-pasted-by-the-user-absolutely\\work\\numba-env\\Lib\\site-packages\\numba\\typed\\typeddict.py",
+      "line": 149,
+      "function": "_parse_arg",
+      "primitive_calls": 9310,
+      "calls": 9310,
+      "self_seconds": 0.0491105,
+      "cumulative_seconds": 0.4202405
+    },
+    {
+      "file": "~",
+      "line": 0,
+      "function": "<method 'format' of 'str' objects>",
+      "primitive_calls": 40274,
+      "calls": 40274,
+      "self_seconds": 0.0474033,
+      "cumulative_seconds": 0.054486700000000006
+    },
+    {
+      "file": "~",
+      "line": 0,
+      "function": "<method 'join' of 'str' objects>",
+      "primitive_calls": 32868,
+      "calls": 32868,
+      "self_seconds": 0.0447911,
+      "cumulative_seconds": 0.0820366
+    },
+    {
+      "file": "C:\\Users\\emmer\\Documents\\Codex\\2026-09-30\\files-pasted-by-the-user-absolutely\\work\\FastHVChan-publish\\NumericalChanHVND\\numerical_chan_numba.py",
+      "line": 112,
+      "function": "add_edge",
+      "primitive_calls": 5248,
+      "calls": 5248,
+      "self_seconds": 0.041878500000000006,
+      "cumulative_seconds": 0.18448820000000002
+    },
+    {
+      "file": "C:\\Users\\emmer\\Documents\\Codex\\2026-09-30\\files-pasted-by-the-user-absolutely\\work\\FastHVChan-publish\\NumericalChanHV4D\\numerical_chan4_compiled.py",
+      "line": 33,
+      "function": "_compress",
+      "primitive_calls": 10,
+      "calls": 10,
+      "self_seconds": 0.0381863,
+      "cumulative_seconds": 0.10869680000000001
+    },
+    {
+      "file": "C:\\Users\\emmer\\Documents\\Codex\\2026-09-30\\files-pasted-by-the-user-absolutely\\work\\numba-env\\Lib\\site-packages\\numba\\core\\types\\containers.py",
+      "line": 772,
+      "function": "key",
+      "primitive_calls": 58678,
+      "calls": 58678,
+      "self_seconds": 0.0373196,
+      "cumulative_seconds": 0.0462013
+    },
+    {
+      "file": "C:\\Users\\emmer\\Documents\\Codex\\2026-09-30\\files-pasted-by-the-user-absolutely\\work\\numba-env\\Lib\\site-packages\\numba\\typed\\typedlist.py",
+      "line": 341,
+      "function": "append",
+      "primitive_calls": 3692,
+      "calls": 3692,
+      "self_seconds": 0.0372142,
+      "cumulative_seconds": 0.9736204
+    },
+    {
+      "file": "C:\\Users\\emmer\\Documents\\Codex\\2026-09-30\\files-pasted-by-the-user-absolutely\\work\\numba-env\\Lib\\site-packages\\numba\\core\\types\\abstract.py",
+      "line": 96,
+      "function": "key",
+      "primitive_calls": 212471,
+      "calls": 212471,
+      "self_seconds": 0.0346471,
+      "cumulative_seconds": 0.0346471
+    },
+    {
+      "file": "C:\\Users\\emmer\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\Lib\\functools.py",
+      "line": 907,
+      "function": "wrapper",
+      "primitive_calls": 18311,
+      "calls": 29267,
+      "self_seconds": 0.0337406,
+      "cumulative_seconds": 1.1486765
+    },
+    {
+      "file": "C:\\Users\\emmer\\Documents\\Codex\\2026-09-30\\files-pasted-by-the-user-absolutely\\work\\numba-env\\Lib\\site-packages\\numpy\\_core\\_methods.py",
+      "line": 96,
+      "function": "_clip",
+      "primitive_calls": 5248,
+      "calls": 5248,
+      "self_seconds": 0.0336375,
+      "cumulative_seconds": 0.0506076
+    },
+    {
+      "file": "C:\\Users\\emmer\\Documents\\Codex\\2026-09-30\\files-pasted-by-the-user-absolutely\\work\\FastHVChan-publish\\NumericalChanHVND\\numerical_chan_numba.py",
+      "line": 27,
+      "function": "<genexpr>",
+      "primitive_calls": 52725,
+      "calls": 52725,
+      "self_seconds": 0.030324700000000003,
+      "cumulative_seconds": 0.030324700000000003
+    },
+    {
+      "file": "C:\\Users\\emmer\\Documents\\Codex\\2026-09-30\\files-pasted-by-the-user-absolutely\\work\\numba-env\\Lib\\site-packages\\numba\\core\\types\\npytypes.py",
+      "line": 482,
+      "function": "key",
+      "primitive_calls": 87994,
+      "calls": 87994,
+      "self_seconds": 0.0292945,
+      "cumulative_seconds": 0.0292945
+    },
+    {
+      "file": "C:\\Users\\emmer\\Documents\\Codex\\2026-09-30\\files-pasted-by-the-user-absolutely\\work\\numba-env\\Lib\\site-packages\\numba\\core\\types\\misc.py",
+      "line": 63,
+      "function": "unliteral",
+      "primitive_calls": 25625,
+      "calls": 47537,
+      "self_seconds": 0.028160900000000003,
+      "cumulative_seconds": 0.6970587
+    },
+    {
+      "file": "C:\\Users\\emmer\\Documents\\Codex\\2026-09-30\\files-pasted-by-the-user-absolutely\\work\\numba-env\\Lib\\site-packages\\numba\\typed\\typeddict.py",
+      "line": 176,
+      "function": "__getitem__",
+      "primitive_calls": 8097,
+      "calls": 8097,
+      "self_seconds": 0.024515000000000002,
+      "cumulative_seconds": 0.0308461
+    },
+    {
+      "file": "C:\\Users\\emmer\\Documents\\Codex\\2026-09-30\\files-pasted-by-the-user-absolutely\\work\\numba-env\\Lib\\site-packages\\numba\\core\\utils.py",
+      "line": 588,
+      "function": "unified_function_type",
+      "primitive_calls": 14608,
+      "calls": 14608,
+      "self_seconds": 0.024223300000000003,
+      "cumulative_seconds": 0.0663928
+    },
+    {
+      "file": "C:\\Users\\emmer\\Documents\\Codex\\2026-09-30\\files-pasted-by-the-user-absolutely\\work\\FastHVChan-publish\\NumericalChanHV4D\\compiled_terms.py",
+      "line": 325,
+      "function": "<genexpr>",
+      "primitive_calls": 101195,
+      "calls": 101195,
+      "self_seconds": 0.0238912,
+      "cumulative_seconds": 0.0238912
+    },
+    {
+      "file": "C:\\Users\\emmer\\Documents\\Codex\\2026-09-30\\files-pasted-by-the-user-absolutely\\work\\numba-env\\Lib\\site-packages\\numba\\typed\\typeddict.py",
+      "line": 94,
+      "function": "empty",
+      "primitive_calls": 7304,
+      "calls": 7304,
+      "self_seconds": 0.0237329,
+      "cumulative_seconds": 1.0599206
+    },
+    {
+      "file": "C:\\Users\\emmer\\Documents\\Codex\\2026-09-30\\files-pasted-by-the-user-absolutely\\work\\numba-env\\Lib\\site-packages\\numba\\core\\serialize.py",
+      "line": 30,
+      "function": "_numba_unpickle",
+      "primitive_calls": 68171,
+      "calls": 68171,
+      "self_seconds": 0.0230499,
+      "cumulative_seconds": 0.0230499
+    },
+    {
+      "file": "C:\\Users\\emmer\\Documents\\Codex\\2026-09-30\\files-pasted-by-the-user-absolutely\\work\\numba-env\\Lib\\site-packages\\numba\\core\\typing\\typeof.py",
+      "line": 275,
+      "function": "_typeof_nb_type",
+      "primitive_calls": 14659,
+      "calls": 14659,
+      "self_seconds": 0.021693900000000002,
+      "cumulative_seconds": 0.24154080000000003
+    },
+    {
+      "file": "C:\\Users\\emmer\\Documents\\Codex\\2026-09-30\\files-pasted-by-the-user-absolutely\\work\\numba-env\\Lib\\site-packages\\numba\\core\\typing\\typeof.py",
+      "line": 27,
+      "function": "typeof",
+      "primitive_calls": 18311,
+      "calls": 18311,
+      "self_seconds": 0.021106200000000002,
+      "cumulative_seconds": 1.182905
+    },
+    {
+      "file": "C:\\Users\\emmer\\Documents\\Codex\\2026-09-30\\files-pasted-by-the-user-absolutely\\work\\numba-env\\Lib\\site-packages\\numba\\core\\dispatcher.py",
+      "line": 691,
+      "function": "typeof_pyval",
+      "primitive_calls": 18311,
+      "calls": 18311,
+      "self_seconds": 0.0210182,
+      "cumulative_seconds": 1.3019792000000001
+    },
+    {
+      "file": "C:\\Users\\emmer\\Documents\\Codex\\2026-09-30\\files-pasted-by-the-user-absolutely\\work\\numba-env\\Lib\\site-packages\\numba\\core\\types\\abstract.py",
+      "line": 118,
+      "function": "__str__",
+      "primitive_calls": 120628,
+      "calls": 120628,
+      "self_seconds": 0.020975,
+      "cumulative_seconds": 0.020975
+    },
+    {
+      "file": "~",
+      "line": 0,
+      "function": "<built-in method builtins.sorted>",
+      "primitive_calls": 14652,
+      "calls": 14652,
+      "self_seconds": 0.0198941,
+      "cumulative_seconds": 0.0257847
+    },
+    {
+      "file": "C:\\Users\\emmer\\Documents\\Codex\\2026-09-30\\files-pasted-by-the-user-absolutely\\work\\numba-env\\Lib\\site-packages\\numba\\core\\types\\containers.py",
+      "line": 322,
+      "function": "<genexpr>",
+      "primitive_calls": 43824,
+      "calls": 43824,
+      "self_seconds": 0.019222100000000002,
+      "cumulative_seconds": 0.024066300000000002
+    },
+    {
+      "file": "C:\\Users\\emmer\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\Lib\\functools.py",
+      "line": 821,
+      "function": "dispatch",
+      "primitive_calls": 29267,
+      "calls": 29267,
+      "self_seconds": 0.019147400000000002,
+      "cumulative_seconds": 0.0398075
+    },
+    {
+      "file": "C:\\Users\\emmer\\Documents\\Codex\\2026-09-30\\files-pasted-by-the-user-absolutely\\work\\numba-env\\Lib\\site-packages\\numba\\core\\types\\containers.py",
+      "line": 233,
+      "function": "__init__",
+      "primitive_calls": 7304,
+      "calls": 7304,
+      "self_seconds": 0.0184453,
+      "cumulative_seconds": 0.0212818
+    },
+    {
+      "file": "C:\\Users\\emmer\\Documents\\Codex\\2026-09-30\\files-pasted-by-the-user-absolutely\\work\\numba-env\\Lib\\site-packages\\numba\\core\\typing\\typeof.py",
+      "line": 66,
+      "function": "_typeof_buffer",
+      "primitive_calls": 7304,
+      "calls": 7304,
+      "self_seconds": 0.017344500000000002,
+      "cumulative_seconds": 0.0275139
+    },
+    {
+      "file": "C:\\Users\\emmer\\Documents\\Codex\\2026-09-30\\files-pasted-by-the-user-absolutely\\work\\numba-env\\Lib\\site-packages\\numba\\core\\types\\containers.py",
+      "line": 144,
+      "function": "from_types",
+      "primitive_calls": 3652,
+      "calls": 3652,
+      "self_seconds": 0.017279700000000002,
+      "cumulative_seconds": 0.7736167
+    },
+    {
+      "file": "~",
+      "line": 0,
+      "function": "<built-in method builtins.all>",
+      "primitive_calls": 25163,
+      "calls": 25163,
+      "self_seconds": 0.0168895,
+      "cumulative_seconds": 0.059426700000000006
+    },
+    {
+      "file": "~",
+      "line": 0,
+      "function": "<built-in method __new__ of type object at 0x00007FFF223418F0>",
+      "primitive_calls": 46945,
+      "calls": 46945,
+      "self_seconds": 0.016509100000000002,
+      "cumulative_seconds": 0.016509100000000002
+    },
+    {
+      "file": "C:\\Users\\emmer\\Documents\\Codex\\2026-09-30\\files-pasted-by-the-user-absolutely\\work\\numba-env\\Lib\\site-packages\\numba\\core\\types\\containers.py",
+      "line": 243,
+      "function": "key",
+      "primitive_calls": 65859,
+      "calls": 65859,
+      "self_seconds": 0.0161508,
+      "cumulative_seconds": 0.0161508
+    },
+    {
+      "file": "C:\\Users\\emmer\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\Lib\\weakref.py",
+      "line": 414,
+      "function": "__getitem__",
+      "primitive_calls": 29267,
+      "calls": 29267,
+      "self_seconds": 0.015600000000000001,
+      "cumulative_seconds": 0.015600000000000001
+    },
+    {
+      "file": "C:\\Users\\emmer\\Documents\\Codex\\2026-09-30\\files-pasted-by-the-user-absolutely\\work\\numba-env\\Lib\\site-packages\\numba\\core\\types\\containers.py",
+      "line": 256,
+      "function": "__unliteral__",
+      "primitive_calls": 7304,
+      "calls": 7304,
+      "self_seconds": 0.015134400000000001,
+      "cumulative_seconds": 0.0969806
+    },
+    {
+      "file": "C:\\Users\\emmer\\Documents\\Codex\\2026-09-30\\files-pasted-by-the-user-absolutely\\work\\numba-env\\Lib\\site-packages\\numba\\core\\types\\containers.py",
+      "line": 311,
+      "function": "<genexpr>",
+      "primitive_calls": 29216,
+      "calls": 29216,
+      "self_seconds": 0.015011400000000001,
+      "cumulative_seconds": 0.019080200000000002
+    },
+    {
+      "file": "C:\\Users\\emmer\\Documents\\Codex\\2026-09-30\\files-pasted-by-the-user-absolutely\\work\\FastHVChan-publish\\NumericalChanHVND\\numerical_chan_numba.py",
+      "line": 107,
+      "function": "multiply_unary",
+      "primitive_calls": 5248,
+      "calls": 5248,
+      "self_seconds": 0.0143668,
+      "cumulative_seconds": 0.044208000000000004
+    },
+    {
+      "file": "~",
+      "line": 0,
+      "function": "<method 'reduce' of 'numpy.ufunc' objects>",
+      "primitive_calls": 10496,
+      "calls": 10496,
+      "self_seconds": 0.0140481,
+      "cumulative_seconds": 0.0140481
+    },
+    {
+      "file": "~",
+      "line": 0,
+      "function": "<built-in method builtins.hasattr>",
+      "primitive_calls": 58503,
+      "calls": 58503,
+      "self_seconds": 0.014029900000000001,
+      "cumulative_seconds": 0.014029900000000001
+    },
+    {
+      "file": "C:\\Users\\emmer\\Documents\\Codex\\2026-09-30\\files-pasted-by-the-user-absolutely\\work\\numba-env\\Lib\\site-packages\\numpy\\_core\\getlimits.py",
+      "line": 399,
+      "function": "__init__",
+      "primitive_calls": 10496,
+      "calls": 10496,
+      "self_seconds": 0.013919,
+      "cumulative_seconds": 0.013919
+    },
+    {
+      "file": "C:\\Users\\emmer\\Documents\\Codex\\2026-09-30\\files-pasted-by-the-user-absolutely\\work\\numba-env\\Lib\\site-packages\\numba\\typed\\typeddict.py",
+      "line": 107,
+      "function": "__init__",
+      "primitive_calls": 9310,
+      "calls": 9310,
+      "self_seconds": 0.013350200000000001,
+      "cumulative_seconds": 0.43359070000000005
+    },
+    {
+      "file": "~",
+      "line": 0,
+      "function": "<built-in method numpy.ascontiguousarray>",
+      "primitive_calls": 34847,
+      "calls": 34847,
+      "self_seconds": 0.0133445,
+      "cumulative_seconds": 0.0133445
+    },
+    {
+      "file": "C:\\Users\\emmer\\Documents\\Codex\\2026-09-30\\files-pasted-by-the-user-absolutely\\work\\numba-env\\Lib\\site-packages\\numba\\core\\typing\\typeof.py",
+      "line": 179,
+      "function": "_typeof_tuple",
+      "primitive_calls": 3652,
+      "calls": 3652,
+      "self_seconds": 0.013228,
+      "cumulative_seconds": 0.8579407
+    },
+    {
+      "file": "C:\\Users\\emmer\\Documents\\Codex\\2026-09-30\\files-pasted-by-the-user-absolutely\\work\\numba-env\\Lib\\site-packages\\numba\\core\\types\\abstract.py",
+      "line": 93,
+      "function": "__init__",
+      "primitive_calls": 69500,
+      "calls": 69500,
+      "self_seconds": 0.013192200000000001,
+      "cumulative_seconds": 0.013192200000000001
+    },
+    {
+      "file": "C:\\Users\\emmer\\Documents\\Codex\\2026-09-30\\files-pasted-by-the-user-absolutely\\work\\numba-env\\Lib\\site-packages\\numba\\core\\types\\abstract.py",
+      "line": 479,
+      "function": "__init__",
+      "primitive_calls": 11007,
+      "calls": 11007,
+      "self_seconds": 0.012960300000000001,
+      "cumulative_seconds": 0.028961700000000003
+    },
+    {
+      "file": "C:\\Users\\emmer\\Documents\\Codex\\2026-09-30\\files-pasted-by-the-user-absolutely\\work\\numba-env\\Lib\\site-packages\\numba\\core\\types\\containers.py",
+      "line": 402,
+      "function": "__init__",
+      "primitive_calls": 3652,
+      "calls": 3652,
+      "self_seconds": 0.012536,
+      "cumulative_seconds": 0.034196700000000003
+    },
+    {
+      "file": "C:\\Users\\emmer\\Documents\\Codex\\2026-09-30\\files-pasted-by-the-user-absolutely\\work\\numba-env\\Lib\\site-packages\\numba\\typed\\typeddict.py",
+      "line": 160,
+      "function": "_numba_type_",
+      "primitive_calls": 97204,
+      "calls": 97204,
+      "self_seconds": 0.012163100000000001,
+      "cumulative_seconds": 0.012163100000000001
+    },
+    {
+      "file": "C:\\Users\\emmer\\Documents\\Codex\\2026-09-30\\files-pasted-by-the-user-absolutely\\work\\FastHVChan-publish\\NumericalChanHVND\\numerical_chan_numba.py",
+      "line": 477,
+      "function": "_absorb",
+      "primitive_calls": 61,
+      "calls": 61,
+      "self_seconds": 0.011969400000000002,
+      "cumulative_seconds": 0.2381425
+    },
+    {
+      "file": "C:\\Users\\emmer\\Documents\\Codex\\2026-09-30\\files-pasted-by-the-user-absolutely\\work\\FastHVChan-publish\\NumericalChanHVND\\numerical_chan_numba.py",
+      "line": 26,
+      "function": "alive",
+      "primitive_calls": 10545,
+      "calls": 10545,
+      "self_seconds": 0.0119582,
+      "cumulative_seconds": 0.0554679
+    },
+    {
+      "file": "~",
+      "line": 0,
+      "function": "<method 'add' of 'set' objects>",
+      "primitive_calls": 18311,
+      "calls": 18311,
+      "self_seconds": 0.011243600000000001,
+      "cumulative_seconds": 0.098056
+    },
+    {
+      "file": "~",
+      "line": 0,
+      "function": "<built-in method builtins.getattr>",
+      "primitive_calls": 45481,
+      "calls": 45481,
+      "self_seconds": 0.011007900000000001,
+      "cumulative_seconds": 0.012131000000000001
+    },
+    {
+      "file": "C:\\Users\\emmer\\Documents\\Codex\\2026-09-30\\files-pasted-by-the-user-absolutely\\work\\FastHVChan-publish\\NumericalChanHVND\\numerical_chan_numba.py",
+      "line": 522,
+      "function": "_node",
+      "primitive_calls": 1,
+      "calls": 61,
+      "self_seconds": 0.0096954,
+      "cumulative_seconds": 2.8258208000000002
+    },
+    {
+      "file": "C:\\Users\\emmer\\Documents\\Codex\\2026-09-30\\files-pasted-by-the-user-absolutely\\work\\numba-env\\Lib\\site-packages\\numba\\core\\types\\abstract.py",
+      "line": 496,
+      "function": "initial_value",
+      "primitive_calls": 58678,
+      "calls": 58678,
+      "self_seconds": 0.008881700000000001,
+      "cumulative_seconds": 0.008881700000000001
+    },
+    {
+      "file": "~",
+      "line": 0,
+      "function": "<built-in method builtins.len>",
+      "primitive_calls": 49525,
+      "calls": 49525,
+      "self_seconds": 0.0086017,
+      "cumulative_seconds": 0.0087043
+    },
+    {
+      "file": "C:\\Users\\emmer\\Documents\\Codex\\2026-09-30\\files-pasted-by-the-user-absolutely\\work\\numba-env\\Lib\\site-packages\\numba\\core\\types\\containers.py",
+      "line": 776,
+      "function": "__unliteral__",
+      "primitive_calls": 7304,
+      "calls": 7304,
+      "self_seconds": 0.008587500000000001,
+      "cumulative_seconds": 0.6232683
+    },
+    {
+      "file": "C:\\Users\\emmer\\Documents\\Codex\\2026-09-30\\files-pasted-by-the-user-absolutely\\work\\numba-env\\Lib\\site-packages\\numba\\core\\types\\containers.py",
+      "line": 128,
+      "function": "is_homogeneous",
+      "primitive_calls": 3652,
+      "calls": 3652,
+      "self_seconds": 0.008322900000000001,
+      "cumulative_seconds": 0.0162107
+    },
+    {
+      "file": "C:\\Users\\emmer\\Documents\\Codex\\2026-09-30\\files-pasted-by-the-user-absolutely\\work\\numba-env\\Lib\\site-packages\\numba\\core\\types\\containers.py",
+      "line": 696,
+      "function": "_sentry_forbidden_types",
+      "primitive_calls": 14608,
+      "calls": 14608,
+      "self_seconds": 0.0082191,
+      "cumulative_seconds": 0.051620200000000005
+    },
+    {
+      "file": "C:\\Users\\emmer\\Documents\\Codex\\2026-09-30\\files-pasted-by-the-user-absolutely\\work\\numba-env\\Lib\\site-packages\\numba\\core\\types\\containers.py",
+      "line": 330,
+      "function": "key",
+      "primitive_calls": 43824,
+      "calls": 43824,
+      "self_seconds": 0.0075027,
+      "cumulative_seconds": 0.0075027
+    },
+    {
+      "file": "C:\\Users\\emmer\\Documents\\Codex\\2026-09-30\\files-pasted-by-the-user-absolutely\\work\\numba-env\\Lib\\site-packages\\numba\\typed\\typedlist.py",
+      "line": 365,
+      "function": "__getitem__",
+      "primitive_calls": 1003,
+      "calls": 1003,
+      "self_seconds": 0.0074818,
+      "cumulative_seconds": 0.0162552
+    },
+    {
+      "file": "C:\\Users\\emmer\\Documents\\Codex\\2026-09-30\\files-pasted-by-the-user-absolutely\\work\\numba-env\\Lib\\site-packages\\numpy\\_core\\fromnumeric.py",
+      "line": 2245,
+      "function": "clip",
+      "primitive_calls": 5248,
+      "calls": 5248,
+      "self_seconds": 0.0072167,
+      "cumulative_seconds": 0.06723810000000001
+    },
+    {
+      "file": "C:\\Users\\emmer\\Documents\\Codex\\2026-09-30\\files-pasted-by-the-user-absolutely\\work\\numba-env\\Lib\\site-packages\\numba\\core\\typing\\typeof.py",
+      "line": 41,
+      "function": "typeof_impl",
+      "primitive_calls": 7304,
+      "calls": 7304,
+      "self_seconds": 0.0069497000000000005,
+      "cumulative_seconds": 0.039112
+    },
+    {
+      "file": "<frozen importlib._bootstrap>",
+      "line": 1390,
+      "function": "_handle_fromlist",
+      "primitive_calls": 7314,
+      "calls": 7314,
+      "self_seconds": 0.0067955,
+      "cumulative_seconds": 0.0101933
+    },
+    {
+      "file": "C:\\Users\\emmer\\Documents\\Codex\\2026-09-30\\files-pasted-by-the-user-absolutely\\work\\FastHVChan-publish\\NumericalChanHVND\\numerical_chan_numba.py",
+      "line": 23,
+      "function": "copy",
+      "primitive_calls": 5297,
+      "calls": 5297,
+      "self_seconds": 0.006762300000000001,
+      "cumulative_seconds": 0.0122827
+    },
+    {
+      "file": "~",
+      "line": 0,
+      "function": "<built-in method builtins.any>",
+      "primitive_calls": 7756,
+      "calls": 7776,
+      "self_seconds": 0.0066684000000000005,
+      "cumulative_seconds": 0.0141533
+    },
+    {
+      "file": "C:\\Users\\emmer\\Documents\\Codex\\2026-09-30\\files-pasted-by-the-user-absolutely\\work\\numba-env\\Lib\\site-packages\\numba\\typed\\typeddict.py",
+      "line": 192,
+      "function": "__iter__",
+      "primitive_calls": 2006,
+      "calls": 2006,
+      "self_seconds": 0.006630100000000001,
+      "cumulative_seconds": 0.008186200000000001
+    },
+    {
+      "file": "C:\\Users\\emmer\\Documents\\Codex\\2026-09-30\\files-pasted-by-the-user-absolutely\\work\\numba-env\\Lib\\site-packages\\numba\\core\\types\\containers.py",
+      "line": 409,
+      "function": "<genexpr>",
+      "primitive_calls": 14608,
+      "calls": 14608,
+      "self_seconds": 0.0064051,
+      "cumulative_seconds": 0.008467500000000001
+    }
+  ],
+  "by_cumulative": [
+    {
+      "file": "C:\\Users\\emmer\\Documents\\Codex\\2026-09-30\\files-pasted-by-the-user-absolutely\\work\\FastHVChan-publish\\NumericalChanHV4D\\benchmarks\\whole_loop\\benchmark_whole_loop.py",
+      "line": 48,
+      "function": "solve",
+      "primitive_calls": 1,
+      "calls": 1,
+      "self_seconds": 5.7600000000000004e-05,
+      "cumulative_seconds": 2.8263728
+    },
+    {
+      "file": "C:\\Users\\emmer\\Documents\\Codex\\2026-09-30\\files-pasted-by-the-user-absolutely\\work\\FastHVChan-publish\\NumericalChanHVND\\numerical_chan_numba.py",
+      "line": 447,
+      "function": "compute",
+      "primitive_calls": 1,
+      "calls": 1,
+      "self_seconds": 0.0001442,
+      "cumulative_seconds": 2.8262873
+    },
+    {
+      "file": "C:\\Users\\emmer\\Documents\\Codex\\2026-09-30\\files-pasted-by-the-user-absolutely\\work\\FastHVChan-publish\\NumericalChanHVND\\numerical_chan_numba.py",
+      "line": 522,
+      "function": "_node",
+      "primitive_calls": 1,
+      "calls": 61,
+      "self_seconds": 0.0096954,
+      "cumulative_seconds": 2.8258208000000002
+    },
+    {
+      "file": "C:\\Users\\emmer\\Documents\\Codex\\2026-09-30\\files-pasted-by-the-user-absolutely\\work\\FastHVChan-publish\\NumericalChanHV4D\\numerical_chan4_compiled.py",
+      "line": 25,
+      "function": "_base",
+      "primitive_calls": 31,
+      "calls": 31,
+      "self_seconds": 0.1686049,
+      "cumulative_seconds": 2.4677279000000003
+    },
+    {
+      "file": "C:\\Users\\emmer\\Documents\\Codex\\2026-09-30\\files-pasted-by-the-user-absolutely\\work\\FastHVChan-publish\\NumericalChanHV4D\\compiled_terms.py",
+      "line": 317,
+      "function": "pack",
+      "primitive_calls": 41,
+      "calls": 41,
+      "self_seconds": 0.0840564,
+      "cumulative_seconds": 2.3056288
+    },
+    {
+      "file": "C:\\Users\\emmer\\Documents\\Codex\\2026-09-30\\files-pasted-by-the-user-absolutely\\work\\numba-env\\Lib\\site-packages\\numba\\core\\types\\abstract.py",
+      "line": 61,
+      "function": "__call__",
+      "primitive_calls": 32980,
+      "calls": 69500,
+      "self_seconds": 0.1335299,
+      "cumulative_seconds": 1.4999066
+    },
+    {
+      "file": "C:\\Users\\emmer\\Documents\\Codex\\2026-09-30\\files-pasted-by-the-user-absolutely\\work\\numba-env\\Lib\\site-packages\\numba\\core\\dispatcher.py",
+      "line": 691,
+      "function": "typeof_pyval",
+      "primitive_calls": 18311,
+      "calls": 18311,
+      "self_seconds": 0.0210182,
+      "cumulative_seconds": 1.3019792000000001
+    },
+    {
+      "file": "C:\\Users\\emmer\\Documents\\Codex\\2026-09-30\\files-pasted-by-the-user-absolutely\\work\\numba-env\\Lib\\site-packages\\numba\\core\\typing\\typeof.py",
+      "line": 27,
+      "function": "typeof",
+      "primitive_calls": 18311,
+      "calls": 18311,
+      "self_seconds": 0.021106200000000002,
+      "cumulative_seconds": 1.182905
+    },
+    {
+      "file": "C:\\Users\\emmer\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\Lib\\functools.py",
+      "line": 907,
+      "function": "wrapper",
+      "primitive_calls": 18311,
+      "calls": 29267,
+      "self_seconds": 0.0337406,
+      "cumulative_seconds": 1.1486765
+    },
+    {
+      "file": "C:\\Users\\emmer\\Documents\\Codex\\2026-09-30\\files-pasted-by-the-user-absolutely\\work\\numba-env\\Lib\\site-packages\\numba\\typed\\typeddict.py",
+      "line": 94,
+      "function": "empty",
+      "primitive_calls": 7304,
+      "calls": 7304,
+      "self_seconds": 0.0237329,
+      "cumulative_seconds": 1.0599206
+    },
+    {
+      "file": "C:\\Users\\emmer\\Documents\\Codex\\2026-09-30\\files-pasted-by-the-user-absolutely\\work\\numba-env\\Lib\\site-packages\\numba\\core\\types\\containers.py",
+      "line": 708,
+      "function": "__init__",
+      "primitive_calls": 14608,
+      "calls": 14608,
+      "self_seconds": 0.0746353,
+      "cumulative_seconds": 1.0444758
+    },
+    {
+      "file": "C:\\Users\\emmer\\Documents\\Codex\\2026-09-30\\files-pasted-by-the-user-absolutely\\work\\numba-env\\Lib\\site-packages\\numba\\typed\\typedlist.py",
+      "line": 341,
+      "function": "append",
+      "primitive_calls": 3692,
+      "calls": 3692,
+      "self_seconds": 0.0372142,
+      "cumulative_seconds": 0.9736204
+    },
+    {
+      "file": "C:\\Users\\emmer\\Documents\\Codex\\2026-09-30\\files-pasted-by-the-user-absolutely\\work\\numba-env\\Lib\\site-packages\\numba\\core\\typing\\typeof.py",
+      "line": 179,
+      "function": "_typeof_tuple",
+      "primitive_calls": 3652,
+      "calls": 3652,
+      "self_seconds": 0.013228,
+      "cumulative_seconds": 0.8579407
+    },
+    {
+      "file": "C:\\Users\\emmer\\Documents\\Codex\\2026-09-30\\files-pasted-by-the-user-absolutely\\work\\numba-env\\Lib\\site-packages\\numba\\core\\types\\containers.py",
+      "line": 144,
+      "function": "from_types",
+      "primitive_calls": 3652,
+      "calls": 3652,
+      "self_seconds": 0.017279700000000002,
+      "cumulative_seconds": 0.7736167
+    },
+    {
+      "file": "C:\\Users\\emmer\\Documents\\Codex\\2026-09-30\\files-pasted-by-the-user-absolutely\\work\\numba-env\\Lib\\site-packages\\numba\\core\\types\\misc.py",
+      "line": 63,
+      "function": "unliteral",
+      "primitive_calls": 25625,
+      "calls": 47537,
+      "self_seconds": 0.028160900000000003,
+      "cumulative_seconds": 0.6970587
+    },
+    {
+      "file": "C:\\Users\\emmer\\Documents\\Codex\\2026-09-30\\files-pasted-by-the-user-absolutely\\work\\numba-env\\Lib\\site-packages\\numba\\core\\types\\containers.py",
+      "line": 776,
+      "function": "__unliteral__",
+      "primitive_calls": 7304,
+      "calls": 7304,
+      "self_seconds": 0.008587500000000001,
+      "cumulative_seconds": 0.6232683
+    },
+    {
+      "file": "C:\\Users\\emmer\\Documents\\Codex\\2026-09-30\\files-pasted-by-the-user-absolutely\\work\\numba-env\\Lib\\site-packages\\numba\\core\\types\\abstract.py",
+      "line": 49,
+      "function": "_intern",
+      "primitive_calls": 69500,
+      "calls": 69500,
+      "self_seconds": 0.0596659,
+      "cumulative_seconds": 0.5356417
+    },
+    {
+      "file": "~",
+      "line": 0,
+      "function": "<method 'get' of 'dict' objects>",
+      "primitive_calls": 69500,
+      "calls": 69500,
+      "self_seconds": 0.0690645,
+      "cumulative_seconds": 0.4759758
+    },
+    {
+      "file": "C:\\Users\\emmer\\Documents\\Codex\\2026-09-30\\files-pasted-by-the-user-absolutely\\work\\numba-env\\Lib\\site-packages\\numba\\typed\\typeddict.py",
+      "line": 107,
+      "function": "__init__",
+      "primitive_calls": 9310,
+      "calls": 9310,
+      "self_seconds": 0.013350200000000001,
+      "cumulative_seconds": 0.43359070000000005
+    },
+    {
+      "file": "C:\\Users\\emmer\\Documents\\Codex\\2026-09-30\\files-pasted-by-the-user-absolutely\\work\\numba-env\\Lib\\site-packages\\numba\\core\\types\\abstract.py",
+      "line": 121,
+      "function": "__hash__",
+      "primitive_calls": 117027,
+      "calls": 374090,
+      "self_seconds": 0.20195280000000002,
+      "cumulative_seconds": 0.42509450000000004
+    },
+    {
+      "file": "C:\\Users\\emmer\\Documents\\Codex\\2026-09-30\\files-pasted-by-the-user-absolutely\\work\\numba-env\\Lib\\site-packages\\numba\\typed\\typeddict.py",
+      "line": 149,
+      "function": "_parse_arg",
+      "primitive_calls": 9310,
+      "calls": 9310,
+      "self_seconds": 0.0491105,
+      "cumulative_seconds": 0.4202405
+    },
+    {
+      "file": "C:\\Users\\emmer\\Documents\\Codex\\2026-09-30\\files-pasted-by-the-user-absolutely\\work\\numba-env\\Lib\\site-packages\\numba\\core\\types\\containers.py",
+      "line": 316,
+      "function": "__init__",
+      "primitive_calls": 14608,
+      "calls": 14608,
+      "self_seconds": 0.052253900000000006,
+      "cumulative_seconds": 0.3618845
+    },
+    {
+      "file": "~",
+      "line": 0,
+      "function": "<built-in method builtins.hash>",
+      "primitive_calls": 117027,
+      "calls": 374090,
+      "self_seconds": 0.1253128,
+      "cumulative_seconds": 0.3166101
+    },
+    {
+      "file": "C:\\Users\\emmer\\Documents\\Codex\\2026-09-30\\files-pasted-by-the-user-absolutely\\work\\numba-env\\Lib\\site-packages\\numba\\core\\typing\\typeof.py",
+      "line": 275,
+      "function": "_typeof_nb_type",
+      "primitive_calls": 14659,
+      "calls": 14659,
+      "self_seconds": 0.021693900000000002,
+      "cumulative_seconds": 0.24154080000000003
+    },
+    {
+      "file": "C:\\Users\\emmer\\Documents\\Codex\\2026-09-30\\files-pasted-by-the-user-absolutely\\work\\FastHVChan-publish\\NumericalChanHVND\\numerical_chan_numba.py",
+      "line": 477,
+      "function": "_absorb",
+      "primitive_calls": 61,
+      "calls": 61,
+      "self_seconds": 0.011969400000000002,
+      "cumulative_seconds": 0.2381425
+    },
+    {
+      "file": "~",
+      "line": 0,
+      "function": "<built-in method builtins.isinstance>",
+      "primitive_calls": 181370,
+      "calls": 181370,
+      "self_seconds": 0.0912005,
+      "cumulative_seconds": 0.22497850000000003
+    },
+    {
+      "file": "C:\\Users\\emmer\\Documents\\Codex\\2026-09-30\\files-pasted-by-the-user-absolutely\\work\\FastHVChan-publish\\NumericalChanHVND\\numerical_chan_numba.py",
+      "line": 112,
+      "function": "add_edge",
+      "primitive_calls": 5248,
+      "calls": 5248,
+      "self_seconds": 0.041878500000000006,
+      "cumulative_seconds": 0.18448820000000002
+    },
+    {
+      "file": "C:\\Users\\emmer\\Documents\\Codex\\2026-09-30\\files-pasted-by-the-user-absolutely\\work\\numba-env\\Lib\\site-packages\\numba\\core\\types\\containers.py",
+      "line": 293,
+      "function": "__init__",
+      "primitive_calls": 14608,
+      "calls": 14608,
+      "self_seconds": 0.057628500000000006,
+      "cumulative_seconds": 0.1781035
+    },
+    {
+      "file": "C:\\Users\\emmer\\Documents\\Codex\\2026-09-30\\files-pasted-by-the-user-absolutely\\work\\numba-env\\Lib\\site-packages\\numba\\core\\types\\containers.py",
+      "line": 303,
+      "function": "__new__",
+      "primitive_calls": 14608,
+      "calls": 14608,
+      "self_seconds": 0.052776300000000005,
+      "cumulative_seconds": 0.1680393
+    },
+    {
+      "file": "C:\\Users\\emmer\\Documents\\Codex\\2026-09-30\\files-pasted-by-the-user-absolutely\\work\\numba-env\\Lib\\site-packages\\numba\\typed\\typeddict.py",
+      "line": 182,
+      "function": "__setitem__",
+      "primitive_calls": 34847,
+      "calls": 34847,
+      "self_seconds": 0.1140401,
+      "cumulative_seconds": 0.1404987
+    },
+    {
+      "file": "<frozen abc>",
+      "line": 117,
+      "function": "__instancecheck__",
+      "primitive_calls": 248702,
+      "calls": 248702,
+      "self_seconds": 0.060612400000000004,
+      "cumulative_seconds": 0.133778
+    },
+    {
+      "file": "C:\\Users\\emmer\\Documents\\Codex\\2026-09-30\\files-pasted-by-the-user-absolutely\\work\\numba-env\\Lib\\site-packages\\numba\\core\\types\\abstract.py",
+      "line": 124,
+      "function": "__eq__",
+      "primitive_calls": 102521,
+      "calls": 117231,
+      "self_seconds": 0.0847794,
+      "cumulative_seconds": 0.1311002
+    },
+    {
+      "file": "C:\\Users\\emmer\\Documents\\Codex\\2026-09-30\\files-pasted-by-the-user-absolutely\\work\\FastHVChan-publish\\NumericalChanHV4D\\numerical_chan4_compiled.py",
+      "line": 33,
+      "function": "_compress",
+      "primitive_calls": 10,
+      "calls": 10,
+      "self_seconds": 0.0381863,
+      "cumulative_seconds": 0.10869680000000001
+    },
+    {
+      "file": "~",
+      "line": 0,
+      "function": "<method 'add' of 'set' objects>",
+      "primitive_calls": 18311,
+      "calls": 18311,
+      "self_seconds": 0.011243600000000001,
+      "cumulative_seconds": 0.098056
+    },
+    {
+      "file": "C:\\Users\\emmer\\Documents\\Codex\\2026-09-30\\files-pasted-by-the-user-absolutely\\work\\numba-env\\Lib\\site-packages\\numba\\core\\types\\containers.py",
+      "line": 256,
+      "function": "__unliteral__",
+      "primitive_calls": 7304,
+      "calls": 7304,
+      "self_seconds": 0.015134400000000001,
+      "cumulative_seconds": 0.0969806
+    },
+    {
+      "file": "~",
+      "line": 0,
+      "function": "<method 'join' of 'str' objects>",
+      "primitive_calls": 32868,
+      "calls": 32868,
+      "self_seconds": 0.0447911,
+      "cumulative_seconds": 0.0820366
+    },
+    {
+      "file": "~",
+      "line": 0,
+      "function": "<built-in method _abc._abc_instancecheck>",
+      "primitive_calls": 248702,
+      "calls": 248702,
+      "self_seconds": 0.0731604,
+      "cumulative_seconds": 0.07316560000000001
+    },
+    {
+      "file": "C:\\Users\\emmer\\Documents\\Codex\\2026-09-30\\files-pasted-by-the-user-absolutely\\work\\numba-env\\Lib\\site-packages\\numpy\\_core\\fromnumeric.py",
+      "line": 2245,
+      "function": "clip",
+      "primitive_calls": 5248,
+      "calls": 5248,
+      "self_seconds": 0.0072167,
+      "cumulative_seconds": 0.06723810000000001
+    },
+    {
+      "file": "C:\\Users\\emmer\\Documents\\Codex\\2026-09-30\\files-pasted-by-the-user-absolutely\\work\\numba-env\\Lib\\site-packages\\numba\\core\\utils.py",
+      "line": 588,
+      "function": "unified_function_type",
+      "primitive_calls": 14608,
+      "calls": 14608,
+      "self_seconds": 0.024223300000000003,
+      "cumulative_seconds": 0.0663928
+    },
+    {
+      "file": "C:\\Users\\emmer\\Documents\\Codex\\2026-09-30\\files-pasted-by-the-user-absolutely\\work\\numba-env\\Lib\\site-packages\\numpy\\_core\\fromnumeric.py",
+      "line": 48,
+      "function": "_wrapfunc",
+      "primitive_calls": 5248,
+      "calls": 5248,
+      "self_seconds": 0.0037081,
+      "cumulative_seconds": 0.0600214
+    },
+    {
+      "file": "~",
+      "line": 0,
+      "function": "<built-in method builtins.all>",
+      "primitive_calls": 25163,
+      "calls": 25163,
+      "self_seconds": 0.0168895,
+      "cumulative_seconds": 0.059426700000000006
+    },
+    {
+      "file": "C:\\Users\\emmer\\Documents\\Codex\\2026-09-30\\files-pasted-by-the-user-absolutely\\work\\FastHVChan-publish\\NumericalChanHVND\\numerical_chan_numba.py",
+      "line": 26,
+      "function": "alive",
+      "primitive_calls": 10545,
+      "calls": 10545,
+      "self_seconds": 0.0119582,
+      "cumulative_seconds": 0.0554679
+    },
+    {
+      "file": "~",
+      "line": 0,
+      "function": "<method 'format' of 'str' objects>",
+      "primitive_calls": 40274,
+      "calls": 40274,
+      "self_seconds": 0.0474033,
+      "cumulative_seconds": 0.054486700000000006
+    },
+    {
+      "file": "~",
+      "line": 0,
+      "function": "<method 'clip' of 'numpy.ndarray' objects>",
+      "primitive_calls": 5248,
+      "calls": 5248,
+      "self_seconds": 0.003746,
+      "cumulative_seconds": 0.0543536
+    },
+    {
+      "file": "C:\\Users\\emmer\\Documents\\Codex\\2026-09-30\\files-pasted-by-the-user-absolutely\\work\\numba-env\\Lib\\site-packages\\numba\\core\\types\\containers.py",
+      "line": 696,
+      "function": "_sentry_forbidden_types",
+      "primitive_calls": 14608,
+      "calls": 14608,
+      "self_seconds": 0.0082191,
+      "cumulative_seconds": 0.051620200000000005
+    },
+    {
+      "file": "C:\\Users\\emmer\\Documents\\Codex\\2026-09-30\\files-pasted-by-the-user-absolutely\\work\\numba-env\\Lib\\site-packages\\numpy\\_core\\_methods.py",
+      "line": 96,
+      "function": "_clip",
+      "primitive_calls": 5248,
+      "calls": 5248,
+      "self_seconds": 0.0336375,
+      "cumulative_seconds": 0.0506076
+    },
+    {
+      "file": "C:\\Users\\emmer\\Documents\\Codex\\2026-09-30\\files-pasted-by-the-user-absolutely\\work\\numba-env\\Lib\\site-packages\\numba\\core\\types\\containers.py",
+      "line": 772,
+      "function": "key",
+      "primitive_calls": 58678,
+      "calls": 58678,
+      "self_seconds": 0.0373196,
+      "cumulative_seconds": 0.0462013
+    },
+    {
+      "file": "C:\\Users\\emmer\\Documents\\Codex\\2026-09-30\\files-pasted-by-the-user-absolutely\\work\\FastHVChan-publish\\NumericalChanHVND\\numerical_chan_numba.py",
+      "line": 107,
+      "function": "multiply_unary",
+      "primitive_calls": 5248,
+      "calls": 5248,
+      "self_seconds": 0.0143668,
+      "cumulative_seconds": 0.044208000000000004
+    },
+    {
+      "file": "<frozen _collections_abc>",
+      "line": 892,
+      "function": "__iter__",
+      "primitive_calls": 10103,
+      "calls": 10103,
+      "self_seconds": 0.0035662000000000003,
+      "cumulative_seconds": 0.042598500000000004
+    },
+    {
+      "file": "C:\\Users\\emmer\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\Lib\\functools.py",
+      "line": 821,
+      "function": "dispatch",
+      "primitive_calls": 29267,
+      "calls": 29267,
+      "self_seconds": 0.019147400000000002,
+      "cumulative_seconds": 0.0398075
+    },
+    {
+      "file": "C:\\Users\\emmer\\Documents\\Codex\\2026-09-30\\files-pasted-by-the-user-absolutely\\work\\numba-env\\Lib\\site-packages\\numba\\core\\typing\\typeof.py",
+      "line": 41,
+      "function": "typeof_impl",
+      "primitive_calls": 7304,
+      "calls": 7304,
+      "self_seconds": 0.0069497000000000005,
+      "cumulative_seconds": 0.039112
+    },
+    {
+      "file": "C:\\Users\\emmer\\Documents\\Codex\\2026-09-30\\files-pasted-by-the-user-absolutely\\work\\numba-env\\Lib\\site-packages\\numba\\core\\types\\abstract.py",
+      "line": 96,
+      "function": "key",
+      "primitive_calls": 212471,
+      "calls": 212471,
+      "self_seconds": 0.0346471,
+      "cumulative_seconds": 0.0346471
+    },
+    {
+      "file": "C:\\Users\\emmer\\Documents\\Codex\\2026-09-30\\files-pasted-by-the-user-absolutely\\work\\numba-env\\Lib\\site-packages\\numba\\core\\types\\containers.py",
+      "line": 402,
+      "function": "__init__",
+      "primitive_calls": 3652,
+      "calls": 3652,
+      "self_seconds": 0.012536,
+      "cumulative_seconds": 0.034196700000000003
+    },
+    {
+      "file": "C:\\Users\\emmer\\Documents\\Codex\\2026-09-30\\files-pasted-by-the-user-absolutely\\work\\numba-env\\Lib\\site-packages\\numba\\typed\\typeddict.py",
+      "line": 176,
+      "function": "__getitem__",
+      "primitive_calls": 8097,
+      "calls": 8097,
+      "self_seconds": 0.024515000000000002,
+      "cumulative_seconds": 0.0308461
+    },
+    {
+      "file": "C:\\Users\\emmer\\Documents\\Codex\\2026-09-30\\files-pasted-by-the-user-absolutely\\work\\FastHVChan-publish\\NumericalChanHVND\\numerical_chan_numba.py",
+      "line": 27,
+      "function": "<genexpr>",
+      "primitive_calls": 52725,
+      "calls": 52725,
+      "self_seconds": 0.030324700000000003,
+      "cumulative_seconds": 0.030324700000000003
+    },
+    {
+      "file": "C:\\Users\\emmer\\Documents\\Codex\\2026-09-30\\files-pasted-by-the-user-absolutely\\work\\numba-env\\Lib\\site-packages\\numba\\core\\types\\npytypes.py",
+      "line": 482,
+      "function": "key",
+      "primitive_calls": 87994,
+      "calls": 87994,
+      "self_seconds": 0.0292945,
+      "cumulative_seconds": 0.0292945
+    },
+    {
+      "file": "C:\\Users\\emmer\\Documents\\Codex\\2026-09-30\\files-pasted-by-the-user-absolutely\\work\\numba-env\\Lib\\site-packages\\numba\\core\\types\\abstract.py",
+      "line": 479,
+      "function": "__init__",
+      "primitive_calls": 11007,
+      "calls": 11007,
+      "self_seconds": 0.012960300000000001,
+      "cumulative_seconds": 0.028961700000000003
+    },
+    {
+      "file": "C:\\Users\\emmer\\Documents\\Codex\\2026-09-30\\files-pasted-by-the-user-absolutely\\work\\numba-env\\Lib\\site-packages\\numba\\core\\typing\\typeof.py",
+      "line": 66,
+      "function": "_typeof_buffer",
+      "primitive_calls": 7304,
+      "calls": 7304,
+      "self_seconds": 0.017344500000000002,
+      "cumulative_seconds": 0.0275139
+    },
+    {
+      "file": "~",
+      "line": 0,
+      "function": "<built-in method builtins.sorted>",
+      "primitive_calls": 14652,
+      "calls": 14652,
+      "self_seconds": 0.0198941,
+      "cumulative_seconds": 0.0257847
+    },
+    {
+      "file": "C:\\Users\\emmer\\Documents\\Codex\\2026-09-30\\files-pasted-by-the-user-absolutely\\work\\numba-env\\Lib\\site-packages\\numba\\core\\types\\containers.py",
+      "line": 322,
+      "function": "<genexpr>",
+      "primitive_calls": 43824,
+      "calls": 43824,
+      "self_seconds": 0.019222100000000002,
+      "cumulative_seconds": 0.024066300000000002
+    },
+    {
+      "file": "C:\\Users\\emmer\\Documents\\Codex\\2026-09-30\\files-pasted-by-the-user-absolutely\\work\\FastHVChan-publish\\NumericalChanHV4D\\compiled_terms.py",
+      "line": 325,
+      "function": "<genexpr>",
+      "primitive_calls": 101195,
+      "calls": 101195,
+      "self_seconds": 0.0238912,
+      "cumulative_seconds": 0.0238912
+    },
+    {
+      "file": "C:\\Users\\emmer\\Documents\\Codex\\2026-09-30\\files-pasted-by-the-user-absolutely\\work\\numba-env\\Lib\\site-packages\\numba\\core\\types\\containers.py",
+      "line": 285,
+      "function": "is_types_iterable",
+      "primitive_calls": 18260,
+      "calls": 18260,
+      "self_seconds": 0.006231400000000001,
+      "cumulative_seconds": 0.0237709
+    },
+    {
+      "file": "C:\\Users\\emmer\\Documents\\Codex\\2026-09-30\\files-pasted-by-the-user-absolutely\\work\\numba-env\\Lib\\site-packages\\numba\\core\\serialize.py",
+      "line": 30,
+      "function": "_numba_unpickle",
+      "primitive_calls": 68171,
+      "calls": 68171,
+      "self_seconds": 0.0230499,
+      "cumulative_seconds": 0.0230499
+    },
+    {
+      "file": "C:\\Users\\emmer\\Documents\\Codex\\2026-09-30\\files-pasted-by-the-user-absolutely\\work\\numba-env\\Lib\\site-packages\\numba\\core\\types\\containers.py",
+      "line": 233,
+      "function": "__init__",
+      "primitive_calls": 7304,
+      "calls": 7304,
+      "self_seconds": 0.0184453,
+      "cumulative_seconds": 0.0212818
+    },
+    {
+      "file": "C:\\Users\\emmer\\Documents\\Codex\\2026-09-30\\files-pasted-by-the-user-absolutely\\work\\numba-env\\Lib\\site-packages\\numba\\core\\types\\abstract.py",
+      "line": 118,
+      "function": "__str__",
+      "primitive_calls": 120628,
+      "calls": 120628,
+      "self_seconds": 0.020975,
+      "cumulative_seconds": 0.020975
+    },
+    {
+      "file": "C:\\Users\\emmer\\Documents\\Codex\\2026-09-30\\files-pasted-by-the-user-absolutely\\work\\numba-env\\Lib\\site-packages\\numba\\core\\types\\containers.py",
+      "line": 311,
+      "function": "<genexpr>",
+      "primitive_calls": 29216,
+      "calls": 29216,
+      "self_seconds": 0.015011400000000001,
+      "cumulative_seconds": 0.019080200000000002
+    },
+    {
+      "file": "C:\\Users\\emmer\\Documents\\Codex\\2026-09-30\\files-pasted-by-the-user-absolutely\\work\\numba-env\\Lib\\site-packages\\numba\\typed\\typedlist.py",
+      "line": 371,
+      "function": "__iter__",
+      "primitive_calls": 1013,
+      "calls": 1013,
+      "self_seconds": 0.0003948,
+      "cumulative_seconds": 0.0167672
+    },
+    {
+      "file": "~",
+      "line": 0,
+      "function": "<built-in method __new__ of type object at 0x00007FFF223418F0>",
+      "primitive_calls": 46945,
+      "calls": 46945,
+      "self_seconds": 0.016509100000000002,
+      "cumulative_seconds": 0.016509100000000002
+    },
+    {
+      "file": "C:\\Users\\emmer\\Documents\\Codex\\2026-09-30\\files-pasted-by-the-user-absolutely\\work\\numba-env\\Lib\\site-packages\\numba\\typed\\typedlist.py",
+      "line": 365,
+      "function": "__getitem__",
+      "primitive_calls": 1003,
+      "calls": 1003,
+      "self_seconds": 0.0074818,
+      "cumulative_seconds": 0.0162552
+    },
+    {
+      "file": "C:\\Users\\emmer\\Documents\\Codex\\2026-09-30\\files-pasted-by-the-user-absolutely\\work\\numba-env\\Lib\\site-packages\\numba\\core\\types\\containers.py",
+      "line": 128,
+      "function": "is_homogeneous",
+      "primitive_calls": 3652,
+      "calls": 3652,
+      "self_seconds": 0.008322900000000001,
+      "cumulative_seconds": 0.0162107
+    },
+    {
+      "file": "C:\\Users\\emmer\\Documents\\Codex\\2026-09-30\\files-pasted-by-the-user-absolutely\\work\\numba-env\\Lib\\site-packages\\numba\\core\\types\\containers.py",
+      "line": 243,
+      "function": "key",
+      "primitive_calls": 65859,
+      "calls": 65859,
+      "self_seconds": 0.0161508,
+      "cumulative_seconds": 0.0161508
+    },
+    {
+      "file": "C:\\Users\\emmer\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\Lib\\weakref.py",
+      "line": 414,
+      "function": "__getitem__",
+      "primitive_calls": 29267,
+      "calls": 29267,
+      "self_seconds": 0.015600000000000001,
+      "cumulative_seconds": 0.015600000000000001
+    },
+    {
+      "file": "~",
+      "line": 0,
+      "function": "<built-in method builtins.any>",
+      "primitive_calls": 7756,
+      "calls": 7776,
+      "self_seconds": 0.0066684000000000005,
+      "cumulative_seconds": 0.0141533
+    },
+    {
+      "file": "~",
+      "line": 0,
+      "function": "<method 'reduce' of 'numpy.ufunc' objects>",
+      "primitive_calls": 10496,
+      "calls": 10496,
+      "self_seconds": 0.0140481,
+      "cumulative_seconds": 0.0140481
+    },
+    {
+      "file": "~",
+      "line": 0,
+      "function": "<built-in method builtins.hasattr>",
+      "primitive_calls": 58503,
+      "calls": 58503,
+      "self_seconds": 0.014029900000000001,
+      "cumulative_seconds": 0.014029900000000001
+    },
+    {
+      "file": "C:\\Users\\emmer\\Documents\\Codex\\2026-09-30\\files-pasted-by-the-user-absolutely\\work\\numba-env\\Lib\\site-packages\\numpy\\_core\\getlimits.py",
+      "line": 399,
+      "function": "__init__",
+      "primitive_calls": 10496,
+      "calls": 10496,
+      "self_seconds": 0.013919,
+      "cumulative_seconds": 0.013919
+    },
+    {
+      "file": "~",
+      "line": 0,
+      "function": "<built-in method numpy.ascontiguousarray>",
+      "primitive_calls": 34847,
+      "calls": 34847,
+      "self_seconds": 0.0133445,
+      "cumulative_seconds": 0.0133445
+    },
+    {
+      "file": "C:\\Users\\emmer\\Documents\\Codex\\2026-09-30\\files-pasted-by-the-user-absolutely\\work\\numba-env\\Lib\\site-packages\\numba\\core\\types\\abstract.py",
+      "line": 93,
+      "function": "__init__",
+      "primitive_calls": 69500,
+      "calls": 69500,
+      "self_seconds": 0.013192200000000001,
+      "cumulative_seconds": 0.013192200000000001
+    },
+    {
+      "file": "~",
+      "line": 0,
+      "function": "<method 'min' of 'numpy.ndarray' objects>",
+      "primitive_calls": 5248,
+      "calls": 5248,
+      "self_seconds": 0.0031554,
+      "cumulative_seconds": 0.0129595
+    },
+    {
+      "file": "C:\\Users\\emmer\\Documents\\Codex\\2026-09-30\\files-pasted-by-the-user-absolutely\\work\\FastHVChan-publish\\NumericalChanHVND\\numerical_chan_numba.py",
+      "line": 23,
+      "function": "copy",
+      "primitive_calls": 5297,
+      "calls": 5297,
+      "self_seconds": 0.006762300000000001,
+      "cumulative_seconds": 0.0122827
+    }
+  ],
+  "whole_loop_source_revision": "7ea05d21b67de869268740096fad32a1117b0430"
+}

@@ -1,6 +1,7 @@
 {
   "status": "All 4D whole-loop JIT checks passed.",
   "checks": {
+    "native_easy_constraint_cells": 16,
     "signed_term_rectangle_sums": 48,
     "signed_first_compression_cells": 144,
     "signed_repeated_compression_cells": 16,
@@ -9,19 +10,23 @@
     "hash_collision_and_duplicate_merging": 1,
     "bounded_collision_chain_preserves_sum": 1,
     "base_bitmask_overflow_guard": 1,
+    "no_pack_empty_compute": 2,
     "exact_inclusion_exclusion_instances": 50,
+    "pack_once_nonempty_compute": 52,
+    "public_numba_compatibility": 4,
     "magnitude_affine_equivalence": 9,
     "public_wrapper_exact_checks": 9,
     "reordering_and_duplicate_invariance": 2,
     "default_compression_shared_backend_comparisons": 2,
-    "repeated_compression_exact_instances": 2
+    "repeated_compression_exact_instances": 2,
+    "fresh_process_package_cache_regression": 1
   },
   "max_scaled_error": 2.6804292617580362e-14,
   "tolerance": {
     "relative": 2e-09,
     "absolute": 2e-10
   },
-  "seconds_including_compilation": 52.51282850001007,
+  "seconds_including_compilation": 14.77066639997065,
   "scope": "4D numerical correctness only; float64 arithmetic; no performance claim.",
   "cases": [
     {

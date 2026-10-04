@@ -34,6 +34,10 @@ with `dimension=...`. Integer/Fraction arithmetic is exact; floats are supported
 
 ## Float64 Numba backend
 
+For 4D, the [dedicated entry point](../NumericalChanHV4D/README.md) now compiles
+whole contractions and keeps term states native across recursion. The generic
+ND interface below retains the hybrid backend used as its comparison.
+
 Tested with CPython 3.12.14, NumPy 2.5.3, Numba 0.68.0 on Windows.
 
 ```bash

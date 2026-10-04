@@ -18,6 +18,8 @@ from pathlib import Path
 import argparse
 import json
 import random
+import subprocess
+import sys
 import time
 
 import numpy as np
@@ -25,6 +27,7 @@ from numba import types
 from numba.typed import Dict, List
 
 import numerical_chan4_compiled as compiled
+import numerical_chan4_numba as public_numba
 from NumericalChanHVND import numerical_chan_numba as shared
 
 
@@ -137,6 +140,15 @@ def check_term_algebra(check, checks):
         source = [term]
         packed = compiled.kernel.pack(source)
         fine = {q: explicit_value(source, q) for q in product(range(4), repeat=dimension)}
+        if repeat == 0:
+            masks = List.empty_list(compiled.kernel.MASK)
+            cutoff = np.array([3, 2, 1, 0], dtype=np.int64)
+            masks.append((0, dimension - 1, cutoff))
+            updated = compiled.kernel.apply_easy(packed, np.array([[0, 1]], dtype=np.int64), masks)
+            for q, weight in fine.items():
+                expected = weight if q[0] > 1 and q[-1] >= cutoff[q[0]] else 0.0
+                check(explicit_value(updated, q), expected, ("native easy constraints", q))
+                checks["native_easy_constraint_cells"] += 1
         rectangles = [([0] * dimension, [3] * dimension),
                       ([1] * dimension, [2] * dimension),
                       ([2] * dimension, [1] * dimension)]
@@ -256,6 +268,24 @@ def main():
         records.append({"case": label, "magnitude": magnitude, "value": float(actual),
                         "stats": {key: int(value) for key, value in solver.stats.items()}})
 
+    def compute_once_packed(solver, points, magnitude):
+        original_pack = compiled.kernel.pack
+        calls = 0
+
+        def counted_pack(terms):
+            nonlocal calls
+            calls += 1
+            return original_pack(terms)
+
+        compiled.kernel.pack = counted_pack
+        try:
+            actual = solver.compute(points, magnitude=magnitude)
+        finally:
+            compiled.kernel.pack = original_pack
+        assert calls == int(bool(points)), ("native packing count", len(points), calls)
+        checks["pack_once_nonempty_compute" if points else "no_pack_empty_compute"] += 1
+        return actual
+
     check_term_algebra(check, checks)
     print("Signed contractions and cellwise repeated compression passed.", flush=True)
 
@@ -265,11 +295,22 @@ def main():
     solver = compiled.NumericalChan4D(base_hard=1)
     for label, points in cases:
         for magnitude in (False, True):
-            actual = solver.compute(points, magnitude=magnitude)
+            actual = compute_once_packed(solver, points, magnitude)
             check(actual, inclusion_exclusion(points, magnitude), (label, magnitude))
             checks["exact_inclusion_exclusion_instances"] += 1
             record(label, solver, magnitude, actual)
     print("Small exact-oracle cases passed.", flush=True)
+
+    # Keep the established 4D module's function and class entry points working
+    # when their implementation is redirected to this native backend.
+    points = cases[7][1]
+    for magnitude in (False, True):
+        expected = inclusion_exclusion(points, magnitude)
+        check(public_numba.hypervolume4(points, magnitude=magnitude), expected,
+              ("compatible public function", magnitude))
+        check(public_numba.NumericalChan4Numba().compute(points, magnitude=magnitude), expected,
+              ("compatible public class", magnitude))
+        checks["public_numba_compatibility"] += 2
 
     # This identity detects lost atoms at zero coordinates without sharing the
     # magnitude-weight implementation with the independent ordinary-HV call.
@@ -295,7 +336,7 @@ def main():
     for magnitude in (False, True):
         solver = compiled.NumericalChan4D()
         reference = shared.NumericalChanNumba(dimension=4)
-        actual = solver.compute(points, magnitude=magnitude)
+        actual = compute_once_packed(solver, points, magnitude)
         expected = reference.compute(points, magnitude=magnitude)
         check(actual, expected, ("default-compression-20", magnitude))
         assert solver.stats["compressions"] > 0, dict(solver.stats)
@@ -309,12 +350,32 @@ def main():
     points = repeated_compression_corners()
     for magnitude in (False, True):
         solver = compiled.NumericalChan4D(base_hard=1, block_levels=2)
-        actual = solver.compute(points, magnitude=magnitude)
+        actual = compute_once_packed(solver, points, magnitude)
         check(actual, inclusion_exclusion(points, magnitude), ("repeated-compression-12", magnitude))
         assert solver.stats["max_generation"] >= 2, dict(solver.stats)
         checks["repeated_compression_exact_instances"] += 1
         record("repeated-compression-12", solver, magnitude, actual)
     print("Repeated compression cases passed.", flush=True)
+
+    # The checks above import the adapter as a directly launched script does.
+    # A fresh process must also load the warmed Numba cache through the package
+    # API: differing kernel module names previously broke cached tuple types.
+    package_probe = """
+import json
+from NumericalChanHV4D.numerical_chan4_numba import hypervolume4
+points = [(1, 4, 3, 2), (2, 3, 4, 1), (3, 2, 1, 4), (4, 1, 2, 3)]
+print(json.dumps({'hv': hypervolume4(points), 'magnitude': hypervolume4(points, magnitude=True)}))
+"""
+    package_result = subprocess.run(
+        [sys.executable, "-c", package_probe], cwd=Path(__file__).resolve().parents[1],
+        capture_output=True, text=True, timeout=120, check=False)
+    assert package_result.returncode == 0, ("fresh-process package/cache import",
+                                           package_result.stdout, package_result.stderr)
+    package_values = json.loads(package_result.stdout)
+    check(package_values["hv"], 69, "fresh-process package cached HV")
+    check(package_values["magnitude"], Fraction(765, 16), "fresh-process package cached magnitude")
+    checks["fresh_process_package_cache_regression"] += 1
+    print("Fresh-process package/cache import passed.", flush=True)
 
     report = {
         "status": "All 4D whole-loop JIT checks passed.",
@@ -326,7 +387,7 @@ def main():
         "cases": records,
     }
     args.output.parent.mkdir(parents=True, exist_ok=True)
-    args.output.write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")
+    args.output.write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8", newline="\n")
     print(json.dumps({key: value for key, value in report.items() if key != "cases"}, indent=2))
 
 

@@ -5,6 +5,9 @@ Numba once for a complete numerical operation, and perform its inner loops
 without returning to Python. It compiles the new algorithm's term algebra;
 it does not replace it with the older target-grid sweep.
 
+The established `numerical_chan4_numba` entry point now selects this backend.
+The explicitly named module below exposes the same computation.
+
 ```python
 from numerical_chan4_compiled import hypervolume4
 
