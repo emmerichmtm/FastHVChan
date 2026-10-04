@@ -46,6 +46,9 @@ compilation; reported performance measurements distinguish it from warm calls.
 
 ## Report, tests, and timings
 
+- [Whole-contraction JIT report (PDF)](paper/whole_loop_jit_4d_report.pdf) /
+  [self-contained LaTeX source](paper/whole_loop_jit_4d_report.tex): recursion,
+  contraction proof, magnitude equivalence, verification and 4D performance.
 - [LaTeX report](paper/numerical_chan4.tex) / [PDF](paper/numerical_chan4.pdf).
 - `python verify_numerical_chan4.py` runs exact correctness tests.
 - `python verify_whole_loop.py` checks the current compiled 4D backend,

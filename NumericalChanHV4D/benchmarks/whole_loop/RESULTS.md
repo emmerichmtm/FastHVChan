@@ -1,5 +1,9 @@
 # Compiling the complete numerical contractions
 
+The standalone [A4 report](../../paper/whole_loop_jit_4d_report.pdf) and
+[LaTeX source](../../paper/whole_loop_jit_4d_report.tex) explain the numerical
+contraction, recursion, correctness checks and the measurements below.
+
 The final backend improves the earlier hybrid Numba implementation by
 **1.47–8.13 times** on the five cases where both complete; the median of those
 five ratios is **7.76 times**. It also completes the two 40-point cases whose
