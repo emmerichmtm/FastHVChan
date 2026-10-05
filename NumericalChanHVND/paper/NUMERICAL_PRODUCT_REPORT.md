@@ -1,7 +1,7 @@
 # A Numerical Formulation of Chan's Hypervolume Algorithm
 
-This report is written as a self-contained research manuscript for both
-evolutionary multiobjective optimization and computational geometry readers.
+This report is written as a self-contained research manuscript for readers
+from the Multiobjective Optimization field and computational geometry.
 It uses 12-point text, A4 pages, a vector illustration, and inline `bibitem`
 references.
 

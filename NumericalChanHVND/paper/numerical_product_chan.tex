@@ -35,8 +35,7 @@ breaklines=true,frame=single,rulecolor=\color{black!20},xleftmargin=3pt,xrightma
 \DeclareMathOperator{\diag}{diag}
 \hypersetup{pdftitle={A Numerical Formulation of Chan's Hypervolume Algorithm},
 pdfsubject={Product measures, exact finite contractions, and preservation of the d/3 exponent}}
-\title{A Numerical Formulation of\\Chan's Hypervolume Algorithm\\[.6em]
-\large Cell masses, finite contractions, and preservation\\of the $d/3$ complexity exponent}
+\title{A Numerical Formulation of\\Chan's Hypervolume Algorithm}
 \author{Technical report accompanying \texttt{FastHVChan}}
 \date{5 October 2026}
 \begin{document}
@@ -85,10 +84,12 @@ compression; evolutionary multiobjective optimization.
 In multiobjective optimization, the output of a search is usually a set
 of mutually incomparable objective vectors. An indicator assigns a scalar
 value to this set, for assessment or for selection during the search.
-The hypervolume indicator rewards the size of the region dominated by
-the vectors relative to a reference point. Repeated indicator evaluations
-can therefore be a computational bottleneck; see the optimization
-background in~\cite{emmerichdeutz2018}.
+The hypervolume indicator, introduced by Zitzler and Thiele~\cite{zitzlerthiele1998},
+rewards the size of the region dominated by the vectors relative to a
+reference point. Repeated indicator evaluations can therefore be a
+computational bottleneck. The Wikipedia article~\cite{wikipediahv} gives
+an introductory overview; further optimization background is provided
+in~\cite{emmerichdeutz2018}.
 
 For computational geometry, the same problem is a restricted union-measure
 problem. The boxes share an anchor, equivalently they are orthants clipped
@@ -107,7 +108,7 @@ The presentation preserves the geometric recursion and the compression
 that make the bound possible. Simply replacing integrals by sums, or
 compiling a slow loop, would not be a sufficient complexity argument.
 
-\paragraph{For the EMO reader.}
+\paragraph{For the reader from the Multiobjective Optimization field.}
 The main message is that the usual hypervolume indicator can be computed
 with interval lengths, prefix sums, and finite array operations, while
 retaining Chan's asymptotic bound. The proof explains why the engine
@@ -894,7 +895,7 @@ a stronger global bound or an additional structural reduction. Neither
 replacing integrals by finite sums nor grouping coordinates in pairs
 supplies that step. No new conditional lower bound is established here.
 
-For EMO software, this gives a numerical implementation of the standard
+For multiobjective optimization software, this gives a numerical implementation of the standard
 hypervolume indicator. For geometric analysis, it gives
 an explicit finite representation and an accounting of retained histories.
 The numerical formulation retains Chan's exponent under the proved
@@ -965,6 +966,22 @@ Foundations of Computer Science (FOCS)}, pages 410--419, 2013.
 \newblock \url{https://doi.org/10.1109/FOCS.2013.51}.
 \newblock Author version, 10 August 2013:
 \url{https://tmc.web.engr.illinois.edu/easyklee8_13.pdf}.
+
+\bibitem{zitzlerthiele1998}
+Eckart Zitzler and Lothar Thiele.
+\newblock Multiobjective optimization using evolutionary algorithms---A
+comparative case study.
+\newblock In \emph{Parallel Problem Solving from Nature---PPSN V},
+volume 1498 of \emph{Lecture Notes in Computer Science}, pages 292--301.
+Springer, Berlin, Heidelberg, 1998.
+\newblock \url{https://doi.org/10.1007/BFb0056872}.
+
+\bibitem{wikipediahv}
+Wikipedia contributors.
+\newblock Hypervolume indicator.
+\newblock \emph{Wikipedia, The Free Encyclopedia}.
+\newblock \url{https://en.wikipedia.org/wiki/Hypervolume_indicator}.
+Accessed 5 October 2026.
 
 \bibitem{emmerich2026}
 Michael T. M. Emmerich.
