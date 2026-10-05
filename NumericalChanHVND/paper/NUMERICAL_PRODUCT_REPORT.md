@@ -1,4 +1,4 @@
-# Numerical Chan recursion for hypervolume and dominated-set magnitude
+# A Numerical Formulation of Chan's Hypervolume Algorithm
 
 This report is written as a self-contained research manuscript for both
 evolutionary multiobjective optimization and computational geometry readers.
@@ -9,15 +9,21 @@ references.
 - [Main LaTeX source](numerical_product_chan.tex)
 - [Experimental section](numerical_product_chan_experiments.tex)
 - [Larger 4D–6D experimental section](numerical_product_chan_larger.tex)
+- [Product-measure and magnitude appendix](numerical_product_chan_magnitude.tex)
 - [Complete LaTeX source bundle](numerical_product_chan_source.zip)
 
-The report explains the metric definition of magnitude, proves its product
-computing-measure formula on finite dominated regions, and gives the HV
-transformation in both directions, including zero coordinates and scaling.
-It derives exact cell-mass discretization, monotone-cutoff contraction,
-block-mass compression, and the geometric recursion.
+The main text develops the algorithm directly for ordinary hypervolume
+under Lebesgue measure: interval lengths, prefix sums, monotone-cutoff
+contraction, block-mass compression, and the geometric recursion. No
+magnitude transformation is required by the algorithm or its proof.
 
-Theorem 10.1 proves that a locally restarted compression schedule retains
+The magnitude viewpoint encouraged this algebraic formulation, as documented
+in the earlier [HV4DMagnitude report](https://github.com/emmerichmtm/HV4DMagnitude/blob/main/paper/magnitude_chan_pair_elimination_report.pdf).
+Appendix A preserves the metric definition, product computing-measure proof,
+both HV transformations, boundary cases, and use of the shared engine.
+This is an additional application, not a claimed source of an HV speedup.
+
+The main complexity theorem proves that a locally restarted compression schedule retains
 Chan's `O(n^(d/3) polylog(n))` arithmetic bound for fixed `d >= 4`.
 It allows a compression to be skipped only when the current stored state
 certifies the required size bound. Both outcomes restart the local budget.
@@ -42,7 +48,7 @@ pdflatex -interaction=nonstopmode -halt-on-error numerical_product_chan.tex
 ```
 
 Alternatively, `tectonic numerical_product_chan.tex` handles the repeat
-passes automatically. The three `.tex` files are sufficient: there is no
+passes automatically. The four `.tex` files are sufficient: there is no
 external bibliography database or image dependency. The source bundle
-contains all three files and this guide. This is an arXiv-style source package;
+contains all four files and this guide. This is an arXiv-style source package;
 it has not been submitted to arXiv.

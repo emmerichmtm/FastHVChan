@@ -52,9 +52,9 @@ compilation; reported performance measurements distinguish it from warm calls.
 
 ## Report, tests, and timings
 
-- [Full numerical HV/magnitude report (PDF)](../NumericalChanHVND/paper/numerical_product_chan.pdf)
+- [Full numerical HV report (PDF)](../NumericalChanHVND/paper/numerical_product_chan.pdf)
   and [LaTeX source](../NumericalChanHVND/paper/numerical_product_chan.tex):
-  self-contained theory for both audiences, both indicator reductions, and
+  self-contained HV theory for both audiences, a magnitude appendix, and
   the local compression policy retaining the `O(n^(4/3) polylog(n))` bound.
   Its compiled implementation is the generic `numerical_chan_local_compiled`
   module, which includes 4D.

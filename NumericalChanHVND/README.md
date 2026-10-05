@@ -5,8 +5,8 @@ Every integer dimension from 2 to 10 is supported, including 5, 7, and 9.
 The two original Chan implementations at the repository root are unchanged.
 
 The [full research report (PDF)](paper/numerical_product_chan.pdf) and
-[LaTeX source](paper/numerical_product_chan.tex) explain magnitude, both HV
-transformations, finite contractions, and a proof retaining Chan's
+[LaTeX source](paper/numerical_product_chan.tex) develop ordinary HV directly
+from Lebesgue measure, finite contractions, and a proof retaining Chan's
 `O(n^(d/3) polylog(n))` arithmetic bound. The new
 [`numerical_chan_local_compiled.py`](numerical_chan_local_compiled.py)
 implements its local checkpoint policy, including compression skips only
@@ -17,6 +17,10 @@ and distinguishes complete medians, partial workers and unrun cases.
 The archived adaptive benchmark below measures a different policy.
 Run `python NumericalChanHVND/verify_local_compiled.py`
 from the repository root to validate it.
+
+Magnitude motivated the algebraic viewpoint but is not needed for ordinary
+HV. Its definitions, product-measure proof and both HV transformations are
+collected in Appendix A, with a link to the earlier HV4DMagnitude report.
 
 ```python
 from NumericalChanHVND.numerical_chan_local_compiled import hypervolume, magnitude

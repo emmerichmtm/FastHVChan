@@ -12,6 +12,8 @@
 breaklines=true,frame=single,rulecolor=\color{black!20},xleftmargin=3pt,xrightmargin=3pt}
 \setlength{\emergencystretch}{3em}
 \setlength{\parskip}{.25em}
+\widowpenalty=10000
+\clubpenalty=10000
 \setcounter{tocdepth}{1}
 \setlist{itemsep=.15em,topsep=.35em}
 \newtheorem{theorem}{Theorem}[section]
@@ -31,12 +33,12 @@ breaklines=true,frame=single,rulecolor=\color{black!20},xleftmargin=3pt,xrightma
 \newcommand{\Push}{\operatorname{Push}}
 \newcommand{\supp}{\operatorname{supp}}
 \DeclareMathOperator{\diag}{diag}
-\hypersetup{pdftitle={Numerical Chan Recursion for Hypervolume and Dominated-Set Magnitude},
+\hypersetup{pdftitle={A Numerical Formulation of Chan's Hypervolume Algorithm},
 pdfsubject={Product measures, exact finite contractions, and preservation of the d/3 exponent}}
-\title{Numerical Chan Recursion for Hypervolume\\and Dominated-Set Magnitude\\[.6em]
-\large Product measures, finite contractions, and preservation\\of the $d/3$ complexity exponent}
+\title{A Numerical Formulation of\\Chan's Hypervolume Algorithm\\[.6em]
+\large Cell masses, finite contractions, and preservation\\of the $d/3$ complexity exponent}
 \author{Technical report accompanying \texttt{FastHVChan}}
-\date{4 October 2026}
+\date{5 October 2026}
 \begin{document}
 \maketitle
 \begin{abstract}
@@ -50,11 +52,9 @@ monotone integer-cutoff constraints. No quadrature or general symbolic
 integration is required. The simplification is representational; Chan's
 own step-function integrals also admit finite arithmetic evaluation.
 
-For the $\ell_1$ magnitude of dominated sets, we explain the metric
-definition, prove the anchored-box product-measure formula, and give
-linear-size reductions to and from ordinary hypervolume. Product measures
-factor coordinate weights, while pair constraints retain geometric
-dependence. We prove closure under numerical elimination and block-mass
+The formulation starts directly from ordinary hypervolume under Lebesgue
+measure: coordinate weights are interval lengths, while pair constraints
+retain geometric dependence. We prove closure under numerical elimination and block-mass
 compression, then account for the entire recursive computation. A local
 checkpoint policy, optionally skipping compression when the state is
 already small, retains Chan's $\wtO_d(n^{d/3})$ arithmetic bound for every
@@ -67,11 +67,13 @@ test, and compare the proved local policy, an earlier adaptive variant,
 and both Python Chan references. Completed timings, partial runs, and
 timeouts are kept distinct. Earlier small-input tests remain separate
 historical comparisons. The measurements do not establish an asymptotic
-exponent or universal practical superiority.
+exponent or universal practical superiority. An appendix develops the
+product-measure extension to dominated-set magnitude and its equivalence
+with HV; that extension is not needed by the main algorithm.
 \end{abstract}
 \vspace{.3em}
 \noindent\textbf{Keywords:} hypervolume indicator; Klee's measure problem;
-metric magnitude; product measure; orthants; numerical elimination;
+Lebesgue measure; product structure; orthants; numerical elimination;
 compression; evolutionary multiobjective optimization.
 \newpage
 \tableofcontents
@@ -106,19 +108,29 @@ that make the bound possible. Simply replacing integrals by sums, or
 compiling a slow loop, would not be a sufficient complexity argument.
 
 \paragraph{For the EMO reader.}
-The main message is that HV and dominated-set magnitude can use one
-geometric engine. Their different meanings enter through one-dimensional
-weights. The proof also explains why the engine absorbs simple boxes
-before dividing the remaining instance, and why compression is an
-essential part of a high-dimensional algorithm.
+The main message is that the usual hypervolume indicator can be computed
+with interval lengths, prefix sums, and finite array operations, while
+retaining Chan's asymptotic bound. The proof explains why the engine
+absorbs simple boxes before dividing the remaining instance and why
+compression is essential in high dimensions.
 
 \paragraph{For the computational geometry reader.}
 The new presentation specializes the functional algebra to a finite
-ordered grid, including atomic measures. Its role is to make the
+ordered grid of coordinate intervals. Its role is to make the
 implementation and its invariants explicit. We provide both a schedule
 that charges representation growth and a guarded version of that schedule.
 We do not claim a new orthant exponent, a new lower bound, or a new
 independent planar factorization.
+
+\paragraph{Origin of the viewpoint.}
+The magnitude viewpoint encouraged us to view the problem algebraically;
+the earlier \href{https://github.com/emmerichmtm/HV4DMagnitude/blob/main/paper/magnitude_chan_pair_elimination_report.pdf}{report in the HV4DMagnitude repository}
+documents that route~\cite{magnitudesoftware}. In the end, the formulation
+can be developed directly for the common hypervolume indicator, because
+Lebesgue measure itself is a product measure. Magnitude is not required
+for the algorithm, its proof, or the measured HV timings.
+Appendix~\ref{app:magnitude} contains the metric background, both indicator
+transformations, and the additional application of the same engine.
 
 \paragraph{What the complexity statement covers.}
 Our main bound applies to the local checkpoint algorithm of
@@ -129,7 +141,7 @@ compiled driver uses an interval based on the \emph{original} input size.
 We do not attach the local-schedule theorem to that different policy.
 Section~\ref{sec:software} maps these statements to actual files.
 
-\section{Dominated regions, reference points, and product measures}
+\section{Dominated regions and ordinary hypervolume}
 \label{sec:product}
 
 For a finite set $A\subseteq\R_{\ge0}^d$, define
@@ -147,303 +159,18 @@ coordinates; no general-position hypothesis is needed.
 For minimization vectors $p$ and a reference vector $r$ satisfying
 $p_i\le r_i$, the conventional region is
 $\bigcup_p\prod_i[p_i,r_i]$. The reflection $x\mapsto r-x$ turns it into
-$D(\{r-p\})$. This is a volume-preserving map and an $\ell_1$ isometry.
-Thus the upper-corner convention changes neither HV nor metric magnitude
-of the corresponding region. The reference point still determines which
-region is measured.
+$D(\{r-p\})$. This reflection preserves volume, so the upper-corner
+convention computes the same hypervolume. The reference point still
+determines which region is measured.
 
-Let $\nu_i$ be a nonnegative measure on the $i$th coordinate axis, finite
-on the bounding interval, and let
+For ordinary hypervolume, Lebesgue measure already has product structure:
 \[
- \nu=\bigotimes_{i=1}^d\nu_i,
- \qquad F_i(t)=\nu_i([0,t]).
+ \lambda_d=\bigotimes_{i=1}^d\lambda_1,
+ \qquad \lambda_d(Q(a))=\prod_i a_i.
 \]
-Product structure means that a box has mass
-$\nu(Q(a))=\prod_iF_i(a_i)$. It does \emph{not} mean that a union of boxes
-is a Cartesian product. The following elementary reduction captures
-exactly what can be factored.
-
-\begin{proposition}[Cumulative-coordinate reduction]\label{prop:cdf}
-For finite $A\subseteq\R_{\ge0}^d$, put
-$F(A)=\{(F_1(a_1),\ldots,F_d(a_d)):a\in A\}$. Then
-\[
-                  \nu(D(A))=\HV_d(F(A)).
-\]
-If all required cumulative values are supplied, the reduction needs
-$O(nd)$ arithmetic and coordinate operations, preserves dimension, and
-does not increase the number of generators.
-\end{proposition}
-\begin{proof}
-Every nonempty intersection of input boxes is $Q(m_J)$, where
-$m_{J,i}=\min_{a\in J}a_i$. Since each $F_i$ is nondecreasing,
-$F_i(m_{J,i})=\min_{a\in J}F_i(a_i)$. The mass of the intersection
-therefore equals the volume of the intersection of its transformed
-anchored boxes. Finite inclusion--exclusion proves the equality for the
-unions. The empty input gives zero on both sides.
-\end{proof}
-
-The proof is an identity, not an exponential-time implementation:
-inclusion--exclusion is used to establish the reduction; a union algorithm
-computes its right side. Atoms and flat parts of the cumulative functions
-are allowed. This is generally a transformation of \emph{generators},
-not an ordinary invertible change of coordinates on the entire region.
-When cumulative values require preprocessing, their construction cost
-must be added to the HV computation.
-
-\section{What dominated-set magnitude means}
-\label{sec:magnitude}
-
-\subsection{From similarity to metric magnitude}
-For a finite metric space $X=\{x_1,\ldots,x_m\}$, form the similarity
-matrix $Z_{ij}=e^{-\operatorname{dist}(x_i,x_j)}$. When $Z$ is invertible,
-its magnitude is $\ind^TZ^{-1}\ind$. Equivalently, solve $Zw=\ind$ and
-sum the weights. Closely spaced points have high similarity and do not
-behave like entirely independent units. This is the metric analogue of
-counting developed in the magnitude literature~\cite{leinstermeckes2017}.
-
-For a compact region, an applicable continuous formulation uses a finite
-signed \emph{weight measure} $W$ supported on the region, with
-\begin{equation}
- \int_D e^{-\operatorname{dist}(x,y)}\,dW(y)=1
-                    \quad\text{for every }x\in D.
- \label{eq:weightmeasure}
-\end{equation}
-In the positive-definite setting used here, existence of such a weight
-measure gives $\Mag(D)=W(D)$~\cite{leinstermeckes2017}. We construct one
-explicitly for anchored box unions, so no limiting discretization of the
-metric space is needed for their computation. The quantity of interest is
-$\Mag(D(A))$, \emph{not} the magnitude of the finite generator set $A$.
-
-For $\operatorname{dist}(x,y)=\|x-y\|_1$, the key identity is
-\begin{equation}
- e^{-\|x-y\|_1}=\prod_{i=1}^d e^{-|x_i-y_i|}.
- \label{eq:exp-product}
-\end{equation}
-The sum in the distance becomes a product in the kernel. This tensor
-structure is the connection between metric magnitude and the product
-algebra below. The resulting algorithm evaluates no exponentials or
-similarity-matrix inverses.
-
-For completeness, positivity and the weight-measure rule have a short
-energy explanation here. The one-dimensional Laplace kernel has positive
-Fourier transform $2/(1+\xi^2)$; its tensor product is positive definite.
-For finite signed measures $\eta$ on $D$, write
-$E(\eta)=\iint e^{-\|x-y\|_1}\,d\eta(x)d\eta(y)$.
-The energy characterization of magnitude is
-$\sup_{\eta\ne0}\eta(D)^2/E(\eta)$ in this setting.
-If $W$ satisfies~\eqref{eq:weightmeasure}, then
-$\langle\eta,W\rangle=\eta(D)$ and $E(W)=W(D)$.
-Cauchy--Schwarz gives $\eta(D)^2/E(\eta)\le W(D)$, with equality
-for $\eta=W$. This justifies the rule used in the proof below and
-explains its relation to the finite matrix formula.
-
-\subsection{A direct proof for anchored boxes}
-For $a\ge0$, let
-\[
- w_a=\tfrac12\bigl(\delta_0+\delta_a+\lambda|_{[0,a]}\bigr).
-\]
-When $a=0$, the coincident endpoint atoms give $w_0=\delta_0$.
-Splitting an elementary integral at $x$ shows that, for every $x\ge0$,
-\begin{equation}
- \int_{[0,a]}e^{-|x-y|}\,dw_a(y)=e^{-(x-a)_+},
- \qquad w_a([0,a])=1+a/2,
- \label{eq:interval-potential}
-\end{equation}
-where $t_+=\max(t,0)$. For $0\le x\le a$, the integral of the density
-is $1-(e^{-x}+e^{-(a-x)})/2$; the two atoms supply the missing terms.
-For $x>a$, all contributions have the common factor $e^{-(x-a)}$.
-
-Tensor products of these interval measures give a weight measure for
-$Q(a)$ and yield $\Mag(Q(a))=\prod_i(1+a_i/2)$. More is true.
-
-\begin{theorem}[Product computing measure for dominated sets]
-\label{thm:magnitude}
-Let $A$ be any finite set of nonnegative corners. With
-\[
-                  \mu=\bigotimes_{i=1}^d
-                         (\delta_0+\tfrac12\lambda),
-\]
-the $\ell_1$ magnitude of its dominated region satisfies
-\begin{equation}
-                         \Mag(D(A))=\mu(D(A)).
- \label{eq:mag-product}
-\end{equation}
-The magnitude of the empty region is taken to be zero.
-\end{theorem}
-\begin{proof}
-Assume $A=\{a^1,\ldots,a^n\}$ is nonempty. For nonempty
-$J\subseteq\{1,\ldots,n\}$, let $m_J$ be the coordinatewise minimum
-of its corners and let $W_J=\bigotimes_i w_{m_{J,i}}$. Define
-\[
-             W=\sum_{\varnothing\ne J\subseteq[n]}
-                       (-1)^{|J|+1}W_J.
-\]
-This is a finite signed measure supported on $D(A)$. Its potential at a
-nonnegative point $x$ is the same signed sum of
-$\exp(-\sum_i(x_i-m_{J,i})_+)$, by
-\eqref{eq:exp-product}--\eqref{eq:interval-potential}.
-If $x\in D(A)$, choose $k$ with $x\le a^k$. Pair every nonempty
-$J$ not containing $k$ with $J\cup\{k\}$. Their potentials agree:
-replacing $m_{J,i}$ by $\min(m_{J,i},a_i^k)$ leaves
-$(x_i-m_{J,i})_+$ unchanged because $a_i^k\ge x_i$.
-All these pairs cancel. The unpaired subset $\{k\}$ has potential one.
-Thus $W$ satisfies~\eqref{eq:weightmeasure}.
-
-Its total mass is
-\[
- W(D(A))=\sum_{\varnothing\ne J\subseteq[n]}(-1)^{|J|+1}
-                      \prod_i(1+m_{J,i}/2).
-\]
-The last product is also $\mu(Q(m_J))$. Inclusion--exclusion for the
-positive measure $\mu$ now gives $W(D(A))=\mu(D(A))$.
-\end{proof}
-
-Equation~\eqref{eq:mag-product} is the dominated-set formula
-in~\cite{emmerich2026}. The proof above spells out why it is legitimate
-on this class, without assuming that magnitude is a valuation on arbitrary
-sets. The positive \emph{computing measure} $\mu$ is not in general the
-kernel weight measure $W$. For instance, the translated interval $[1,2]$
-has metric magnitude $3/2$ by translation invariance, but its mass under
-the fixed-anchor measure $\delta_0+\lambda/2$ is $1/2$. Consequently,
-this formula does not directly identify arbitrary Klee-measure instances
-with the metric magnitude of their unions.
-
-\subsection{Faces, Pareto compliance, and scale}
-Expanding the product measure in~\eqref{eq:mag-product} gives
-\begin{equation}
- \Mag(D(A))=\sum_{I\subseteq[d]}2^{-|I|}
-                       \lambda_{|I|}(\pi_I D(A)).
- \label{eq:projection}
-\end{equation}
-For a nonempty region the zero-dimensional term is one; for the empty
-region all terms are zero. The reason projections appear is specific to
-down-sets: the section obtained by setting coordinates outside $I$ to
-zero coincides with the projection onto $I$.
-In two dimensions the formula is
-\[
- 1+\tfrac12(\text{horizontal extent}+\text{vertical extent})
-                      +\tfrac14(\text{area}).
-\]
-In higher dimensions it combines all coordinate-projection volumes,
-including the full-dimensional HV. The algorithm need not enumerate
-these $2^d$ projections; one product measure contains them all.
-
-Proper inclusion of two finite dominated regions strictly increases
-$\mu$, hence magnitude. To see strictness, take $p\in D(B)\setminus D(A)$.
-Closedness of $D(A)$ leaves a sufficiently small lower rectangle near $p$
-outside $D(A)$; use intervals on the positive coordinates of $p$ and
-origin atoms on its zero coordinates. This rectangle has positive $\mu$
-mass and lies in $D(B)$. If $p=0$, its atomic mass is already positive.
-This explains Pareto compliance at the region level. Adding an already
-dominated generator changes neither indicator. A new box of zero
-full-dimensional volume can change magnitude through a lower-dimensional
-face even when it leaves ordinary HV unchanged.
-
-Magnitude uses a metric and therefore a length scale. For the distance
-$\tau\|x-y\|_1$, with $\tau>0$, the computing measure becomes
-$\bigotimes_i(\delta_0+\tfrac\tau2\lambda)$. Its value is a polynomial
-in $\tau$, whose degree-$d$ term is $(\tau/2)^d\HV_d(A)$
-(and vanishes when the full-dimensional HV is zero).
-Changing objective units without correspondingly specifying the metric
-changes the indicator. Product structure gives a clear algebraic
-description of this choice; it does not remove the choice.
-
-\section{Magnitude and hypervolume: both reductions}
-\label{sec:reductions}
-
-\begin{corollary}[Magnitude to HV]\label{cor:mag-to-hv}
-For finite nonnegative corners,
-\begin{equation}
- \Mag(D(A))=\HV_d\bigl(\{\ind+a/2:a\in A\}\bigr).
- \label{eq:forward}
-\end{equation}
-\end{corollary}
-\begin{proof}
-Apply Proposition~\ref{prop:cdf} with $F_i(t)=1+t/2$ and
-Theorem~\ref{thm:magnitude}.
-\end{proof}
-
-The anchor on the right of~\eqref{eq:forward} remains zero. The affine
-image of $[0,a_i]$ would instead be $[1,1+a_i/2]$. Thus this is not a
-statement that translating a region adds volume. Transforming the
-generators and rebuilding their anchored boxes includes precisely the
-face contributions represented by the atoms.
-
-\begin{proposition}[HV to magnitude]\label{prop:reverse}
-For an HV input $B\subseteq\R_{\ge0}^d$, discard corners with any zero
-coordinate. If none remain, the HV is zero. Otherwise put
-\[
- \delta_i=\min_{b\in B}b_i>0,
- \qquad c_i(b)=2(b_i/\delta_i-1).
-\]
-Then
-\begin{equation}
- \HV_d(B)=\left(\prod_i\delta_i\right)
-                 \Mag\bigl(D(\{c(b):b\in B\})\bigr).
- \label{eq:reverse}
-\end{equation}
-\end{proposition}
-\begin{proof}
-The discarded boxes have zero $d$-dimensional volume. Scaling the
-remaining $i$th coordinates by $1/\delta_i$ multiplies their HV by
-$\prod_i\delta_i^{-1}$ and gives extents at least one. For these
-normalized corners, $1+c_i(b)/2=b_i/\delta_i$. Apply
-\eqref{eq:forward} and undo the volume scale.
-\end{proof}
-
-Both directions require one indicator evaluation and $O(nd)$ preprocessing.
-They preserve dimension and input size. Therefore an arithmetic upper
-bound transfers in both directions, and so does a conditional lower bound
-within a computational model supporting these arithmetic transformations.
-This observation alone proves no new hardness result. Bit complexity and
-restrictions on integer coordinates require their own accounting.
-Zero coordinates created by~\eqref{eq:reverse} must be retained in the
-\emph{magnitude} instance. Discarding them would invalidate the reduction.
-
-\begin{example}[One example in both directions]\label{ex:two-box}
-Take $A=\{(2,1),(1,2)\}$. Its HV is $2+2-1=3$, whereas its magnitude is
-\[
- 3+3-\tfrac94=\tfrac{15}{4}
-       =1+\tfrac12(2+2)+\tfrac14\cdot3.
-\]
-The forward reduction gives corners $(2,3/2)$ and $(3/2,2)$, with HV
-$15/4$. The reverse reduction applied to the original HV instance gives
-$(2,0)$ and $(0,2)$: the magnitude of these two anchored line segments
-is $2+2-1=3$. Adding $(3,0)$ to the original set leaves its HV at $3$
-and increases its magnitude to $17/4$.
-\end{example}
-
-\begin{figure}[tb]
-\centering
-\begin{tikzpicture}[scale=1.25,>=Stealth]
- \begin{scope}
- \fill[blue!12] (0,0)--(2,0)--(2,1)--(1,1)--(1,2)--(0,2)--cycle;
- \draw[very thick,blue!60!black] (0,0)--(2,0)--(2,1)--(1,1)--(1,2)--(0,2)--cycle;
- \draw[->] (-.15,0)--(2.65,0) node[right] {$x_1$};
- \draw[->] (0,-.15)--(0,2.5) node[above] {$x_2$};
- \fill (2,1) circle(1.5pt) node[right] {\small$(2,1)$};
- \fill (1,2) circle(1.5pt) node[above right] {\small$(1,2)$};
- \fill[orange!85!black] (0,0) circle(2.2pt);
- \node at (1,-.6) {$\HV=3,\quad\Mag=15/4$};
- \end{scope}
- \node at (3.9,1.1) {$a\mapsto\ind+a/2$};
- \draw[->,thick] (3,0.7)--(4.8,0.7);
- \begin{scope}[xshift=6cm]
- \fill[teal!14] (0,0)--(2,0)--(2,1.5)--(1.5,1.5)--(1.5,2)--(0,2)--cycle;
- \draw[very thick,teal!60!black] (0,0)--(2,0)--(2,1.5)--(1.5,1.5)--(1.5,2)--(0,2)--cycle;
- \draw[->] (-.15,0)--(2.65,0) node[right] {$y_1$};
- \draw[->] (0,-.15)--(0,2.5) node[above] {$y_2$};
- \fill (2,1.5) circle(1.5pt);
- \fill (1.5,2) circle(1.5pt);
- \node at (1,-.6) {$\HV=15/4$};
- \end{scope}
-\end{tikzpicture}
-\caption{The transformed generators define a new anchored region. The
-left region's magnitude equals the right region's ordinary area. The
-origin atom and lower-dimensional contributions are represented by the
-enlargement of anchored extents, not by a translation of the shaded set.}
-\label{fig:shift}
-\end{figure}
+This is the algebraic starting point of the algorithm. A union of boxes
+need not be a Cartesian product; the geometric constraints must still be
+retained. No change of indicator is needed to obtain the product algebra.
 
 \section{Exact discretization and the numerical meaning of an integral}
 \label{sec:discrete}
@@ -453,21 +180,17 @@ $0=c_{i,0}<c_{i,1}<\cdots<c_{i,m_i}$. Use the cells
 \[
  C_{i,0}=\{0\},\qquad C_{i,k}=(c_{i,k-1},c_{i,k}]\quad(k\ge1).
 \]
-Their masses are as follows.
-\begin{center}
-\begin{tabular}{@{}lll@{}}
-\toprule
-Measure & $w_i(0)$ & $w_i(k)$ for $k\ge1$\\\midrule
-Ordinary HV & $0$ & $c_{i,k}-c_{i,k-1}$\\
-Dominated-set magnitude & $1$ & $(c_{i,k}-c_{i,k-1})/2$\\
-General product measure & $\nu_i(\{0\})$ & $\nu_i(C_{i,k})$\\
-\bottomrule
-\end{tabular}
-\end{center}
+For Lebesgue measure their masses are simply
+\[
+ w_i(0)=0,\qquad w_i(k)=c_{i,k}-c_{i,k-1}\quad(k\ge1).
+\]
+The zero cell preserves the rank convention for zero coordinates; it
+contributes no ordinary volume. These interval lengths are the only
+initial weights required by the HV algorithm.
 Every generator becomes a rank vector $r(a)$. Membership in its box is
 exactly $k_i\le r_i(a)$ on all axes. Therefore
 \begin{equation}
- \nu(D(A))=\sum_{k_1=0}^{m_1}\cdots\sum_{k_d=0}^{m_d}
+ \HV_d(A)=\sum_{k_1=0}^{m_1}\cdots\sum_{k_d=0}^{m_d}
        \ind[\exists a\in A:\ k\le r(a)]\prod_iw_i(k_i).
  \label{eq:finite-sum}
 \end{equation}
@@ -489,26 +212,34 @@ A cell-mass implementation stores the $w(k)$ and their prefixes directly.
 These are two finite arithmetic descriptions of the same operation.
 
 The difference matters in implementation. Integer ranks handle strict
-and weak endpoints explicitly, atomic masses need no special integration
-convention, and the bulk operations compile into loops over typed arrays.
+and weak endpoints explicitly, and the bulk operations compile into
+loops over typed arrays.
 There is no general symbolic-expression manipulation and no quadrature
 error. Nevertheless, evaluating a known step-function antiderivative was
 already numerical arithmetic in the Python Chan reference. The
 simplification is an explicit finite representation, not the elimination
 of a computer algebra system that the reference never used.
 
-For Example~\ref{ex:two-box}, the axis coordinates are $(0,1,2)$.
-HV masses are $(0,1,1)$ and magnitude masses are $(1,1/2,1/2)$.
-On the $3\times3$ rank grid, the only uncovered cell within the enclosing
-square is $(2,2)$. Thus HV is $4-1=3$ and magnitude is
-$4-1/4=15/4$. This tiny grid is useful for explanation and testing;
-the high-dimensional solver avoids enumerating its analogue.
+For a concrete HV example, take $A=\{(2,1),(1,2)\}$.
+The axis coordinates are $(0,1,2)$ and the mass arrays are $(0,1,1)$.
+The only uncovered positive-area cell within the enclosing square is
+$(1,2]\times(1,2]$, indexed by $(2,2)$. Thus the HV is $4-1=3$.
+This tiny grid is useful for explanation and testing; the high-dimensional
+solver avoids enumerating its analogue.
+
+The finite algebra also accepts supplied masses from another product
+measure $\nu=\bigotimes_i\nu_i$: set $w_i(k)=\nu_i(C_{i,k})$ and replace
+$\HV_d(A)$ on the left of~\eqref{eq:finite-sum} by $\nu(D(A))$.
+The coordinate cells still make each box-membership predicate constant.
+This extension changes the initial weights, not the recursive operations.
+Its cumulative-coordinate interpretation is given in Appendix~\ref{app:magnitude}.
 
 \section{Why product structure helps, and what remains coupled}
 \label{sec:structure}
 
-Product measures let the initial state be stored as $d$ unary arrays
-instead of a table with one entry per product cell. They also let us sum
+The product structure of Lebesgue measure lets the initial state be
+stored as $d$ unary arrays
+instead of a table with one entry per product cell. It also lets us sum
 an unconstrained variable by a single scalar factor. Geometry enters
 through predicates. After absorbing a two-sided box or eliminating a
 variable, the state generally ceases to be one independent product.
@@ -532,11 +263,10 @@ joint planar contraction. For odd $d$, the last coordinate is a singleton.
 No dummy dimension is needed.
 
 Another benefit is that compression preserves masses directly. A block
-can contain an origin atom, positive-length cells, or zero-mass HV cells.
+can contain positive-length cells and zero-mass endpoint cells.
 Its total mass is a sum. There is no need to divide by a cell's volume or
-reconstruct an artificial continuous density. This is particularly useful
-for magnitude, whose boundary contributions must survive every recursive
-restriction and compression.
+reconstruct an artificial continuous density. The same finite operations
+also work for the supplied product masses described above.
 
 \section{Finite contraction with monotone pair constraints}
 \label{sec:contraction}
@@ -744,7 +474,7 @@ and merges equal states. These are exact restrictions, not approximations.
 All cell endpoints are inclusive. A split after rank $c$ gives
 $[l,c]$ and $[c+1,h]$; a slab covering through rank $c$ leaves ranks
 starting at $c+1$. Cropping shifts cutoff values by the target-axis
-offset. It does not introduce a new magnitude atom at the new rank zero.
+offset. It does not recompute or insert initial cell masses.
 
 \subsection{Why three active axes produce the exponent $d/3$}
 Cycle through coordinate axes. At the current axis, let the cyclic
@@ -823,8 +553,8 @@ The affected part is one interval: from the first height below $v$ to the
 rectangle's last second-coordinate rank. A lazy segment tree locates
 that first height and assigns the interval in $O(\log n)$, maintaining
 $\sum_y w_2(y)h(y)$. Sorting and all insertions take $O(n\log n)$
-and $O(n)$ space. The same argument applies to both sets of nonnegative
-initial masses, including the magnitude atom.
+and $O(n)$ space. The same argument applies to supplied nonnegative
+initial masses.
 
 \section{A local compression policy that retains Chan's bound}
 \label{sec:complexity}
@@ -885,8 +615,7 @@ Solve(B, F, cell, axis, remaining):
 \begin{theorem}[Numerical Chan bound with guarded compression]
 \label{thm:main}
 For fixed $d\ge4$ and fixed base size, the local-checkpoint algorithm
-computes the mass of a union of $n$ anchored boxes under a supplied
-product measure in
+computes the ordinary hypervolume of a union of $n$ anchored boxes in
 \begin{equation}
                    O_d(n^{d/3}\log^{c_d}(n+2))
                        =\wtO_d(n^{d/3})
@@ -894,10 +623,10 @@ product measure in
 \end{equation}
 arithmetic and comparison operations, for a constant $c_d$ depending
 only on $d$. This holds with compression at every checkpoint, or with
-the certified skip rule above. Initial coordinate sorting and mass
-construction are included when the cell masses take $O_d(n\log n)$ work
-to obtain. In particular it applies to ordinary HV and dominated-set
-$\ell_1$ magnitude. For $d=2,3$, the sweeps give $O(n\log n)$.
+the certified skip rule above. Initial coordinate sorting and interval
+length construction are included. The same bound applies to a supplied
+product measure whose cell masses take $O_d(n\log n)$ work to obtain.
+For $d=2,3$, the sweeps give $O(n\log n)$.
 \end{theorem}
 
 \begin{proof}
@@ -982,8 +711,8 @@ elimination, and compression framework~\cite{chan2013}. His functional
 closure and grid-preserving simplification appear in Lemmas 4.4 and 4.5;
 the orthant bound is in Section 4.2. Our local schedule makes the
 representation-growth charge explicit and permits the storage-certified
-skip. Neither atoms nor finite prefix sums cause an extra polynomial
-factor in $n$. In particular, 4D remains $\wtO(n^{4/3})$.
+skip. The finite prefix operations cause no extra polynomial factor in
+$n$. In particular, 4D remains $\wtO(n^{4/3})$.
 
 \begin{center}
 \begin{tabular}{@{}clcc@{}}
@@ -1079,21 +808,19 @@ indicator is positive.
 From the repository root, in an environment with NumPy and Numba:
 \begin{lstlisting}[language=Python]
 from NumericalChanHVND.numerical_chan_local_compiled import (
-    hypervolume, magnitude, NumericalChanLocalCompiled)
+    hypervolume, NumericalChanLocalCompiled)
 
 points = [(2, 1, 1, 1), (1, 2, 1, 1)]
 assert abs(hypervolume(points) - 3.0) < 1e-10
-assert abs(magnitude(points) - 135.0 / 16.0) < 1e-10
 
 solver = NumericalChanLocalCompiled(dimension=4)
 value = solver.compute(points)
 print(solver.stats)
 \end{lstlisting}
-The second value is $(15/4)(3/2)^2=135/16$. For minimization data,
-replace each point by its nonnegative extent vector $r-p$ before calling
-the solver. The public validation rejects negative or nonfinite extents.
-An empty input returns zero, whereas a single all-zero generator has
-magnitude one. No dominance filter is required for correctness.
+For minimization data, replace each point by its nonnegative extent
+vector $r-p$ before calling the solver. The public validation rejects
+negative or nonfinite extents. An empty input and a single all-zero
+generator both have HV zero. No dominance filter is required for correctness.
 
 The local driver intentionally exposes no global interval or
 compression-disable option. Its compression factor is a fixed constant
@@ -1105,30 +832,28 @@ parameters depend on input size is outside the stated theorem.
 The script \texttt{verify\_local\_compiled.py} and its saved JSON record
 check the new driver independently of the old timing experiment. They
 include 232 exact small-instance checks across dimensions 2--10, 24
-additional exact checkpoint-recursion instances, 18 checks of the two
-magnitude transformations, and 3,538 observed cyclic-advance and budget
-invariants. The trace checks that a skipped axis consumes a step and that
+additional exact checkpoint-recursion instances, and 3,538 observed
+cyclic-advance and budget invariants. Additional product-measure checks
+are described in Appendix~\ref{app:magnitude-software}. The trace checks that a skipped axis consumes a step and that
 a checkpoint resets its budget after either decision.
 
 A 64-point four-dimensional permuted antichain reaches two successive
 checkpoint generations. With factor zero it executes 63 compressions;
 with a sufficiently large fixed factor it executes 63 certified skips.
-Both settings agree with the independent Chan $d/2$ reference for HV and
-magnitude. These deliberately chosen settings validate both branches of
+Both settings agree with the independent Chan $d/2$ reference for HV. These deliberately chosen settings validate both branches of
 the policy; they are not performance recommendations.
 
 The common-extent 1,552-box family described in
 Section~\ref{sec:archived} also executes six \emph{default local-policy}
-compressions. Its HV is $6\,372\,330\,876$ and its magnitude is
-$411\,863\,688.75$, agreeing with the independently transformed Chan
-$d/2$ computations. These six events occur on different branches; this
+compressions. Its HV is $6\,372\,330\,876$, agreeing with the independent
+Chan $d/2$ computation. These six events occur on different branches; this
 case alone does not demonstrate repeated compression on one path.
 
 All checks pass with maximum scaled discrepancy
 $5.6844\times10^{-13}$, using relative tolerance $2\times10^{-9}$ and
 absolute tolerance $2\times10^{-10}$. Cached import in a fresh process
 is also checked. The shared kernel's separate suite tests signed states,
-all cutoff orientations, inclusive crops, boundary atoms, repeated
+all cutoff orientations, inclusive crops, repeated
 compression, and parent-state immutability. These tests corroborate the
 implementation; the complexity conclusion rests on
 Theorem~\ref{thm:main}, not on a finite test set.
@@ -1149,14 +874,11 @@ limits the number of representation-expanding checkpoints to
 $O_d(\log\log n)$ on a path. Together these properties preserve the
 $d/3$ exponent.
 
-Magnitude contributes a particularly clean interpretation of the initial
-weights. Its exponential kernel factors under the $\ell_1$ metric,
-anchored-box magnitude is a product of affine coordinate factors, and
-the union indicator is represented by the product measure with an origin
-atom. The affine generator transformation translates this problem to HV
-and back with no increase in dimension. This is a useful simplification
-and an equivalence of computational difficulty, not a faster union
-algorithm by itself.
+For ordinary HV, all initial masses are coordinate interval lengths.
+The algebraic formulation, including its product factors and finite
+prefix operations, therefore follows directly from Lebesgue measure.
+The extension in Appendix~\ref{app:magnitude} is additional functionality;
+the benchmarked HV algorithm needs no metric kernel or indicator conversion.
 
 There are also clear limits. Multiplying answers from coordinate-pair
 projections loses dependence. After masks are introduced, independent
@@ -1168,20 +890,20 @@ exponent losing to a simpler method on the tested inputs.
 
 The present result leaves the stricter target of an unrestricted
 $\wtO(n^{4/3-\varepsilon})$ 4D algorithm open. Obtaining it would require
-a stronger global bound or an additional structural reduction; neither
-the magnitude identity nor a $2+2$ ordering supplies that step. Similarly,
-HV--magnitude equivalence transports an established lower bound but does
-not manufacture a reduction from 3SUM, a clique problem, or arbitrary
-Klee measure input. Those are separate questions.
+a stronger global bound or an additional structural reduction. Neither
+replacing integrals by finite sums nor grouping coordinates in pairs
+supplies that step. No new conditional lower bound is established here.
 
-For EMO software, this gives one interface for HV and dominated-set
-magnitude, including boundary cases. For geometric analysis, it gives
+For EMO software, this gives a numerical implementation of the standard
+hypervolume indicator. For geometric analysis, it gives
 an explicit finite representation and an accounting of retained histories.
 The numerical formulation retains Chan's exponent under the proved
 compression policy.
 
 \clearpage
 \appendix
+\input{numerical_product_chan_magnitude.tex}
+\clearpage
 \section{A compact implementation and proof map}
 \label{app:map}
 
@@ -1194,7 +916,7 @@ arithmetic while the compiled code evaluates the same formulas in binary64.
 \toprule
 Mathematical operation & Implementation location and invariant\\\midrule
 Axis cells and masses & \texttt{numerical\_chan\_numba.py},
-\texttt{compute}: origin atom plus interval masses; ranks preserve box membership.\\
+\texttt{compute}: interval lengths for HV; ranks preserve box membership.\\
 Cell simplification & \texttt{numerical\_chan\_compiled.py},
 \texttt{\_cell\_state}: disjointness, slab tightening, cropping and pair masks.\\
 Scalar contraction & \texttt{compiled\_terms.py},
@@ -1221,7 +943,7 @@ transferred to it.
 
 To reproduce correctness and build this manuscript from the repository
 root, use the following commands. LaTeX is run in the paper directory
-because the experimental sections are companion source files.
+because the experimental sections and magnitude appendix are companion source files.
 \begin{lstlisting}
 python NumericalChanHVND/verify_local_compiled.py
 cd NumericalChanHVND/paper
@@ -1266,6 +988,16 @@ Michael T. M. Emmerich and Andr\'e H. Deutz.
 evolutionary methods.
 \newblock \emph{Natural Computing}, 17:585--609, 2018.
 \newblock \url{https://doi.org/10.1007/s11047-018-9685-y}.
+
+\bibitem{magnitudesoftware}
+Michael T. M. Emmerich.
+\newblock Pair-Elimination and Product-Measure Simplification of
+Chan's Fixed-Dimensional Hypervolume Algorithm.
+\newblock Working research note, 2 October 2026, in the
+\texttt{HV4DMagnitude} repository.
+\newblock \href{https://github.com/emmerichmtm/HV4DMagnitude/blob/main/paper/magnitude_chan_pair_elimination_report.pdf}{Report PDF};
+\href{https://github.com/emmerichmtm/HV4DMagnitude/blob/main/paper/magnitude_chan_pair_elimination_report.tex}{LaTeX source}.
+\newblock \url{https://github.com/emmerichmtm/HV4DMagnitude}.
 
 \bibitem{software}
 \emph{FastHVChan: numerical hypervolume and magnitude implementations}.

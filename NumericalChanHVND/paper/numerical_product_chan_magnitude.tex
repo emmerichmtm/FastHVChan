@@ -1,0 +1,346 @@
+\section{Dominated-set magnitude}
+\label{app:magnitude}
+
+This appendix records an additional application of the numerical algebra.
+The development of the HV algorithm and its complexity proof in the main
+text requires only Lebesgue measure. The magnitude viewpoint encouraged
+the algebraic formulation in the earlier research report~\cite{magnitudesoftware};
+it is retained here as motivation and as an extension, not as a prerequisite
+for the ordinary hypervolume algorithm or as a source of a faster exponent.
+
+\subsection{Cumulative-coordinate reduction for product measures}
+Let $\nu_i$ be a nonnegative measure on the $i$th coordinate axis, finite
+on the bounding interval, and let
+\[
+ \nu=\bigotimes_{i=1}^d\nu_i,
+ \qquad F_i(t)=\nu_i([0,t]).
+\]
+Product structure means that a box has mass
+$\nu(Q(a))=\prod_iF_i(a_i)$. It does \emph{not} mean that a union of boxes
+is a Cartesian product. The following elementary reduction captures
+exactly what can be factored.
+
+\begin{proposition}[Cumulative-coordinate reduction]\label{prop:cdf}
+For finite $A\subseteq\R_{\ge0}^d$, put
+$F(A)=\{(F_1(a_1),\ldots,F_d(a_d)):a\in A\}$. Then
+\[
+                  \nu(D(A))=\HV_d(F(A)).
+\]
+If all required cumulative values are supplied, the reduction needs
+$O(nd)$ arithmetic and coordinate operations, preserves dimension, and
+does not increase the number of generators.
+\end{proposition}
+\begin{proof}
+Every nonempty intersection of input boxes is $Q(m_J)$, where
+$m_{J,i}=\min_{a\in J}a_i$. Since each $F_i$ is nondecreasing,
+$F_i(m_{J,i})=\min_{a\in J}F_i(a_i)$. The mass of the intersection
+therefore equals the volume of the intersection of its transformed
+anchored boxes. Finite inclusion--exclusion proves the equality for the
+unions. The empty input gives zero on both sides.
+\end{proof}
+
+The proof is an identity, not an exponential-time implementation:
+inclusion--exclusion is used to establish the reduction; a union algorithm
+computes its right side. Atoms and flat parts of the cumulative functions
+are allowed. This is generally a transformation of \emph{generators},
+not an ordinary invertible change of coordinates on the entire region.
+When cumulative values require preprocessing, their construction cost
+must be added to the HV computation.
+
+\subsection{What dominated-set magnitude means}
+\label{sec:magnitude}
+
+\subsubsection{From similarity to metric magnitude}
+For a finite metric space $X=\{x_1,\ldots,x_m\}$, form the similarity
+matrix $Z_{ij}=e^{-\operatorname{dist}(x_i,x_j)}$. When $Z$ is invertible,
+its magnitude is $\ind^TZ^{-1}\ind$. Equivalently, solve $Zw=\ind$ and
+sum the weights. Closely spaced points have high similarity and do not
+behave like entirely independent units. This is the metric analogue of
+counting developed in the magnitude literature~\cite{leinstermeckes2017}.
+
+For a compact region, an applicable continuous formulation uses a finite
+signed \emph{weight measure} $W$ supported on the region, with
+\begin{equation}
+ \int_D e^{-\operatorname{dist}(x,y)}\,dW(y)=1
+                    \quad\text{for every }x\in D.
+ \label{eq:weightmeasure}
+\end{equation}
+In the positive-definite setting used here, existence of such a weight
+measure gives $\Mag(D)=W(D)$~\cite{leinstermeckes2017}. We construct one
+explicitly for anchored box unions, so no limiting discretization of the
+metric space is needed for their computation. The quantity of interest is
+$\Mag(D(A))$, \emph{not} the magnitude of the finite generator set $A$.
+
+For $\operatorname{dist}(x,y)=\|x-y\|_1$, the key identity is
+\begin{equation}
+ e^{-\|x-y\|_1}=\prod_{i=1}^d e^{-|x_i-y_i|}.
+ \label{eq:exp-product}
+\end{equation}
+The sum in the distance becomes a product in the kernel. This tensor
+structure connects metric magnitude with the finite product algebra of
+the main text. The resulting algorithm evaluates no exponentials or
+similarity-matrix inverses.
+
+For completeness, positivity and the weight-measure rule have a short
+energy explanation here. The one-dimensional Laplace kernel has positive
+Fourier transform $2/(1+\xi^2)$; its tensor product is positive definite.
+For finite signed measures $\eta$ on $D$, write
+$E(\eta)=\iint e^{-\|x-y\|_1}\,d\eta(x)d\eta(y)$.
+The energy characterization of magnitude is
+$\sup_{\eta\ne0}\eta(D)^2/E(\eta)$ in this setting.
+If $W$ satisfies~\eqref{eq:weightmeasure}, then
+$\langle\eta,W\rangle=\eta(D)$ and $E(W)=W(D)$.
+Cauchy--Schwarz gives $\eta(D)^2/E(\eta)\le W(D)$, with equality
+for $\eta=W$. This justifies the rule used in the proof below and
+explains its relation to the finite matrix formula.
+
+\subsubsection{A direct proof for anchored boxes}
+For $a\ge0$, let
+\[
+ w_a=\tfrac12\bigl(\delta_0+\delta_a+\lambda|_{[0,a]}\bigr).
+\]
+When $a=0$, the coincident endpoint atoms give $w_0=\delta_0$.
+Splitting an elementary integral at $x$ shows that, for every $x\ge0$,
+\begin{equation}
+ \int_{[0,a]}e^{-|x-y|}\,dw_a(y)=e^{-(x-a)_+},
+ \qquad w_a([0,a])=1+a/2,
+ \label{eq:interval-potential}
+\end{equation}
+where $t_+=\max(t,0)$. For $0\le x\le a$, the integral of the density
+is $1-(e^{-x}+e^{-(a-x)})/2$; the two atoms supply the missing terms.
+For $x>a$, all contributions have the common factor $e^{-(x-a)}$.
+
+Tensor products of these interval measures give a weight measure for
+$Q(a)$ and yield $\Mag(Q(a))=\prod_i(1+a_i/2)$. More is true.
+
+\begin{theorem}[Product computing measure for dominated sets]
+\label{thm:magnitude}
+Let $A$ be any finite set of nonnegative corners. With
+\[
+                  \mu=\bigotimes_{i=1}^d
+                         (\delta_0+\tfrac12\lambda),
+\]
+the $\ell_1$ magnitude of its dominated region satisfies
+\begin{equation}
+                         \Mag(D(A))=\mu(D(A)).
+ \label{eq:mag-product}
+\end{equation}
+The magnitude of the empty region is taken to be zero.
+\end{theorem}
+\begin{proof}
+Assume $A=\{a^1,\ldots,a^n\}$ is nonempty. For nonempty
+$J\subseteq\{1,\ldots,n\}$, let $m_J$ be the coordinatewise minimum
+of its corners and let $W_J=\bigotimes_i w_{m_{J,i}}$. Define
+\[
+             W=\sum_{\varnothing\ne J\subseteq[n]}
+                       (-1)^{|J|+1}W_J.
+\]
+This is a finite signed measure supported on $D(A)$. Its potential at a
+nonnegative point $x$ is the same signed sum of
+$\exp(-\sum_i(x_i-m_{J,i})_+)$, by
+\eqref{eq:exp-product}--\eqref{eq:interval-potential}.
+If $x\in D(A)$, choose $k$ with $x\le a^k$. Pair every nonempty
+$J$ not containing $k$ with $J\cup\{k\}$. Their potentials agree:
+replacing $m_{J,i}$ by $\min(m_{J,i},a_i^k)$ leaves
+$(x_i-m_{J,i})_+$ unchanged because $a_i^k\ge x_i$.
+All these pairs cancel. The unpaired subset $\{k\}$ has potential one.
+Thus $W$ satisfies~\eqref{eq:weightmeasure}.
+
+Its total mass is
+\[
+ W(D(A))=\sum_{\varnothing\ne J\subseteq[n]}(-1)^{|J|+1}
+                      \prod_i(1+m_{J,i}/2).
+\]
+The last product is also $\mu(Q(m_J))$. Inclusion--exclusion for the
+positive measure $\mu$ now gives $W(D(A))=\mu(D(A))$.
+\end{proof}
+
+Equation~\eqref{eq:mag-product} is the dominated-set formula
+in~\cite{emmerich2026}. The proof above spells out why it is legitimate
+on this class, without assuming that magnitude is a valuation on arbitrary
+sets. The positive \emph{computing measure} $\mu$ is not in general the
+kernel weight measure $W$. For instance, the translated interval $[1,2]$
+has metric magnitude $3/2$ by translation invariance, but its mass under
+the fixed-anchor measure $\delta_0+\lambda/2$ is $1/2$. Consequently,
+this formula does not directly identify arbitrary Klee-measure instances
+with the metric magnitude of their unions.
+
+\subsubsection{Faces, Pareto compliance, and scale}
+Expanding the product measure in~\eqref{eq:mag-product} gives
+\begin{equation}
+ \Mag(D(A))=\sum_{I\subseteq[d]}2^{-|I|}
+                       \lambda_{|I|}(\pi_I D(A)).
+ \label{eq:projection}
+\end{equation}
+For a nonempty region the zero-dimensional term is one; for the empty
+region all terms are zero. The reason projections appear is specific to
+down-sets: the section obtained by setting coordinates outside $I$ to
+zero coincides with the projection onto $I$.
+In two dimensions the formula is
+\[
+ 1+\tfrac12(\text{horizontal extent}+\text{vertical extent})
+                      +\tfrac14(\text{area}).
+\]
+In higher dimensions it combines all coordinate-projection volumes,
+including the full-dimensional HV. The algorithm need not enumerate
+these $2^d$ projections; one product measure contains them all.
+
+Proper inclusion of two finite dominated regions strictly increases
+$\mu$, hence magnitude. To see strictness, take $p\in D(B)\setminus D(A)$.
+Closedness of $D(A)$ leaves a sufficiently small lower rectangle near $p$
+outside $D(A)$; use intervals on the positive coordinates of $p$ and
+origin atoms on its zero coordinates. This rectangle has positive $\mu$
+mass and lies in $D(B)$. If $p=0$, its atomic mass is already positive.
+This explains Pareto compliance at the region level. Adding an already
+dominated generator changes neither indicator. A new box of zero
+full-dimensional volume can change magnitude through a lower-dimensional
+face even when it leaves ordinary HV unchanged.
+
+Magnitude uses a metric and therefore a length scale. For the distance
+$\tau\|x-y\|_1$, with $\tau>0$, the computing measure becomes
+$\bigotimes_i(\delta_0+\tfrac\tau2\lambda)$. Its value is a polynomial
+in $\tau$, whose degree-$d$ term is $(\tau/2)^d\HV_d(A)$
+(and vanishes when the full-dimensional HV is zero).
+Changing objective units without correspondingly specifying the metric
+changes the indicator. Product structure gives a clear algebraic
+description of this choice; it does not remove the choice.
+
+\subsection{Magnitude and hypervolume: both reductions}
+\label{sec:reductions}
+
+\begin{corollary}[Magnitude to HV]\label{cor:mag-to-hv}
+For finite nonnegative corners,
+\begin{equation}
+ \Mag(D(A))=\HV_d\bigl(\{\ind+a/2:a\in A\}\bigr).
+ \label{eq:forward}
+\end{equation}
+\end{corollary}
+\begin{proof}
+Apply Proposition~\ref{prop:cdf} with $F_i(t)=1+t/2$ and
+Theorem~\ref{thm:magnitude}.
+\end{proof}
+
+The anchor on the right of~\eqref{eq:forward} remains zero. The affine
+image of $[0,a_i]$ would instead be $[1,1+a_i/2]$. Thus this is not a
+statement that translating a region adds volume. Transforming the
+generators and rebuilding their anchored boxes includes precisely the
+face contributions represented by the atoms.
+
+\begin{proposition}[HV to magnitude]\label{prop:reverse}
+For an HV input $B\subseteq\R_{\ge0}^d$, discard corners with any zero
+coordinate. If none remain, the HV is zero. Otherwise put
+\[
+ \delta_i=\min_{b\in B}b_i>0,
+ \qquad c_i(b)=2(b_i/\delta_i-1).
+\]
+Then
+\begin{equation}
+ \HV_d(B)=\left(\prod_i\delta_i\right)
+                 \Mag\bigl(D(\{c(b):b\in B\})\bigr).
+ \label{eq:reverse}
+\end{equation}
+\end{proposition}
+\begin{proof}
+The discarded boxes have zero $d$-dimensional volume. Scaling the
+remaining $i$th coordinates by $1/\delta_i$ multiplies their HV by
+$\prod_i\delta_i^{-1}$ and gives extents at least one. For these
+normalized corners, $1+c_i(b)/2=b_i/\delta_i$. Apply
+\eqref{eq:forward} and undo the volume scale.
+\end{proof}
+
+Both directions require one indicator evaluation and $O(nd)$ preprocessing.
+They preserve dimension and input size. Therefore an arithmetic upper
+bound transfers in both directions, and so does a conditional lower bound
+within a computational model supporting these arithmetic transformations.
+This observation alone proves no new hardness result. Bit complexity and
+restrictions on integer coordinates require their own accounting.
+Zero coordinates created by~\eqref{eq:reverse} must be retained in the
+\emph{magnitude} instance. Discarding them would invalidate the reduction.
+
+\begin{example}[One example in both directions]\label{ex:two-box}
+Take $A=\{(2,1),(1,2)\}$. Its HV is $2+2-1=3$, whereas its magnitude is
+\[
+ 3+3-\tfrac94=\tfrac{15}{4}
+       =1+\tfrac12(2+2)+\tfrac14\cdot3.
+\]
+The forward reduction gives corners $(2,3/2)$ and $(3/2,2)$, with HV
+$15/4$. The reverse reduction applied to the original HV instance gives
+$(2,0)$ and $(0,2)$: the magnitude of these two anchored line segments
+is $2+2-1=3$. Adding $(3,0)$ to the original set leaves its HV at $3$
+and increases its magnitude to $17/4$.
+\end{example}
+
+\begin{figure}[tb]
+\centering
+\begin{tikzpicture}[scale=1.25,>=Stealth]
+ \begin{scope}
+ \fill[blue!12] (0,0)--(2,0)--(2,1)--(1,1)--(1,2)--(0,2)--cycle;
+ \draw[very thick,blue!60!black] (0,0)--(2,0)--(2,1)--(1,1)--(1,2)--(0,2)--cycle;
+ \draw[->] (-.15,0)--(2.65,0) node[right] {$x_1$};
+ \draw[->] (0,-.15)--(0,2.5) node[above] {$x_2$};
+ \fill (2,1) circle(1.5pt) node[right] {\small$(2,1)$};
+ \fill (1,2) circle(1.5pt) node[above right] {\small$(1,2)$};
+ \fill[orange!85!black] (0,0) circle(2.2pt);
+ \node at (1,-.6) {$\HV=3,\quad\Mag=15/4$};
+ \end{scope}
+ \node at (3.9,1.1) {$a\mapsto\ind+a/2$};
+ \draw[->,thick] (3,0.7)--(4.8,0.7);
+ \begin{scope}[xshift=6cm]
+ \fill[teal!14] (0,0)--(2,0)--(2,1.5)--(1.5,1.5)--(1.5,2)--(0,2)--cycle;
+ \draw[very thick,teal!60!black] (0,0)--(2,0)--(2,1.5)--(1.5,1.5)--(1.5,2)--(0,2)--cycle;
+ \draw[->] (-.15,0)--(2.65,0) node[right] {$y_1$};
+ \draw[->] (0,-.15)--(0,2.5) node[above] {$y_2$};
+ \fill (2,1.5) circle(1.5pt);
+ \fill (1.5,2) circle(1.5pt);
+ \node at (1,-.6) {$\HV=15/4$};
+ \end{scope}
+\end{tikzpicture}
+\caption{The transformed generators define a new anchored region. The
+left region's magnitude equals the right region's ordinary area. The
+origin atom and lower-dimensional contributions are represented by the
+enlargement of anchored extents, not by a translation of the shaded set.}
+\label{fig:shift}
+\end{figure}
+
+
+\subsection{Using the same numerical engine}
+\label{app:magnitude-software}
+
+On the cells of Section~\ref{sec:discrete}, the initial masses are
+\[
+ w_i(0)=1,\qquad w_i(k)=\frac{c_{i,k}-c_{i,k-1}}2\quad(k\ge1).
+\]
+Replacing the Lebesgue masses by these masses changes neither the cutoff
+algebra nor the recursion. Prefix sums include the original origin atom.
+Cropping shifts rank indices only: it must not insert a new atom at the
+new rank zero. Compression adds existing cell masses, including atoms;
+it does not reconstruct a continuous density by dividing by cell volume.
+The hypotheses of Theorem~\ref{thm:main} therefore apply. Alternatively,
+one can transform the generators by~\eqref{eq:forward} and call an ordinary
+HV solver. Neither route improves the asymptotic exponent.
+
+For Example~\ref{ex:two-box}, the axis coordinates are $(0,1,2)$.
+The HV masses are $(0,1,1)$ and the magnitude masses are $(1,1/2,1/2)$.
+The only uncovered cell in the enclosing rank grid is $(2,2)$, giving
+HV $4-1=3$ and magnitude $4-1/4=15/4$.
+
+The public interface also supports the indicator directly:
+\begin{lstlisting}[language=Python]
+from NumericalChanHVND.numerical_chan_local_compiled import magnitude
+points = [(2, 1, 1, 1), (1, 2, 1, 1)]
+assert abs(magnitude(points) - 135.0 / 16.0) < 1e-10
+\end{lstlisting}
+Here $(15/4)(3/2)^2=135/16$. An empty input has magnitude zero, whereas
+a single all-zero generator has magnitude one. Zero-extent boxes must
+therefore be retained for this application. The reflection from a
+minimization region to upper-corner extents is an $\ell_1$ isometry, so
+it also preserves the metric magnitude of the corresponding region.
+
+The saved validation record includes 18 checks of the two HV--magnitude
+transformations. The 64-point checkpoint instance and both checkpoint
+decisions were also checked for magnitude against transformed Chan $d/2$
+inputs. The 1,552-box instance has magnitude $411\,863\,688.75$, again
+agreeing with the transformed reference. The shared algebra tests include
+boundary atoms. These are correctness checks, not evidence that magnitude
+improves the running time of ordinary HV. The larger benchmark in
+Section~\ref{sec:experiments} measures ordinary hypervolume only.

@@ -1,21 +1,22 @@
 {
   "status": "passed",
-  "pages": 27,
+  "pages": 28,
   "paper": "A4",
   "base_font_points": 12,
   "compiler": "Tectonic (LaTeX/XeTeX), repeated passes to resolve references",
   "undefined_references": 0,
   "overfull_boxes": 0,
   "underfull_boxes": 0,
-  "visual_review": "All 27 rendered pages inspected, including the new larger-input tables.",
+  "visual_review": "All 28 rendered pages inspected, including the HV-first exposition, benchmark tables and magnitude appendix.",
   "verification": "Local-driver, archived benchmark, and larger-input benchmark source hashes all match.",
   "scope": "Document layout and source provenance; numerical checks are in local_compiled_verification.json.",
   "sha256": {
-    "numerical_product_chan.pdf": "065903e030b26cf197c19abf48cd20b5266c44ab7107d08986d39ecf1d2c31e8",
-    "numerical_product_chan_source.zip": "1ce459dda12f159e3d21e8dca947647cd33b833b2458131397915bb5d10d55c4",
-    "numerical_product_chan.tex": "ed2f992c859b5e0b1ff7e662894edcced3552efe7642bc41923efe62b7cc2ce6",
+    "numerical_product_chan.pdf": "4506bf9bde6034669f672ea68600bec9533a9c9a708071ddab78a55d7ea9f74a",
+    "numerical_product_chan_source.zip": "e97727aeeecfc79a7fb434c8840f121a564c991ce399780126a7429e527b275e",
+    "numerical_product_chan.tex": "980689439548e115208ae63cadec3059839db98b67bd6c07d957e0895baa3349",
     "numerical_product_chan_larger.tex": "e3f220c3b18428f0616665d1e787888f66848f41e81c6182171ef45c5798f550",
-    "numerical_product_chan_experiments.tex": "3be23b95d9b2d26ceda798af370e6a3400f5b9fbf5d1bbcc6b9e3ec463b4f570",
-    "NUMERICAL_PRODUCT_REPORT.md": "ba2334084890665a6e92b2df5f4a23ffd4304b8cc2def382b720f361adbca5d5"
+    "numerical_product_chan_experiments.tex": "485ca0cdf671745e54200a953080863613a0f5ba8719dcb1b6a79fd8f0ba16ba",
+    "numerical_product_chan_magnitude.tex": "d559e3f60257b52cd0549891ee302025787150ddc198c3ef30cb984dbf0a30d0",
+    "NUMERICAL_PRODUCT_REPORT.md": "f900d43c0eb84d95595c6b586f0718fcde94247d9d44d7c77620cfdeb8f0973e"
   }
 }
