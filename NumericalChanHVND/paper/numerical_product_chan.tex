@@ -66,10 +66,10 @@ not improve it. Dimensions two and three use $O(n\log n)$ sweeps.
 
 The accompanying implementation covers dimensions two through ten.
 Experiments in 4D--6D use 64--1,024 points, with a 4,096-point 4D stress
-test, and compare the proved local policy, an earlier adaptive variant,
-and both Python Chan references. Completed timings, partial runs, and
-timeouts are kept distinct. Earlier small-input tests remain separate
-historical comparisons. The measurements do not establish an asymptotic
+test, and compare the numerical implementation with the two Python
+Chan references. Completed timings, partial runs, and
+timeouts are kept distinct. Earlier implementation variants and their
+measurements remain in the repository archive. The measurements do not establish an asymptotic
 exponent or universal practical superiority. An appendix develops the
 product-measure extension to dominated-set magnitude and its equivalence
 with HV; that extension is not needed by the main algorithm.
@@ -163,12 +163,9 @@ transformations, and the additional application of the same engine.
 
 \paragraph{What the complexity statement covers.}
 Our main bound applies to the local checkpoint algorithm of
-Sections~\ref{sec:geometry}--\ref{sec:complexity}. It includes the fixed
-local schedule already used by the standard-library numerical version
-and the new compiled local-checkpoint driver. The earlier experimental
-compiled driver uses an interval based on the \emph{original} input size.
-We do not attach the local-schedule theorem to that different policy.
-Section~\ref{sec:software} maps these statements to actual files.
+Sections~\ref{sec:geometry}--\ref{sec:complexity}, implemented by the
+Numerical Chan driver introduced in Section~\ref{sec:software}. The
+claim depends on that compression policy as well as the numerical algebra.
 
 \section{Dominated regions and ordinary hypervolume}
 \label{sec:product}
@@ -644,6 +641,7 @@ Solve(B, F, cell, axis, remaining):
 \end{minipage}
 \end{center}
 
+\begin{samepage}
 \begin{theorem}[Numerical Chan bound with guarded compression]
 \label{thm:main}
 For fixed $d\ge4$ and fixed base size, the local-checkpoint algorithm
@@ -660,6 +658,7 @@ length construction are included. The same bound applies to a supplied
 product measure whose cell masses take $O_d(n\log n)$ work to obtain.
 For $d=2,3$, the sweeps give $O(n\log n)$.
 \end{theorem}
+\end{samepage}
 
 \begin{proof}
 \emph{Correctness.} Discretization is exact by~\eqref{eq:finite-sum}.
@@ -768,56 +767,32 @@ bound, not a rational bit-complexity result or a floating-point stability
 theorem. It concerns total indicator evaluation, not all exclusive
 contributions, gradient evaluation, or online update sequences.
 
-\subsection{Why the older adaptive timings do not prove this theorem}
-The earlier compiled adaptive driver uses a level interval of roughly
-$0.1d\log_2n_0$, based on the original input size, combined with a size
-threshold. This does not restart local blocks at every smaller subproblem
-or skipped checkpoint. Moreover, even a locally chosen
-$0.1d\log_2N$ interval would give the crude block-work exponent $1+0.1d$,
-which is $1.4>4/3$ in 4D. The constant in~\eqref{eq:localbudget} is
-deliberate: block work grows like $N^{5/4}$, strictly below the target
-exponent in all dimensions under discussion.
-
-Accordingly, the statement ``the numerical treatment retains Chan's
-complexity'' is proved here for an explicit numerical algorithm and its
-local policy. It is not inferred from a familiar algorithm name, a
-compilation setting, or timing plots for a different policy.
-
-\section{Software realization and validation of the local policy}
+\section{Software realization and validation}
 \label{sec:software}
 
-The repository~\cite{software} provides three relevant variants in
-\texttt{NumericalChanHVND}. They share the finite-mass problem formulation
-but should not be conflated.
-\begin{enumerate}
-\item \texttt{numerical\_chan.py} is the standard-library numerical
-implementation with locally chosen blocks and compression at each
-checkpoint. Integer and \texttt{Fraction} inputs can be evaluated with
-exact arithmetic. It is covered by the fixed-local-policy case of
-Theorem~\ref{thm:main}.
-\item \texttt{numerical\_chan\_compiled.py} is the previously published
-compiled adaptive driver. It adds cell pruning and native contractions,
-with the global-interval policy discussed above. The archived performance
-comparisons measure this variant.
-\item \texttt{numerical\_chan\_local\_compiled.py} is the local-checkpoint
-compiled driver accompanying this report. It reuses the same native
-kernel, cell restriction and base routines, and changes the scheduling
-to Listing~\ref{alg:local}. Theorem~\ref{thm:main} covers its algorithmic
-policy, with fixed base size and compression factor, under the stated
-arithmetic-operation model.
-\end{enumerate}
-All three support every integer dimension from two through ten. The
-theory is for any fixed dimension; ten is an implementation and testing
-range, not a mathematical barrier.
+Numerical Chan uses the file
+\path{numerical_chan_local_compiled.py}
+in the repository's \texttt{NumericalChanHVND} directory~\cite{software}.
+It follows Listing~\ref{alg:local}, with fixed
+base size and compression factor, and is the compiled implementation
+covered by Theorem~\ref{thm:main}. It supports every integer dimension
+from two through ten. The theory applies to any fixed dimension; ten
+is the implemented and tested range, not a mathematical barrier.
+
+For exact verification, \texttt{numerical\_chan.py} evaluates the finite
+algebra using integer or \texttt{Fraction} arithmetic and compression
+at every local checkpoint. It is a checking tool here, not another
+column in the timing comparison. Earlier experimental implementations
+remain available in the repository, but their different compression
+schedules and historical timings are not covered by claims about the
+current compiled driver.
 
 \subsection{What is compiled}
 The file \texttt{compiled\_terms.py} stores coefficients, unary arrays,
 and pair constraints in typed native states. Numba compiles complete
 restriction, masking, variable elimination, state merging, base sums,
 and block compression. The geometric recursion remains readable Python.
-In 2D and 3D the numerical sweeps are compiled instead. The earlier hybrid
-Numba version compiled only smaller array helpers while Python retained
-much of the term construction and dispatch overhead.
+In 2D and 3D the numerical sweeps are compiled instead.
 
 The kernel does not enable fast-math or parallel execution. Coefficients
 and unary masses are binary64 values, cutoff indices are integers, and
@@ -876,7 +851,7 @@ Both settings agree with the independent Chan $d/2$ reference for HV. These deli
 the policy; they are not performance recommendations.
 
 The common-extent 1,552-box family described in
-Section~\ref{sec:archived} also executes six \emph{default local-policy}
+Appendix~\ref{sec:archived} also executes six \emph{default local-policy}
 compressions. Its HV is $6\,372\,330\,876$, agreeing with the independent
 Chan $d/2$ computation. These six events occur on different branches; this
 case alone does not demonstrate repeated compression on one path.
@@ -891,7 +866,6 @@ implementation; the complexity conclusion rests on
 Theorem~\ref{thm:main}, not on a finite test set.
 
 \input{numerical_product_chan_larger.tex}
-\input{numerical_product_chan_experiments.tex}
 
 \section{Structural simplifications and limits}
 \label{sec:discussion}
@@ -969,11 +943,8 @@ Validation & \texttt{verify\_compiled.py} checks the shared algebra;
 The larger experiment uses \texttt{benchmarks/larger\_4d\_6d}, with
 saved coordinates, every retained repetition, partial runs and source
 hashes. Its unchanged solver sources are from revision \texttt{095fa73}.
-The earlier experiment remains in \texttt{benchmarks/compiled\_2d\_10d},
-including its exact-oracle record and natural-compression probe. Revision
-\texttt{38587e7} identifies that earlier release. The local driver is now
-timed explicitly in the larger comparison; old speedup ratios are not
-transferred to it.
+Archived experiments and the structural compression input are
+documented in Appendix~\ref{sec:archived}.
 
 To reproduce correctness and build this manuscript from the repository
 root, use the following commands. LaTeX is run in the paper directory
@@ -987,6 +958,9 @@ pdflatex -interaction=nonstopmode -halt-on-error numerical_product_chan.tex
 The report uses the standard article class, A4 paper, 12-point text, and
 an inline \texttt{thebibliography} with \texttt{bibitem} entries. It can
 be compiled without a bibliography database or code execution by LaTeX.
+
+\clearpage
+\input{numerical_product_chan_experiments.tex}
 
 \clearpage
 \begin{thebibliography}{9}

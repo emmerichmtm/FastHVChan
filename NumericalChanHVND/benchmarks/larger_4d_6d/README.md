@@ -1,13 +1,37 @@
 # Larger 4D–6D benchmarks
 
-This comparison includes the **local-checkpoint compiled solver covered by
-the research report's complexity proof**, the earlier global-interval
-compiled solver, and Python Chan d/3 and d/2.
+[RESULTS.md](RESULTS.md) is the main comparison. Its tables contain only:
+
+- **Numerical Chan (Numba)**: the local compression schedule covered by the report's proof.
+- **Chan d/3 (Python)**: the existing Section 4.2 reference.
+- **Chan d/2 (Python)**: the existing Section 2 reference.
+
+The compiled numerical solver is compared with interpreted references, so
+these timings do not isolate the effect of the numerical formulation.
 
 Spherical fronts use 64, 128, 256, 512, and 1,024 points in every dimension
-4–6, plus 4,096 points in 4D. A second simplex family uses 64, 256, and
-1,024 points in each dimension. Inputs are nested prefixes within each
-dimension/family. All generators lie on a positive nondominated front.
+4–6, plus 4,096 points in 4D. Simplex fronts use 64, 256, and 1,024 points
+in each dimension. Inputs are nested prefixes within each dimension/family.
+All generators lie on a positive nondominated front.
+
+## Read or regenerate the summary
+
+The stored measurements can be summarized without rerunning any solver:
+
+```sh
+python NumericalChanHVND/benchmarks/larger_4d_6d/summarize_larger.py
+```
+
+This regenerates only the concise Markdown report. It does not change the
+paper or the raw records. The [archived full comparison](RESULTS_ALL_VARIANTS.md)
+retains the earlier compiled policy, all compression counters and partial
+worker timings. Regenerate that additional detail explicitly with:
+
+```sh
+python NumericalChanHVND/benchmarks/larger_4d_6d/summarize_larger.py --all-variants
+```
+
+## Reproduce or audit
 
 From the repository root, using a NumPy/Numba environment:
 
@@ -16,34 +40,32 @@ python NumericalChanHVND/benchmarks/larger_4d_6d/benchmark_larger.py --out fresh
 python NumericalChanHVND/benchmarks/larger_4d_6d/summarize_larger.py --results fresh-results
 ```
 
-The default worker budget is 45 seconds for startup, imports, the first
-call, and three warm calls together. The script saves every returned value,
-timing, and counter. Partial workers are not reported as a complete warm
-median. After two consecutive worker timeouts in a solver/dimension/family
-series, larger sizes in that series are marked **not run**, not timed out.
-Neither status supplies an inferred single-call runtime.
+The runner still measures all four archived variants to preserve the original
+protocol; the main summary selects the three solvers above. Each worker has
+45 seconds for startup, imports, one first call and three warm calls together.
+**TO** means this combined budget expired, not that a single call took 45
+seconds. **NR** means not run after two consecutive timeouts in a
+solver/dimension/family series. No warm median is inferred from either status.
+Every returned timing and value, including partial results, remains in the
+[raw records](results/).
 
 Workers run sequentially. Every call builds a fresh solver and includes
-input conversion and preprocessing. Compilation caches are retained; the
-first call is recorded separately. All compression defaults remain enabled.
+input conversion and preprocessing. Compilation caches are retained; first
+calls are recorded separately. All compression defaults remain enabled.
 There is no dominance prefilter, fast-math, or parallel numerical execution.
+Every available value is compared with an available Chan d/2 value. Large
+inputs are not checked by exponential inclusion–exclusion; the separate
+small-input exact verification remains applicable.
 
-The input dataset and source hashes identify precisely what was measured.
-Every available value is compared with an available Chan d/2 value,
-including returned values from partial workers. Large inputs are not
-validated using exponential inclusion–exclusion; the separate small-input
-exact verification remains applicable to the implementation.
-
-See [RESULTS.md](RESULTS.md) and the saved [inputs and records](results/).
-The retained published run can be audited without rerunning the solvers:
+Audit the retained published measurements without rerunning the solvers:
 
 ```sh
 python NumericalChanHVND/benchmarks/larger_4d_6d/audit_results.py
 ```
 
-The audit checks source hashes, nested inputs, complete-worker medians,
-timeout escalation, and every returned value against the available reference.
-The original byte hashes describe the measured Windows checkout. Git can
-change text line endings on checkout, so `results/source_provenance.json`
-also records hashes after normalizing CRLF to LF. The audit accepts this
-line-ending difference while still checking the source contents.
+The audit covers all original variants, source hashes, nested inputs,
+complete-worker medians, timeout escalation, and every returned value.
+The original hashes describe the measured Windows checkout. Git can change
+line endings, so `results/source_provenance.json` also records hashes after
+normalizing CRLF to LF. The audit accepts this line-ending difference while
+still checking source contents.

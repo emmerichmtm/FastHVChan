@@ -1,169 +1,41 @@
-\section{Archived small-input experiments}
+\section{Structural validation and archived measurements}
 \label{sec:archived}
 
-These measurements concern the previously published \emph{global-interval
-adaptive} implementation, archived with revision \texttt{38587e7}~\cite{software}.
-They do \emph{not} measure the new local-checkpoint driver
-\texttt{numerical\_chan\_local\_compiled.py}, which uses a different schedule.
-Source hashes identify the files actually timed.
+\paragraph{A structural input for compression.}
+The 1,552-box family used in the validation has the following explicit
+construction. For each of the six coordinate pairs in 4D, take 256
+corners with pair extents $(t,257-t)$, $1\le t\le256$, and extent 300
+in the other coordinates. Add 16 corners
+$(161+i,176-i,161+j,176-j)$, where $0\le i<16$ and $j=3i\bmod16$.
+The first 1,536 corners become pair constraints, leaving long arrays
+with relatively few hard boxes. Shared extents are deliberate.
 
-\subsection{Inputs, implementations, and measurement protocol}
+The current Numerical Chan driver executes six default-policy compressions
+on this family and returns $6\,372\,330\,876$, agreeing with Chan $d/2$.
+These events occur on different branches; they do not by themselves
+test repeated compression along one path. The separate checkpoint
+tests in Section~\ref{sec:software} cover that case.
 
-The main suite contains 45 standard inputs: for each dimension from 2 to 10,
-two spherical fronts, two tied grids, and one magnitude instance on the smaller
-spherical front. Three additional inputs force compression in dimensions 4,
-7, and 10, giving 48 inputs altogether. Spherical corners are positive,
-normalized vectors formed from absolute Gaussian samples with a positive
-offset, and hence mutually nondominated.
-The grids can contain ties, duplicates, and dominated corners. Point counts
-decrease with dimension; this is a collection of small practical examples,
-not an experiment estimating an asymptotic exponent.
-The auxiliary indicator is defined in Appendix~\ref{app:magnitude}; its
-presence in this archived suite does not enter the derivation of the HV algorithm.
+An earlier recorded run on this same family illustrates the storage
+effect mentioned in Section~\ref{sec:compression}: its first compression
+changes one term into 296 terms and increases the stored-entry count
+from 1,710 to 6,936. Compression shortens the coordinate histories but
+need not immediately shrink the whole representation. These historical
+event counts are not runtime measurements of the current driver.
 
-Four implementations are compared: compiled numerical, original numerical
-Python, and the repository's Python Chan $d/3$ and $d/2$ implementations.
-Chan $d/3$ is omitted in 2D. The compiled solver uses sweeps in 2D/3D and
-native contractions with Python geometric recursion in 4D--10D. Numerical
-Python retains its earlier local block schedule, so this compares complete
-implementations rather than compilation alone. Compression remains enabled.
-No dominance filtering, fast-math, or parallel execution is used. Solvers
-receive equivalent unions; magnitude uses the affine HV transformation for
-the Chan references.
+\paragraph{Where to find the earlier experiments.}
+The repository preserves the
+\href{https://github.com/emmerichmtm/FastHVChan/blob/main/NumericalChanHVND/benchmarks/compiled_2d_10d/RESULTS.md}{earlier 2D--10D comparison}
+at solver revision \texttt{38587e7}, including its small inputs, exact
+oracle checks and compression probes. The larger experiment also retains
+an \href{https://github.com/emmerichmtm/FastHVChan/blob/main/NumericalChanHVND/benchmarks/larger_4d_6d/RESULTS_ALL_VARIANTS.md}{all-variant detail report}.
+Its extra implementation is an earlier compiled driver with a different
+compression schedule. Those measurements remain available for
+reproducibility; they are not included in this paper's main timing tables.
 
-Sequential fresh workers perform one separately recorded first call and
-three timed calls, each with a fresh solver. Warm medians include conversion
-and preprocessing but exclude imports; verification warmed the compilation
-caches. The 45-second worker budget includes startup, imports, and every
-call. A timeout is not a per-call lower bound.
-The recorded processor identifier is AMD64 Family 25 Model 80 Stepping 0,
-with 16 logical CPUs. The environment used Windows 11, Python 3.12.14,
-NumPy 2.5.3, and Numba 0.68.0; CPU affinity was not fixed. All raw samples,
-inputs, counters, signatures, and source hashes are archived~\cite{software}.
-
-\begin{table}[tbp]
-\centering
-\small
-\setlength{\tabcolsep}{5pt}
-\begin{tabular}{rrrrrr}
-\toprule
-$d$ & $n$ & \shortstack{Compiled\\numerical} &
-\shortstack{Numerical\\Python} & \shortstack{Chan $d/3$\\Python} &
-\shortstack{Chan $d/2$\\Python} \\
-\midrule
-2  & 128 &   0.474 &     0.770 & ---     &  5.313 \\
-3  & 128 &   0.981 &     1.609 &  44.524 & 19.108 \\
-4  &  24 &  16.995 &  1877.982 &  28.632 &  6.216 \\
-5  &  16 &  16.971 &  1434.933 &  78.805 &  7.853 \\
-6  &  12 &  27.651 &  1634.712 &  54.249 &  9.206 \\
-7  &   8 &  20.201 &   759.785 &  66.189 &  6.179 \\
-8  &  10 & 130.842 & 11894.048 & 182.583 & 24.820 \\
-9  &   6 &  30.459 & timeout   &  51.050 &  5.342 \\
-10 &   6 &  62.646 &  6737.424 &  96.593 & 11.206 \\
-\bottomrule
-\end{tabular}
-\caption{Larger spherical input in each dimension: warm median milliseconds
-for the pre-existing global-interval adaptive compiled implementation and
-three references. These measurements do not apply to the new local-checkpoint
-driver. Sizes vary with dimension.}
-\label{tab:adaptive-sphere-times}
-\end{table}
-
-Of 187 algorithm--input workers, 186 completed and one timed out: numerical
-Python on the six-point 9D sphere. All 48 compiled workers completed.
-Across ordinary-hypervolume inputs in dimensions 4--10, compiled numerical
-was faster than Chan $d/3$ on 26 of 28 pairs, with median ratio of reference
-time to compiled time $2.02$. Against numerical Python, it won 26 of 27
-completed pairs, with median ratio $6.29$. Chan $d/2$ was faster on all 28
-ordinary-hypervolume pairs in these dimensions. These completed-pair ratios
-exclude magnitude, forced compression, and timeouts. They provide no general
-claim that the compiled solver is the fastest hypervolume implementation.
-
-Variability is material. Across the 48 compiled workers, the ratio of slowest
-to fastest warm repetition had median $1.28$ and maximum $2.74$; five workers
-exceeded a ratio of two. There were no deliberately concurrent solver or
-oracle jobs, but ordinary system load was uncontrolled. Three samples do not
-provide reliable confidence intervals, and small differences should not be
-overinterpreted.
-
-\subsection{What the compression experiments establish}
-
-All 35 standard inputs in dimensions 4--10 executed \emph{zero} compressions
-in the compiled solver. Their adaptive size gates were checked 994 times,
-but the states stayed below the threshold. Thus the main timing table
-measures the benefit of pruning and native evaluation on these inputs; it
-does not measure the cost of required compression. The three forced cases
-use the first eight corners of a 4D spherical input, padded with unit extents
-for 7D and 10D. With interval two and threshold factor zero, each executes
-one compression and reaches a peak of 135 terms. All values agree with the
-reference. These checks exercise the implementation, but are excluded from
-the performance aggregates.
-
-A separate structural input exercises the global-interval implementation's
-\emph{unchanged defaults}. For each of the six coordinate pairs in 4D, it
-contains 256 corners with pair extents $(t,257-t)$, $1\leq t\leq256$, and
-extent 300 in the other coordinates. Add 16 corners
-$(161+i,176-i,161+j,176-j)$ with $0\leq i<16$ and
-$j=3i\bmod16$. This gives 1,552 boxes. The first 1,536 become pair
-constraints, leaving long arrays with few remaining hard boxes. Shared
-extents are intentional; this is not a general-position performance sample.
-
-The compiled run performs six compressions and returns
-$6\,372\,330\,876$, exactly the floating-point value returned by both Chan
-references. Table~\ref{tab:natural-compression} records all six events.
-Every event starts above the size threshold, yet every resulting state is
-larger by the stored-entry count. In particular, the first compression
-changes one term into 296 terms. Compression preserves the required cell
-masses and coarsens the coordinate domains; it need not immediately reduce
-the complete representation.
-
-\begin{table}[tbp]
-\centering
-\small
-\begin{tabular}{rrrrrr}
-\toprule
-Event & Hard boxes & Size before & Threshold & Terms after & Size after \\
-\midrule
-1 & 6 & 1710 & 1024 & 296 & 6936 \\
-2 & 3 & 1108 &  640 & 111 & 1665 \\
-3 & 4 & 1205 &  768 & 130 & 2237 \\
-4 & 4 & 1100 &  768 & 105 & 1785 \\
-5 & 4 & 1277 &  768 & 144 & 2468 \\
-6 & 4 &  974 &  768 & 110 & 1870 \\
-\bottomrule
-\end{tabular}
-\caption{All default compression events in the separate 1,552-box probe.
-Each starts with one term. Size counts stored scalar array entries plus
-terms. Events occur in different recursion branches: the maximum number of
-compressions along a path is one.}
-\label{tab:natural-compression}
-\end{table}
-
-This probe visited 47 nodes, emitted 6,358 raw terms, and performed 1,352
-variable eliminations. Its single first-use computations took 2.432 seconds
-for compiled numerical, 1.235 seconds for Chan $d/3$, and 0.459 seconds for
-Chan $d/2$, using existing caches. They are \emph{not warm medians} and are
-excluded from Table~\ref{tab:adaptive-sphere-times} and all timing ratios.
-Chan $d/3$ performed no compression: its breakpoint representation and the
-numerical array representation have different size measures. This experiment
-establishes that default compression is operational, not that it improves
-runtime or storage. Repeated compression along one path is checked in the
-separate correctness suite, not established by this probe.
-
-\subsection{Correctness evidence and its limits}
-
-Every available first-call and warm value was compared with Chan $d/2$.
-An independent oracle also evaluated exact rational inclusion--exclusion on
-the binary64 input coordinates for the 34 saved inputs with at most 12
-points, including all three forced cases. All 543 recorded values passed;
-the largest scaled error was $6.3811\times10^{-16}$, where scaling divides
-absolute error by $\max(1,|\text{reference}|)$. The comparison tolerances were
-$2\times10^{-9}$ relative and $2\times10^{-10}$ absolute. Oracle input hashes
-match the archived dataset and timing files.
-
-The proofs concern exact arithmetic; the compiled implementation uses binary64
-and signed intermediate sums, without a general floating-point error bound.
-Local algebraic closure also does not establish the old adaptive driver's
-global runtime. The local-checkpoint analysis is separate from this
-archived benchmark. Section~\ref{sec:experiments} now measures that policy
-on larger inputs; the earlier speedup ratios are not applied to it.
+Raw inputs and results have not been changed or recomputed. The totals
+in Section~\ref{sec:experiments} count only its three displayed methods;
+the full archived experiment has additional rows and therefore different
+aggregate counts. The current numerical method's complexity is justified
+by the local policy and proof in Section~\ref{sec:complexity}, rather
+than by historical timings or compilation alone.

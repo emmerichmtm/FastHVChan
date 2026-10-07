@@ -7,18 +7,14 @@ import statistics
 from source_provenance import verify_sources
 
 HERE = Path(__file__).resolve().parent
-ROOT = HERE.parents[2]
 ALGORITHMS = ('local_compiled', 'global_compiled', 'chan_dby3', 'chan_dby2')
 NAMES = ('Local compiled', 'Earlier compiled', 'Chan d/3 Python', 'Chan d/2 Python')
+PRIMARY_ALGORITHMS = ('local_compiled', 'chan_dby3', 'chan_dby2')
+PRIMARY_NAMES = ('Numerical Chan (Numba)', 'Chan d/3 (Python)', 'Chan d/2 (Python)')
 
 
 def good(row):
     return row.get('status') == 'ok'
-
-
-def tex_scientific(value):
-    mantissa, exponent = f'{value:.4e}'.split('e')
-    return mantissa + r'\times10^{' + str(int(exponent)) + '}'
 
 
 def cell(row, latex=False):
@@ -32,18 +28,12 @@ def cell(row, latex=False):
     return row['status'].replace('_', ' ')
 
 
-def first_cell(row):
-    if 'first_seconds' in row:
-        return f"{row['first_seconds']:.3f}"
-    return 'NR' if row['status'] == 'not_run_after_timeouts' else '---'
-
-
-def facts(report, cases):
-    rows = report['rows']
+def facts(report, cases, algorithms=ALGORITHMS):
+    rows = [r for r in report['rows'] if r['algorithm'] in algorithms]
     index = {(r['id'], r['algorithm']): r for r in rows}
     selected = [r for r in rows if r['algorithm'] == 'local_compiled']
     ratios = {}
-    for alg in ALGORITHMS[1:]:
+    for alg in algorithms[1:]:
         pairs = [(r, index[r['id'], alg]) for r in selected]
         q = [b['median_seconds']/a['median_seconds'] for a,b in pairs if good(a) and good(b)]
         ratios[alg] = dict(pairs=len(q), wins=sum(x>1 for x in q),
@@ -55,6 +45,7 @@ def facts(report, cases):
     spreads = [max(r['seconds'])/min(r['seconds']) for r in selected if good(r)]
     comp = [r for r in selected if good(r) and r['counters'].get('compressions', 0)>0]
     return dict(index=index, local=selected, ratios=ratios, max_error=error,
+                planned_rows=len(rows), mismatches=sum(r.get('validation') == 'value mismatch' for r in rows),
                 verified_rows=verified, verified_values=verified_values,
                 statuses=Counter(r['status'] for r in rows),
                 local_statuses=Counter(r['status'] for r in selected), compressed=comp,
@@ -62,7 +53,7 @@ def facts(report, cases):
                 max_spread=max(spreads, default=None))
 
 
-def markdown(report, cases, info):
+def markdown_all_variants(report, cases, info):
     lines = ['# Larger hypervolume benchmarks: 4D–6D', '',
         f"{len(cases)} inputs, {len(report['rows'])} planned algorithm/input rows. "
         f"Statuses: {dict(info['statuses'])}. Value mismatches: **{report['validation_errors']}**.", '',
@@ -150,115 +141,93 @@ def markdown(report, cases, info):
     return '\n'.join(lines)+'\n'
 
 
-def latex(report, cases, info):
-    lines = [r'\section{Experiments with larger inputs in 4D--6D}', r'\label{sec:experiments}', '',
-        'This additional experiment measures the local-checkpoint implementation covered by '
-        'Theorem~\\ref{thm:main}, alongside the earlier global-interval compiled variant and both '
-        'Python Chan references. The solvers were unchanged from source revision \\texttt{095fa73}; '
-        'hashes identify the exact sources and inputs. Here $n$ denotes input generators, one per anchored box.', '',
-        'The spherical inputs use $n=64,128,256,512,1024$ in each of dimensions four, five and six, '
-        'and $n=4096$ in four dimensions. A second family on the positive simplex uses '
-        '$n=64,256,1024$ in each dimension. Smaller inputs are nested prefixes within each family '
-        'and dimension. Spherical coordinates are absolute Gaussian samples plus $0.01$, normalized '
-        'in Euclidean norm; simplex coordinates are exponential samples plus $0.01$, normalized '
-        'by their sum. Both constructions produce positive nondominated fronts.', '',
-        'Each fresh sequential worker makes one first call and three warm calls, with a new solver '
-        'on each call. Warm medians include input conversion and preprocessing but exclude imports '
-        'and first use. Existing compilation caches are retained. The whole worker, including imports '
-        'and all four calls, has a 45-second budget. A timeout therefore does not imply that one '
-        'call took 45 seconds. Available partial timings and values are archived. After two consecutive '
-        'timeouts in a solver/family/dimension series, larger sizes in that series are explicitly '
-        'marked not run; no runtime is inferred for them.', '',
-        'All default compression settings remain enabled. There is no dominance prefilter, fast-math '
-        'or concurrent numerical worker. The processor is an AMD Ryzen 7 5800H with 16 logical CPUs. '
-        'The environment is the same Windows/Python/Numba setup '
-        'described in Section~\\ref{sec:archived}. Ordinary system load is uncontrolled.', '',
-        'Tables~\\ref{tab:larger-sphere} and~\\ref{tab:larger-simplex} report complete warm medians. '
-        'Table~\\ref{tab:larger-first} retains first-call observations on selected large inputs, '
-        'including partial workers.', '']
-    for family in ('sphere','simplex'):
-        lines += [r'\begin{table}[tbp]', r'\centering\small', r'\setlength{\tabcolsep}{5pt}',
-                  r'\begin{tabular}{rrrrrr}', r'\toprule',
-                  r'$d$ & $n$ & \shortstack{Local\\compiled} & \shortstack{Earlier\\compiled} & '
-                  r'\shortstack{Chan $d/3$\\Python} & \shortstack{Chan $d/2$\\Python} \\', r'\midrule']
-        for case in cases:
-            if case['family']==family:
-                lines.append(f"{case['d']} & {case['n']} & "+' & '.join(
-                    cell(info['index'][case['id'], alg], True) for alg in ALGORITHMS)+r' \\')
-        lines += [r'\bottomrule',r'\end{tabular}',
-                  '\\caption{'+family.title()+' fronts at larger input sizes: warm median \\emph{seconds}. '
-                  'Local compiled uses the proved local-checkpoint policy; earlier compiled uses '
-                  'the global-interval policy. TO[$k$] means worker timeout with $k$ complete warm '
-                  'calls; NR means not run after two smaller-size timeouts.}',
-                  r'\label{tab:larger-'+family+'}',r'\end{table}', '']
-    lines += [r'\begin{table}[tbp]', r'\centering\small', r'\setlength{\tabcolsep}{4pt}',
-              r'\begin{tabular}{lrrrrrr}', r'\toprule',
-              r'Front & $d$ & $n$ & \shortstack{Local\\compiled} & \shortstack{Earlier\\compiled} & '
-              r'\shortstack{Chan $d/3$\\Python} & \shortstack{Chan $d/2$\\Python} \\', r'\midrule']
-    for case in cases:
-        if case['n'] >= 1024 or (case['d'] == 6 and case['n'] == 512):
-            lines.append(f"{case['family'].title()} & {case['d']} & {case['n']} & "+' & '.join(
-                first_cell(info['index'][case['id'], alg]) for alg in ALGORITHMS)+r' \\')
-    lines += [r'\bottomrule', r'\end{tabular}',
-              r'\caption{Retained first-call seconds on the largest inputs, including workers that '
-              r'later timed out. These are single observations, not warm medians; compiled first calls '
-              r'can include kernel initialization and cache loading. Imports are excluded. '
-              r'A dash means no first value returned within the worker budget; NR means not run.}',
-              r'\label{tab:larger-first}', r'\end{table}', '']
+def markdown(report, cases, info):
     counts = info['statuses']
-    lines += [f"There are {len(cases)} inputs and {len(report['rows'])} planned algorithm/input rows: "
-              f"{counts.get('ok',0)} complete workers, {counts.get('timeout',0)} timeouts, and "
-              f"{counts.get('not_run_after_timeouts',0)} not run by the escalation rule. "
-              f"The local solver completes {info['local_statuses'].get('ok',0)} of its {len(cases)} rows. "
-              'The tables retain all planned sizes so the missing large cases remain visible.', '']
-    for alg,name in zip(ALGORITHMS[1:], ('the earlier compiled solver', 'Python Chan $d/3$', 'Python Chan $d/2$')):
-        q=info['ratios'][alg]
-        if q['pairs']:
-            lines += [f"Against {name}, local compiled is faster on {q['wins']} of {q['pairs']} "
-                      f"complete pairs, with median reference/local ratio {q['median']:.3g}. "
-                      'These ratios omit censored pairs and are not universal speed guarantees.', '']
-    large = info['index'].get(('sphere-d4-n4096-hv', 'local_compiled'), {})
-    ref = info['index'].get(('sphere-d4-n4096-hv', 'chan_dby3'), {})
-    if 'first_seconds' in large and 'first_seconds' in ref:
-        lines += [f"For four dimensions and $n=4096$, local compiled returns its first value in "
-                  f"{large['first_seconds']:.3f} seconds, versus {ref['first_seconds']:.3f} seconds "
-                  'for Python Chan $d/3$. Neither completes all three warm calls. This first-call '
-                  'observation shows why the complete-pair speedups should not be extrapolated to '
-                  'larger inputs; it is not a warm-median comparison.', '']
-    lines += [f"Compression is executed on {len(info['compressed'])} completed local inputs. "
-              'Per-input checkpoint, compression and peak-term counts are retained with the raw data. '
-              'The size rule is unchanged; absence of compression in an individual input is a recorded '
-              'algorithm decision, not a disabled feature.', '',
-              f"All {info['verified_values']} returned values in {info['verified_rows']} rows are checked against an available "
-              f"Chan $d/2$ value; there are {report['validation_errors']} mismatches and the maximum "
-              f"scaled error is ${tex_scientific(info['max_error'])}$. "
-              'This checks every retained first and warm value, including partial workers. '
-              'A completed first reference value remains valid even if that worker later exceeds its '
-              'budget. These are cross-implementation comparisons; the larger sets were not evaluated '
-              'by an exponential exact inclusion--exclusion oracle.', '',
-              f"Among complete local workers, the ratio of slowest to fastest warm call has median "
-              f"{info['median_spread']:.3g} and maximum {info['max_spread']:.3g}. "
-              'The sample is one seeded front per dimension/family and three timed repetitions. '
-              'It demonstrates performance and limits at larger $n$, not a fitted asymptotic exponent. '
-              'The worst-case bound continues to rest on Theorem~\\ref{thm:main}. '
-              'Full inputs, statuses and retained samples are in '
-              '\\texttt{benchmarks/larger\\_4d\\_6d/results}.', '']
-    return '\n'.join(lines)
+    d3, d2 = info['ratios']['chan_dby3'], info['ratios']['chan_dby2']
+    lines = ['# Numerical hypervolume benchmarks: 4D–6D', '',
+        'The main comparison uses three solvers: **Numerical Chan (Numba)**, the numerical '
+        'implementation with the local compression schedule proved in the report; '
+        '**Chan d/3 (Python)**; and **Chan d/2 (Python)**. '
+        'In the raw records their keys are `local_compiled`, `chan_dby3` and `chan_dby2`.', '',
+        f"There are **{len(cases)} inputs** and {info['planned_rows']} selected solver/input rows: "
+        f"{counts.get('ok', 0)} complete, {counts.get('timeout', 0)} timed out, and "
+        f"{counts.get('not_run_after_timeouts', 0)} not run. "
+        '**n is the number of input points**, each defining an origin-anchored box.', '',
+        'Spherical fronts use n = 64, 128, 256, 512, 1024 in 4D–6D, plus n = 4096 in 4D. '
+        'Simplex fronts use n = 64, 256, 1024 in each dimension. All points are nondominated. '
+        'Smaller inputs are prefixes of the same seeded sample within each dimension/family.', '',
+        '**Table entries are median seconds over three warm calls.** '
+        '**TO** means the worker exceeded its 45-second budget for startup, imports, one first '
+        'call and all three warm calls together; it does not mean that one call took 45 seconds. '
+        '**NR** means not run after two consecutive timeouts at smaller sizes. '
+        'Neither TO nor NR supplies a warm median.']
+    for family in ('sphere', 'simplex'):
+        lines += ['', f'## {family.title()} fronts', '',
+                  '| d | n | ' + ' | '.join(PRIMARY_NAMES) + ' |', '|---:|---:|---:|---:|---:|']
+        for case in cases:
+            if case['family'] == family:
+                values = []
+                for alg in PRIMARY_ALGORITHMS:
+                    row = info['index'][case['id'], alg]
+                    values.append(f"{row['median_seconds']:.4f}" if good(row) else
+                                  'TO' if row['status'] == 'timeout' else
+                                  'NR' if row['status'] == 'not_run_after_timeouts' else row['status'])
+                lines.append(f"| {case['d']} | {case['n']} | " + ' | '.join(values) + ' |')
+    large = info['index']['sphere-d4-n4096-hv', 'local_compiled']
+    ref = info['index']['sphere-d4-n4096-hv', 'chan_dby3']
+    lines += ['', '## What the comparison shows', '',
+        f"Numerical Chan (Numba) was faster than Chan d/3 (Python) on {d3['wins']}/{d3['pairs']} "
+        f"complete pairs; the median reference/numerical time ratio was {d3['median']:.3g}×. "
+        f"Chan d/2 (Python) was faster on all {d2['pairs']} complete pairs. "
+        'These comparisons exclude incomplete workers and do not establish a universal speedup.', '',
+        f"At **4D, n = 4096**, Numerical Chan (Numba) returned its first value in {large['first_seconds']:.3f} s, "
+        f"versus {ref['first_seconds']:.3f} s for Chan d/3 (Python). Neither finished the warm protocol. "
+        'These single first-call observations can include compiled-kernel initialization and cache '
+        'loading; they are not warm medians, but show why the smaller-input results should not be '
+        'extrapolated to all sizes.', '',
+        '**Compilation matters:** this compares compiled numerical kernels with Python implementations '
+        'of the references. It does not isolate the effect of the mathematical formulation or show '
+        'an improved complexity exponent.', '',
+        '## Measurement and validation', '',
+        'Each call builds a fresh solver and includes input conversion and preprocessing. '
+        'Warm medians exclude imports and first-call costs; existing compilation caches are retained. '
+        'Workers run sequentially with no dominance prefilter or fast-math, and all compression '
+        'defaults remain enabled. Only one seeded front per dimension/family and three warm '
+        'repetitions were measured, under uncontrolled ordinary machine load.', '',
+        'Environment: Windows 11, AMD Ryzen 7 5800H (16 logical CPUs), Python 3.12.14, '
+        'NumPy 2.5.3 and Numba 0.68.0.', '',
+        f"All **{info['verified_values']} returned values** from the three selected solvers, including "
+        f"available partial results, agree with the available Chan d/2 reference: "
+        f"**{info['mismatches']} mismatches**, maximum scaled error {info['max_error']:.3g}. "
+        'These are cross-implementation checks; exact small-instance tests are separate.', '',
+        'The [archived full comparison](RESULTS_ALL_VARIANTS.md) preserves the earlier compiled '
+        'variant, compression counters and partial-call tables. All original '
+        '[inputs and raw records](results/) are unchanged. See [README.md](README.md) '
+        'for reproduction and audit commands.']
+    return '\n'.join(lines) + '\n'
 
 
 def main():
-    parser=argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--results',type=Path,default=HERE/'results')
-    args=parser.parse_args()
-    report=json.loads((args.results/'timings.json').read_text(encoding='utf-8'))
-    cases=json.loads((args.results/'datasets.json').read_text(encoding='utf-8'))
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--results', type=Path, default=HERE / 'results')
+    parser.add_argument('--all-variants', action='store_true',
+                        help='also regenerate the archived four-solver detail report')
+    args = parser.parse_args()
+    report = json.loads((args.results / 'timings.json').read_text(encoding='utf-8'))
+    cases = json.loads((args.results / 'datasets.json').read_text(encoding='utf-8'))
     assert 'finished_utc' in report, 'Wait for the full run before publishing'
     verify_sources(report, args.results)
-    info=facts(report,cases)
-    (HERE/'RESULTS.md').write_text(markdown(report,cases,info),encoding='utf-8')
-    (ROOT/'NumericalChanHVND/paper/numerical_product_chan_larger.tex').write_text(latex(report,cases,info),encoding='utf-8')
-    print(json.dumps({k:v for k,v in info.items() if k not in ('index','local','compressed')},indent=2))
+    info = facts(report, cases, PRIMARY_ALGORITHMS)
+    (HERE / 'RESULTS.md').write_text(markdown(report, cases, info), encoding='utf-8')
+    if args.all_variants:
+        archive = ('> **Archive: full four-solver comparison.** The concise current comparison is '
+                   '[RESULTS.md](RESULTS.md). This page retains the earlier compiled variant and '
+                   'all diagnostic tables from the original published report.\n\n')
+        archive += markdown_all_variants(report, cases, facts(report, cases))
+        (HERE / 'RESULTS_ALL_VARIANTS.md').write_text(archive, encoding='utf-8')
+    print(json.dumps({k: v for k, v in info.items()
+                      if k not in ('index', 'local', 'compressed')}, indent=2))
 
 
-if __name__=='__main__':
+if __name__ == '__main__':
     main()

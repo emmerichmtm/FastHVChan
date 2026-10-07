@@ -9,8 +9,8 @@ references.
 
 - [PDF](numerical_product_chan.pdf)
 - [Main LaTeX source](numerical_product_chan.tex)
-- [Experimental section](numerical_product_chan_experiments.tex)
-- [Larger 4D–6D experimental section](numerical_product_chan_larger.tex)
+- [Main 4D–6D benchmark comparison](numerical_product_chan_larger.tex)
+- [Structural validation and archive appendix](numerical_product_chan_experiments.tex)
 - [Product-measure and magnitude appendix](numerical_product_chan_magnitude.tex)
 - [Worked eight-point 4D example](numerical_product_chan_example.tex)
 - [Example verification script](eight_point_example.py) and [checked results](eight_point_example.json)
@@ -48,14 +48,16 @@ The compiled implementation is
 [`numerical_chan_local_compiled.py`](../numerical_chan_local_compiled.py),
 with [verification records](../local_compiled_verification.json).
 
-The first experimental tables now compare the proved local-checkpoint
-policy with the earlier compiled policy and both Python Chan references
-at 64–1,024 points in 4D–6D, plus a 4,096-point 4D stress test. They retain
-partial results and timeouts explicitly. See the
+The two benchmark tables compare **Numerical Chan (Numba)** with **Chan
+d/3 (Python)** and **Chan d/2 (Python)**. Numerical Chan is the current
+local-checkpoint implementation covered by the theorem. The tables cover
+64–1,024 points in 4D–6D, plus a 4,096-point 4D stress test, with timeouts
+and unrun cases kept visible. See the
 [larger benchmark report](../benchmarks/larger_4d_6d/RESULTS.md).
-The archived small-input timing tables remain separate and concern the
-earlier global-interval adaptive driver at commit `38587e7`. The report
-does not infer complexity from either set of measurements.
+Earlier timing tables and additional implementation variants remain in
+the repository archive, linked in Appendix D. They are omitted from the
+main comparison. Raw measurements and solver code are unchanged; the
+report does not infer complexity from timings.
 
 From this directory, using a standard TeX installation:
 
