@@ -1,22 +1,25 @@
 {
   "status": "passed",
-  "pages": 28,
+  "pages": 34,
   "paper": "A4",
   "base_font_points": 12,
   "compiler": "Tectonic (LaTeX/XeTeX), repeated passes to resolve references",
   "undefined_references": 0,
   "overfull_boxes": 0,
   "underfull_boxes": 0,
-  "visual_review": "All 28 rendered pages inspected, including the HV-first exposition, benchmark tables and magnitude appendix.",
+  "visual_review": "All 34 rendered pages inspected, including authorship, benchmark tables, magnitude appendix, and gridded eight-point example.",
   "verification": "Local-driver, archived benchmark, and larger-input benchmark source hashes all match.",
   "scope": "Document layout and source provenance; numerical checks are in local_compiled_verification.json.",
   "sha256": {
-    "numerical_product_chan.pdf": "7b894c6b29aa87a6ef6c99dab1b75b7aecf3d78aef904163477d271edf6da36b",
-    "numerical_product_chan_source.zip": "9acf8d85d346f15503e40afeea9d980d4f455ae91499324f54c895e2cdf695ab",
-    "numerical_product_chan.tex": "93727825626b6f2ed2efb1dc38310d56d607f00258cff555cc1763f1f271662f",
+    "numerical_product_chan.pdf": "05eed96185c1ce3a12665615e0ba7238a4ccf1c569abcbbd4d02f6df17175e7c",
+    "numerical_product_chan_source.zip": "cf9c53ba2e31fc0e1660a05c658cc6d6fe9da42ea5558f4d6f06b2a57c889d76",
+    "numerical_product_chan.tex": "9034f9acd6de20ae572694c7b75f01d52e6165d9b563e1e8b21c1aac89c0fba4",
     "numerical_product_chan_larger.tex": "e3f220c3b18428f0616665d1e787888f66848f41e81c6182171ef45c5798f550",
     "numerical_product_chan_experiments.tex": "485ca0cdf671745e54200a953080863613a0f5ba8719dcb1b6a79fd8f0ba16ba",
     "numerical_product_chan_magnitude.tex": "d559e3f60257b52cd0549891ee302025787150ddc198c3ef30cb984dbf0a30d0",
-    "NUMERICAL_PRODUCT_REPORT.md": "d3974dfa843e2586da0ea49920beeed336bb854080fa45a02fc30c685a2b6085"
+    "numerical_product_chan_example.tex": "18db23818eb9639fce3a395ffd64473c571ef9b7b6de51b3da2d6fac46cf8359",
+    "eight_point_example.py": "602ddb968ef6f6e30702777caa9bb7138d36f49c6f08c5ccc8b7ed5da883f388",
+    "eight_point_example.json": "89ca9bfc8cbe5ec0a63c601c818a84e13790dcdd2447fac29cb854ea2769a8e4",
+    "NUMERICAL_PRODUCT_REPORT.md": "abfdb6a401b119bff27fd826e59b3a6169d186ac42022caa8f88d34c1f9cae58"
   }
 }

@@ -1,0 +1,183 @@
+{
+  "points": [
+    [
+      5,
+      1,
+      5,
+      1
+    ],
+    [
+      5,
+      2,
+      3,
+      2
+    ],
+    [
+      4,
+      3,
+      4,
+      1
+    ],
+    [
+      3,
+      4,
+      2,
+      3
+    ],
+    [
+      2,
+      5,
+      1,
+      4
+    ],
+    [
+      1,
+      5,
+      2,
+      4
+    ],
+    [
+      2,
+      2,
+      5,
+      3
+    ],
+    [
+      1,
+      3,
+      3,
+      5
+    ]
+  ],
+  "hypervolume": 192,
+  "projection_areas": [
+    19,
+    21
+  ],
+  "planar_areas": [
+    [
+      21,
+      21,
+      16,
+      8,
+      8
+    ],
+    [
+      16,
+      16,
+      9,
+      7,
+      4
+    ],
+    [
+      10,
+      9,
+      8,
+      6,
+      0
+    ],
+    [
+      8,
+      7,
+      4,
+      0,
+      0
+    ],
+    [
+      8,
+      6,
+      0,
+      0,
+      0
+    ]
+  ],
+  "row_sums": [
+    74,
+    52,
+    33,
+    19,
+    14
+  ],
+  "intersection_sums_by_subset_size": [
+    390,
+    397,
+    358,
+    252,
+    130,
+    46,
+    10,
+    1
+  ],
+  "uncovered_by_region": {
+    "root": 433,
+    "L": 216,
+    "LL": 99,
+    "LLL": 21,
+    "LLR": 78,
+    "LR": 117,
+    "LRL": 27,
+    "LRR": 90,
+    "R": 217
+  },
+  "right_leaf_masses": [
+    240,
+    18,
+    8,
+    3
+  ],
+  "illustrative_compressed_pair_masses": [
+    [
+      1,
+      2,
+      6
+    ],
+    [
+      1,
+      1,
+      3
+    ],
+    [
+      2,
+      2,
+      6
+    ]
+  ],
+  "compiled_checked": true,
+  "exact_solver_hv": 192,
+  "compiled_solver_hv": 192.0,
+  "compiled_trace": {
+    "LLL": 21.0,
+    "LLR": 78.0,
+    "LL": 99.0,
+    "LRL": 27.0,
+    "LRR": 90.0,
+    "LR": 117.0,
+    "L": 216.0,
+    "R": 217.0,
+    "root": 433.0
+  },
+  "compiled_stats": {
+    "input_points": 8,
+    "dimension": 4,
+    "initial_cells": 24,
+    "nodes": 9,
+    "max_generation": 0,
+    "box_classifications": 50,
+    "raw_terms": 71,
+    "term_eliminations": 43,
+    "peak_terms": 3,
+    "max_lower_candidates": 2,
+    "max_upper_candidates": 1,
+    "compressions": 0,
+    "absorbed_boxes": 22,
+    "blocks": 1,
+    "min_block_levels": 4,
+    "max_block_levels": 4,
+    "max_block_potential": 30,
+    "cuts": 4,
+    "base_calls": 5,
+    "local_schedule": 1,
+    "compression_enabled": 1,
+    "compression_factor": 8.0
+  }
+}

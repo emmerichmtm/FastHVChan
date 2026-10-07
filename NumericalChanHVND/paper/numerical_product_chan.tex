@@ -34,10 +34,12 @@ breaklines=true,frame=single,rulecolor=\color{black!20},xleftmargin=3pt,xrightma
 \newcommand{\supp}{\operatorname{supp}}
 \DeclareMathOperator{\diag}{diag}
 \hypersetup{pdftitle={A Numerical Formulation of Chan's Hypervolume Algorithm},
+pdfauthor={Michael Emmerich},
 pdfsubject={Product measures, exact finite contractions, and preservation of the d/3 exponent}}
 \title{A Numerical Formulation of\\Chan's Hypervolume Algorithm}
-\author{Technical report accompanying \texttt{FastHVChan}}
-\date{5 October 2026}
+\author{Michael Emmerich\\[.3em]
+\small Technical report accompanying \texttt{FastHVChan}}
+\date{5 October 2026\\\small Revised 7 October 2026}
 \begin{document}
 \maketitle
 \begin{abstract}
@@ -48,8 +50,10 @@ We give a self-contained numerical formulation of Chan's orthant recursion,
 written for both optimization and computational geometry readers. The
 integrals are evaluated by exact finite cell masses, prefix sums and
 monotone integer-cutoff constraints. No quadrature or general symbolic
-integration is required. The simplification is representational; Chan's
-own step-function integrals also admit finite arithmetic evaluation.
+integration is required. The contribution is an explicit, compilable
+numerical implementation of Chan's framework. The simplification is
+representational; Chan's own step-function integrals also admit finite
+arithmetic evaluation.
 
 The formulation starts directly from ordinary hypervolume under Lebesgue
 measure: coordinate weights are interval lengths, while pair constraints
@@ -107,6 +111,30 @@ their masses, monotone cutoff arrays, and signed sums of products.
 The presentation preserves the geometric recursion and the compression
 that make the bound possible. Simply replacing integrals by sums, or
 compiling a slow loop, would not be a sufficient complexity argument.
+
+\paragraph{Attribution and contribution.}
+Chan's FOCS paper and its author preprint~\cite{chan2013} provide the
+geometric algorithm, the functional framework for its simplification
+step, and the $d/3$ exponent. Section~4 of that work describes elimination
+through integration and algebraic manipulation of functions. We refer
+to this as the symbolic formulation: functions and their integrals are
+represented and transformed, rather than only their masses on finite cells.
+The FastHVChan implementation project was initiated and developed by
+Michael Emmerich. The earlier Python implementation, the numerical
+formulation presented here, its software, and the accompanying validation
+and benchmarks belong to that implementation project; they are not
+software supplied by Chan.
+
+The motivation for this revision was to remove the need to maintain
+symbolic functional expressions in an implementation following Chan's
+description. The contribution is a compilable numerical implementation,
+together with explicit formulas and a proof that its stated compression
+policy retains Chan's bound. ``Compilable'' means that the core operations
+use numbers and integer-indexed arrays that Numba can translate into
+machine code. It does not mean that a symbolic implementation could never
+be compiled, nor does it claim a new geometric algorithm or exponent.
+The earlier Python reference uses specialized step-function algebra,
+not a general-purpose computer algebra package.
 
 \paragraph{For the reader from the Multiobjective Optimization field.}
 The main message is that the usual hypervolume indicator can be computed
@@ -227,6 +255,9 @@ The only uncovered positive-area cell within the enclosing square is
 $(1,2]\times(1,2]$, indexed by $(2,2)$. Thus the HV is $4-1=3$.
 This tiny grid is useful for explanation and testing; the high-dimensional
 solver avoids enumerating its analogue.
+Appendix~\ref{app:eight} gives a complete eight-point 4D example,
+including the actual cuts, a worked numerical leaf, and a separate
+illustration of compression.
 
 The finite algebra also accepts supplied masses from another product
 measure $\nu=\bigotimes_i\nu_i$: set $w_i(k)=\nu_i(C_{i,k})$ and replace
@@ -905,6 +936,8 @@ compression policy.
 \appendix
 \input{numerical_product_chan_magnitude.tex}
 \clearpage
+\input{numerical_product_chan_example.tex}
+\clearpage
 \section{A compact implementation and proof map}
 \label{app:map}
 
@@ -944,7 +977,7 @@ transferred to it.
 
 To reproduce correctness and build this manuscript from the repository
 root, use the following commands. LaTeX is run in the paper directory
-because the experimental sections and magnitude appendix are companion source files.
+because the experimental sections and appendices are companion source files.
 \begin{lstlisting}
 python NumericalChanHVND/verify_local_compiled.py
 cd NumericalChanHVND/paper
